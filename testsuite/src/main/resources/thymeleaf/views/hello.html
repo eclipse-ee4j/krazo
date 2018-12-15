@@ -1,0 +1,11 @@
+<html  xmlns:th="http://www.thymeleaf.org">
+    <head>
+      <title>Hello</title>
+      <link rel="stylesheet" type="text/css" th:href="@{~{cp}/krazo.css(cp=${request.contextPath})}" />
+    </head>
+    <body>
+      <h1>Hello <span th:text="${greeting.user}"/>!</h1>
+    </body>
+</html>
+
+

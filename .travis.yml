@@ -1,0 +1,42 @@
+language: java
+sudo: required
+jdk: oraclejdk8
+
+services:
+- docker
+
+jobs:
+  include:
+    - stage: build
+      script: mvn -B -V -DskipTests clean install
+    - stage: test
+      env: TYPE=glassfish-module
+      script: .travis/tests.sh ${TYPE}
+    - stage: test
+      env: TYPE=glassfish-bundled
+      script: .travis/tests.sh ${TYPE}
+    - stage: test
+      env: TYPE=testsuite-wildfly
+      before_script: .travis/docker-wildfly.sh
+      script: mvn -P${TYPE} --projects testsuite clean verify
+    - stage: test
+      env: TYPE=testsuite-payara
+      before_script: .travis/docker-payara.sh
+      script: mvn -P${TYPE} --projects testsuite clean verify
+    - stage: test
+      env: TYPE=tck-glassfish
+      script: .travis/tests.sh ${TYPE}
+    - stage: test
+      env: TYPE=tck-wildfly
+      script: .travis/tests.sh ${TYPE}
+    - stage: test
+      env: TYPE=tck-tomee
+      script: .travis/tests.sh ${TYPE}
+    - stage: test
+      env: TYPE=tck-liberty
+      script: .travis/tests.sh ${TYPE}
+  allow_failures:
+    - env: TYPE=tck-glassfish
+    - env: TYPE=tck-wildfly
+    - env: TYPE=tck-tomee
+    - env: TYPE=tck-liberty

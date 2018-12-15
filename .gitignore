@@ -1,0 +1,12 @@
+.classpath
+.project
+.settings
+.metadata
+.idea
+target
+*~
+*.iml
+*.swp
+nb-configuration.xml
+.DS_Store
+

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hello Controller with @View</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="krazo.css">
+</head>
+<body>
+<h1>Hello Controller with @View</h1>
+<ul>
+    <li><a href="resources/void">Void method with @View annotation. View 'hello.jsp' should be rendered.</a>
+    <li><a href="resources/string">Method that overrides the @View annotation. View 'bye.jsp' should be rendered.</a>
+    <li><a href="resources/null">Method that returns a null value. View 'hello.jsp' should be rendered.</a>
+    <li><a href="resources/class/void">Void method with @View annotation from class. View 'hello.jsp' should be rendered.</a>
+    <li><a href="resources/class/string">Method that overrides the @View annotation from class. View 'bye.jsp' should be rendered.</a>
+    <li><a href="resources/class/null">Method that returns a null value. View 'hello.jsp' from class should be rendered.</a>
+    <li><a href="resources/void/forbidden">Void method that throws a ForbiddenException. View 'hello.jsp' should be rendered.</a>
+    <li><a href="resources/void/illegal-argument">Void method that throws a IllegalArgumentException. Error page defined in web.xml should be rendered.</a>
+    <li><a href="resources/string/forbidden">Method that throws a ForbiddenException. View 'hello.jsp' should be rendered.</a>
+    <li><a href="resources/string/illegal-argument">Method that throws a IllegalArgumentException. Error page defined in web.xml should be rendered.</a>
+</ul>
+<br/>
+<a class="source" href="https://github.com/eclipse-ee4j/krazo/blob/master/test/view-annotation/src/main/java/org/eclipse/krazo/test/view-annotation/HelloController.java">Source Code</a>
+</body>
+</html>

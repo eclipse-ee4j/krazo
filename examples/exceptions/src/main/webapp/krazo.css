@@ -1,0 +1,78 @@
+h1 {
+    color: steelblue;
+    font-size: 30px;
+}
+
+h2 {
+    color: steelblue;
+    font-size: 24px;
+    margin-top: 20px;
+}
+
+input {
+    width: 200px;
+    display: block;
+    border: 1px solid #999;
+    height: 25px;
+    margin-bottom: 5px;
+}
+
+input[type=submit] {
+    width: 150px;
+    padding: 5px 5px;
+    background: steelblue;
+    color: white;
+    border: 0 none;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    margin-top: 15px;
+}
+
+.source {
+    width: 150px;
+    padding: 8px 8px 8px 8px;
+    background: steelblue;
+    color: white;
+    border: 0 none;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    margin-top: 15px;
+}
+
+.table {
+    width: 70%;
+    border-collapse: collapse;
+    color: white;
+}
+
+.table td {
+    padding: 7px;
+}
+
+.table th {
+    background: steelblue;
+    color: white;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-align: left;
+    padding-left: 5px;
+    font-size: 125%;
+}
+
+.table tr {
+    background: steelblue;
+}
+
+.table tr:nth-child(odd) {
+    background: steelblue;
+}
+
+.table tr:nth-child(even) {
+    background: lightsteelblue;
+}
+
+.table a {
+    color: white;
+}
