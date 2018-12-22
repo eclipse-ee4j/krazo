@@ -73,18 +73,24 @@
     </build>
 
     <dependencies>
+
+        <!-- Specifications  -->
         <dependency>
             <groupId>javax.mvc</groupId>
             <artifactId>javax.mvc-api</artifactId>
             <version>${spec.version}</version>
             <scope>compile</scope>
         </dependency>
+
+        <!-- Krazo Core -->
         <dependency>
             <groupId>org.eclipse.krazo</groupId>
             <artifactId>krazo-core</artifactId>
             <version>${project.version}</version>
             <scope>compile</scope>
         </dependency>
+
+        <!-- RESTEasy -->
         <dependency>
             <groupId>org.jboss.resteasy</groupId>
             <artifactId>resteasy-jaxrs</artifactId>
@@ -97,12 +103,7 @@
             <version>${resteasy.version}</version>
             <scope>provided</scope>
         </dependency>
-        <dependency>
-            <groupId>javax</groupId>
-            <artifactId>javaee-web-api</artifactId>
-            <version>7.0</version>
-            <scope>provided</scope>
-        </dependency>
+
     </dependencies>
 
 </project>
