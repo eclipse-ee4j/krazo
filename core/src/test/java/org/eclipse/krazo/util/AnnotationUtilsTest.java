@@ -17,11 +17,17 @@
  */
 package org.eclipse.krazo.util;
 
-import org.apache.deltaspike.testcontrol.api.junit.CdiTestRunner;
+import org.jboss.weld.environment.se.Weld;
+import org.jboss.weld.environment.se.WeldContainer;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.spi.CreationalContext;
+import javax.enterprise.inject.spi.AnnotatedType;
+import javax.enterprise.inject.spi.BeanManager;
+import javax.enterprise.inject.spi.InjectionTarget;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.mvc.Controller;
@@ -41,7 +47,6 @@ import static org.junit.Assert.assertTrue;
  *
  * @author Florian Hirsch
  */
-@RunWith(CdiTestRunner.class)
 public class AnnotationUtilsTest {
 
 	@Inject
@@ -50,6 +55,33 @@ public class AnnotationUtilsTest {
 	@Inject
 	private SomeBean someBean; // proxied
 
+	private WeldContainer container;
+
+	@Before
+	public void before() {
+
+		Weld weld = new Weld();
+		container = weld.initialize();
+
+		injectFields(this, container.getBeanManager());
+
+	}
+
+	private static <T> void injectFields(T instance, BeanManager beanManager) {
+
+		CreationalContext<T> creationalContext = beanManager.createCreationalContext(null);
+
+		AnnotatedType<T> annotatedType = beanManager.createAnnotatedType((Class<T>) instance.getClass());
+		InjectionTarget<T> injectionTarget = beanManager.createInjectionTarget(annotatedType);
+		injectionTarget.inject(instance, creationalContext);
+
+	}
+
+	@After
+	public void after() {
+		container.shutdown();
+	}
+	
 	@Test
 	public void getAnnotation() {
 		Path path = AnnotationUtils.getAnnotation(someController.getClass(), Path.class);
