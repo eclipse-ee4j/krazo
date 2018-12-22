@@ -32,7 +32,7 @@
     <name>Eclipse Krazo RESTEasy</name>
 
     <properties>
-        <resteasy.version>3.1.4.Final</resteasy.version>
+        <resteasy.version>3.6.2.Final</resteasy.version>
     </properties>
 
     <build>
