@@ -39,7 +39,7 @@
         <maven.compiler.target>1.8</maven.compiler.target>
 
         <spec.version>1.0-pfd</spec.version>
-        <jersey.version>2.26-b07</jersey.version>
+        <jersey.version>2.27</jersey.version>
         <javaee.version>8.0</javaee.version>
 
     </properties>
