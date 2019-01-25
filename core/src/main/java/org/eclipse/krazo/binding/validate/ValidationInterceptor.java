@@ -111,7 +111,7 @@ public class ValidationInterceptor implements Serializable {
             return;
         }
 
-        log.log(Level.FINE, "Validation found {} constraint violations...", violations.size());
+        log.log(Level.FINE, "Validation found {0} constraint violations...", violations.size());
 
         Set<ValidationError> validationErrors = new LinkedHashSet<>();
 
