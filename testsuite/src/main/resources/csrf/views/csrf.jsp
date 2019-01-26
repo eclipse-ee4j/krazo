@@ -3,7 +3,6 @@
 <html>
 <head>
     <title>CSRF Protection Test</title>
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/krazo.css"/>
 </head>
 <body>
     <h1>CSRF Protection Test</h1>
