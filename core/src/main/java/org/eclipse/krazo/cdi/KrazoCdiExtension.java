@@ -39,7 +39,7 @@ import org.eclipse.krazo.locale.LocaleResolverChain;
 import org.eclipse.krazo.security.CsrfImpl;
 import org.eclipse.krazo.security.CsrfProtectFilter;
 import org.eclipse.krazo.security.CsrfTokenManager;
-import org.eclipse.krazo.security.CsrfValidateInterceptor;
+import org.eclipse.krazo.security.CsrfValidateFilter;
 import org.eclipse.krazo.security.EncodersImpl;
 import org.eclipse.krazo.uri.ApplicationUris;
 import org.eclipse.krazo.uri.UriTemplateParser;
@@ -120,7 +120,7 @@ public class KrazoCdiExtension implements Extension {
                 // security
                 CsrfImpl.class,
                 CsrfProtectFilter.class,
-                CsrfValidateInterceptor.class,
+                CsrfValidateFilter.class,
                 CsrfTokenManager.class,
                 EncodersImpl.class,
 

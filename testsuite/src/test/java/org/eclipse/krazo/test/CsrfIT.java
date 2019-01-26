@@ -28,8 +28,6 @@ import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.jboss.shrinkwrap.api.Archive;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.By;
@@ -37,10 +35,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import javax.ws.rs.core.Response;
+import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Paths;
-import java.util.Iterator;
-import java.util.UUID;
 
 import static org.junit.Assert.*;
 
@@ -100,19 +97,25 @@ public class CsrfIT {
      * result in a 403 error.
      */
     @Test
-    public void testFormFail()  {
-        webDriver.get(baseURL + "resources/csrf");
-        WebElement form = webDriver.findElement(By.tagName("form"));
+    public void testFormFail() throws IOException {
+        try (WebClient webClient = new WebClient()) {
+            HtmlPage page1 = webClient.getPage(baseURL + "resources/csrf");
+            HtmlForm form = (HtmlForm) page1.getDocumentElement().getElementsByTagName("form").get(0);
 
-        // Remove hidden input field to cause a CSRF validation failure
-        WebElement input = form.findElement(By.name(CSRF_PARAM));
-        input.clear();
+            // Remove hidden input field to cause a CSRF validation failure
+            HtmlElement input = form.getElementsByTagName("input").get(1);
+            form.removeChild(input);
 
-
-        // Submit form - should fail
-        form.submit();
-        WebElement h1 = webDriver.findElement(By.tagName("h1"));
-        assertNotEquals("CSRF validation should have failed", "CSRF Protection OK", h1.getText());
+            // Submit form - should fail
+            HtmlSubmitInput button = (HtmlSubmitInput) form.getElementsByTagName("input").get(0);
+            try {
+                button.click();
+                fail("CSRF validation should have failed!");
+            } catch (FailingHttpStatusCodeException e) {
+                // falls through
+                assertEquals(403, e.getStatusCode());
+            }
+        }
     }
 
     /**

@@ -27,12 +27,11 @@ import javax.mvc.security.CsrfProtected;
 import javax.mvc.security.CsrfValidationException;
 import javax.ws.rs.POST;
 import javax.ws.rs.Priorities;
-import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.container.ContainerRequestContext;
+import javax.ws.rs.container.ContainerRequestFilter;
 import javax.ws.rs.container.ResourceInfo;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.ext.ReaderInterceptor;
-import javax.ws.rs.ext.ReaderInterceptorContext;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -64,7 +63,7 @@ import static org.eclipse.krazo.util.AnnotationUtils.hasAnnotation;
  */
 @Controller
 @Priority(Priorities.HEADER_DECORATOR)
-public class CsrfValidateInterceptor implements ReaderInterceptor {
+public class CsrfValidateFilter implements ContainerRequestFilter {
 
     private static final int BUFFER_SIZE = 4096;
     private static final String DEFAULT_CHARSET = "UTF-8";
@@ -82,7 +81,7 @@ public class CsrfValidateInterceptor implements ReaderInterceptor {
     private Messages messages;
 
     @Override
-    public Object aroundReadFrom(ReaderInterceptorContext context) throws IOException, WebApplicationException {
+    public void filter(ContainerRequestContext context) throws IOException {
         // Validate if name bound or if CSRF property enabled and a POST
         final Method controller = resourceInfo.getResourceMethod();
         if (needsValidation(controller)) {
@@ -93,7 +92,7 @@ public class CsrfValidateInterceptor implements ReaderInterceptor {
             // First check if CSRF token is in header
             final String csrfToken = context.getHeaders().getFirst(token.getHeaderName());
             if (token.getValue().equals(csrfToken)) {
-                return context.proceed();
+                return;
             }
 
             // Otherwise, it must be a form parameter
@@ -104,7 +103,7 @@ public class CsrfValidateInterceptor implements ReaderInterceptor {
 
             // Ensure stream can be restored for next interceptor
             ByteArrayInputStream bais;
-            final InputStream is = context.getInputStream();
+            final InputStream is = context.getEntityStream();
             if (is instanceof ByteArrayInputStream) {
                 bais = (ByteArrayInputStream) is;
             } else {
@@ -115,12 +114,15 @@ public class CsrfValidateInterceptor implements ReaderInterceptor {
             boolean validated = false;
             final String charset = contentType.getParameters().get("charset");
             final String entity = toString(bais, charset != null ? charset : DEFAULT_CHARSET);
-            final String[] pairs = entity.split("\\&");
-            for (int i = 0; i < pairs.length; i++) {
-                final String[] fields = pairs[i].split("=");
+            final String[] pairs = entity.split("&");
+            for (String pair : pairs) {
+                final String[] fields = pair.split("=");
                 final String nn = URLDecoder.decode(fields[0], DEFAULT_CHARSET);
                 // Is this the CSRF field?
                 if (token.getParamName().equals(nn)) {
+                    if (fields.length < 2) {
+                        throw new CsrfValidationException(messages.get("CsrfFailed", "missing token"));
+                    }
                     final String vv = URLDecoder.decode(fields[1], DEFAULT_CHARSET);
                     // If so then check the token
                     if (token.getValue().equals(vv)) {
@@ -136,9 +138,8 @@ public class CsrfValidateInterceptor implements ReaderInterceptor {
 
             // Restore stream and proceed
             bais.reset();
-            context.setInputStream(bais);
+            context.setEntityStream(bais);
         }
-        return context.proceed();
     }
 
     protected static boolean isSupportedMediaType(MediaType contentType) {
@@ -186,4 +187,6 @@ public class CsrfValidateInterceptor implements ReaderInterceptor {
         }
         return false;
     }
+
+
 }
