@@ -103,11 +103,11 @@ public class CsrfIT {
             HtmlForm form = (HtmlForm) page1.getDocumentElement().getElementsByTagName("form").get(0);
 
             // Remove hidden input field to cause a CSRF validation failure
-            HtmlElement input = form.getElementsByTagName("input").get(1);
+            HtmlElement input = form.getInputByName(CSRF_PARAM);
             form.removeChild(input);
 
             // Submit form - should fail
-            HtmlSubmitInput button = (HtmlSubmitInput) form.getElementsByTagName("input").get(0);
+            HtmlSubmitInput button = form.getInputByName("submit");
             try {
                 button.click();
                 fail("CSRF validation should have failed!");
