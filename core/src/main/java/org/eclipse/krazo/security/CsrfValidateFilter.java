@@ -25,6 +25,7 @@ import javax.inject.Inject;
 import javax.mvc.Controller;
 import javax.mvc.security.CsrfProtected;
 import javax.mvc.security.CsrfValidationException;
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.POST;
 import javax.ws.rs.Priorities;
 import javax.ws.rs.container.ContainerRequestContext;
@@ -32,13 +33,7 @@ import javax.ws.rs.container.ContainerRequestFilter;
 import javax.ws.rs.container.ResourceInfo;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Method;
-import java.net.URLDecoder;
 
 import static org.eclipse.krazo.util.AnnotationUtils.hasAnnotation;
 
@@ -65,9 +60,6 @@ import static org.eclipse.krazo.util.AnnotationUtils.hasAnnotation;
 @Priority(Priorities.HEADER_DECORATOR)
 public class CsrfValidateFilter implements ContainerRequestFilter {
 
-    private static final int BUFFER_SIZE = 4096;
-    private static final String DEFAULT_CHARSET = "UTF-8";
-
     @Inject
     private CsrfTokenManager csrfTokenManager;
 
@@ -78,10 +70,13 @@ public class CsrfValidateFilter implements ContainerRequestFilter {
     private ResourceInfo resourceInfo;
 
     @Inject
+    private HttpServletRequest request;
+
+    @Inject
     private Messages messages;
 
     @Override
-    public void filter(ContainerRequestContext context) throws IOException {
+    public void filter(ContainerRequestContext context) {
         // Validate if name bound or if CSRF property enabled and a POST
         final Method controller = resourceInfo.getResourceMethod();
         if (needsValidation(controller)) {
@@ -101,69 +96,22 @@ public class CsrfValidateFilter implements ContainerRequestFilter {
                 throw new CsrfValidationException(messages.get("UnableValidateCsrf", context.getMediaType()));
             }
 
-            // Ensure stream can be restored for next interceptor
-            ByteArrayInputStream bais;
-            final InputStream is = context.getEntityStream();
-            if (is instanceof ByteArrayInputStream) {
-                bais = (ByteArrayInputStream) is;
-            } else {
-                bais = copyStream(is);
-            }
-
             // Validate CSRF
-            boolean validated = false;
-            final String charset = contentType.getParameters().get("charset");
-            final String entity = toString(bais, charset != null ? charset : DEFAULT_CHARSET);
-            final String[] pairs = entity.split("&");
-            for (String pair : pairs) {
-                final String[] fields = pair.split("=");
-                final String nn = URLDecoder.decode(fields[0], DEFAULT_CHARSET);
-                // Is this the CSRF field?
-                if (token.getParamName().equals(nn)) {
-                    if (fields.length < 2) {
-                        throw new CsrfValidationException(messages.get("CsrfFailed", "missing token"));
-                    }
-                    final String vv = URLDecoder.decode(fields[1], DEFAULT_CHARSET);
-                    // If so then check the token
-                    if (token.getValue().equals(vv)) {
-                        validated = true;
-                        break;
-                    }
-                    throw new CsrfValidationException(messages.get("CsrfFailed", "mismatching tokens"));
-                }
-            }
-            if (!validated) {
+            final String[] tokenValues = request.getParameterMap().get(token.getParamName());
+
+            if (tokenValues == null) {
                 throw new CsrfValidationException(messages.get("CsrfFailed", "missing field"));
             }
 
-            // Restore stream and proceed
-            bais.reset();
-            context.setEntityStream(bais);
+            if (!token.getValue().equals(tokenValues[0])) {
+                throw new CsrfValidationException(messages.get("CsrfFailed", "mismatching tokens"));
+            }
         }
     }
 
     protected static boolean isSupportedMediaType(MediaType contentType) {
         return contentType != null &&
             contentType.isCompatible(MediaType.APPLICATION_FORM_URLENCODED_TYPE);
-    }
-
-    private ByteArrayInputStream copyStream(InputStream is) throws IOException {
-        int n;
-        try (final ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
-            final byte[] buffer = new byte[BUFFER_SIZE];
-            while ((n = is.read(buffer)) >= 0) {
-                baos.write(buffer, 0, n);
-            }
-            return new ByteArrayInputStream(baos.toByteArray());
-        }
-    }
-
-    private String toString(ByteArrayInputStream bais, String encoding) throws UnsupportedEncodingException {
-        int n = 0;
-        final byte[] bb = new byte[bais.available()];
-        while ((n = bais.read(bb, n, bb.length - n)) >= 0); // NOPMD ignore empty while block
-        bais.reset();
-        return new String(bb, encoding);
     }
 
     /**
@@ -187,6 +135,5 @@ public class CsrfValidateFilter implements ContainerRequestFilter {
         }
         return false;
     }
-
 
 }
