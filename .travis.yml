@@ -40,3 +40,4 @@ jobs:
     - env: TYPE=tck-wildfly
     - env: TYPE=tck-tomee
     - env: TYPE=tck-liberty
+    - env: TYPE=glassfish-module
