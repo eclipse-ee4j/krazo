@@ -1,5 +1,5 @@
 /*
- * Copyright © 2017, 2018 Ivar Grimstad
+ * Copyright © 2017, 2019 Ivar Grimstad
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,8 +19,6 @@ package org.eclipse.krazo.event;
 
 import javax.enterprise.context.Dependent;
 import javax.mvc.event.AfterControllerEvent;
-import javax.ws.rs.container.ContainerRequestContext;
-import javax.ws.rs.container.ContainerResponseContext;
 import javax.ws.rs.container.ResourceInfo;
 import javax.ws.rs.core.UriInfo;
 
@@ -35,10 +33,6 @@ public class AfterControllerEventImpl implements AfterControllerEvent {
     private UriInfo uriInfo;
 
     private ResourceInfo resourceInfo;
-
-    private ContainerRequestContext requestContext;
-
-    private ContainerResponseContext responseContext;
 
     @Override
     public UriInfo getUriInfo() {
@@ -58,19 +52,4 @@ public class AfterControllerEventImpl implements AfterControllerEvent {
         this.resourceInfo = resourceInfo;
     }
 
-    public ContainerRequestContext getContainerRequestContext() {
-        return requestContext;
-    }
-
-    public void setContainerRequestContext(ContainerRequestContext requestContext) {
-        this.requestContext = requestContext;
-    }
-
-    public ContainerResponseContext getContainerResponseContext() {
-        return responseContext;
-    }
-
-    public void setContainerResponseContext(ContainerResponseContext responseContext) {
-        this.responseContext = responseContext;
-    }
 }

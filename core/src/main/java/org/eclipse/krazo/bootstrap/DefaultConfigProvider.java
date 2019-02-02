@@ -18,7 +18,6 @@
 package org.eclipse.krazo.bootstrap;
 
 import org.eclipse.krazo.binding.convert.MvcConverterProvider;
-import org.eclipse.krazo.core.ViewRequestFilter;
 import org.eclipse.krazo.core.ViewResponseFilter;
 import org.eclipse.krazo.core.ViewableWriter;
 import org.eclipse.krazo.jaxrs.PostMatchingRequestFilter;
@@ -42,7 +41,6 @@ public class DefaultConfigProvider implements ConfigProvider {
     @Override
     public void configure(FeatureContext context) {
 
-        register(context, ViewRequestFilter.class);
         register(context, ViewResponseFilter.class);
         register(context, ViewableWriter.class);
         register(context, CsrfValidateInterceptor.class);

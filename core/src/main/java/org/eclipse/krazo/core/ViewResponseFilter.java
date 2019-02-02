@@ -1,5 +1,5 @@
 /*
- * Copyright © 2017, 2018 Ivar Grimstad
+ * Copyright © 2017, 2019 Ivar Grimstad
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -105,15 +105,6 @@ public class ViewResponseFilter implements ContainerResponseFilter {
     @Override
     public void filter(ContainerRequestContext requestContext,
                        ContainerResponseContext responseContext) throws IOException {
-        // Fire AfterControllerEvent event
-        if (isEventObserved(AfterControllerEvent.class)) {
-            final AfterControllerEventImpl event = new AfterControllerEventImpl();
-            event.setUriInfo(uriInfo);
-            event.setResourceInfo(resourceInfo);
-            event.setContainerRequestContext(requestContext);
-            event.setContainerResponseContext(responseContext);
-            dispatcher.fire(event);
-        }
 
         final Method method = resourceInfo.getResourceMethod();
         final Class<?> returnType = method.getReturnType();

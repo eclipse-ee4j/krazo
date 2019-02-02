@@ -1,5 +1,5 @@
 /*
- * Copyright © 2017, 2018 Ivar Grimstad
+ * Copyright © 2017, 2019 Ivar Grimstad
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,13 +18,14 @@
 package org.eclipse.krazo.cdi.types;
 
 import org.eclipse.krazo.binding.validate.ValidationInterceptorBinding;
+import org.eclipse.krazo.cdi.AroundController;
 
 import javax.enterprise.inject.spi.AnnotatedMethod;
 import javax.enterprise.inject.spi.AnnotatedType;
 import javax.mvc.Controller;
 import javax.ws.rs.*;
 import java.lang.annotation.Annotation;
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.function.Predicate;
@@ -73,8 +74,11 @@ public class AnnotatedTypeProcessor {
         boolean hasControllerAnnotation =
             method.getAnnotation(Controller.class) != null || type.getAnnotation(Controller.class) != null;
 
-        // added to methods to intercept calls with our validation interceptor
-        Set<Annotation> markerAnnotations = Collections.singleton(() -> ValidationInterceptorBinding.class);
+        // added to methods to intercept calls with our interceptors
+        Set<Annotation> markerAnnotations = new LinkedHashSet<>(Arrays.asList(
+                () -> ValidationInterceptorBinding.class,
+                () -> AroundController.class
+        ));
 
         // drop Hibernate Validator's marker annotations to skip the native validation
         Predicate<Class> annotationBlacklist = clazz -> isHibernateValidatorMarkerAnnotation(clazz);
