@@ -1,5 +1,5 @@
 /*
- * Copyright © 2017, 2018 Ivar Grimstad
+ * Copyright © 2017, 2019 Ivar Grimstad
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,12 +17,10 @@
  */
 package org.eclipse.krazo.core;
 
-import org.eclipse.krazo.cdi.KrazoCdiExtension;
 import org.eclipse.krazo.engine.ViewEngineContextImpl;
 import org.eclipse.krazo.engine.ViewEngineFinder;
 import org.eclipse.krazo.engine.Viewable;
-import org.eclipse.krazo.event.AfterProcessViewEventImpl;
-import org.eclipse.krazo.event.BeforeProcessViewEventImpl;
+import org.eclipse.krazo.lifecycle.EventDispatcher;
 
 import javax.enterprise.event.Event;
 import javax.enterprise.inject.Instance;
@@ -31,8 +29,6 @@ import javax.mvc.Models;
 import javax.mvc.MvcContext;
 import javax.mvc.engine.ViewEngine;
 import javax.mvc.engine.ViewEngineException;
-import javax.mvc.event.AfterProcessViewEvent;
-import javax.mvc.event.BeforeProcessViewEvent;
 import javax.mvc.event.MvcEvent;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.WriteListener;
@@ -43,11 +39,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.ServerErrorException;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.container.ResourceInfo;
-import javax.ws.rs.core.Configuration;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.MultivaluedMap;
-import javax.ws.rs.core.UriInfo;
+import javax.ws.rs.core.*;
 import javax.ws.rs.ext.MessageBodyWriter;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -109,6 +101,9 @@ public class ViewableWriter implements MessageBodyWriter<Viewable> {
 
     @Inject
     private MvcContext mvc;
+    
+    @Inject
+    private EventDispatcher eventDispatcher;
 
     @Override
     public boolean isWriteable(Class<?> aClass, Type type, Annotation[] annotations, MediaType mediaType) {
@@ -155,25 +150,18 @@ public class ViewableWriter implements MessageBodyWriter<Viewable> {
             // Bind EL 'mvc' object in models
             models.put("mvc", mvc);
 
-            // Fire BeforeProcessView event
-            if (KrazoCdiExtension.isEventObserved(BeforeProcessViewEvent.class)) {
-                final BeforeProcessViewEventImpl event = new BeforeProcessViewEventImpl();
-                event.setEngine(engine.getClass());
-                event.setView(viewable.getView());
-                dispatcher.fire(event);
+            // Execute the view engine
+            eventDispatcher.fireBeforeProcessViewEvent(engine, viewable);
+            try {
+
+                // Process view using selected engine
+                engine.processView(new ViewEngineContextImpl(viewable.getView(), models, request, responseWrapper,
+                        headers, responseStream, mediaType, uriInfo, resourceInfo, config, mvc.getLocale()));
+
+            } finally {
+                eventDispatcher.fireAfterProcessViewEvent(engine, viewable);
             }
 
-            // Process view using selected engine
-            engine.processView(new ViewEngineContextImpl(viewable.getView(), models, request, responseWrapper,
-                    headers, responseStream, mediaType, uriInfo, resourceInfo, config, mvc.getLocale()));
-
-            // Fire AfterProcessView event
-            if (KrazoCdiExtension.isEventObserved(AfterProcessViewEvent.class)) {
-                final AfterProcessViewEventImpl event = new AfterProcessViewEventImpl();
-                event.setEngine(engine.getClass());
-                event.setView(viewable.getView());
-                dispatcher.fire(event);
-            }
         } catch (ViewEngineException e) {
             throw new ServerErrorException(INTERNAL_SERVER_ERROR, e);
         } finally {

@@ -18,15 +18,17 @@
 package org.eclipse.krazo.lifecycle;
 
 import org.eclipse.krazo.cdi.KrazoCdiExtension;
+import org.eclipse.krazo.engine.Viewable;
 import org.eclipse.krazo.event.AfterControllerEventImpl;
+import org.eclipse.krazo.event.AfterProcessViewEventImpl;
 import org.eclipse.krazo.event.BeforeControllerEventImpl;
+import org.eclipse.krazo.event.BeforeProcessViewEventImpl;
 import org.eclipse.krazo.jaxrs.JaxRsContext;
 
 import javax.enterprise.event.Event;
 import javax.inject.Inject;
-import javax.mvc.event.AfterControllerEvent;
-import javax.mvc.event.BeforeControllerEvent;
-import javax.mvc.event.MvcEvent;
+import javax.mvc.engine.ViewEngine;
+import javax.mvc.event.*;
 import javax.ws.rs.container.ResourceInfo;
 import javax.ws.rs.core.UriInfo;
 
@@ -60,6 +62,24 @@ public class EventDispatcher {
             final AfterControllerEventImpl event = new AfterControllerEventImpl();
             event.setUriInfo(uriInfo);
             event.setResourceInfo(resourceInfo);
+            mvcEventDispatcher.fire(event);
+        }
+    }
+
+    public void fireBeforeProcessViewEvent(ViewEngine engine, Viewable viewable) {
+        if (KrazoCdiExtension.isEventObserved(BeforeProcessViewEvent.class)) {
+            final BeforeProcessViewEventImpl event = new BeforeProcessViewEventImpl();
+            event.setEngine(engine.getClass());
+            event.setView(viewable.getView());
+            mvcEventDispatcher.fire(event);
+        }
+    }
+
+    public void fireAfterProcessViewEvent(ViewEngine engine, Viewable viewable) {
+        if (KrazoCdiExtension.isEventObserved(AfterProcessViewEvent.class)) {
+            final AfterProcessViewEventImpl event = new AfterProcessViewEventImpl();
+            event.setEngine(engine.getClass());
+            event.setView(viewable.getView());
             mvcEventDispatcher.fire(event);
         }
     }
