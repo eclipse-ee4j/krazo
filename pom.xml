@@ -1,6 +1,6 @@
 <!--
 
-    Copyright © 2017, 2018 Ivar Grimstad
+    Copyright © 2017, 2019 Ivar Grimstad
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -155,25 +155,6 @@
                 </plugin>
 
                 <plugin>
-                    <groupId>com.mycila</groupId>
-                    <artifactId>license-maven-plugin</artifactId>
-                    <version>3.0</version>
-                    <configuration>
-                        <!-- rootDir property is set from directory-maven-plugin -->
-                        <header>${rootDir}/etc/license-header.txt</header>
-                        <includes>
-                            <include>src/**/*.java</include>
-                            <include>src/**/*.xml</include>
-                            <include>findbugs-exclude.xml</include>
-                            <include>pom.xml</include>
-                        </includes>
-                        <mapping>
-                            <java>SLASHSTAR_STYLE</java>
-                        </mapping>
-                    </configuration>
-                </plugin>
-
-                <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>findbugs-maven-plugin</artifactId>
                     <version>3.0.1</version>
@@ -223,21 +204,6 @@
                         <phase>initialize</phase>
                         <goals>
                             <goal>highest-basedir</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-
-            <!-- We need to run this on every module -->
-            <plugin>
-                <groupId>com.mycila</groupId>
-                <artifactId>license-maven-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>license-check</id>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>check</goal>
                         </goals>
                     </execution>
                 </executions>

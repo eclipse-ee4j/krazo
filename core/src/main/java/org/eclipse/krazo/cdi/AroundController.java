@@ -1,5 +1,5 @@
 /*
- * Copyright © 2017, 2019 Ivar Grimstad
+ * Copyright © 2019 Eclipse Krazo committers and contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,22 +15,24 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  */
-package org.eclipse.krazo.tck.tomee;
+package org.eclipse.krazo.cdi;
 
-import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.spec.WebArchive;
-import org.eclipse.krazo.tck.AbstractArchiveProvider;
+import javax.interceptor.InterceptorBinding;
+import java.lang.annotation.*;
+
+import static java.lang.annotation.ElementType.METHOD;
+import static java.lang.annotation.ElementType.TYPE;
 
 /**
- * BaseArchiveProvider implementation for running TCK against TomEE
+ * Automatically added to all controller methods to hook into the JAX-RS lifecycle.
+ *
+ * @author Christian Kaltepoth
  */
-public class TomeeArchiveProvider extends AbstractArchiveProvider {
-
-    @Override
-    public WebArchive getBaseArchive() {
-        return ShrinkWrap.create(WebArchive.class)
-                .addAsLibraries(resolveMvcSpecJar())
-                .addAsLibraries(resolveKrazoCxf());
-    }
+@Inherited
+@InterceptorBinding
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+@Target({METHOD, TYPE})
+public @interface AroundController {
 
 }

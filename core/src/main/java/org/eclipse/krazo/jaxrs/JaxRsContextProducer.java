@@ -1,5 +1,5 @@
 /*
- * Copyright © 2017, 2018 Ivar Grimstad
+ * Copyright © 2017, 2019 Ivar Grimstad
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,6 +21,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.enterprise.inject.Produces;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.ws.rs.container.ResourceInfo;
 import javax.ws.rs.core.Application;
 import javax.ws.rs.core.Configuration;
 import javax.ws.rs.core.UriInfo;
@@ -44,13 +45,7 @@ public class JaxRsContextProducer {
 
     private UriInfo uriInfo;
 
-    protected void populate(Configuration configuration, HttpServletRequest request, HttpServletResponse response, Application application, UriInfo uriInfo) {
-        this.configuration = Objects.requireNonNull(configuration, "Configuration is required");
-        this.request = Objects.requireNonNull(request, "HttpServletRequest is required");
-        this.response = Objects.requireNonNull(response, "Configuration is required");
-        this.application = Objects.requireNonNull(application, "Application is required");
-        this.uriInfo = Objects.requireNonNull(uriInfo, "UriInfo is required");
-    }
+    private ResourceInfo resourceInfo;
 
     @Produces
     @JaxRsContext
@@ -87,4 +82,35 @@ public class JaxRsContextProducer {
         return Objects.requireNonNull(uriInfo, "Cannot produce UriInfo");
     }
 
+    @Produces
+    @JaxRsContext
+    @RequestScoped
+    public ResourceInfo produceResourceInfo() {
+        return Objects.requireNonNull(resourceInfo, "Cannot produce ResourceInfo");
+    }
+
+    void setConfiguration(Configuration configuration) {
+        this.configuration = Objects.requireNonNull(configuration, "Configuration must not be null");
+    }
+
+    void setRequest(HttpServletRequest request) {
+        this.request = Objects.requireNonNull(request, "Request must not be null");
+    }
+
+    void setResponse(HttpServletResponse response) {
+        this.response = Objects.requireNonNull(response, "Response must not be null");
+    }
+
+    void setApplication(Application application) {
+        this.application = Objects.requireNonNull(application, "Application must not be null");
+    }
+
+    void setUriInfo(UriInfo uriInfo) {
+        this.uriInfo = Objects.requireNonNull(uriInfo, "UriInfo must not be null");
+    }
+
+    void setResourceInfo(ResourceInfo resourceInfo) {
+        this.resourceInfo = Objects.requireNonNull(resourceInfo, "ResourceInfo must not be null");
+    }
+    
 }

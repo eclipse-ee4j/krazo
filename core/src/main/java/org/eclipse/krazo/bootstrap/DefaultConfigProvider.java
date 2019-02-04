@@ -1,5 +1,5 @@
 /*
- * Copyright © 2017, 2018 Ivar Grimstad
+ * Copyright © 2017, 2019 Ivar Grimstad
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,10 +18,10 @@
 package org.eclipse.krazo.bootstrap;
 
 import org.eclipse.krazo.binding.convert.MvcConverterProvider;
-import org.eclipse.krazo.core.ViewRequestFilter;
 import org.eclipse.krazo.core.ViewResponseFilter;
 import org.eclipse.krazo.core.ViewableWriter;
-import org.eclipse.krazo.jaxrs.JaxRsContextFilter;
+import org.eclipse.krazo.jaxrs.PostMatchingRequestFilter;
+import org.eclipse.krazo.jaxrs.PreMatchingRequestFilter;
 import org.eclipse.krazo.locale.LocaleRequestFilter;
 import org.eclipse.krazo.security.CsrfExceptionMapper;
 import org.eclipse.krazo.security.CsrfProtectFilter;
@@ -41,14 +41,14 @@ public class DefaultConfigProvider implements ConfigProvider {
     @Override
     public void configure(FeatureContext context) {
 
-        register(context, ViewRequestFilter.class);
         register(context, ViewResponseFilter.class);
         register(context, ViewableWriter.class);
         register(context, CsrfValidateInterceptor.class);
         register(context, CsrfProtectFilter.class);
         register(context, CsrfExceptionMapper.class);
         register(context, LocaleRequestFilter.class);
-        register(context, JaxRsContextFilter.class);
+        register(context, PreMatchingRequestFilter.class);
+        register(context, PostMatchingRequestFilter.class);
         register(context, MvcConverterProvider.class);
 
     }

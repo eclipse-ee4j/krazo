@@ -1,5 +1,5 @@
 /*
- * Copyright © 2017, 2018 Ivar Grimstad
+ * Copyright © 2017, 2019 Ivar Grimstad
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,6 +31,8 @@ import org.eclipse.krazo.engine.JspViewEngine;
 import org.eclipse.krazo.engine.ViewEngineFinder;
 import org.eclipse.krazo.event.*;
 import org.eclipse.krazo.jaxrs.JaxRsContextProducer;
+import org.eclipse.krazo.lifecycle.EventDispatcher;
+import org.eclipse.krazo.lifecycle.RequestLifecycle;
 import org.eclipse.krazo.locale.DefaultLocaleResolver;
 import org.eclipse.krazo.locale.LocaleRequestFilter;
 import org.eclipse.krazo.locale.LocaleResolverChain;
@@ -104,8 +106,11 @@ public class KrazoCdiExtension implements Extension {
                 Messages.class,
                 ModelsImpl.class,
                 ViewableWriter.class,
-                ViewRequestFilter.class,
                 ViewResponseFilter.class,
+                
+                // lifecycle
+                EventDispatcher.class,
+                RequestLifecycle.class,
 
                 // engine
                 FaceletsViewEngine.class,
@@ -125,6 +130,7 @@ public class KrazoCdiExtension implements Extension {
                 // cdi
                 RedirectScopeManager.class,
                 ValidationInterceptor.class,
+                AroundControllerInterceptor.class,
 
                 //event
                 AfterControllerEventImpl.class,

@@ -1,5 +1,5 @@
 /*
- * Copyright © 2017, 2019 Ivar Grimstad
+ * Copyright © 2019 Eclipse Krazo committers and contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,20 +17,31 @@
  */
 package org.eclipse.krazo.tck.tomee;
 
-import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.eclipse.krazo.tck.AbstractArchiveProvider;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.importer.ExplodedImporter;
+import org.jboss.shrinkwrap.api.spec.JavaArchive;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
 
 /**
  * BaseArchiveProvider implementation for running TCK against TomEE
  */
-public class TomeeArchiveProvider extends AbstractArchiveProvider {
+public class TomeeDevArchiveProvider extends AbstractArchiveProvider {
 
     @Override
     public WebArchive getBaseArchive() {
         return ShrinkWrap.create(WebArchive.class)
                 .addAsLibraries(resolveMvcSpecJar())
-                .addAsLibraries(resolveKrazoCxf());
+                .addAsLibraries(
+                        ShrinkWrap.create(ExplodedImporter.class, "krazo-core.jar")
+                                .importDirectory("../core/target/classes")
+                                .as(JavaArchive.class)
+                )
+                .addAsLibraries(
+                        ShrinkWrap.create(ExplodedImporter.class, "krazo-cxf.jar")
+                                .importDirectory("../cxf/target/classes")
+                                .as(JavaArchive.class)
+                );
     }
 
 }

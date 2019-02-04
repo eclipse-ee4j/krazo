@@ -1,5 +1,5 @@
 /*
- * Copyright © 2017, 2018 Ivar Grimstad
+ * Copyright © 2017, 2019 Ivar Grimstad
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,6 +20,7 @@ package org.eclipse.krazo.core;
 import org.easymock.EasyMock;
 import org.eclipse.krazo.MvcContextImpl;
 import org.eclipse.krazo.engine.ViewEngineFinder;
+import org.eclipse.krazo.lifecycle.EventDispatcher;
 import org.junit.Test;
 
 import javax.enterprise.event.Event;
@@ -98,6 +99,11 @@ public class ViewableWriterTest {
         Field dispatcherField = writer.getClass().getDeclaredField("dispatcher");
         dispatcherField.setAccessible(true);
         dispatcherField.set(writer, dispatcher);
+
+        EventDispatcher eventDispatcher = EasyMock.createMock(EventDispatcher.class);
+        Field eventDispatcherField = writer.getClass().getDeclaredField("eventDispatcher");
+        eventDispatcherField.setAccessible(true);
+        eventDispatcherField.set(writer, eventDispatcher);
 
         ViewEngine viewEngine = EasyMock.createStrictMock(ViewEngine.class);
 
