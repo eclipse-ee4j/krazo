@@ -19,21 +19,24 @@ package org.eclipse.krazo.security;
 
 import org.eclipse.krazo.KrazoConfig;
 import org.eclipse.krazo.core.Messages;
+import org.eclipse.krazo.util.ServiceLoaders;
 
 import javax.annotation.Priority;
 import javax.inject.Inject;
 import javax.mvc.Controller;
 import javax.mvc.security.CsrfProtected;
 import javax.mvc.security.CsrfValidationException;
-import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.POST;
 import javax.ws.rs.Priorities;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
 import javax.ws.rs.container.ResourceInfo;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.Form;
 import javax.ws.rs.core.MediaType;
+import java.io.IOException;
 import java.lang.reflect.Method;
+import java.util.List;
 
 import static org.eclipse.krazo.util.AnnotationUtils.hasAnnotation;
 
@@ -48,8 +51,7 @@ import static org.eclipse.krazo.util.AnnotationUtils.hasAnnotation;
  * the HTTP method (note that CSRF validation should only apply to non-idempotent
  * requests).</p>
  *
- * <p>Stream buffering is required to restore the entity for the next interceptor.
- * If validation succeeds, it calls the next interceptor in the chain. Default
+ * <p>If validation succeeds, it calls the next interceptor in the chain. Default
  * character encoding is utf-8. Even though none of the main browsers send a
  * charset param on a form post, we still check it to decode the entity.</p>
  *
@@ -70,15 +72,19 @@ public class CsrfValidateFilter implements ContainerRequestFilter {
     private ResourceInfo resourceInfo;
 
     @Inject
-    private HttpServletRequest request;
-
-    @Inject
     private Messages messages;
 
+    private FormEntityProvider formEntityProvider;
+
+    public CsrfValidateFilter() {
+        this.formEntityProvider = ServiceLoaders.list(FormEntityProvider.class).get(0);
+    }
+
     @Override
-    public void filter(ContainerRequestContext context) {
+    public void filter(ContainerRequestContext context) throws IOException {
         // Validate if name bound or if CSRF property enabled and a POST
         final Method controller = resourceInfo.getResourceMethod();
+
         if (needsValidation(controller)) {
 
             CsrfToken token = csrfTokenManager.getToken()
@@ -92,18 +98,18 @@ public class CsrfValidateFilter implements ContainerRequestFilter {
 
             // Otherwise, it must be a form parameter
             final MediaType contentType = context.getMediaType();
-            if (!isSupportedMediaType(contentType)) {
+            if (!isSupportedMediaType(contentType) || !context.hasEntity()) {
                 throw new CsrfValidationException(messages.get("UnableValidateCsrf", context.getMediaType()));
             }
 
             // Validate CSRF
-            final String[] tokenValues = request.getParameterMap().get(token.getParamName());
-
-            if (tokenValues == null) {
+            final Form form = formEntityProvider.getForm(context);
+            final List<String> tokenValues = form.asMap().get(token.getParamName());
+            if (tokenValues == null || tokenValues.isEmpty()) {
                 throw new CsrfValidationException(messages.get("CsrfFailed", "missing field"));
             }
 
-            if (!token.getValue().equals(tokenValues[0])) {
+            if (!token.getValue().equals(tokenValues.get(0))) {
                 throw new CsrfValidationException(messages.get("CsrfFailed", "mismatching tokens"));
             }
         }

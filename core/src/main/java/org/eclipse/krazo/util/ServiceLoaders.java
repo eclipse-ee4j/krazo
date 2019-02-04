@@ -19,7 +19,10 @@ package org.eclipse.krazo.util;
 
 import org.eclipse.krazo.bootstrap.ConfigProvider;
 
+import javax.annotation.Priority;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.ServiceLoader;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -51,8 +54,29 @@ public class ServiceLoaders {
 
         // return the SPI implementations as a list
         return StreamSupport.stream(ServiceLoader.load(type, classLoader).spliterator(), false)
-                .collect(Collectors.toList());
-
+            .sorted(new PriorityComparator())
+            .collect(Collectors.toList());
     }
+
+    /**
+     * Sorts objects by their {@link Priority} annotation. Defaults to 0 if the class is not annotated.
+     */
+    private static class PriorityComparator implements Comparator<Object> {
+        @Override
+        public int compare(Object o1, Object o2) {
+            // Reverse the objects, as we need reverse order (0 being the lowest priority)
+            return Integer.compare(getPriority(o2), getPriority(o1));
+        }
+
+        private int getPriority(Object o) {
+            Priority priority = o.getClass().getAnnotation(Priority.class);
+            if (priority != null) {
+                return priority.value();
+            } else {
+                return 0;
+            }
+        }
+    }
+
 
 }
