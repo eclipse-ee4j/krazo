@@ -3,7 +3,7 @@
 
     <!-- Enable features -->
     <featureManager>
-        <feature>webProfile-7.0</feature>
+        <feature>webProfile-8.0</feature>
 
         <!-- For Arquillian -->
         <feature>jsp-2.2</feature>

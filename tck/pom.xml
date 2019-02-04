@@ -194,7 +194,7 @@
                 </property>
             </activation>
             <properties>
-                <tomee.version>7.1.0</tomee.version>
+                <tomee.version>8.0.0-M2</tomee.version>
                 <tomee.classifier>webprofile</tomee.classifier>
             </properties>
             <build>
@@ -259,7 +259,7 @@
                 <dependency>
                     <groupId>io.openliberty.arquillian</groupId>
                     <artifactId>arquillian-liberty-managed</artifactId>
-                    <version>1.0.0</version>
+                    <version>1.0.3</version>
                     <scope>test</scope>
                 </dependency>
             </dependencies>
