@@ -3,12 +3,15 @@
 <html>
 <head>
     <title>CSRF Protection Test</title>
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/krazo.css"/>
 </head>
 <body>
     <h1>CSRF Protection Test</h1>
     <form action="csrf" method="post" accept-charset="utf-8">
-        <input type="submit" value="Click here"/>
+        <label>
+            Greeting
+            <input type="text" name="greeting" value="Hello!"/>
+        </label>
+        <input type="submit" name="submit" value="Click here"/>
         <input type="hidden" name="${mvc.csrf.name}" value="${mvc.csrf.token}"/>
     </form>
 </body>

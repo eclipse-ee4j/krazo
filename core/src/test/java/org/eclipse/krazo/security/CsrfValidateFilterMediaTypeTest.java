@@ -21,34 +21,34 @@ import org.junit.Test;
 
 import javax.ws.rs.core.MediaType;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
-public class CsrfValidateInterceptorMediaTypeTest {
+public class CsrfValidateFilterMediaTypeTest {
 
   @Test
   public void shouldSupportFormMediaType() {
-    assertEquals(true, CsrfValidateInterceptor.isSupportedMediaType(
-        MediaType.valueOf("application/x-www-form-urlencoded")
-    ));
+      assertTrue(CsrfValidateFilter.isSupportedMediaType(
+          MediaType.valueOf("application/x-www-form-urlencoded")
+      ));
   }
 
   @Test
   public void shouldSupportFormMediaTypeWithCharset() {
-    assertEquals(true, CsrfValidateInterceptor.isSupportedMediaType(
-        MediaType.valueOf("application/x-www-form-urlencoded;charset=windows-31j")
-    ));
+      assertTrue(CsrfValidateFilter.isSupportedMediaType(
+          MediaType.valueOf("application/x-www-form-urlencoded;charset=windows-31j")
+      ));
   }
 
   @Test
   public void shouldFailForOtherMediaType() {
-    assertEquals(false, CsrfValidateInterceptor.isSupportedMediaType(
-        MediaType.valueOf("application/pdf")
-    ));
+      assertFalse(CsrfValidateFilter.isSupportedMediaType(
+          MediaType.valueOf("application/pdf")
+      ));
   }
 
   @Test
   public void shouldFailForNoMediaType() {
-    assertEquals(false, CsrfValidateInterceptor.isSupportedMediaType(null));
+      assertFalse(CsrfValidateFilter.isSupportedMediaType(null));
   }
 
 }
