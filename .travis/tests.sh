@@ -2,9 +2,9 @@
 
 set -euo pipefail
 
-GLASSFISH_URL="https://repo1.maven.org/maven2/org/glassfish/main/distributions/web/5.1.0-RC1/web-5.1.0-RC1.zip"
-WILDFLY_URL="http://download.jboss.org/wildfly/14.0.1.Final/wildfly-14.0.1.Final.tar.gz"
-LIBERTY_URL="https://public.dhe.ibm.com/ibmdl/export/pub/software/websphere/wasdev/downloads/wlp/18.0.0.3/wlp-webProfile7-18.0.0.3.zip"
+GLASSFISH_URL="http://download.eclipse.org/glassfish/web-5.1.0.zip"
+WILDFLY_URL="https://download.jboss.org/wildfly/15.0.1.Final/wildfly-15.0.1.Final.tar.gz"
+LIBERTY_URL="https://public.dhe.ibm.com/ibmdl/export/pub/software/websphere/wasdev/downloads/wlp/19.0.0.1/wlp-webProfile8-19.0.0.1.zip"
 
 if [ "${1}" == "glassfish-bundled" ]; then
 
@@ -48,7 +48,7 @@ elif [ "${1}" == "tck-wildfly" ]; then
   curl -L -s -o wildfly.tgz "${WILDFLY_URL}"
   tar -xzf wildfly.tgz
   mvn -B -V -DskipTests clean install
-  LAUNCH_JBOSS_IN_BACKGROUND=1 JBOSS_PIDFILE=wildfly.pid ./wildfly-14.0.1.Final/bin/standalone.sh > wildfly.log 2>&1 &
+  LAUNCH_JBOSS_IN_BACKGROUND=1 JBOSS_PIDFILE=wildfly.pid ./wildfly-15.0.1.Final/bin/standalone.sh > wildfly.log 2>&1 &
   sleep 30
   pushd tck
   mvn -B -V -Dtck-env=wildfly verify
