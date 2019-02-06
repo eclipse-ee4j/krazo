@@ -17,8 +17,13 @@
  */
 package org.eclipse.krazo.lifecycle;
 
+import org.eclipse.krazo.MvcContextImpl;
+import org.eclipse.krazo.locale.LocaleResolverChain;
+
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import javax.ws.rs.container.ContainerRequestContext;
+import java.util.Locale;
 import java.util.concurrent.Callable;
 
 /**
@@ -29,6 +34,20 @@ public class RequestLifecycle {
 
     @Inject
     private EventDispatcher eventDispatcher;
+
+    @Inject
+    private LocaleResolverChain localeResolverChain;
+
+    @Inject
+    private MvcContextImpl mvc;
+
+    public void beforeAll(ContainerRequestContext context) {
+
+        // initialize request locale
+        Locale requestLocale = localeResolverChain.resolve(context);
+        mvc.setLocale(requestLocale);
+
+    }
 
     public Object aroundController(Callable<Object> controllerMethod) throws Exception {
 

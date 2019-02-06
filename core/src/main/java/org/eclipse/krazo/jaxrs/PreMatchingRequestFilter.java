@@ -17,6 +17,7 @@
  */
 package org.eclipse.krazo.jaxrs;
 
+import org.eclipse.krazo.lifecycle.RequestLifecycle;
 import org.eclipse.krazo.util.CdiUtils;
 
 import javax.annotation.Priority;
@@ -71,6 +72,11 @@ public class PreMatchingRequestFilter implements ContainerRequestFilter {
         contextProducer.setResponse(response);
         contextProducer.setApplication(application);
         contextProducer.setUriInfo(uriInfo);
+
+        // notify RequestLifecycle
+        CdiUtils.getApplicationBean(RequestLifecycle.class)
+                .orElseThrow(() -> new IllegalStateException("Failed to lookup RequestLifecycle"))
+                .beforeAll(requestContext);
 
     }
 

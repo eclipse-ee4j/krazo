@@ -22,7 +22,6 @@ import org.eclipse.krazo.core.ViewResponseFilter;
 import org.eclipse.krazo.core.ViewableWriter;
 import org.eclipse.krazo.jaxrs.PostMatchingRequestFilter;
 import org.eclipse.krazo.jaxrs.PreMatchingRequestFilter;
-import org.eclipse.krazo.locale.LocaleRequestFilter;
 import org.eclipse.krazo.security.CsrfExceptionMapper;
 import org.eclipse.krazo.security.CsrfProtectFilter;
 import org.eclipse.krazo.security.CsrfValidateFilter;
@@ -46,7 +45,6 @@ public class DefaultConfigProvider implements ConfigProvider {
         register(context, CsrfValidateFilter.class);
         register(context, CsrfProtectFilter.class);
         register(context, CsrfExceptionMapper.class);
-        register(context, LocaleRequestFilter.class);
         register(context, PreMatchingRequestFilter.class);
         register(context, PostMatchingRequestFilter.class);
         register(context, MvcConverterProvider.class);

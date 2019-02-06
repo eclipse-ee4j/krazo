@@ -34,7 +34,6 @@ import org.eclipse.krazo.jaxrs.JaxRsContextProducer;
 import org.eclipse.krazo.lifecycle.EventDispatcher;
 import org.eclipse.krazo.lifecycle.RequestLifecycle;
 import org.eclipse.krazo.locale.DefaultLocaleResolver;
-import org.eclipse.krazo.locale.LocaleRequestFilter;
 import org.eclipse.krazo.locale.LocaleResolverChain;
 import org.eclipse.krazo.security.*;
 import org.eclipse.krazo.uri.ApplicationUris;
@@ -136,7 +135,6 @@ public class KrazoCdiExtension implements Extension {
                 ControllerRedirectEventImpl.class,
 
                 //locale
-                LocaleRequestFilter.class,
                 LocaleResolverChain.class,
                 DefaultLocaleResolver.class,
 
