@@ -17,18 +17,21 @@
  */
 package org.eclipse.krazo.security;
 
+import static org.junit.Assert.assertEquals;
+
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import javax.ws.rs.container.ContainerRequestContext;
+import javax.ws.rs.core.Form;
+import javax.ws.rs.core.MediaType;
 import org.easymock.EasyMock;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
-import javax.ws.rs.container.ContainerRequestContext;
-import javax.ws.rs.core.Form;
-import javax.ws.rs.core.MediaType;
-import java.io.*;
-import java.util.Random;
-
-import static org.junit.Assert.*;
 
 /**
  * @author Gregor Tudan
@@ -113,8 +116,7 @@ public class DefaultFormEntityProviderTest {
 
     @Test
     public void testReadingGarbage() throws IOException {
-        byte[] bytes = new byte[20];
-        new Random().nextBytes(bytes);
+        byte[] bytes = "sj238snssKJSHUFDH8u290+!9@*32".getBytes();
 
         EasyMock.expect(context.getEntityStream()).andReturn(new ByteArrayInputStream(bytes));
         EasyMock.expect(context.getMediaType()).andReturn(MediaType.APPLICATION_FORM_URLENCODED_TYPE);
