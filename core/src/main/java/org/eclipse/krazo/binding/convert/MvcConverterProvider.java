@@ -1,5 +1,5 @@
 /*
- * Copyright © 2017, 2018 Ivar Grimstad
+ * Copyright © 2017, 2019 Ivar Grimstad
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,6 +20,7 @@ package org.eclipse.krazo.binding.convert;
 import org.eclipse.krazo.binding.BindingErrorImpl;
 import org.eclipse.krazo.binding.BindingResultImpl;
 
+import javax.annotation.Priority;
 import javax.inject.Inject;
 import javax.mvc.MvcContext;
 import javax.mvc.binding.MvcBinding;
@@ -41,6 +42,7 @@ import java.util.stream.Stream;
  *
  * @author Christian Kaltepoth
  */
+@Priority(0)  // should be preferred over builtin providers
 public class MvcConverterProvider implements ParamConverterProvider {
 
     @Inject

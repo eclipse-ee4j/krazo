@@ -1,5 +1,5 @@
 /*
- * Copyright © 2017, 2018 Ivar Grimstad
+ * Copyright © 2017, 2019 Ivar Grimstad
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,9 @@
  */
 package org.eclipse.krazo.security;
 
+import javax.annotation.Priority;
 import javax.mvc.security.CsrfValidationException;
+import javax.ws.rs.Priorities;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 
@@ -26,6 +28,7 @@ import javax.ws.rs.ext.ExceptionMapper;
  *
  * @author Christian Kaltepoth
  */
+@Priority(Priorities.USER + 5000)    // User provided mappers must be preferred
 public class CsrfExceptionMapper implements ExceptionMapper<CsrfValidationException> {
 
     @Override
