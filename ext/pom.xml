@@ -44,7 +44,6 @@
         <module>thymeleaf</module>
         <module>velocity</module>
         <module>pebble</module>
-        <module>groovy</module>
         <module>jtwig</module>
     </modules>
 
