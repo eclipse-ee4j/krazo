@@ -1,5 +1,5 @@
 /*
- * Copyright © 2017, 2018 Ivar Grimstad
+ * Copyright © 2017, 2019 Ivar Grimstad
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -37,12 +37,12 @@ public class DoubleConverter extends NumberConverter<Double> {
     @Override
     public ConverterResult<Double> convert(String value, Class<Double> rawType, Locale locale) {
 
+        Double defaultValue = Double.TYPE.equals(rawType) ? 0.0 : null;
         try {
 
-            return ConverterResult.success(parseNumber(value, locale).doubleValue());
+            return ConverterResult.success(parseNumber(value, locale).map(Number::doubleValue).orElse(defaultValue));
 
         } catch (ParseException e) {
-            Double defaultValue = Double.TYPE.equals(rawType) ? 0.0 : null;
             return ConverterResult.failed(defaultValue, e.getMessage());
         }
 

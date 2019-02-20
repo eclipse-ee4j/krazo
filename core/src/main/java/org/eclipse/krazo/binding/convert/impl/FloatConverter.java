@@ -1,5 +1,5 @@
 /*
- * Copyright © 2017, 2018 Ivar Grimstad
+ * Copyright © 2017, 2019 Ivar Grimstad
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -37,12 +37,12 @@ public class FloatConverter extends NumberConverter<Float> {
     @Override
     public ConverterResult<Float> convert(String value, Class<Float> rawType, Locale locale) {
 
+        Float defaultValue = Float.TYPE.equals(rawType) ? 0.0f : null;
         try {
 
-            return ConverterResult.success(parseNumber(value, locale).floatValue());
+            return ConverterResult.success(parseNumber(value, locale).map(Number::floatValue).orElse(defaultValue));
 
         } catch (ParseException e) {
-            Float defaultValue = Float.TYPE.equals(rawType) ? 0.0f : null;
             return ConverterResult.failed(defaultValue, e.getMessage());
         }
 
