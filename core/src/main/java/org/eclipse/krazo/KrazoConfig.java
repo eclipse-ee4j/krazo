@@ -59,7 +59,9 @@ public class KrazoConfig {
         }
 
         // default
-        return new SessionCsrfTokenStrategy.Builder().build();
+        return new SessionCsrfTokenStrategy.Builder()
+                .headerName(getCsrfHeaderName())
+                .build();
 
     }
 
@@ -69,6 +71,19 @@ public class KrazoConfig {
             return (String) value;
         }
         return null;
+    }
+
+    public String getCsrfHeaderName() {
+
+        // TODO: Replace with constant from Csrf class after updating spec dependency
+        Object value = config.getProperty("javax.mvc.security.CsrfHeaderName");
+        if (value != null) {
+            return value.toString();
+        }
+
+        // TODO: Replace with constant from Csrf class after updating spec dependency
+        return "X-CSRF-TOKEN";
+
     }
 
 }
