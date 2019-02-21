@@ -17,6 +17,8 @@
  */
 package org.eclipse.krazo.binding.convert;
 
+import org.eclipse.krazo.binding.convert.impl.BigDecimalConverter;
+import org.eclipse.krazo.binding.convert.impl.BigIntegerConverter;
 import org.eclipse.krazo.binding.convert.impl.BooleanConverter;
 import org.eclipse.krazo.binding.convert.impl.DoubleConverter;
 import org.eclipse.krazo.binding.convert.impl.FloatConverter;
@@ -45,6 +47,8 @@ public class ConverterRegistry {
         register(new LongConverter());
         register(new DoubleConverter());
         register(new FloatConverter());
+        register(new BigDecimalConverter());
+        register(new BigIntegerConverter());
         register(new BooleanConverter());
     }
 
