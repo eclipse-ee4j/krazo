@@ -1,5 +1,5 @@
 /*
- * Copyright © 2017, 2018 Ivar Grimstad
+ * Copyright © 2017, 2019 Ivar Grimstad
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -37,12 +37,12 @@ public class LongConverter extends NumberConverter<Long> {
     @Override
     public ConverterResult<Long> convert(String value, Class<Long> rawType, Locale locale) {
 
+        Long defaultValue = Long.TYPE.equals(rawType) ? 0L : null;
         try {
 
-            return ConverterResult.success(parseNumber(value, locale).longValue());
+            return ConverterResult.success(parseNumber(value, locale).map(Number::longValue).orElse(defaultValue));
 
         } catch (ParseException e) {
-            Long defaultValue = Long.TYPE.equals(rawType) ? 0L : null;
             return ConverterResult.failed(defaultValue, e.getMessage());
         }
 

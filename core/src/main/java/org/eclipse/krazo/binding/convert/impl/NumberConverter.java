@@ -1,5 +1,5 @@
 /*
- * Copyright © 2017, 2018 Ivar Grimstad
+ * Copyright © 2017, 2019 Ivar Grimstad
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,10 +23,11 @@ import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.ParsePosition;
 import java.util.Locale;
+import java.util.Optional;
 
 abstract class NumberConverter<T extends Number> implements MvcConverter<T> {
 
-    Number parseNumber(String value, Locale locale) throws ParseException {
+    Optional<Number> parseNumber(String value, Locale locale) throws ParseException {
 
         if (value != null && !value.trim().isEmpty()) {
 
@@ -39,10 +40,10 @@ abstract class NumberConverter<T extends Number> implements MvcConverter<T> {
                 throw new ParseException("Not a valid number: " + value.trim(), parsePosition.getIndex());
             }
 
-            return result;
+            return Optional.ofNullable(result);
 
         }
-        return null;
+        return Optional.empty();
 
     }
 }
