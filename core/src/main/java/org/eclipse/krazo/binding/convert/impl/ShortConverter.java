@@ -19,35 +19,31 @@ package org.eclipse.krazo.binding.convert.impl;
 
 import org.eclipse.krazo.binding.convert.ConverterResult;
 
-import java.math.BigInteger;
 import java.text.ParseException;
 import java.util.Locale;
 
 /**
- * Converter for double primitive or wrapper types.
+ * Converter for integer primitive or wrapper types.
  *
  * @author Christian Kaltepoth
  */
-public class BigIntegerConverter extends NumberConverter<BigInteger> {
+public class ShortConverter extends NumberConverter<Short> {
 
     @Override
-    public boolean supports(Class<BigInteger> rawType) {
-        return BigInteger.class.equals(rawType);
+    public boolean supports(Class<Short> rawType) {
+        return Short.class.equals(rawType) || Short.TYPE.equals(rawType);
     }
 
     @Override
-    public ConverterResult<BigInteger> convert(String value, Class<BigInteger> rawType, Locale locale) {
+    public ConverterResult<Short> convert(String value, Class<Short> rawType, Locale locale) {
 
+        Short defaultValue = Short.TYPE.equals(rawType) ? (short) 0 : null;
         try {
 
-            return ConverterResult.success(
-                    parseNumber(value, locale)
-                            .map(val -> new BigInteger(val.toString()))
-                            .orElse(null)
-            );
+            return ConverterResult.success(parseNumber(value, locale).map(Number::shortValue).orElse(defaultValue));
 
-        } catch (ParseException | NumberFormatException e) {
-            return ConverterResult.failed(null, e.getMessage());
+        } catch (ParseException e) {
+            return ConverterResult.failed(defaultValue, e.getMessage());
         }
 
     }
