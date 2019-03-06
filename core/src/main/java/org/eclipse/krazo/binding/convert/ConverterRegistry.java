@@ -1,5 +1,5 @@
 /*
- * Copyright © 2017, 2018 Ivar Grimstad
+ * Copyright © 2017, 2019 Ivar Grimstad
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,13 +17,7 @@
  */
 package org.eclipse.krazo.binding.convert;
 
-import org.eclipse.krazo.binding.convert.impl.BigDecimalConverter;
-import org.eclipse.krazo.binding.convert.impl.BigIntegerConverter;
-import org.eclipse.krazo.binding.convert.impl.BooleanConverter;
-import org.eclipse.krazo.binding.convert.impl.DoubleConverter;
-import org.eclipse.krazo.binding.convert.impl.FloatConverter;
-import org.eclipse.krazo.binding.convert.impl.IntegerConverter;
-import org.eclipse.krazo.binding.convert.impl.LongConverter;
+import org.eclipse.krazo.binding.convert.impl.*;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
@@ -43,6 +37,7 @@ public class ConverterRegistry {
 
     @PostConstruct
     public void init() {
+        register(new ShortConverter());
         register(new IntegerConverter());
         register(new LongConverter());
         register(new DoubleConverter());
