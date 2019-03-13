@@ -32,7 +32,7 @@
     <name>Eclipse Krazo CXF</name>
 
     <properties>
-        <cxf.version>3.1.15</cxf.version>
+        <cxf.version>3.3.1</cxf.version>
     </properties>
 
     <build>
