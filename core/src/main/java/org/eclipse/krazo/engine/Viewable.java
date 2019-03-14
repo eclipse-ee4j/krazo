@@ -136,4 +136,9 @@ public class Viewable {
     public void setViewEngine(Class<? extends ViewEngine> viewEngine) {
         this.viewEngine = viewEngine;
     }
+
+    @Override
+    public String toString() {
+        return view;
+    }
 }
