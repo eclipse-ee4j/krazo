@@ -31,10 +31,23 @@ elif [ "${1}" == "glassfish-module" ]; then
   mvn -Pintegration -Dintegration.serverPort=8080 verify
   glassfish5/bin/asadmin stop-domain
 
-elif [ "${1}" == "tck-glassfish" ]; then
+elif [ "${1}" == "tck-glassfish-vanilla" ]; then
 
   curl -L -s -o glassfish5.zip "${GLASSFISH_URL}"
   unzip -q glassfish5.zip
+  mvn -B -V -DskipTests clean install
+  glassfish5/bin/asadmin start-domain
+  sleep 30
+  pushd tck
+  mvn -B -V -Dtck-env=glassfish verify
+  popd
+  glassfish5/bin/asadmin stop-domain
+
+elif [ "${1}" == "tck-glassfish-patched" ]; then
+
+  curl -L -s -o glassfish5.zip "${GLASSFISH_URL}"
+  unzip -q glassfish5.zip
+  curl -L -s -o glassfish5/glassfish/modules/jersey-cdi1x.jar "https://www.dropbox.com/s/wc2ukjns388lwir/jersey-cdi1x-2.28-fix1.jar"
   mvn -B -V -DskipTests clean install
   glassfish5/bin/asadmin start-domain
   sleep 30
