@@ -45,7 +45,9 @@ public class BooleanConverterTest {
                 new Object[]{"false", false, false},
                 new Object[]{"off", false, false},
                 new Object[]{"null", false, false},
-                new Object[]{"baz", false, false}
+                new Object[]{"baz", false, false},
+                new Object[]{"", null, false},
+                new Object[]{null, null, false}
             );
         }
     }
