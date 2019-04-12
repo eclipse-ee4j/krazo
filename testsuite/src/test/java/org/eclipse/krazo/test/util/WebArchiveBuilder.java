@@ -69,6 +69,11 @@ public class WebArchiveBuilder {
         return this;
     }
 
+    public WebArchiveBuilder addResource(File file) {
+        archive.addAsResource(file);
+        return this;
+    }
+
     public WebArchive build() {
         PomEquippedResolveStage stage = Maven.configureResolver().workOffline()
             .withClassPathResolution(true)
