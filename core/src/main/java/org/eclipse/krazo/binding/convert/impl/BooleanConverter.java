@@ -37,8 +37,13 @@ public class BooleanConverter implements MvcConverter<Boolean> {
     @Override
     public ConverterResult<Boolean> convert(String value, Class<Boolean> rawType, Locale locale) {
 
+        Boolean defaultValue = Boolean.TYPE.equals(rawType) ? false : null;
+
         String normalized = value != null ? value.trim().toLowerCase() : "";
-        return ConverterResult.success("on".equals(normalized) || "true".equals(normalized));
+
+        return "".equals(normalized)
+                ? ConverterResult.success(defaultValue)
+                : ConverterResult.success("on".equals(normalized) || "true".equals(normalized));
 
     }
 }
