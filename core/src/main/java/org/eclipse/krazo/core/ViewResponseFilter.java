@@ -18,7 +18,6 @@
 package org.eclipse.krazo.core;
 
 import org.eclipse.krazo.KrazoConfig;
-import org.eclipse.krazo.event.AfterControllerEventImpl;
 import org.eclipse.krazo.event.ControllerRedirectEventImpl;
 
 import javax.annotation.Priority;
@@ -27,7 +26,6 @@ import javax.inject.Inject;
 import org.eclipse.krazo.engine.Viewable;
 import javax.mvc.Controller;
 import javax.mvc.View;
-import javax.mvc.event.AfterControllerEvent;
 import javax.mvc.event.ControllerRedirectEvent;
 import javax.mvc.event.MvcEvent;
 import javax.servlet.http.HttpServletRequest;
@@ -82,6 +80,8 @@ import static org.eclipse.krazo.util.PathUtils.*;
 @Priority(Priorities.ENTITY_CODER)
 public class ViewResponseFilter implements ContainerResponseFilter {
 
+    private static final String FILTER_EXECUTED_KEY = ViewResponseFilter.class.getName() + ".EXECUTED";
+    
     private static final String REDIRECT = "redirect:";
 
     @Context
@@ -106,6 +106,14 @@ public class ViewResponseFilter implements ContainerResponseFilter {
     public void filter(ContainerRequestContext requestContext,
                        ContainerResponseContext responseContext) throws IOException {
 
+        // For some reason Jersey 2.28 executes our filter twice, resulting in weird side effects.
+        // Therefore, we ensure that our filter is executed only once for each request.
+        if (request.getAttribute(FILTER_EXECUTED_KEY) != null) {
+            return;
+        } else {
+            request.setAttribute(FILTER_EXECUTED_KEY, true);
+        }
+        
         final Method method = resourceInfo.getResourceMethod();
         final Class<?> returnType = method.getReturnType();
 
