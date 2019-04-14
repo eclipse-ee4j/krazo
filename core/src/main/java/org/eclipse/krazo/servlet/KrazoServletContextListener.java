@@ -1,5 +1,5 @@
 /*
- * Copyright © 2017, 2018 Ivar Grimstad
+ * Copyright © 2017, 2019 Ivar Grimstad
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -73,8 +73,9 @@ public class KrazoServletContextListener implements ServletContextListener {
     private void failIfNoCdiBean(Class<?> controllerClass) {
         Set<Bean<?>> controllerBeans = beanManager.getBeans(controllerClass);
         if (controllerBeans == null || controllerBeans.isEmpty()) {
-            String message = String.format("The controller %s is not a managed CDI bean. Maybe the controller class is " +
-                    "missing a scope annotation (e.g. @RequestScoped).", controllerClass.getName());
+            String message = String.format("The controller %s is not a managed CDI bean. If CDI bean discovery mode " +
+                    "in not set to \"all\" in beans.xml, then controller classes need a scope annotation " +
+                    "(e.g. @RequestScoped).", controllerClass.getName());
             throw new IllegalArgumentException(message);
         }
     }
