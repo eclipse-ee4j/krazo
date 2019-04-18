@@ -43,7 +43,6 @@ jobs:
       script: .travis/tests.sh ${TYPE}
   allow_failures:
     - env: TYPE=tck-glassfish51-vanilla
-    - env: TYPE=tck-glassfish51-patched
     - env: TYPE=tck-wildfly16-vanilla
     - env: TYPE=tck-wildfly16-patched
     - env: TYPE=tck-tomee
