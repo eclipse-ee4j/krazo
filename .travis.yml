@@ -30,7 +30,10 @@ jobs:
       env: TYPE=tck-glassfish-patched
       script: .travis/tests.sh ${TYPE}
     - stage: test
-      env: TYPE=tck-wildfly
+      env: TYPE=tck-wildfly16-vanilla
+      script: .travis/tests.sh ${TYPE}
+    - stage: test
+      env: TYPE=tck-wildfly16-patched
       script: .travis/tests.sh ${TYPE}
     - stage: test
       env: TYPE=tck-tomee
@@ -41,7 +44,8 @@ jobs:
   allow_failures:
     - env: TYPE=tck-glassfish-vanilla
     - env: TYPE=tck-glassfish-patched
-    - env: TYPE=tck-wildfly
+    - env: TYPE=tck-wildfly16-vanilla
+    - env: TYPE=tck-wildfly16-patched
     - env: TYPE=tck-tomee
     - env: TYPE=tck-liberty
     - env: TYPE=glassfish-module
