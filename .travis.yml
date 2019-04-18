@@ -24,10 +24,10 @@ jobs:
       before_script: .travis/docker-payara.sh
       script: mvn -P${TYPE} --projects testsuite clean verify
     - stage: test
-      env: TYPE=tck-glassfish-vanilla
+      env: TYPE=tck-glassfish51-vanilla
       script: .travis/tests.sh ${TYPE}
     - stage: test
-      env: TYPE=tck-glassfish-patched
+      env: TYPE=tck-glassfish51-patched
       script: .travis/tests.sh ${TYPE}
     - stage: test
       env: TYPE=tck-wildfly16-vanilla
@@ -42,8 +42,7 @@ jobs:
       env: TYPE=tck-liberty
       script: .travis/tests.sh ${TYPE}
   allow_failures:
-    - env: TYPE=tck-glassfish-vanilla
-    - env: TYPE=tck-glassfish-patched
+    - env: TYPE=tck-glassfish51-vanilla
     - env: TYPE=tck-wildfly16-vanilla
     - env: TYPE=tck-wildfly16-patched
     - env: TYPE=tck-tomee
