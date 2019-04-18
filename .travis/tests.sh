@@ -41,6 +41,8 @@ elif [[ ${1} == tck-glassfish51-* ]]; then
     echo "Patching Glassfish..."
     curl -L -s -o glassfish5/glassfish/modules/jersey-cdi1x.jar \
       "https://www.dropbox.com/s/wc2ukjns388lwir/jersey-cdi1x-2.28-fix1.jar"
+    curl -L -s -o glassfish5/glassfish/modules/jersey-common.jar \
+      "https://www.dropbox.com/s/qgms27wxlpxw74x/jersey-common-2.28-fix1.jar"
   fi
 
   echo "Building Krazo..."
