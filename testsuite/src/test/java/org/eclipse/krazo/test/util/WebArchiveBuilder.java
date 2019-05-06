@@ -75,7 +75,7 @@ public class WebArchiveBuilder {
     }
 
     public WebArchive build() {
-        PomEquippedResolveStage stage = Maven.configureResolver().workOffline()
+        PomEquippedResolveStage stage = Maven.configureResolver()
             .withClassPathResolution(true)
             .loadPomFromFile("pom.xml", System.getProperty("testsuite.profile", ""))
             .importCompileAndRuntimeDependencies();
