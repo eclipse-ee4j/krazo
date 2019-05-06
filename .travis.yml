@@ -47,4 +47,5 @@ jobs:
     - env: TYPE=tck-wildfly16-patched
     - env: TYPE=tck-tomee
     - env: TYPE=tck-liberty
+    - env: TYPE=testsuite-wildfly
     - env: TYPE=glassfish-module
