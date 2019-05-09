@@ -70,6 +70,9 @@ elif [[ ${1} == tck-wildfly16-* ]]; then
     echo "Patching Wildfly..."
     curl -L -s -o ./wildfly-16.0.0.Final/modules/system/layers/base/org/jboss/weld/core/main/weld-core-impl-3.1.0.Final.jar \
       "https://www.dropbox.com/s/5vm35kkkyuapcqs/weld-core-impl-3.1.0.Final-fix1.jar"
+    # https://issues.jboss.org/browse/RESTEASY-2222
+    curl -L -s -o ./wildfly-16.0.0.Final/modules/system/layers/base/org/jboss/resteasy/resteasy-jaxrs/main/resteasy-jaxrs-3.6.3.Final.jar \
+      "https://www.dropbox.com/s/erlrvci9950mpkp/resteasy-jaxrs-3.6.3.Final-fix1.jar"
   fi
 
   echo "Building Krazo..."

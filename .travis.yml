@@ -44,7 +44,6 @@ jobs:
   allow_failures:
     - env: TYPE=tck-glassfish51-vanilla
     - env: TYPE=tck-wildfly16-vanilla
-    - env: TYPE=tck-wildfly16-patched
     - env: TYPE=tck-tomee
     - env: TYPE=tck-liberty
     - env: TYPE=glassfish-module
