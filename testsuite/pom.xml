@@ -70,6 +70,61 @@
                 <artifactId>krazo-thymeleaf</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.eclipse.krazo.ext</groupId>
+                <artifactId>krazo-velocity</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.eclipse.krazo.ext</groupId>
+                <artifactId>krazo-freemarker</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.eclipse.krazo.ext</groupId>
+                <artifactId>krazo-handlebars</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.eclipse.krazo.ext</groupId>
+                <artifactId>krazo-mustache</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.eclipse.krazo.ext</groupId>
+                <artifactId>krazo-asciidoc</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.eclipse.krazo.ext</groupId>
+                <artifactId>krazo-pebble</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.eclipse.krazo.ext</groupId>
+                <artifactId>krazo-jade</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.eclipse.krazo.ext</groupId>
+                <artifactId>krazo-jtwig</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.eclipse.krazo.ext</groupId>
+                <artifactId>krazo-jsr223</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.eclipse.krazo.ext</groupId>
+                <artifactId>krazo-jetbrick</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.eclipse.krazo.ext</groupId>
+                <artifactId>krazo-stringtemplate</artifactId>
+                <version>${project.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -135,6 +190,13 @@
             <artifactId>htmlunit</artifactId>
             <version>2.32</version>
             <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>de.neuland-bfi</groupId>
+            <artifactId>jade4j</artifactId>
+            <version>1.2.7</version>
+            <optional>true</optional>
         </dependency>
     </dependencies>
 

@@ -55,7 +55,6 @@
     <modules>
         <module>annotations</module>
         <module>application-path</module>
-        <module>asciidoc</module>
         <module>book-cdi</module>
         <module>book-models</module>
         <module>conversation</module>
@@ -64,27 +63,17 @@
         <module>events</module>
         <module>exceptions</module>
         <module>facelets</module>
-        <module>freemarker</module>
-        <module>handlebars</module>
-        <module>jade</module>
-        <module>jsr223</module>
         <module>locale</module>
-        <module>mustache</module>
         <module>produces</module>
         <module>redirect</module>
         <module>redirectScope</module>
         <module>redirectScope2</module>
         <module>requestDispatcher</module>
         <module>returns</module>
-        <module>stringtemplate</module>
         <module>validation</module>
         <module>validation-i18n</module>
-        <module>velocity</module>
         <module>view-annotation</module>
-        <module>pebble</module>
         <module>uri-builder</module>
-        <module>jetbrick</module>
-        <module>jtwig</module>
     </modules>
     <profiles>
         <profile>
