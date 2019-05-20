@@ -36,6 +36,9 @@ jobs:
       env: TYPE=tck-wildfly16-patched
       script: .travis/tests.sh ${TYPE}
     - stage: test
+      env: TYPE=tck-wildfly17
+      script: .travis/tests.sh ${TYPE}
+    - stage: test
       env: TYPE=tck-tomee
       script: .travis/tests.sh ${TYPE}
     - stage: test

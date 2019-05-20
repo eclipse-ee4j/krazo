@@ -90,6 +90,28 @@ elif [[ ${1} == tck-wildfly16-* ]]; then
   echo "Stopping Wildfly..."
   kill $(cat wildfly.pid)
 
+elif [[ ${1} == tck-wildfly17* ]]; then
+
+  echo "Downloading Wildfly..."
+  curl -L -s -o wildfly17.zip "https://ci.wildfly.org/guestAuth/repository/download/WF_Nightly/latest.lastFinished/wildfly-17.0.0.Beta1-SNAPSHOT.zip"
+  unzip wildfly17.zip
+  mv wildfly-17.0.0.Beta1-SNAPSHOT wildfly
+
+  echo "Building Krazo..."
+  mvn -B -V -DskipTests clean install
+
+  echo "Starting Wildfly..."
+  LAUNCH_JBOSS_IN_BACKGROUND=1 JBOSS_PIDFILE=wildfly.pid ./wildfly/bin/standalone.sh > wildfly.log 2>&1 &
+  sleep 30
+
+  echo "Running TCK..."
+  pushd tck
+  mvn -B -V -Dtck-env=wildfly verify
+  popd
+
+  echo "Stopping Wildfly..."
+  kill $(cat wildfly.pid)
+
 elif [ "${1}" == "tck-tomee" ]; then
 
   mvn -B -V -DskipTests clean install
