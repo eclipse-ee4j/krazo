@@ -188,6 +188,19 @@
                     </configuration>
                 </plugin>
 
+                <plugin>
+                    <groupId>org.owasp</groupId>
+                    <artifactId>dependency-check-maven</artifactId>
+                    <version>5.0.0</version>
+                    <configuration>
+                        <!-- Some dependencies ship dlls for native bindings.
+                        This avoids warnings about dotnet not being installed -->
+                        <assemblyAnalyzerEnabled>false</assemblyAnalyzerEnabled>
+                        <!-- skip dependencies provided by the application servers -->
+                        <skipProvidedScope>true</skipProvidedScope>
+                    </configuration>
+                </plugin>
+
             </plugins>
         </pluginManagement>
 
