@@ -204,7 +204,6 @@
                             <exclude>org.jboss.shrinkwrap.resolver:*</exclude>
                         </excludes>
                         <suppressionFile>dependency-check-suppressions.xml</suppressionFile>
-                        <failBuildOnAnyVulnerability>true</failBuildOnAnyVulnerability>
                     </configuration>
                 </plugin>
 
