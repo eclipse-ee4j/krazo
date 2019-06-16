@@ -198,6 +198,12 @@
                         <assemblyAnalyzerEnabled>false</assemblyAnalyzerEnabled>
                         <!-- skip dependencies provided by the application servers -->
                         <skipProvidedScope>true</skipProvidedScope>
+                        <excludes>
+                            <!-- Shrinkwrap includes a lot of the dependencies and some of them are quiet old.
+                            We don't ship it, but only use it in the tck. So we won't report those libs as vulnerable -->
+                            <exclude>org.jboss.shrinkwrap.resolver:*</exclude>
+                        </excludes>
+                        <suppressionFile>dependency-check-suppressions.xml</suppressionFile>
                     </configuration>
                 </plugin>
 

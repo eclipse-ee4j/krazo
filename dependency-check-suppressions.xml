@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suppressions xmlns="https://jeremylong.github.io/DependencyCheck/dependency-suppression.1.2.xsd">
+    <suppress>
+        <notes><![CDATA[
+            file name: dirgra-0.3.jar
+
+            This file gets detected as jruby v0.3 due to a bad pattern reported
+            in some older CVEs (listed below)
+        ]]>
+        </notes>
+        <gav regex="true">^org\.jruby:dirgra:.*$</gav>
+        <cve>CVE-2010-1330</cve>
+        <cve>CVE-2011-4838</cve>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[
+            file name: jruby-stdlib-9.2.7.0.jar: jquery.js
+
+            JRuby ships a pretty old version of jquery in some dependency for Rdoc.
+            We don't generate any rdoc, so we should be fine.
+        ]]>
+        </notes>
+        <sha1>71cce71820cc47b3bd1098618d248325fcf24ddb</sha1>
+        <cve>CVE-2012-6708</cve>
+        <cve>CVE-2015-9251</cve>
+        <cve>CVE-2019-11358</cve>
+    </suppress>
+</suppressions>
