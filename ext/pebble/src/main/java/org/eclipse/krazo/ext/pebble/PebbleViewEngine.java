@@ -1,5 +1,5 @@
 /*
- * Copyright © 2017, 2018 Ivar Grimstad
+ * Copyright © 2017, 2019 Ivar Grimstad
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -45,34 +45,39 @@ import org.eclipse.krazo.engine.ViewEngineConfig;
 @Priority(ViewEngine.PRIORITY_FRAMEWORK)
 public class PebbleViewEngine extends ViewEngineBase {
 
-  private PebbleEngine pebbleEngine;
+    private PebbleEngine pebbleEngine;
 
-  @Inject
-  public PebbleViewEngine(@ViewEngineConfig PebbleEngine pebbleEngine) {
-    this.pebbleEngine = pebbleEngine;
-  }
-
-  @Override
-  public boolean supports(String view) {
-    return view.endsWith(".peb");
-  }
-
-  @Override
-  public void processView(ViewEngineContext context) throws ViewEngineException {
-
-    Charset charset = resolveCharsetAndSetContentType(context);
-    
-    try(Writer writer = new OutputStreamWriter(context.getOutputStream(), charset)) {
-
-      PebbleTemplate template = pebbleEngine.getTemplate(resolveView(context));
-      
-      Map<String, Object> model = new HashMap<>(context.getModels().asMap());
-      model.put("request", context.getRequest(HttpServletRequest.class));
-      
-      template.evaluate(writer, model);
-      
-    } catch (PebbleException | IOException ex) {
-      throw new ViewEngineException(String.format("Could not process view %s.", context.getView()), ex);
+    @SuppressWarnings("unused")
+    protected PebbleViewEngine() {
+        // needs a default constructor to make it proxyable
     }
-  }
+
+    @Inject
+    public PebbleViewEngine(@ViewEngineConfig PebbleEngine pebbleEngine) {
+        this.pebbleEngine = pebbleEngine;
+    }
+
+    @Override
+    public boolean supports(String view) {
+        return view.endsWith(".peb");
+    }
+
+    @Override
+    public void processView(ViewEngineContext context) throws ViewEngineException {
+
+        Charset charset = resolveCharsetAndSetContentType(context);
+
+        try (Writer writer = new OutputStreamWriter(context.getOutputStream(), charset)) {
+
+            PebbleTemplate template = pebbleEngine.getTemplate(resolveView(context));
+
+            Map<String, Object> model = new HashMap<>(context.getModels().asMap());
+            model.put("request", context.getRequest(HttpServletRequest.class));
+
+            template.evaluate(writer, model);
+
+        } catch (PebbleException | IOException ex) {
+            throw new ViewEngineException(String.format("Could not process view %s.", context.getView()), ex);
+        }
+    }
 }
