@@ -60,36 +60,6 @@ elif [[ ${1} == tck-glassfish51-* ]]; then
   echo "Stopping Glassfish..."
   glassfish5/bin/asadmin stop-domain
 
-elif [[ ${1} == tck-wildfly16-* ]]; then
-
-  echo "Downloading Wildfly..."
-  curl -L -s -o wildfly.tgz "${WILDFLY_URL}"
-  tar -xzf wildfly.tgz
-
-  if [[ ${1} == *-patched ]]; then
-    echo "Patching Wildfly..."
-    curl -L -s -o ./wildfly-16.0.0.Final/modules/system/layers/base/org/jboss/weld/core/main/weld-core-impl-3.1.0.Final.jar \
-      "https://www.dropbox.com/s/5vm35kkkyuapcqs/weld-core-impl-3.1.0.Final-fix1.jar"
-    # https://issues.jboss.org/browse/RESTEASY-2222
-    curl -L -s -o ./wildfly-16.0.0.Final/modules/system/layers/base/org/jboss/resteasy/resteasy-jaxrs/main/resteasy-jaxrs-3.6.3.Final.jar \
-      "https://www.dropbox.com/s/erlrvci9950mpkp/resteasy-jaxrs-3.6.3.Final-fix1.jar"
-  fi
-
-  echo "Building Krazo..."
-  mvn -B -V -DskipTests clean install
-
-  echo "Starting Wildfly..."
-  LAUNCH_JBOSS_IN_BACKGROUND=1 JBOSS_PIDFILE=wildfly.pid ./wildfly-16.0.0.Final/bin/standalone.sh > wildfly.log 2>&1 &
-  sleep 30
-
-  echo "Running TCK..."
-  pushd tck
-  mvn -B -V -Dtck-env=wildfly verify
-  popd
-
-  echo "Stopping Wildfly..."
-  kill $(cat wildfly.pid)
-
 elif [[ ${1} == tck-wildfly17* ]]; then
 
   echo "Downloading Wildfly..."
