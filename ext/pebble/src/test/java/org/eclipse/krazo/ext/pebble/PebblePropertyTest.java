@@ -1,5 +1,5 @@
 /*
- * Copyright © 2017, 2018 Ivar Grimstad
+ * Copyright © 2017, 2019 Ivar Grimstad
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,34 +17,35 @@
  */
 package org.eclipse.krazo.ext.pebble;
 
+import org.junit.Test;
+
 import java.util.stream.Stream;
 
 import static org.junit.Assert.*;
-import org.junit.Test;
 
 public class PebblePropertyTest {
 
-  @Test
-  public void propertyKeyShouldStartWithGroupPrefix() {
-    final String groupPrefix = "org.eclipse.krazo.ext.pebble.";
+    @Test
+    public void propertyKeyShouldStartWithGroupPrefix() {
+        final String groupPrefix = "org.eclipse.krazo.ext.pebble.";
 
-    Stream.of(PebbleProperty.values()).forEach(property -> {
-      assertTrue(property.key().startsWith(groupPrefix));
-    });
-  }
+        Stream.of(PebbleProperty.values()).forEach(property -> {
+            assertTrue(property.key().startsWith(groupPrefix));
+        });
+    }
 
-  @Test
-  public void shouldResolvePebblePropertyFromStringKey() {
-    Stream.of(PebbleProperty.values()).forEach(property -> {
-      assertEquals(property, PebbleProperty.fromKey(property.key()));
-    });
-  }
+    @Test
+    public void shouldResolvePebblePropertyFromStringKey() {
+        Stream.of(PebbleProperty.values()).forEach(property -> {
+            assertEquals(property, PebbleProperty.fromKey(property.key()));
+        });
+    }
 
-  @Test
-  public void shouldReturnSystemPropertyValueAsOptional() {
-    System.setProperty(PebbleProperty.STRICT_VARIABLES.key(), "false");
+    @Test
+    public void shouldReturnSystemPropertyValueAsOptional() {
+        System.setProperty(PebbleProperty.STRICT_VARIABLES.key(), "false");
 
-    assertEquals("false", PebbleProperty.STRICT_VARIABLES.systemPropertyValue().get());
-    assertFalse(PebbleProperty.NEW_LINE_TRIMMING.systemPropertyValue().isPresent());
-  }
+        assertEquals("false", PebbleProperty.STRICT_VARIABLES.systemPropertyValue().get());
+        assertFalse(PebbleProperty.NEW_LINE_TRIMMING.systemPropertyValue().isPresent());
+    }
 }

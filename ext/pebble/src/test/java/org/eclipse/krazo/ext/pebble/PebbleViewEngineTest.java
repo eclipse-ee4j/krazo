@@ -1,5 +1,5 @@
 /*
- * Copyright © 2017, 2018 Ivar Grimstad
+ * Copyright © 2017, 2019 Ivar Grimstad
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,16 +17,18 @@
  */
 package org.eclipse.krazo.ext.pebble;
 
-import static org.junit.Assert.*;
 import org.junit.Test;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class PebbleViewEngineTest {
 
-  @Test
-  public void shouldSupportOnlyFilesWithExtensionPeb() {
-    PebbleViewEngine engine = new PebbleViewEngine(null);
+    @Test
+    public void shouldSupportOnlyFilesWithExtensionPeb() {
+        PebbleViewEngine engine = new PebbleViewEngine(null);
 
-    assertTrue(engine.supports("view.peb"));
-    assertFalse(engine.supports("view.txt"));
-  }
+        assertTrue(engine.supports("view.peb"));
+        assertFalse(engine.supports("view.txt"));
+    }
 }

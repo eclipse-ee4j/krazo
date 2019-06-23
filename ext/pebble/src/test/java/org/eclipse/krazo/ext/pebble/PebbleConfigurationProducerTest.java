@@ -1,5 +1,5 @@
 /*
- * Copyright © 2017, 2018 Ivar Grimstad
+ * Copyright © 2017, 2019 Ivar Grimstad
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,53 +17,54 @@
  */
 package org.eclipse.krazo.ext.pebble;
 
-import java.util.Properties;
-
-import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Properties;
+
+import static org.junit.Assert.*;
+
 public class PebbleConfigurationProducerTest {
 
-  PebbleConfigurationProducer pebbleConfigurationProducer;
+    PebbleConfigurationProducer pebbleConfigurationProducer;
 
-  @Before
-  public void setup() {
-    pebbleConfigurationProducer = new PebbleConfigurationProducer();
-    System.clearProperty(PebbleProperty.AUTO_ESCAPING.key());
-  }
+    @Before
+    public void setup() {
+        pebbleConfigurationProducer = new PebbleConfigurationProducer();
+        System.clearProperty(PebbleProperty.AUTO_ESCAPING.key());
+    }
 
-  @Test
-  public void shouldReturnEmptyPropertiesForNonExistingPropertiesFile() {
-    Properties pebbleConfiguration = pebbleConfigurationProducer.loadFromFile("unexisting.properties");
+    @Test
+    public void shouldReturnEmptyPropertiesForNonExistingPropertiesFile() {
+        Properties pebbleConfiguration = pebbleConfigurationProducer.loadFromFile("unexisting.properties");
 
-    assertNotNull(pebbleConfiguration);
-    assertTrue(pebbleConfiguration.isEmpty());
-  }
+        assertNotNull(pebbleConfiguration);
+        assertTrue(pebbleConfiguration.isEmpty());
+    }
 
-  @Test
-  public void shouldLoadPebbleConfigurationPropertiesFromFile() {
-    Properties pebbleConfiguration = pebbleConfigurationProducer.loadFromFile("pebble.properties");
+    @Test
+    public void shouldLoadPebbleConfigurationPropertiesFromFile() {
+        Properties pebbleConfiguration = pebbleConfigurationProducer.loadFromFile("pebble.properties");
 
-    assertNotNull(pebbleConfiguration);
-    assertEquals(pebbleConfiguration.getProperty("org.eclipse.krazo.ext.pebble.autoEscaping"), "true");
-  }
+        assertNotNull(pebbleConfiguration);
+        assertEquals(pebbleConfiguration.getProperty("org.eclipse.krazo.ext.pebble.autoEscaping"), "true");
+    }
 
-  @Test
-  public void shouldReturnPebbleConfiguration() {
-    Properties pebbleConfiguration = pebbleConfigurationProducer.pebbleConfiguration();
+    @Test
+    public void shouldReturnPebbleConfiguration() {
+        Properties pebbleConfiguration = pebbleConfigurationProducer.pebbleConfiguration();
 
-    assertNotNull(pebbleConfiguration);
-    assertEquals(pebbleConfiguration.getProperty("org.eclipse.krazo.ext.pebble.autoEscaping"), "true");
-  }
+        assertNotNull(pebbleConfiguration);
+        assertEquals(pebbleConfiguration.getProperty("org.eclipse.krazo.ext.pebble.autoEscaping"), "true");
+    }
 
-  @Test
-  public void systemPropertyShouldHaveHigherPriorityThanTheOneFromPropertyFile() {
-    System.setProperty(PebbleProperty.AUTO_ESCAPING.key(), "false-override");
+    @Test
+    public void systemPropertyShouldHaveHigherPriorityThanTheOneFromPropertyFile() {
+        System.setProperty(PebbleProperty.AUTO_ESCAPING.key(), "false-override");
 
-    Properties pebbleConfiguration = pebbleConfigurationProducer.pebbleConfiguration();
+        Properties pebbleConfiguration = pebbleConfigurationProducer.pebbleConfiguration();
 
-    assertNotNull(pebbleConfiguration);
-    assertEquals(pebbleConfiguration.getProperty(PebbleProperty.AUTO_ESCAPING.key()), "false-override");
-  }
+        assertNotNull(pebbleConfiguration);
+        assertEquals(pebbleConfiguration.getProperty(PebbleProperty.AUTO_ESCAPING.key()), "false-override");
+    }
 }
