@@ -44,6 +44,8 @@ import org.eclipse.krazo.util.ServiceLoaders;
  *
  * <p>
  * Example:
+ * </p>
+ *
  * <pre>
  * {@code
  *    <form action="/example" method="post">
@@ -52,7 +54,6 @@ import org.eclipse.krazo.util.ServiceLoaders;
  *    </form>
  * }
  * </pre>
- * </p>
  *
  * @author Tobias Erdle
  */
