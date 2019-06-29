@@ -2,7 +2,7 @@
 
 set -eu
 
-TOMEE_VERSION=8-jre-7.1.0-plus
+TOMEE_VERSION=11-jre-8.0.0-M3-plus
 
 docker pull tomee:${TOMEE_VERSION}
 docker run --name=tomee -d \
