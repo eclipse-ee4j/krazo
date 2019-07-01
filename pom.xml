@@ -204,7 +204,10 @@
                             <exclude>org.jboss.shrinkwrap.resolver:*</exclude>
                         </excludes>
                         <suppressionFile>dependency-check-suppressions.xml</suppressionFile>
-                        <failBuildOnAnyVulnerability>true</failBuildOnAnyVulnerability>
+                        <!-- We allow the build to pass with vulnerabilities below HIGH or MEDIUM.
+                        We should lower this value to MEDIUM (4) once all issues in upstream libraries
+                        (especially from the ext-package) have been resolved. -->
+                        <failBuildOnCVSS>7</failBuildOnCVSS>
                     </configuration>
                 </plugin>
 
