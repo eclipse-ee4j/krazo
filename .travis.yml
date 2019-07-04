@@ -24,6 +24,10 @@ jobs:
       before_script: .travis/docker-payara.sh
       script: mvn -P${TYPE} --projects testsuite clean verify
     - stage: test
+      env: TYPE=testsuite-tomee
+      before_script: .travis/docker-tomee.sh
+      script: mvn -P${TYPE} --projects testsuite clean verify
+    - stage: test
       env: TYPE=tck-glassfish51-vanilla
       script: .travis/tests.sh ${TYPE}
     - stage: test
@@ -43,4 +47,5 @@ jobs:
     - env: TYPE=tck-tomee
     - env: TYPE=tck-liberty
     - env: TYPE=testsuite-wildfly
+    - env: TYPE=testsuite-tomee
     - env: TYPE=glassfish-module
