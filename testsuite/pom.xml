@@ -313,9 +313,6 @@
                             <systemProperties>
                                 <arquillian.launch>payara</arquillian.launch>
                                 <testsuite.profile>testsuite-payara</testsuite.profile>
-                                <javax.net.ssl.trustStore>src/test/resources/payara-truststore.jks
-                                </javax.net.ssl.trustStore>
-                                <javax.net.ssl.trustStorePassword>changeit</javax.net.ssl.trustStorePassword>
                             </systemProperties>
                         </configuration>
                     </plugin>
