@@ -28,9 +28,6 @@ jobs:
       before_script: .travis/docker-tomee.sh
       script: mvn -P${TYPE} --projects testsuite clean verify
     - stage: test
-      env: TYPE=tck-glassfish51-vanilla
-      script: .travis/tests.sh ${TYPE}
-    - stage: test
       env: TYPE=tck-glassfish51-patched
       script: .travis/tests.sh ${TYPE}
     - stage: test
@@ -43,7 +40,6 @@ jobs:
       env: TYPE=tck-liberty
       script: .travis/tests.sh ${TYPE}
   allow_failures:
-    - env: TYPE=tck-glassfish51-vanilla
     - env: TYPE=tck-tomee
     - env: TYPE=tck-liberty
     - env: TYPE=testsuite-wildfly
