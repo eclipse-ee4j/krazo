@@ -1,5 +1,5 @@
 /*
- * Copyright © 2017, 2018 Ivar Grimstad
+ * Copyright © 2017, 2019 Ivar Grimstad
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,41 +17,41 @@
  */
 package org.eclipse.krazo.ext.pebble;
 
+import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.inject.Produces;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Objects;
 import java.util.Properties;
 import java.util.stream.Stream;
-import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.inject.Produces;
 
 @ApplicationScoped
 public class PebbleConfigurationProducer {
 
-  @Produces
-  public Properties pebbleConfiguration() {
-    Properties pebbleProperties = loadFromFile("pebble.properties");
+    @Produces
+    public Properties pebbleConfiguration() {
+        Properties pebbleProperties = loadFromFile("pebble.properties");
 
-    Stream.of(PebbleProperty.values())
-        .forEach(property
-            -> property.systemPropertyValue().ifPresent(value -> pebbleProperties.put(property.key(), value))
-        );
+        Stream.of(PebbleProperty.values())
+            .forEach(property
+                -> property.systemPropertyValue().ifPresent(value -> pebbleProperties.put(property.key(), value))
+            );
 
-    return pebbleProperties;
-  }
-
-  public Properties loadFromFile(String fileName) {
-    Properties props = new Properties();
-
-    try (InputStream config = Thread.currentThread().getContextClassLoader().getResourceAsStream(fileName)) {
-      if (Objects.nonNull(config)) {
-        props.load(config);
-      }
-    } catch (IOException e) {
-      // ignore exception
+        return pebbleProperties;
     }
 
-    return props;
-  }
+    public Properties loadFromFile(String fileName) {
+        Properties props = new Properties();
+
+        try (InputStream config = Thread.currentThread().getContextClassLoader().getResourceAsStream(fileName)) {
+            if (Objects.nonNull(config)) {
+                props.load(config);
+            }
+        } catch (IOException e) {
+            // ignore exception
+        }
+
+        return props;
+    }
 
 }

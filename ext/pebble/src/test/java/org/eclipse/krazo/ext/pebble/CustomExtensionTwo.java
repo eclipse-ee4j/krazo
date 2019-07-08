@@ -1,5 +1,5 @@
 /*
- * Copyright © 2017, 2018 Ivar Grimstad
+ * Copyright © 2017, 2019 Ivar Grimstad
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,57 +17,60 @@
  */
 package org.eclipse.krazo.ext.pebble;
 
-import com.mitchellbosecke.pebble.extension.Extension;
-import com.mitchellbosecke.pebble.extension.Filter;
-import com.mitchellbosecke.pebble.extension.Function;
-import com.mitchellbosecke.pebble.extension.NodeVisitorFactory;
-import com.mitchellbosecke.pebble.extension.Test;
+import com.mitchellbosecke.pebble.attributes.AttributeResolver;
+import com.mitchellbosecke.pebble.extension.*;
 import com.mitchellbosecke.pebble.operator.BinaryOperator;
 import com.mitchellbosecke.pebble.operator.UnaryOperator;
 import com.mitchellbosecke.pebble.tokenParser.TokenParser;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
 public class CustomExtensionTwo implements Extension {
 
-  @Override
-  public Map<String, Filter> getFilters() {
-    return Collections.EMPTY_MAP;
-  }
+    @Override
+    public Map<String, Filter> getFilters() {
+        return Collections.EMPTY_MAP;
+    }
 
-  @Override
-  public Map<String, Test> getTests() {
-    return Collections.EMPTY_MAP;
-  }
+    @Override
+    public Map<String, Test> getTests() {
+        return Collections.EMPTY_MAP;
+    }
 
-  @Override
-  public Map<String, Function> getFunctions() {
-    return Collections.EMPTY_MAP;
-  }
+    @Override
+    public Map<String, Function> getFunctions() {
+        return Collections.EMPTY_MAP;
+    }
 
-  @Override
-  public List<TokenParser> getTokenParsers() {
-    return Collections.EMPTY_LIST;
-  }
+    @Override
+    public List<TokenParser> getTokenParsers() {
+        return Collections.EMPTY_LIST;
+    }
 
-  @Override
-  public List<BinaryOperator> getBinaryOperators() {
-    return Collections.EMPTY_LIST;
-  }
+    @Override
+    public List<BinaryOperator> getBinaryOperators() {
+        return Collections.EMPTY_LIST;
+    }
 
-  @Override
-  public List<UnaryOperator> getUnaryOperators() {
-    return Collections.EMPTY_LIST;
-  }
+    @Override
+    public List<UnaryOperator> getUnaryOperators() {
+        return Collections.EMPTY_LIST;
+    }
 
-  @Override
-  public Map<String, Object> getGlobalVariables() {
-    return Collections.EMPTY_MAP;
-  }
+    @Override
+    public Map<String, Object> getGlobalVariables() {
+        return Collections.EMPTY_MAP;
+    }
 
-  @Override
-  public List<NodeVisitorFactory> getNodeVisitors() {
-    return Collections.EMPTY_LIST;
-  }
+    @Override
+    public List<NodeVisitorFactory> getNodeVisitors() {
+        return Collections.EMPTY_LIST;
+    }
+
+    @Override
+    public List<AttributeResolver> getAttributeResolver() {
+        return Collections.EMPTY_LIST;
+    }
 }

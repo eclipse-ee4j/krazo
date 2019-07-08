@@ -188,6 +188,29 @@
                     </configuration>
                 </plugin>
 
+                <plugin>
+                    <groupId>org.owasp</groupId>
+                    <artifactId>dependency-check-maven</artifactId>
+                    <version>5.1.0</version>
+                    <configuration>
+                        <!-- Some dependencies ship dlls for native bindings.
+                        This avoids warnings about dotnet not being installed -->
+                        <assemblyAnalyzerEnabled>false</assemblyAnalyzerEnabled>
+                        <!-- skip dependencies provided by the application servers -->
+                        <skipProvidedScope>true</skipProvidedScope>
+                        <excludes>
+                            <!-- Shrinkwrap includes a lot of the dependencies and some of them are quiet old.
+                            We don't ship it, but only use it in the tck. So we won't report those libs as vulnerable -->
+                            <exclude>org.jboss.shrinkwrap.resolver:*</exclude>
+                        </excludes>
+                        <suppressionFile>dependency-check-suppressions.xml</suppressionFile>
+                        <!-- We allow the build to pass with vulnerabilities below HIGH or MEDIUM.
+                        We should lower this value to MEDIUM (4) once all issues in upstream libraries
+                        (especially from the ext-package) have been resolved. -->
+                        <failBuildOnCVSS>7</failBuildOnCVSS>
+                    </configuration>
+                </plugin>
+
             </plugins>
         </pluginManagement>
 

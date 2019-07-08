@@ -21,22 +21,21 @@ import com.mitchellbosecke.pebble.PebbleEngine;
 import com.mitchellbosecke.pebble.error.PebbleException;
 import com.mitchellbosecke.pebble.template.PebbleTemplate;
 import org.eclipse.krazo.engine.ViewEngineBase;
+import org.eclipse.krazo.engine.ViewEngineConfig;
 
 import javax.annotation.Priority;
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import javax.mvc.engine.ViewEngine;
 import javax.mvc.engine.ViewEngineContext;
 import javax.mvc.engine.ViewEngineException;
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.Map;
-import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
-
-import org.eclipse.krazo.engine.ViewEngineConfig;
 
 /**
  * @see <a href="http://www.mitchellbosecke.com/pebble/home">Pebble</a>
