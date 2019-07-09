@@ -63,9 +63,9 @@ elif [[ ${1} == tck-glassfish51-* ]]; then
 elif [[ ${1} == tck-wildfly17* ]]; then
 
   echo "Downloading Wildfly..."
-  curl -L -s -o wildfly-17.0.0.Final.zip "https://download.jboss.org/wildfly/17.0.0.Final/wildfly-17.0.0.Final.zip"
-  unzip wildfly-17.0.0.Final.zip
-  mv wildfly-17.0.0.Final wildfly
+  curl -L -s -o wildfly-17.0.1.Final.zip "https://download.jboss.org/wildfly/17.0.1.Final/wildfly-17.0.1.Final.zip"
+  unzip wildfly-17.0.1.Final.zip
+  mv wildfly-17.0.1.Final wildfly
 
   echo "Building Krazo..."
   mvn -B -V -DskipTests clean install
