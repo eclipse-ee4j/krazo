@@ -1,5 +1,6 @@
 /*
- * Copyright © 2017, 2019 Ivar Grimstad
+ * Copyright (c) 2014-2015 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2018, 2019 Eclipse Krazo committers and contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -82,7 +83,7 @@ public class JadeIT {
     public void testIncludesViews() {
         webDriver.navigate().to(baseURL + "jade");
         WebElement footer = webDriver.findElement(By.xpath("//p[@class='footer']"));
-        assertTrue(footer.getText().contains("Ivar Grimstad"));
+        assertTrue(footer.getText().contains("Eclipse Krazo committers and contributors"));
     }
 
     @Test
