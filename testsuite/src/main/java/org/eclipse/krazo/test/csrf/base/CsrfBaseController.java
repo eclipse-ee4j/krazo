@@ -15,7 +15,7 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  */
-package org.eclipse.krazo.test.csrf;
+package org.eclipse.krazo.test.csrf.base;
 
 import javax.mvc.Controller;
 import javax.mvc.security.CsrfProtected;
@@ -32,7 +32,7 @@ import javax.ws.rs.Path;
  */
 @Path("csrf")
 @Controller
-public class CsrfController {
+public class CsrfBaseController {
 
     @GET
     public String getForm() {

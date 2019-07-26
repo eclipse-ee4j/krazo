@@ -15,7 +15,7 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  */
-package org.eclipse.krazo.test.csrf;
+package org.eclipse.krazo.test.csrf.base;
 
 import javax.mvc.security.Csrf;
 import javax.ws.rs.ApplicationPath;
@@ -31,12 +31,12 @@ import java.util.Set;
  * @author Santiago Pericas-Geertsen
  */
 @ApplicationPath("resources")
-public class MyApplication extends Application {
+public class CsrfBaseApplication extends Application {
 
     @Override
     public Set<Class<?>> getClasses() {
         final Set<Class<?>> set = new HashSet<>();
-        set.add(CsrfController.class);
+        set.add(CsrfBaseController.class);
         return set;
     }
 
