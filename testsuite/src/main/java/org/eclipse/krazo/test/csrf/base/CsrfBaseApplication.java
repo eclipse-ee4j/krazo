@@ -16,39 +16,35 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  */
-package org.eclipse.krazo.test.csrf;
+package org.eclipse.krazo.test.csrf.base;
 
-import javax.mvc.Controller;
-import javax.mvc.security.CsrfProtected;
-import javax.mvc.View;
-import javax.ws.rs.FormParam;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
+import javax.mvc.security.Csrf;
+import javax.ws.rs.ApplicationPath;
+import javax.ws.rs.core.Application;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 /**
- * CsrfController test.
+ * Class MyApplication.
  *
  * @author Santiago Pericas-Geertsen
  */
-@Path("csrf")
-@Controller
-public class CsrfController {
+@ApplicationPath("resources")
+public class CsrfBaseApplication extends Application {
 
-    @GET
-    public String getForm() {
-        return "csrf.jsp";
+    @Override
+    public Set<Class<?>> getClasses() {
+        final Set<Class<?>> set = new HashSet<>();
+        set.add(CsrfBaseController.class);
+        return set;
     }
 
-    @POST
-    @CsrfProtected
-    public String postForm(@FormParam("greeting") String greeting) {
-        return "redirect:/csrf/ok";
-    }
-
-    @GET
-    @Path("ok")
-    @View("ok.jsp")
-    public void getOk() {
+    @Override
+    public Map<String, Object> getProperties() {
+        final Map<String, Object> map = new HashMap<>();
+        map.put(Csrf.CSRF_PROTECTION, Csrf.CsrfOptions.EXPLICIT);
+        return map;
     }
 }
