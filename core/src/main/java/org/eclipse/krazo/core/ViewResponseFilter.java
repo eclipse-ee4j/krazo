@@ -17,15 +17,29 @@
  */
 package org.eclipse.krazo.core;
 
-import org.eclipse.krazo.KrazoConfig;
-import org.eclipse.krazo.event.ControllerRedirectEventImpl;
+import static javax.ws.rs.core.Response.Status.FOUND;
+import static javax.ws.rs.core.Response.Status.INTERNAL_SERVER_ERROR;
+import static javax.ws.rs.core.Response.Status.MOVED_PERMANENTLY;
+import static javax.ws.rs.core.Response.Status.SEE_OTHER;
+import static javax.ws.rs.core.Response.Status.TEMPORARY_REDIRECT;
+import static org.eclipse.krazo.cdi.KrazoCdiExtension.isEventObserved;
+import static org.eclipse.krazo.util.AnnotationUtils.getAnnotation;
+import static org.eclipse.krazo.util.PathUtils.noPrefix;
+import static org.eclipse.krazo.util.PathUtils.noStartingSlash;
 
+import java.io.IOException;
+import java.lang.reflect.Method;
+import java.net.URI;
+import java.util.Arrays;
+import java.util.List;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 import javax.annotation.Priority;
 import javax.enterprise.event.Event;
 import javax.inject.Inject;
-import org.eclipse.krazo.engine.Viewable;
 import javax.mvc.Controller;
 import javax.mvc.View;
+import javax.mvc.event.AfterControllerEvent;
 import javax.mvc.event.ControllerRedirectEvent;
 import javax.mvc.event.MvcEvent;
 import javax.servlet.http.HttpServletRequest;
@@ -40,29 +54,20 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Request;
-import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.core.Variant;
-
-import java.io.IOException;
-import java.lang.reflect.Method;
-import java.net.URI;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import static javax.ws.rs.core.Response.Status.*;
-import static org.eclipse.krazo.cdi.KrazoCdiExtension.isEventObserved;
-import static org.eclipse.krazo.util.AnnotationUtils.getAnnotation;
-import static org.eclipse.krazo.util.PathUtils.*;
+import org.eclipse.krazo.KrazoConfig;
+import org.eclipse.krazo.engine.Viewable;
+import org.eclipse.krazo.event.ControllerRedirectEventImpl;
 
 /**
- * <p>A JAX-RS response filter that fires a {@link javax.mvc.event.AfterControllerEvent}
+ * <p>A JAX-RS response filter that fires a {@link AfterControllerEvent}
  * event. It also verifies the static return type of the controller method is correct,
  * and ensures that the entity is a {@link Viewable} to be processed by
  * {@link ViewableWriter}.</p>
  *
- * <p>The class uses {@link javax.ws.rs.core.Request} which implements the algorithm in
+ * <p>The class uses {@link Request} which implements the algorithm in
  * Section 3.8 of the JAX-RS specification to compute the final Content-Type when
  * the method returns void (no entity). If unable to compute the final Content-Type,
  * e.g. if the controller method is not annotated by {@code @Produces}, it defaults to
@@ -71,7 +76,7 @@ import static org.eclipse.krazo.util.PathUtils.*;
  *
  * <p>Given that this filter is annotated with {@link Controller}, it
  * will be called after every controller method returns. Priority is set to
- * {@link javax.ws.rs.Priorities#ENTITY_CODER} which means it will be executed
+ * {@link Priorities#ENTITY_CODER} which means it will be executed
  * after user-defined response filters (response filters are sorted in reverse order).</p>
  *
  * @author Santiago Pericas-Geertsen
@@ -81,8 +86,14 @@ import static org.eclipse.krazo.util.PathUtils.*;
 public class ViewResponseFilter implements ContainerResponseFilter {
 
     private static final String FILTER_EXECUTED_KEY = ViewResponseFilter.class.getName() + ".EXECUTED";
-    
+
     private static final String REDIRECT = "redirect:";
+
+    /**
+     * Pattern to check if a String inside the response entity is a template or a plain value,
+     * which may not be processed by the {@link ViewableWriter}.
+     */
+    private static final Pattern VIEW_TEMPLATE_PATTERN = Pattern.compile(".*(\\.[a-zA-Z0-9]+)+");
 
     @Context
     private UriInfo uriInfo;
@@ -104,7 +115,7 @@ public class ViewResponseFilter implements ContainerResponseFilter {
 
     @Override
     public void filter(ContainerRequestContext requestContext,
-                       ContainerResponseContext responseContext) throws IOException {
+        ContainerResponseContext responseContext) throws IOException {
 
         // For some reason Jersey 2.28 executes our filter twice, resulting in weird side effects.
         // Therefore, we ensure that our filter is executed only once for each request.
@@ -113,7 +124,7 @@ public class ViewResponseFilter implements ContainerResponseFilter {
         } else {
             request.setAttribute(FILTER_EXECUTED_KEY, true);
         }
-        
+
         final Method method = resourceInfo.getResourceMethod();
         final Class<?> returnType = method.getReturnType();
 
@@ -135,29 +146,33 @@ public class ViewResponseFilter implements ContainerResponseFilter {
                 // set the status to 200 unless no other status was set by e.g. throwing an Exception.
 
                 // Don't use equals() on the result of getStatusInfo(), because it doesn't work on CXF
-                if (responseContext.getStatusInfo().getStatusCode() == Response.Status.NO_CONTENT.getStatusCode()) {
-                    responseContext.setStatusInfo(Response.Status.OK);
+                if (responseContext.getStatusInfo()
+                    .getStatusCode() == Status.NO_CONTENT.getStatusCode()) {
+                    responseContext.setStatusInfo(Status.OK);
                 }
-                
+
             } else if (returnType == Void.TYPE) {
-                throw new ServerErrorException(messages.get("VoidControllerNoView", resourceInfo.getResourceMethod()), INTERNAL_SERVER_ERROR);
+                throw new ServerErrorException(messages.get("VoidControllerNoView", resourceInfo.getResourceMethod()),
+                    INTERNAL_SERVER_ERROR);
             }
         } else {
             final String view = appendExtensionIfRequired(entityType == Viewable.class ? ((Viewable) entity).getView() : entity.toString());
             if (view == null) {
                 throw new ServerErrorException(messages.get("EntityToStringNull", resourceInfo.getResourceMethod()), INTERNAL_SERVER_ERROR);
             }
-            responseContext.setEntity(new Viewable(view), null, responseContext.getMediaType());
+
+            fillResponseEntity(view, responseContext);
         }
 
         // Redirect logic, entity must be a Viewable if not null
         entity = responseContext.getEntity();
-        if (entity != null) {
+        if (entity instanceof Viewable) {
             final String view = appendExtensionIfRequired(((Viewable) entity).getView());
             final String uri = uriInfo.getBaseUri() + noStartingSlash(noPrefix(view, REDIRECT));
-            if (view.startsWith(REDIRECT)) {
+            if (isRedirect(view)) {
                 responseContext.setStatusInfo(SEE_OTHER);
-                responseContext.getHeaders().putSingle(HttpHeaders.LOCATION, uri);
+                responseContext.getHeaders()
+                    .putSingle(HttpHeaders.LOCATION, uri);
                 responseContext.setEntity(null);
             }
         }
@@ -166,7 +181,7 @@ public class ViewResponseFilter implements ContainerResponseFilter {
         if (isEventObserved(ControllerRedirectEvent.class)) {
             final int status = responseContext.getStatus();
             if (status == SEE_OTHER.getStatusCode() || status == MOVED_PERMANENTLY.getStatusCode()
-                    || status == FOUND.getStatusCode() || status == TEMPORARY_REDIRECT.getStatusCode()) {
+                || status == FOUND.getStatusCode() || status == TEMPORARY_REDIRECT.getStatusCode()) {
                 final ControllerRedirectEventImpl event = new ControllerRedirectEventImpl();
                 event.setUriInfo(uriInfo);
                 event.setResourceInfo(resourceInfo);
@@ -178,6 +193,10 @@ public class ViewResponseFilter implements ContainerResponseFilter {
         }
     }
 
+    private static boolean isRedirect(final String view) {
+        return view.startsWith(REDIRECT);
+    }
+
     private String appendExtensionIfRequired(String viewName) {
         return appendExtensionIfRequired(viewName, krazoConfig.getDefaultViewFileExtension());
     }
@@ -186,7 +205,7 @@ public class ViewResponseFilter implements ContainerResponseFilter {
      * Append to view name default extension if one available and applicable.
      */
     static String appendExtensionIfRequired(String viewName, String defaultExtension) {
-        if (viewName == null || viewName.startsWith(REDIRECT)
+        if (viewName == null || isRedirect(viewName)
             || defaultExtension == null || defaultExtension.length() == 0) {
             return viewName;
         }
@@ -198,9 +217,23 @@ public class ViewResponseFilter implements ContainerResponseFilter {
         return resultView;
     }
 
+    private void fillResponseEntity(final String view, final ContainerResponseContext responseContext) {
+        if (krazoConfig.isStrictViewResolution() || isViewTemplate(view) || isRedirect(view)) {
+            responseContext.setEntity(new Viewable(view), null, responseContext.getMediaType());
+        } else {
+            responseContext.setEntity(view, null, responseContext.getMediaType());
+        }
+    }
+
+    static boolean isViewTemplate(final String view) {
+        return VIEW_TEMPLATE_PATTERN.matcher(view)
+            .matches();
+    }
+
     private static MediaType selectVariant(Request request, ResourceInfo resourceInfo) {
 
-        Produces produces = resourceInfo.getResourceMethod().getAnnotation(Produces.class);
+        Produces produces = resourceInfo.getResourceMethod()
+            .getAnnotation(Produces.class);
         if (produces == null) {
             produces = getAnnotation(resourceInfo.getResourceClass(), Produces.class);
         }
@@ -208,7 +241,9 @@ public class ViewResponseFilter implements ContainerResponseFilter {
         if (produces != null) {
 
             List<Variant> variants = Arrays.stream(produces.value())
-                .map((String mt) -> Variant.mediaTypes(MediaType.valueOf(mt)).build().get(0))
+                .map((String mt) -> Variant.mediaTypes(MediaType.valueOf(mt))
+                    .build()
+                    .get(0))
                 .collect(Collectors.toList());
 
             Variant variant = request.selectVariant(variants);
@@ -219,7 +254,5 @@ public class ViewResponseFilter implements ContainerResponseFilter {
         }
 
         return null;
-
     }
-
 }

@@ -33,7 +33,7 @@ import static org.junit.Assert.assertEquals;
  * @author Dmytro Maidaniuk
  */
 @RunWith(value = Parameterized.class)
-public class ViewResponseFilterTest {
+public class ViewResponseFilterAppendExtensionIfRequiredTest {
 
     private String viewName;
 
@@ -41,7 +41,7 @@ public class ViewResponseFilterTest {
 
     private String expectedViewName;
 
-    public ViewResponseFilterTest(String viewName,
+    public ViewResponseFilterAppendExtensionIfRequiredTest(String viewName,
                                   String defaultExtension,
                                   String expectedViewName) {
         this.viewName = viewName;

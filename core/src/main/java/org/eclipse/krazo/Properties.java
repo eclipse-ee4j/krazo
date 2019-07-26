@@ -42,4 +42,5 @@ public interface Properties {
      */
     String DEFAULT_VIEW_FILE_EXTENSION = "org.eclipse.krazo.defaultViewFileExtension";
 
+    String STRICT_VIEW_RESOLUTION ="org.eclipse.krazo.strictViewResolution";
 }

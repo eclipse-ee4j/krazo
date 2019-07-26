@@ -86,4 +86,12 @@ public class KrazoConfig {
 
     }
 
+    public boolean isStrictViewResolution() {
+        final Object value = config.getProperty(Properties.STRICT_VIEW_RESOLUTION);
+        if (value != null) {
+            return (boolean) value;
+        }
+
+        return true;
+    }
 }
