@@ -17,6 +17,7 @@
  */
 package org.eclipse.krazo.test.ext;
 
+import org.eclipse.krazo.test.annotation.IgnoreOnWildfly;
 import org.eclipse.krazo.test.util.WebArchiveBuilder;
 import org.jboss.arquillian.container.test.api.BeforeDeployment;
 import org.jboss.arquillian.container.test.api.Deployment;
@@ -27,6 +28,7 @@ import org.jboss.arquillian.test.api.ArquillianResource;
 import org.jboss.shrinkwrap.api.Archive;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.WebDriver;
 
@@ -65,6 +67,7 @@ public class Jsr223IT {
     }
 
     @Test
+    @Category(IgnoreOnWildfly.class)
     public void testJython() {
         webDriver.navigate().to(baseURL + "mvc/jython?name=Jython");
         assertTrue(webDriver.getPageSource().contains("Hello Jython"));
