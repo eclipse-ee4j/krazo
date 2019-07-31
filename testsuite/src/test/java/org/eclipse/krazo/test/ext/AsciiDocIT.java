@@ -38,6 +38,9 @@ import java.nio.file.Paths;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(Arquillian.class)
+// To get the test to work, we'd need to patch Wildfly with an own Asciidoctor module
+// (see: https://github.com/asciidoctor/asciidoctorj/blob/26641dbe1510a83fbb9c5cab3974a8736b385bdd/README.adoc#running-asciidoctorj-on-wildfly-as)
+// We think that isn't worth the effort in our case and skip the test for that reason.
 @Category(IgnoreOnWildfly.class)
 public class AsciiDocIT {
 

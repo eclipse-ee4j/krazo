@@ -17,25 +17,21 @@
  */
 package org.eclipse.krazo.test.ext;
 
+import static org.junit.Assert.assertTrue;
+
+import java.net.URL;
+import java.nio.file.Paths;
 import org.eclipse.krazo.test.annotation.IgnoreOnWildfly;
 import org.eclipse.krazo.test.util.WebArchiveBuilder;
-import org.jboss.arquillian.container.test.api.BeforeDeployment;
 import org.jboss.arquillian.container.test.api.Deployment;
-import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.jboss.shrinkwrap.api.Archive;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.WebDriver;
-
-import java.net.URL;
-import java.nio.file.Paths;
-
-import static org.junit.Assert.assertTrue;
 
 @RunWith(Arquillian.class)
 public class Jsr223IT {
@@ -67,6 +63,10 @@ public class Jsr223IT {
     }
 
     @Test
+    // Ignore on wildfly as we'd have to configure the server to get this test to run.
+    // Also it doesn't seem that there will be a Jython 3 in the near future, so
+    // in 2020 (EOL Python 2) we probably need to remove this test with Jython 2.7 anyway
+    // and the above mentioned configuration effort would count for nothing.
     @Category(IgnoreOnWildfly.class)
     public void testJython() {
         webDriver.navigate().to(baseURL + "mvc/jython?name=Jython");
