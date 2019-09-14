@@ -18,16 +18,20 @@
  */
 package org.eclipse.krazo.security;
 
-import org.eclipse.krazo.KrazoConfig;
-import org.eclipse.krazo.core.Messages;
-import org.eclipse.krazo.util.ServiceLoaders;
+import static org.eclipse.krazo.util.AnnotationUtils.hasAnnotation;
 
+import java.io.IOException;
+import java.lang.reflect.Method;
+import java.util.List;
 import javax.annotation.Priority;
 import javax.inject.Inject;
 import javax.mvc.Controller;
 import javax.mvc.security.CsrfProtected;
 import javax.mvc.security.CsrfValidationException;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.PATCH;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Priorities;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
@@ -35,11 +39,9 @@ import javax.ws.rs.container.ResourceInfo;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Form;
 import javax.ws.rs.core.MediaType;
-import java.io.IOException;
-import java.lang.reflect.Method;
-import java.util.List;
-
-import static org.eclipse.krazo.util.AnnotationUtils.hasAnnotation;
+import org.eclipse.krazo.KrazoConfig;
+import org.eclipse.krazo.core.Messages;
+import org.eclipse.krazo.util.ServiceLoaders;
 
 /**
  * <p>Reader interceptor that checks for the CSRF header and token. If not available as
@@ -78,7 +80,8 @@ public class CsrfValidateFilter implements ContainerRequestFilter {
     private FormEntityProvider formEntityProvider;
 
     public CsrfValidateFilter() {
-        this.formEntityProvider = ServiceLoaders.list(FormEntityProvider.class).get(0);
+        this.formEntityProvider = ServiceLoaders.list(FormEntityProvider.class)
+            .get(0);
     }
 
     @Override
@@ -89,11 +92,13 @@ public class CsrfValidateFilter implements ContainerRequestFilter {
         if (needsValidation(controller)) {
 
             CsrfToken token = csrfTokenManager.getToken()
-                    .orElseThrow(() -> new CsrfValidationException(messages.get("CsrfFailed", "missing token")));
+                .orElseThrow(() -> new CsrfValidationException(messages.get("CsrfFailed", "missing token")));
 
             // First check if CSRF token is in header
-            final String csrfToken = context.getHeaders().getFirst(token.getHeaderName());
-            if (token.getValue().equals(csrfToken)) {
+            final String csrfToken = context.getHeaders()
+                .getFirst(token.getHeaderName());
+            if (token.getValue()
+                .equals(csrfToken)) {
                 return;
             }
 
@@ -105,12 +110,14 @@ public class CsrfValidateFilter implements ContainerRequestFilter {
 
             // Validate CSRF
             final Form form = formEntityProvider.getForm(context);
-            final List<String> tokenValues = form.asMap().get(token.getParamName());
+            final List<String> tokenValues = form.asMap()
+                .get(token.getParamName());
             if (tokenValues == null || tokenValues.isEmpty()) {
                 throw new CsrfValidationException(messages.get("CsrfFailed", "missing field"));
             }
 
-            if (!token.getValue().equals(tokenValues.get(0))) {
+            if (!token.getValue()
+                .equals(tokenValues.get(0))) {
                 throw new CsrfValidationException(messages.get("CsrfFailed", "mismatching tokens"));
             }
         }
@@ -127,8 +134,8 @@ public class CsrfValidateFilter implements ContainerRequestFilter {
      * @param controller controller to inspect.
      * @return outcome of test.
      */
-    private boolean needsValidation(Method controller) {
-        if (controller == null || !hasAnnotation(controller, POST.class)) {
+    private boolean needsValidation(final Method controller) {
+        if (controller == null || !performsWriteAccess(controller)) {
             return false;
         }
         switch (krazoConfig.getCsrfOptions()) {
@@ -138,9 +145,24 @@ public class CsrfValidateFilter implements ContainerRequestFilter {
                 return true;
             case EXPLICIT:
                 return hasAnnotation(controller, CsrfProtected.class)
-                        || hasAnnotation(controller.getDeclaringClass(), CsrfProtected.class);
+                    || hasAnnotation(controller.getDeclaringClass(), CsrfProtected.class);
         }
         return false;
+    }
+
+    /**
+     * Check if the controller wants to perform a write access. This means, in HTTP verbs, it wants
+     * to perform a {@link POST}, {@link PUT}, {@link PATCH} or {@link DELETE} annotated method.
+     *
+     * Because the {@link org.eclipse.krazo.forms.HiddenMethodFilter} enables us to use this methods in forms, we
+     * need to validate a Csrf token for them too, because the HTTP POST method is overwritten before this filter is entered.
+     *
+     * @param controller the controller method to check for write access
+     * @return true, if the controller method wants to perform a write access, false if not
+     */
+    private boolean performsWriteAccess(final Method controller) {
+        return hasAnnotation(controller, POST.class) || hasAnnotation(controller, PATCH.class) ||
+            hasAnnotation(controller, PUT.class) || hasAnnotation(controller, DELETE.class);
     }
 
 }
