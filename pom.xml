@@ -103,8 +103,17 @@
         <url>https://github.com/eclipse-ee4j/krazo/issues</url>
     </issueManagement>
 
-    <build>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>commons-beanutils</groupId>
+                <artifactId>commons-beanutils</artifactId>
+                <version>1.9.4</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
+    <build>
         <pluginManagement>
             <plugins>
 
