@@ -108,7 +108,7 @@
 
             <!-- Manually upgrade commons-beanutils to fix vulnerability CVE-2019-10086 -->
             <!-- Currently, the vulnerable version is only used by org.apache.velocity.tools:velocity-tools-view. -->
-            <!-- When the dependency is upgraded in this dependency, we can remove this workaround. -->
+            <!-- When the common-beanutils are upgraded in this dependency, we can remove this workaround. -->
             <dependency>
                 <groupId>commons-beanutils</groupId>
                 <artifactId>commons-beanutils</artifactId>
