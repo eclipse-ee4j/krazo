@@ -19,6 +19,7 @@ package org.eclipse.krazo.test.ext;
 
 import com.gargoylesoftware.htmlunit.html.HtmlElement;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
+import org.eclipse.krazo.test.annotation.IgnoreOnWildfly;
 import org.eclipse.krazo.test.util.WebArchiveBuilder;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.drone.api.annotation.Drone;
@@ -26,6 +27,7 @@ import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.jboss.shrinkwrap.api.Archive;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -36,6 +38,10 @@ import java.nio.file.Paths;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(Arquillian.class)
+// To get the test to work, we'd need to patch Wildfly with an own Asciidoctor module
+// (see: https://github.com/asciidoctor/asciidoctorj/blob/26641dbe1510a83fbb9c5cab3974a8736b385bdd/README.adoc#running-asciidoctorj-on-wildfly-as)
+// We think that isn't worth the effort in our case and skip the test for that reason.
+@Category(IgnoreOnWildfly.class)
 public class AsciiDocIT {
 
     private static final String WEB_INF_SRC = "src/main/resources/asciidoc/";

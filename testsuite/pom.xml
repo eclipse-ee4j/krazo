@@ -277,6 +277,9 @@
                                 <arquillian.launch>wildfly</arquillian.launch>
                                 <testsuite.profile>testsuite-wildfly</testsuite.profile>
                             </systemProperties>
+                            <excludedGroups>
+                                org.eclipse.krazo.test.annotation.IgnoreOnWildfly
+                            </excludedGroups>
                         </configuration>
                     </plugin>
                 </plugins>
