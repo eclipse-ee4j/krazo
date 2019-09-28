@@ -18,7 +18,7 @@
 
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
 
@@ -103,8 +103,21 @@
         <url>https://github.com/eclipse-ee4j/krazo/issues</url>
     </issueManagement>
 
-    <build>
+    <dependencyManagement>
+        <dependencies>
 
+            <!-- Manually upgrade commons-beanutils to fix vulnerability CVE-2019-10086 -->
+            <!-- Currently, the vulnerable version is only used by org.apache.velocity.tools:velocity-tools-view. -->
+            <!-- When the common-beanutils are upgraded in this dependency, we can remove this workaround. -->
+            <dependency>
+                <groupId>commons-beanutils</groupId>
+                <artifactId>commons-beanutils</artifactId>
+                <version>1.9.4</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
         <pluginManagement>
             <plugins>
 
