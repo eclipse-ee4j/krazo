@@ -102,7 +102,7 @@ public class KrazoCdiExtension implements Extension {
                 ModelsImpl.class,
                 ViewableWriter.class,
                 ViewResponseFilter.class,
-                
+
                 // lifecycle
                 EventDispatcher.class,
                 RequestLifecycle.class,
@@ -213,5 +213,14 @@ public class KrazoCdiExtension implements Extension {
      */
     public static synchronized boolean isEventObserved(Class<? extends MvcEvent> eventType) {
         return observedEvents == null ? false : observedEvents.contains(eventType);
+    }
+
+    /**
+     * Clears all observed events
+     * <p>
+     * This is used for testing
+     */
+    public static synchronized void clearEventsObserved() {
+        observedEvents = null;
     }
 }

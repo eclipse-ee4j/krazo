@@ -23,7 +23,10 @@ import org.eclipse.krazo.event.ControllerRedirectEventImpl;
 import javax.annotation.Priority;
 import javax.enterprise.event.Event;
 import javax.inject.Inject;
+
 import org.eclipse.krazo.engine.Viewable;
+
+import javax.interceptor.InvocationContext;
 import javax.mvc.Controller;
 import javax.mvc.View;
 import javax.mvc.event.ControllerRedirectEvent;
@@ -81,7 +84,7 @@ import static org.eclipse.krazo.util.PathUtils.*;
 public class ViewResponseFilter implements ContainerResponseFilter {
 
     private static final String FILTER_EXECUTED_KEY = ViewResponseFilter.class.getName() + ".EXECUTED";
-    
+
     private static final String REDIRECT = "redirect:";
 
     @Context
@@ -113,60 +116,73 @@ public class ViewResponseFilter implements ContainerResponseFilter {
         } else {
             request.setAttribute(FILTER_EXECUTED_KEY, true);
         }
-        
+
+        // Wrap the entity into a MVC-Viewable
+        wrapToViewable(requestContext, responseContext);
+
+        // Redirect logic, entity must be a Viewable if not null
+        redirect(responseContext);
+
+        // Fire ControllerRedirectEvent event
+        fireControllerRedirectEvent(requestContext, responseContext);
+    }
+
+    private void wrapToViewable(ContainerRequestContext requestContext, ContainerResponseContext responseContext) {
         final Method method = resourceInfo.getResourceMethod();
         final Class<?> returnType = method.getReturnType();
 
-        // Wrap entity type into Viewable, possibly looking at @View
         Object entity = responseContext.getEntity();
-        final Class<?> entityType = entity != null ? entity.getClass() : null;
-        if (entityType == null) {       // NO_CONTENT
-            View an = getAnnotation(method, View.class);
-            if (an == null) {
-                an = getAnnotation(resourceInfo.getResourceClass(), View.class);
-            }
-            if (an != null) {
-                MediaType contentType = selectVariant(requestContext.getRequest(), resourceInfo);
-                if (contentType == null) {
-                    contentType = MediaType.TEXT_HTML_TYPE;     // default
-                }
-                responseContext.setEntity(new Viewable(appendExtensionIfRequired(an.value())), null, contentType);
-                // If the entity is null the status will be set to 204 by Jersey. For void methods we need to
-                // set the status to 200 unless no other status was set by e.g. throwing an Exception.
-
-                // Don't use equals() on the result of getStatusInfo(), because it doesn't work on CXF
-                if (responseContext.getStatusInfo().getStatusCode() == Response.Status.NO_CONTENT.getStatusCode()) {
-                    responseContext.setStatusInfo(Response.Status.OK);
-                }
-                
-            } else if (returnType == Void.TYPE) {
+        // Wrap entity type into Viewable, possibly looking at @View
+        if (entity == null /* && Boolean.TRUE.equals(request.getAttribute("controllerCompleted")) */) {   // NO_CONTENT
+            final String viewAnnotation = readViewFromAnnotation(method);
+            if (viewAnnotation == null && returnType == Void.TYPE) {
                 throw new ServerErrorException(messages.get("VoidControllerNoView", resourceInfo.getResourceMethod()), INTERNAL_SERVER_ERROR);
             }
-        } else {
-            final String view = appendExtensionIfRequired(entityType == Viewable.class ? ((Viewable) entity).getView() : entity.toString());
+
+            MediaType contentType = selectVariant(requestContext.getRequest(), resourceInfo);
+            if (contentType == null) {
+                contentType = MediaType.TEXT_HTML_TYPE;     // default
+            }
+            responseContext.setEntity(new Viewable(appendExtensionIfRequired(viewAnnotation)), null, contentType);
+            // If the entity is null the status will be set to 204 by Jersey. For void methods we need to
+            // set the status to 200 unless no other status was set by e.g. throwing an Exception.
+
+            // Don't use equals() on the result of getStatusInfo(), because it doesn't work on CXF
+            if (responseContext.getStatus() == Response.Status.NO_CONTENT.getStatusCode()) {
+                responseContext.setStatusInfo(Response.Status.OK);
+            }
+
+        } else if (entity instanceof Viewable) {
+            final String view = appendExtensionIfRequired(((Viewable) entity).getView());
             if (view == null) {
                 throw new ServerErrorException(messages.get("EntityToStringNull", resourceInfo.getResourceMethod()), INTERNAL_SERVER_ERROR);
             }
             responseContext.setEntity(new Viewable(view), null, responseContext.getMediaType());
+        } else {
+            final String view = appendExtensionIfRequired(entity.toString());
+            responseContext.setEntity(new Viewable(view), null, responseContext.getMediaType());
         }
+    }
 
-        // Redirect logic, entity must be a Viewable if not null
+    private void redirect(ContainerResponseContext responseContext) {
+        Object entity;
         entity = responseContext.getEntity();
         if (entity != null) {
             final String view = appendExtensionIfRequired(((Viewable) entity).getView());
             final String uri = uriInfo.getBaseUri() + noStartingSlash(noPrefix(view, REDIRECT));
-            if (view.startsWith(REDIRECT)) {
+            if (view != null && view.startsWith(REDIRECT)) {
                 responseContext.setStatusInfo(SEE_OTHER);
                 responseContext.getHeaders().putSingle(HttpHeaders.LOCATION, uri);
                 responseContext.setEntity(null);
             }
         }
+    }
 
-        // Fire ControllerRedirectEvent event
+    private void fireControllerRedirectEvent(ContainerRequestContext requestContext, ContainerResponseContext responseContext) {
         if (isEventObserved(ControllerRedirectEvent.class)) {
             final int status = responseContext.getStatus();
             if (status == SEE_OTHER.getStatusCode() || status == MOVED_PERMANENTLY.getStatusCode()
-                    || status == FOUND.getStatusCode() || status == TEMPORARY_REDIRECT.getStatusCode()) {
+                || status == FOUND.getStatusCode() || status == TEMPORARY_REDIRECT.getStatusCode()) {
                 final ControllerRedirectEventImpl event = new ControllerRedirectEventImpl();
                 event.setUriInfo(uriInfo);
                 event.setResourceInfo(resourceInfo);
@@ -220,6 +236,27 @@ public class ViewResponseFilter implements ContainerResponseFilter {
 
         return null;
 
+    }
+
+    /**
+     * Reads the value of the view annotation from a resource method.
+     * <p>
+     * The method might be annotated either on the method itself or at class level
+     *
+     * @param method a resource method
+     * @return the value from a view annotation if present, else {@code null}
+     */
+    private String readViewFromAnnotation(Method method) {
+        View an = getAnnotation(method, View.class);
+        if (an == null) {
+            an = getAnnotation(method.getDeclaringClass(), View.class);
+        }
+
+        if (an != null) {
+            return an.value();
+        } else {
+            return null;
+        }
     }
 
 }

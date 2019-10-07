@@ -20,6 +20,7 @@ package org.eclipse.krazo.engine;
 import javax.mvc.Controller;
 import javax.mvc.Models;
 import javax.mvc.engine.ViewEngine;
+import java.util.Objects;
 
 /**
  * <p>An abstraction that encapsulates information about a view as well as an instance
@@ -140,5 +141,20 @@ public class Viewable {
     @Override
     public String toString() {
         return view;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Viewable viewable = (Viewable) o;
+        return Objects.equals(view, viewable.view) &&
+            Objects.equals(models, viewable.models) &&
+            Objects.equals(viewEngine, viewable.viewEngine);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(view, models, viewEngine);
     }
 }
