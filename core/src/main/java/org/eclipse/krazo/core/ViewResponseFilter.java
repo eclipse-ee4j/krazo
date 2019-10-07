@@ -26,7 +26,6 @@ import javax.inject.Inject;
 
 import org.eclipse.krazo.engine.Viewable;
 
-import javax.interceptor.InvocationContext;
 import javax.mvc.Controller;
 import javax.mvc.View;
 import javax.mvc.event.ControllerRedirectEvent;
@@ -47,7 +46,6 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.core.Variant;
 
-import java.io.IOException;
 import java.lang.reflect.Method;
 import java.net.URI;
 import java.util.Arrays;
@@ -107,7 +105,7 @@ public class ViewResponseFilter implements ContainerResponseFilter {
 
     @Override
     public void filter(ContainerRequestContext requestContext,
-                       ContainerResponseContext responseContext) throws IOException {
+                       ContainerResponseContext responseContext) {
 
         // For some reason Jersey 2.28 executes our filter twice, resulting in weird side effects.
         // Therefore, we ensure that our filter is executed only once for each request.
@@ -128,46 +126,49 @@ public class ViewResponseFilter implements ContainerResponseFilter {
     }
 
     private void wrapToViewable(ContainerRequestContext requestContext, ContainerResponseContext responseContext) {
-        final Method method = resourceInfo.getResourceMethod();
-        final Class<?> returnType = method.getReturnType();
-
         Object entity = responseContext.getEntity();
         // Wrap entity type into Viewable, possibly looking at @View
-        if (entity == null /* && Boolean.TRUE.equals(request.getAttribute("controllerCompleted")) */) {   // NO_CONTENT
-            final String viewAnnotation = readViewFromAnnotation(method);
-            if (viewAnnotation == null && returnType == Void.TYPE) {
+        if (entity == null && Boolean.TRUE.equals(request.getAttribute(RequestAttributes.CONTROLLER_EXECUTED.name()))) {   // NO_CONTENT
+            final String viewAnnotation = readViewFromAnnotation();
+            final Method method = resourceInfo.getResourceMethod();
+            if (viewAnnotation == null && method.getReturnType() == Void.TYPE) {
                 throw new ServerErrorException(messages.get("VoidControllerNoView", resourceInfo.getResourceMethod()), INTERNAL_SERVER_ERROR);
             }
 
-            MediaType contentType = selectVariant(requestContext.getRequest(), resourceInfo);
-            if (contentType == null) {
-                contentType = MediaType.TEXT_HTML_TYPE;     // default
+            if (viewAnnotation != null) {
+                rewriteEntityByAnnotation(requestContext, responseContext, viewAnnotation);
             }
-            responseContext.setEntity(new Viewable(appendExtensionIfRequired(viewAnnotation)), null, contentType);
-            // If the entity is null the status will be set to 204 by Jersey. For void methods we need to
-            // set the status to 200 unless no other status was set by e.g. throwing an Exception.
-
-            // Don't use equals() on the result of getStatusInfo(), because it doesn't work on CXF
-            if (responseContext.getStatus() == Response.Status.NO_CONTENT.getStatusCode()) {
-                responseContext.setStatusInfo(Response.Status.OK);
-            }
-
         } else if (entity instanceof Viewable) {
             final String view = appendExtensionIfRequired(((Viewable) entity).getView());
             if (view == null) {
                 throw new ServerErrorException(messages.get("EntityToStringNull", resourceInfo.getResourceMethod()), INTERNAL_SERVER_ERROR);
             }
             responseContext.setEntity(new Viewable(view), null, responseContext.getMediaType());
-        } else {
+        } else if (entity != null) {
             final String view = appendExtensionIfRequired(entity.toString());
             responseContext.setEntity(new Viewable(view), null, responseContext.getMediaType());
+        }
+    }
+
+    private void rewriteEntityByAnnotation(ContainerRequestContext requestContext, ContainerResponseContext responseContext, String viewAnnotation) {
+        MediaType contentType = selectVariant(requestContext.getRequest(), resourceInfo);
+        if (contentType == null) {
+            contentType = MediaType.TEXT_HTML_TYPE;     // default
+        }
+
+        responseContext.setEntity(new Viewable(appendExtensionIfRequired(viewAnnotation)), null, contentType);
+
+        // If the entity is null the status will be set to 204 by Jersey. For void methods we need to
+        // set the status to 200 unless no other status was set by e.g. throwing an Exception.
+        if (responseContext.getStatus() == Response.Status.NO_CONTENT.getStatusCode()) {
+            responseContext.setStatusInfo(Response.Status.OK);
         }
     }
 
     private void redirect(ContainerResponseContext responseContext) {
         Object entity;
         entity = responseContext.getEntity();
-        if (entity != null) {
+        if (entity instanceof Viewable) {
             final String view = appendExtensionIfRequired(((Viewable) entity).getView());
             final String uri = uriInfo.getBaseUri() + noStartingSlash(noPrefix(view, REDIRECT));
             if (view != null && view.startsWith(REDIRECT)) {
@@ -243,13 +244,12 @@ public class ViewResponseFilter implements ContainerResponseFilter {
      * <p>
      * The method might be annotated either on the method itself or at class level
      *
-     * @param method a resource method
      * @return the value from a view annotation if present, else {@code null}
      */
-    private String readViewFromAnnotation(Method method) {
-        View an = getAnnotation(method, View.class);
+    private String readViewFromAnnotation() {
+        View an = getAnnotation(resourceInfo.getResourceMethod(), View.class);
         if (an == null) {
-            an = getAnnotation(method.getDeclaringClass(), View.class);
+            an = getAnnotation(resourceInfo.getResourceClass(), View.class);
         }
 
         if (an != null) {

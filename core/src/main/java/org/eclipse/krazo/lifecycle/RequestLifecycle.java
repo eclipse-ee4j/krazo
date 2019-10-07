@@ -18,12 +18,12 @@
 package org.eclipse.krazo.lifecycle;
 
 import org.eclipse.krazo.MvcContextImpl;
+import org.eclipse.krazo.core.RequestAttributes;
 import org.eclipse.krazo.jaxrs.JaxRsContext;
 import org.eclipse.krazo.locale.LocaleResolverChain;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.container.ContainerRequestContext;
 import java.util.Locale;
@@ -61,7 +61,7 @@ public class RequestLifecycle {
         eventDispatcher.fireBeforeControllerEvent();
         try {
             final Object result = controllerMethod.call();
-            request.setAttribute("controllerCompleted", true);
+            request.setAttribute(RequestAttributes.CONTROLLER_EXECUTED.name(), true);
             return result;
 
         } finally {

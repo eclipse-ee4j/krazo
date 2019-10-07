@@ -17,18 +17,14 @@
  */
 package org.eclipse.krazo.core;
 
-import com.sun.xml.internal.ws.client.ResponseContext;
 import org.easymock.*;
 import org.eclipse.krazo.KrazoConfig;
 import org.eclipse.krazo.cdi.KrazoCdiExtension;
 import org.eclipse.krazo.engine.Viewable;
-import org.eclipse.krazo.event.ControllerRedirectEventImpl;
-import org.eclipse.krazo.lifecycle.EventDispatcher;
 import org.junit.*;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
-import sun.security.provider.certpath.OCSPResponse;
 
 import javax.enterprise.event.Event;
 import javax.mvc.View;
@@ -46,18 +42,19 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Map;
+import java.util.List;
 
 import static org.easymock.EasyMock.*;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 /**
  * Test for ViewResponseFilter
  *
  * @author Dmytro Maidaniuk
+ * @author Gregor Tudan
  */
 @RunWith(org.junit.experimental.runners.Enclosed.class)
 public class ViewResponseFilterTest {
@@ -97,13 +94,19 @@ public class ViewResponseFilterTest {
 
         void mockControllerCall(Object controller, String methodName) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
             final Method method = controller.getClass().getMethod(methodName);
-            responseEntity = method.invoke(controller);
-            responseStatus = method.getReturnType() == Void.TYPE ? Response.Status.NO_CONTENT : Response.Status.OK;
+
+            if (method.getReturnType().isAssignableFrom(Response.class)) {
+                final Response response = (Response) method.invoke(controller);
+                responseStatus = Response.Status.fromStatusCode(response.getStatus());
+                response.getHeaders().forEach((String key, List<Object> value) -> responseHeaders.put(key, value));
+                responseEntity = response.getEntity();
+            } else {
+                responseStatus = method.getReturnType() == Void.TYPE ? Response.Status.NO_CONTENT : Response.Status.OK;
+                responseEntity = method.invoke(controller);
+            }
 
             expect(resourceInfo.getResourceMethod()).andStubReturn(method);
             expect((Object) resourceInfo.getResourceClass()).andStubReturn(controller.getClass());
-            expect(responseContext.getEntity()).andAnswer(() -> responseEntity);
-            expect(responseContext.getEntity()).andAnswer(() -> responseEntity);
         }
 
         @AfterClass
@@ -113,8 +116,8 @@ public class ViewResponseFilterTest {
 
         @Before
         public void setUp() throws Exception {
-            expect(request.getAttribute(anyString())).andReturn(null);
-            expect(krazoConfig.getDefaultViewFileExtension()).andReturn("jsp");
+            expect(request.getAttribute(RequestAttributes.CONTROLLER_EXECUTED.name())).andStubReturn(true);
+            expect(krazoConfig.getDefaultViewFileExtension()).andStubReturn("jsp");
             expect(uriInfo.getBaseUri()).andStubReturn(new URI("/"));
 
             responseHeaders = new MultivaluedHashMap<>();
@@ -124,12 +127,20 @@ public class ViewResponseFilterTest {
             Capture<Object> responseEntityCapture = newCapture();
             responseContext.setEntity(capture(responseEntityCapture), anyObject(), anyObject());
             expectLastCall().andStubAnswer(() -> responseEntity = responseEntityCapture.getValue());
+            expect(responseContext.getEntity()).andStubAnswer(() -> responseEntity);
 
             Capture<Response.Status> responseStatusCapture = newCapture();
             responseContext.setStatusInfo(capture(responseStatusCapture));
             expectLastCall().andStubAnswer(() -> responseStatus = responseStatusCapture.getValue());
             expect(responseContext.getStatusInfo()).andStubAnswer(() -> responseStatus);
             expect(responseContext.getStatus()).andStubAnswer(() -> responseStatus.getStatusCode());
+        }
+
+        @After
+        public void tearDown() throws Exception {
+            responseHeaders = null;
+            responseEntity = null;
+            responseStatus = null;
         }
 
         @Test
@@ -156,7 +167,7 @@ public class ViewResponseFilterTest {
         }
 
         @Test
-        public void testFilteringVoidMethodsWithAnnotatedController() throws IOException, NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        public void testFilteringVoidMethodsWithAnnotatedController() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
             mockControllerCall(new AnnotatedController(), "view");
             replayAll();
 
@@ -166,6 +177,19 @@ public class ViewResponseFilterTest {
             assertEquals(new Viewable("helloWorld.jsp"), responseEntity);
             assertEquals(Response.Status.OK, responseStatus);
         }
+
+        @Test
+        public void testFallingBackToAnnotation() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+            mockControllerCall(new AnnotatedController(), "fallbackToAnnotation");
+            replayAll();
+
+            responseFilter.filter(requestContext, responseContext);
+
+            verifyAll();
+            assertEquals(new Viewable("helloWorld.jsp"), responseEntity);
+            assertEquals(Response.Status.OK, responseStatus);
+        }
+
 
         @Test
         public void testFilteringRedirect() throws IOException, NoSuchMethodException, InvocationTargetException, IllegalAccessException {
@@ -178,6 +202,18 @@ public class ViewResponseFilterTest {
             assertEquals(new Viewable("redirect:view"), responseEntity);
             assertEquals(Response.Status.SEE_OTHER, responseStatus);
             assertEquals("/view", responseHeaders.getFirst(HttpHeaders.LOCATION));
+        }
+
+        @Test
+        public void testFilteringRedirectResponses() throws IOException, NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+            mockControllerCall(new SampleController(), "redirectResponse");
+            replayAll();
+
+            responseFilter.filter(requestContext, responseContext);
+
+            verifyAll();
+            assertEquals(Response.Status.SEE_OTHER, responseStatus);
+            assertEquals(URI.create("view"), responseHeaders.getFirst(HttpHeaders.LOCATION));
         }
 
         @Test
@@ -203,6 +239,9 @@ public class ViewResponseFilterTest {
             final Method method = SampleController.class.getMethod("annotatedView");
             expect(resourceInfo.getResourceMethod()).andStubReturn(method);
             expect((Object) resourceInfo.getResourceClass()).andStubReturn(SampleController.class);
+
+            reset(request);
+            expect(request.getAttribute(RequestAttributes.CONTROLLER_EXECUTED.name())).andReturn(null);
             responseStatus = Response.Status.FORBIDDEN;
 
             replayAll();
@@ -210,7 +249,7 @@ public class ViewResponseFilterTest {
             responseFilter.filter(requestContext, responseContext);
 
             verifyAll();
-            assertEquals(responseStatus, Response.Status.FORBIDDEN);
+            assertEquals(Response.Status.FORBIDDEN, responseStatus);
             assertNull(responseEntity);
         }
 
@@ -228,6 +267,10 @@ public class ViewResponseFilterTest {
             public String redirect() {
                 return "redirect:view";
             }
+
+            public Response redirectResponse() {
+                return Response.seeOther(URI.create("view")).build();
+            }
         }
 
         @View("helloWorld.jsp")
@@ -235,6 +278,10 @@ public class ViewResponseFilterTest {
 
             public void view() {
 
+            }
+
+            public String fallbackToAnnotation() {
+                return null;
             }
         }
     }
