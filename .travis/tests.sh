@@ -3,7 +3,7 @@
 set -euo pipefail
 
 GLASSFISH_URL="http://download.eclipse.org/glassfish/web-5.1.0.zip"
-WILDFLY_URL="https://download.jboss.org/wildfly/16.0.0.Final/wildfly-16.0.0.Final.tar.gz"
+WILDFLY_URL="https://download.jboss.org/wildfly/18.0.0.Final/wildfly-18.0.0.Final.zip"
 LIBERTY_URL="https://public.dhe.ibm.com/ibmdl/export/pub/software/websphere/wasdev/downloads/wlp/19.0.0.2/wlp-webProfile8-19.0.0.2.zip"
 
 if [ "${1}" == "glassfish-bundled" ]; then
@@ -60,12 +60,12 @@ elif [[ ${1} == tck-glassfish51-* ]]; then
   echo "Stopping Glassfish..."
   glassfish5/bin/asadmin stop-domain
 
-elif [[ ${1} == tck-wildfly17* ]]; then
+elif [[ ${1} == tck-wildfly18* ]]; then
 
   echo "Downloading Wildfly..."
-  curl -L -s -o wildfly-17.0.1.Final.zip "https://download.jboss.org/wildfly/17.0.1.Final/wildfly-17.0.1.Final.zip"
-  unzip wildfly-17.0.1.Final.zip
-  mv wildfly-17.0.1.Final wildfly
+  curl -L -s -o wildfly-18.0.0.Final.zip $WILDFLY_URL
+  unzip wildfly-18.0.0.Final.zip
+  mv wildfly-18.0.0.Final wildfly
 
   echo "Building Krazo..."
   mvn -B -V -DskipTests clean install
@@ -80,7 +80,7 @@ elif [[ ${1} == tck-wildfly17* ]]; then
   popd
 
   echo "Stopping Wildfly..."
-  kill $(cat wildfly.pid)
+  kill "$(cat wildfly.pid)"
 
 elif [ "${1}" == "tck-tomee" ]; then
 

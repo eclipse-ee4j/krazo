@@ -35,7 +35,7 @@ jobs:
       env: TYPE=tck-glassfish51-patched
       script: .travis/tests.sh ${TYPE}
     - stage: test
-      env: TYPE=tck-wildfly17
+      env: TYPE=tck-wildfly18
       script: .travis/tests.sh ${TYPE}
     - stage: test
       env: TYPE=tck-tomee
