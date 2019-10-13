@@ -49,6 +49,4 @@ jobs:
   allow_failures:
     - env: TYPE=tck-tomee
     - env: TYPE=tck-liberty
-    - env: TYPE=testsuite-wildfly
-    - env: TYPE=testsuite-tomee
     - env: TYPE=glassfish-module
