@@ -13,6 +13,9 @@ jobs:
   include:
     - stage: build
       script: mvn -B -V -DskipTests -DperformRelease -Dgpg.skip clean install
+    - stage: build
+      script: mvn -B -V -DskipTests clean install
+      jdk: openjdk11
     - stage: test
       env: TYPE=glassfish-module
       script: .travis/tests.sh ${TYPE}
