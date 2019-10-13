@@ -14,6 +14,8 @@ jobs:
     - stage: build
       script: mvn -B -V -DskipTests -DperformRelease -Dgpg.skip clean install
     - stage: test
+      script: mvn -B -V test
+    - stage: test
       env: TYPE=glassfish-module
       script: .travis/tests.sh ${TYPE}
     - stage: test
