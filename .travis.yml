@@ -17,6 +17,8 @@ jobs:
       script: mvn -B -V -DskipTests clean install
       jdk: openjdk11
     - stage: test
+      script: mvn -B -V test
+    - stage: test
       env: TYPE=glassfish-module
       script: .travis/tests.sh ${TYPE}
     - stage: test
