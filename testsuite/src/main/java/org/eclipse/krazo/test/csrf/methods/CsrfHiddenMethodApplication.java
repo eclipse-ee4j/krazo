@@ -17,14 +17,10 @@
  */
 package org.eclipse.krazo.test.csrf.methods;
 
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
-import javax.mvc.security.Csrf;
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
-import org.eclipse.krazo.test.csrf.exception.CsrfCustomExceptionMapper;
 
 @ApplicationPath("resources")
 public class CsrfHiddenMethodApplication extends Application {
