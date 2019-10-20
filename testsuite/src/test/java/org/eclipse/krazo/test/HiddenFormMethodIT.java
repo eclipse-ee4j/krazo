@@ -1,5 +1,6 @@
 /*
- * Copyright (c) 2019 Eclipse Krazo committers and contributors
+ * Copyright (c) 2014-2015 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2018, 2019 Eclipse Krazo committers and contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,13 +19,12 @@
 package org.eclipse.krazo.test;
 
 import static org.junit.Assert.assertEquals;
-
+import java.net.URL;
+import java.nio.file.Paths;
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.HtmlForm;
 import com.gargoylesoftware.htmlunit.html.HtmlHiddenInput;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
-import java.net.URL;
-import java.nio.file.Paths;
 import org.eclipse.krazo.test.util.WebArchiveBuilder;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
