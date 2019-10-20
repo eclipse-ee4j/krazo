@@ -8,7 +8,7 @@
 <h1>CSRF Custom Exception Test</h1>
 <form id="form" action="${mvc.uri('doPatch')}" method="post" accept-charset="utf-8">
 
-    <input type="hidden" name="_method" value="DELETE">
+    <input type="hidden" name="_method" value="PATCH">
 
     <input type="hidden" name="${mvc.csrf.name}" value="${mvc.csrf.token}"/>
 
