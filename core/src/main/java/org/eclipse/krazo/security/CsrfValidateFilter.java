@@ -19,7 +19,6 @@
 package org.eclipse.krazo.security;
 
 import static org.eclipse.krazo.util.AnnotationUtils.hasAnnotation;
-
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.List;
@@ -80,8 +79,7 @@ public class CsrfValidateFilter implements ContainerRequestFilter {
     private FormEntityProvider formEntityProvider;
 
     public CsrfValidateFilter() {
-        this.formEntityProvider = ServiceLoaders.list(FormEntityProvider.class)
-            .get(0);
+        this.formEntityProvider = ServiceLoaders.list(FormEntityProvider.class).get(0);
     }
 
     @Override
@@ -92,13 +90,11 @@ public class CsrfValidateFilter implements ContainerRequestFilter {
         if (needsValidation(controller)) {
 
             CsrfToken token = csrfTokenManager.getToken()
-                .orElseThrow(() -> new CsrfValidationException(messages.get("CsrfFailed", "missing token")));
+                    .orElseThrow(() -> new CsrfValidationException(messages.get("CsrfFailed", "missing token")));
 
             // First check if CSRF token is in header
-            final String csrfToken = context.getHeaders()
-                .getFirst(token.getHeaderName());
-            if (token.getValue()
-                .equals(csrfToken)) {
+            final String csrfToken = context.getHeaders().getFirst(token.getHeaderName());
+            if (token.getValue().equals(csrfToken)) {
                 return;
             }
 
@@ -110,14 +106,12 @@ public class CsrfValidateFilter implements ContainerRequestFilter {
 
             // Validate CSRF
             final Form form = formEntityProvider.getForm(context);
-            final List<String> tokenValues = form.asMap()
-                .get(token.getParamName());
+            final List<String> tokenValues = form.asMap().get(token.getParamName());
             if (tokenValues == null || tokenValues.isEmpty()) {
                 throw new CsrfValidationException(messages.get("CsrfFailed", "missing field"));
             }
 
-            if (!token.getValue()
-                .equals(tokenValues.get(0))) {
+            if (!token.getValue().equals(tokenValues.get(0))) {
                 throw new CsrfValidationException(messages.get("CsrfFailed", "mismatching tokens"));
             }
         }
@@ -145,7 +139,7 @@ public class CsrfValidateFilter implements ContainerRequestFilter {
                 return true;
             case EXPLICIT:
                 return hasAnnotation(controller, CsrfProtected.class)
-                    || hasAnnotation(controller.getDeclaringClass(), CsrfProtected.class);
+                        || hasAnnotation(controller.getDeclaringClass(), CsrfProtected.class);
         }
         return false;
     }
