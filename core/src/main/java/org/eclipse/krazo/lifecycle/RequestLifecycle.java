@@ -41,6 +41,8 @@ public class RequestLifecycle {
     @Inject
     private MvcContextImpl mvc;
 
+    private boolean controllerExecuted = false;
+
     public void beforeAll(ContainerRequestContext context) {
 
         // initialize request locale
@@ -54,12 +56,19 @@ public class RequestLifecycle {
         eventDispatcher.fireBeforeControllerEvent();
         try {
 
-            return controllerMethod.call();
+            Object result = controllerMethod.call();
+            controllerExecuted = true;
+
+            return result;
 
         } finally {
             eventDispatcher.fireAfterControllerEvent();
         }
 
+    }
+
+    public boolean isControllerExecuted() {
+        return controllerExecuted;
     }
 
 }

@@ -25,6 +25,8 @@ import javax.annotation.Priority;
 import javax.enterprise.event.Event;
 import javax.inject.Inject;
 import org.eclipse.krazo.engine.Viewable;
+import org.eclipse.krazo.lifecycle.RequestLifecycle;
+
 import javax.mvc.Controller;
 import javax.mvc.View;
 import javax.mvc.event.ControllerRedirectEvent;
@@ -82,7 +84,7 @@ import static org.eclipse.krazo.util.PathUtils.*;
 public class ViewResponseFilter implements ContainerResponseFilter {
 
     private static final String FILTER_EXECUTED_KEY = ViewResponseFilter.class.getName() + ".EXECUTED";
-    
+
     private static final String REDIRECT = "redirect:";
 
     @Context
@@ -103,6 +105,9 @@ public class ViewResponseFilter implements ContainerResponseFilter {
     @Inject
     private KrazoConfig krazoConfig;
 
+    @Inject
+    private RequestLifecycle requestLifecycle;
+
     @Override
     public void filter(ContainerRequestContext requestContext,
                        ContainerResponseContext responseContext) throws IOException {
@@ -114,7 +119,12 @@ public class ViewResponseFilter implements ContainerResponseFilter {
         } else {
             request.setAttribute(FILTER_EXECUTED_KEY, true);
         }
-        
+
+        // the following code should only execute for the controller happy path
+        if (!requestLifecycle.isControllerExecuted()) {
+            return;
+        }
+
         final Method method = resourceInfo.getResourceMethod();
         final Class<?> returnType = method.getReturnType();
 
@@ -139,7 +149,7 @@ public class ViewResponseFilter implements ContainerResponseFilter {
                 if (responseContext.getStatusInfo().getStatusCode() == Response.Status.NO_CONTENT.getStatusCode()) {
                     responseContext.setStatusInfo(Response.Status.OK);
                 }
-                
+
             } else if (returnType == Void.TYPE) {
                 throw new ServerErrorException(messages.get("VoidControllerNoView", resourceInfo.getResourceMethod()), INTERNAL_SERVER_ERROR);
             }
