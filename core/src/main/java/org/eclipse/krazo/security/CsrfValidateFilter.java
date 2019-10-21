@@ -18,16 +18,19 @@
  */
 package org.eclipse.krazo.security;
 
-import org.eclipse.krazo.KrazoConfig;
-import org.eclipse.krazo.core.Messages;
-import org.eclipse.krazo.util.ServiceLoaders;
-
+import static org.eclipse.krazo.util.AnnotationUtils.hasAnnotation;
+import java.io.IOException;
+import java.lang.reflect.Method;
+import java.util.List;
 import javax.annotation.Priority;
 import javax.inject.Inject;
 import javax.mvc.Controller;
 import javax.mvc.security.CsrfProtected;
 import javax.mvc.security.CsrfValidationException;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.PATCH;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Priorities;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
@@ -35,11 +38,9 @@ import javax.ws.rs.container.ResourceInfo;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Form;
 import javax.ws.rs.core.MediaType;
-import java.io.IOException;
-import java.lang.reflect.Method;
-import java.util.List;
-
-import static org.eclipse.krazo.util.AnnotationUtils.hasAnnotation;
+import org.eclipse.krazo.KrazoConfig;
+import org.eclipse.krazo.core.Messages;
+import org.eclipse.krazo.util.ServiceLoaders;
 
 /**
  * <p>Reader interceptor that checks for the CSRF header and token. If not available as
@@ -127,8 +128,8 @@ public class CsrfValidateFilter implements ContainerRequestFilter {
      * @param controller controller to inspect.
      * @return outcome of test.
      */
-    private boolean needsValidation(Method controller) {
-        if (controller == null || !hasAnnotation(controller, POST.class)) {
+    private boolean needsValidation(final Method controller) {
+        if (controller == null || !performsWriteAccess(controller)) {
             return false;
         }
         switch (krazoConfig.getCsrfOptions()) {
@@ -141,6 +142,21 @@ public class CsrfValidateFilter implements ContainerRequestFilter {
                         || hasAnnotation(controller.getDeclaringClass(), CsrfProtected.class);
         }
         return false;
+    }
+
+    /**
+     * Check if the controller wants to perform a write access. This means, in HTTP verbs, it wants
+     * to perform a {@link POST}, {@link PUT}, {@link PATCH} or {@link DELETE} annotated method.
+     *
+     * Because the {@link org.eclipse.krazo.forms.HiddenMethodFilter} enables us to use this methods in forms, we
+     * need to validate a Csrf token for them too, because the HTTP POST method is overwritten before this filter is entered.
+     *
+     * @param controller the controller method to check for write access
+     * @return true, if the controller method wants to perform a write access, false if not
+     */
+    private boolean performsWriteAccess(final Method controller) {
+        return hasAnnotation(controller, POST.class) || hasAnnotation(controller, PATCH.class) ||
+            hasAnnotation(controller, PUT.class) || hasAnnotation(controller, DELETE.class);
     }
 
 }

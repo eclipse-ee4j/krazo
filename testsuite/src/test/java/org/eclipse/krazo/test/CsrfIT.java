@@ -55,7 +55,7 @@ public class CsrfIT {
     private static final String CSRF_PARAM = "_csrf";
 
 
-    private static final String WEB_INF_SRC = "src/main/resources/csrf/";
+    private static final String WEB_INF_SRC = "src/main/resources/csrf/base/";
 
     @ArquillianResource
     private URL baseURL;
@@ -66,7 +66,7 @@ public class CsrfIT {
     @Deployment(testable = false, name = "csrf")
     public static Archive createDeployment() {
         return new WebArchiveBuilder()
-            .addPackage("org.eclipse.krazo.test.csrf")
+            .addPackage("org.eclipse.krazo.test.csrf.base")
             .addView(Paths.get(WEB_INF_SRC).resolve("views/csrf.jsp").toFile(), "csrf.jsp")
             .addView(Paths.get(WEB_INF_SRC).resolve("views/ok.jsp").toFile(), "ok.jsp")
             .addBeansXml()
