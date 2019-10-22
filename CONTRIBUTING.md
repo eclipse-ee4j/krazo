@@ -18,6 +18,10 @@ The project maintains the following source code repositories
 
 * https://github.com/eclipse-ee4j/krazo
 
+Eclipse Krazo uses the Eclipse EE4J code format rules available here:
+
+* https://github.com/eclipse-ee4j/ee4j/tree/master/codestyle
+
 ## Eclipse Contributor Agreement
 
 Before your contribution can be accepted by the project team contributors must
