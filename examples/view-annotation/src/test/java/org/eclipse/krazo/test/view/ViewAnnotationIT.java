@@ -28,6 +28,7 @@ import org.junit.Test;
 import java.util.Iterator;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
@@ -103,7 +104,7 @@ public class ViewAnnotationIT {
         final HtmlPage page = webClient.getPage(webUrl + "resources/void/forbidden");
         assertThat(page.getWebResponse().getStatusCode(), is(403));
         final Iterator<HtmlElement> it = page.getDocumentElement().getHtmlElementsByTagName("h1").iterator();
-        assertTrue(it.next().asText().contains("Hello World"));
+        assertFalse(it.next().asText().contains("Hello World"));
     }
 
     @Test
@@ -119,7 +120,7 @@ public class ViewAnnotationIT {
         final HtmlPage page = webClient.getPage(webUrl + "resources/string/forbidden");
         assertThat(page.getWebResponse().getStatusCode(), is(403));
         final Iterator<HtmlElement> it = page.getDocumentElement().getHtmlElementsByTagName("h1").iterator();
-        assertTrue(it.next().asText().contains("Hello World"));
+        assertFalse(it.next().asText().contains("Hello World"));
     }
 
     @Test
