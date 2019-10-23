@@ -103,7 +103,7 @@ public class HelloController {
     }
 
     /**
-     * Void method that throws a ForbiddenException. View 'hello.jsp' should be rendered.
+     * Void method that throws a ForbiddenException. View 'hello.jsp' should be ignored.
      */
     @GET
     @Path("void/forbidden")
@@ -123,7 +123,7 @@ public class HelloController {
     }
 
     /**
-     * Method that throws a ForbiddenException. View 'hello.jsp' should be rendered.
+     * Method that throws a ForbiddenException. View 'hello.jsp' should be ignored.
      */
     @GET
     @Path("string/forbidden")

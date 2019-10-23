@@ -59,7 +59,7 @@ public class ExceptionsIT {
     public void testNotFound() throws Exception {
         final HtmlPage page = webClient.getPage(webUrl + "resources/exceptions/not_found");
         final Iterator<HtmlElement> it = page.getDocumentElement().getHtmlElementsByTagName("h1").iterator();
-        assertTrue(it.next().asText().contains("Hello World"));
+        assertFalse(it.next().asText().contains("Hello World"));
     }
 
     @Test

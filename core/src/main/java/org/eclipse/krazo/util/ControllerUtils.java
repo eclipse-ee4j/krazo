@@ -64,8 +64,8 @@ public final class ControllerUtils {
         if (hasDeclaredRequestMethodAnnotation(method)) {
             return true;
         }
-        // inheritance disabled if other MVC or JAX-RS annotations found
-        if (AnnotationUtils.hasMvcOrJaxrsAnnotations(method)) {
+        // inheritance disabled if other JAX-RS annotations found
+        if (AnnotationUtils.hasJaxrsAnnotations(method)) {
             return false;
         }
         // check all super classes

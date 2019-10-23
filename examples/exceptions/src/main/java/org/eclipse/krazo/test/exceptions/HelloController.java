@@ -18,6 +18,8 @@
  */
 package org.eclipse.krazo.test.exceptions;
 
+import org.eclipse.krazo.engine.Viewable;
+
 import javax.mvc.Controller;
 import javax.mvc.View;
 import javax.ws.rs.ClientErrorException;
@@ -70,7 +72,9 @@ public class HelloController {
     public static class GlobalExceptionMapper implements ExceptionMapper<ClientErrorException> {
         @Override
         public Response toResponse(ClientErrorException exception) {
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("hello.jsp").build();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                .entity(new Viewable("hello.jsp"))
+                .build();
         }
     }
 }

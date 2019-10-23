@@ -171,9 +171,17 @@ public final class AnnotationUtils {
      * @return outcome of test.
      */
     static boolean hasMvcOrJaxrsAnnotations(Method method) {
-        return Arrays.stream(method.getDeclaredAnnotations()).anyMatch(a -> {
-            final String an = a.annotationType().getName();
-            return an.startsWith("javax.mvc.") || an.startsWith("javax.ws.rs.");
-        });
+        return hasMvcAnnotations(method) || hasJaxrsAnnotations(method);
     }
+
+    static boolean hasJaxrsAnnotations(Method method) {
+        return Arrays.stream(method.getDeclaredAnnotations())
+            .anyMatch(a -> a.annotationType().getName().startsWith("javax.ws.rs."));
+    }
+
+    static boolean hasMvcAnnotations(Method method) {
+        return Arrays.stream(method.getDeclaredAnnotations())
+            .anyMatch(a -> a.annotationType().getName().startsWith("javax.mvc."));
+    }
+
 }

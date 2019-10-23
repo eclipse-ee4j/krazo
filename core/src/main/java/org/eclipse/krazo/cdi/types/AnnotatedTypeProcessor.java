@@ -19,11 +19,10 @@ package org.eclipse.krazo.cdi.types;
 
 import org.eclipse.krazo.binding.validate.ValidationInterceptorBinding;
 import org.eclipse.krazo.cdi.AroundController;
+import org.eclipse.krazo.util.ControllerUtils;
 
 import javax.enterprise.inject.spi.AnnotatedMethod;
 import javax.enterprise.inject.spi.AnnotatedType;
-import javax.mvc.Controller;
-import javax.ws.rs.*;
 import java.lang.annotation.Annotation;
 import java.util.Arrays;
 import java.util.LinkedHashSet;
@@ -67,13 +66,6 @@ public class AnnotatedTypeProcessor {
     private <T> AnnotatedMethod<? super T> getReplacement(AnnotatedType<T> type,
                                                           AnnotatedMethod<? super T> method) {
 
-        boolean isResourceMethod = method.getAnnotation(GET.class) != null ||
-            method.getAnnotation(POST.class) != null || method.getAnnotation(PUT.class) != null ||
-            method.getAnnotation(HEAD.class) != null || method.getAnnotation(DELETE.class) != null;
-
-        boolean hasControllerAnnotation =
-            method.getAnnotation(Controller.class) != null || type.getAnnotation(Controller.class) != null;
-
         // added to methods to intercept calls with our interceptors
         Set<Annotation> markerAnnotations = new LinkedHashSet<>(Arrays.asList(
                 () -> ValidationInterceptorBinding.class,
@@ -83,7 +75,7 @@ public class AnnotatedTypeProcessor {
         // drop Hibernate Validator's marker annotations to skip the native validation
         Predicate<Class> annotationBlacklist = clazz -> isHibernateValidatorMarkerAnnotation(clazz);
 
-        if (isResourceMethod && hasControllerAnnotation) {
+        if (ControllerUtils.isControllerMethod(method.getJavaMember())) {
 
             log.log(Level.FINE, "Found controller method: {0}#{1}", new Object[]{
                 type.getJavaClass().getName(),
