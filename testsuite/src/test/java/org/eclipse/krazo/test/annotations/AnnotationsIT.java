@@ -18,9 +18,19 @@
  */
 package org.eclipse.krazo.test.annotations;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+
+import java.net.URL;
+import java.nio.file.Paths;
+import java.util.Iterator;
+
+import com.gargoylesoftware.htmlunit.Page;
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.HtmlElement;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
+
 import org.eclipse.krazo.test.util.WebArchiveBuilder;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
@@ -30,12 +40,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import java.net.URL;
-import java.nio.file.Paths;
-import java.util.Iterator;
-
-import static org.junit.Assert.*;
 
 @RunWith(Arquillian.class)
 public class AnnotationsIT {
@@ -50,10 +54,8 @@ public class AnnotationsIT {
     @Before
     public void setUp() throws Exception {
         webClient = new WebClient();
-        webClient.getOptions()
-                .setThrowExceptionOnFailingStatusCode(false);
-        webClient.getOptions()
-                .setRedirectEnabled(true);
+        webClient.getOptions().setThrowExceptionOnFailingStatusCode(false);
+        webClient.getOptions().setRedirectEnabled(true);
     }
 
     @After
@@ -63,61 +65,42 @@ public class AnnotationsIT {
 
     @Deployment(testable = false, name = "annotations")
     public static Archive createDeployment() {
-        return new WebArchiveBuilder()
-                .addPackage("org.eclipse.krazo.test.annotations")
-                .addView(Paths.get(WEB_INF_SRC)
-                                 .resolve("views/error.jsp")
-                                 .toFile(), "error.jsp")
-                .addView(Paths.get(WEB_INF_SRC)
-                                 .resolve("views/success.jsp")
-                                 .toFile(), "success.jsp")
-                .addBeansXml()
+        return new WebArchiveBuilder().addPackage("org.eclipse.krazo.test.annotations")
+                .addView(Paths.get(WEB_INF_SRC).resolve("views/error.jsp").toFile(), "error.jsp")
+                .addView(Paths.get(WEB_INF_SRC).resolve("views/success.jsp").toFile(), "success.jsp").addBeansXml()
                 .build();
     }
 
     @Test
     public void testNoView() throws Exception {
         final HtmlPage page = webClient.getPage(baseURL + "resources/annotations/no_view");
-        final Iterator<HtmlElement> it = page.getDocumentElement()
-                .getElementsByTagName("h1")
-                .iterator();
-        assertTrue(it.next()
-                           .asText()
-                           .contains("Success"));
+        final Iterator<HtmlElement> it = page.getDocumentElement().getElementsByTagName("h1").iterator();
+        assertTrue(it.next().asText().contains("Success"));
     }
 
     @Test
     public void testWithView() throws Exception {
         final HtmlPage page = webClient.getPage(baseURL + "resources/annotations/view");
-        final Iterator<HtmlElement> it = page.getDocumentElement()
-                .getElementsByTagName("h1")
-                .iterator();
-        assertTrue(it.next()
-                           .asText()
-                           .contains("Success"));
+        final Iterator<HtmlElement> it = page.getDocumentElement().getElementsByTagName("h1").iterator();
+        assertTrue(it.next().asText().contains("Success"));
     }
 
     @Test
     public void testWithViewInterface() throws Exception {
         final HtmlPage page = webClient.getPage(baseURL + "resources/annotations/view_interface");
-        final Iterator<HtmlElement> it = page.getDocumentElement()
-                .getElementsByTagName("h1")
-                .iterator();
-        assertTrue(it.next()
-                           .asText()
-                           .contains("Success"));
+        final Iterator<HtmlElement> it = page.getDocumentElement().getElementsByTagName("h1").iterator();
+        assertTrue(it.next().asText().contains("Success"));
     }
 
     @Test
     public void testNoOverrideJaxrs() throws Exception {
         final HtmlPage page = webClient.getPage(baseURL + "resources/annotations/no_override_jaxrs");
-        assertNull(page);       // Empty 204
+        assertNull(page); // Empty 204
     }
 
     @Test
     public void testNoOverrideMvc() throws Exception {
-        final HtmlPage page = webClient.getPage(baseURL + "resources/annotations/no_override_mvc");
-        assertEquals(500, page.getWebResponse()
-                .getStatusCode());       // void but no @View -> Exception
+        final Page page = webClient.getPage(baseURL + "resources/annotations/no_override_mvc");
+        assertEquals(500, page.getWebResponse().getStatusCode()); // void but no @View -> Exception
     }
 }
