@@ -3,7 +3,6 @@
 <html>
 <head>
     <title>Success</title>
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/krazo.css"/>
 </head>
 <body>
     <h1>Success</h1>

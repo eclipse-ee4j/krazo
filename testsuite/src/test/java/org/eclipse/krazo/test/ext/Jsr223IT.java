@@ -22,7 +22,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.net.URL;
 import java.nio.file.Paths;
-import org.eclipse.krazo.test.annotation.IgnoreOnWildfly;
+import org.eclipse.krazo.test.helper.annotation.IgnoreOnWildfly;
 import org.eclipse.krazo.test.util.WebArchiveBuilder;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.drone.api.annotation.Drone;

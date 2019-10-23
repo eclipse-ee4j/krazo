@@ -18,9 +18,7 @@
  */
 package org.eclipse.krazo.test.ext;
 
-import com.gargoylesoftware.htmlunit.html.HtmlElement;
-import com.gargoylesoftware.htmlunit.html.HtmlPage;
-import org.eclipse.krazo.test.annotation.IgnoreOnWildfly;
+import org.eclipse.krazo.test.helper.annotation.IgnoreOnWildfly;
 import org.eclipse.krazo.test.util.WebArchiveBuilder;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.drone.api.annotation.Drone;
