@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2014-2015 Oracle and/or its affiliates. All rights reserved.
- * Copyright (c) 2018, 2019 Eclipse Krazo committers and contributors
+ * Copyright (c) 2019 Eclipse Krazo committers and contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,23 +15,13 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  */
-package org.eclipse.krazo.test.annotations;
-
-import javax.ws.rs.ApplicationPath;
-import javax.ws.rs.core.Application;
-import java.util.Collections;
-import java.util.Set;
+package org.eclipse.krazo.test.helper.annotation;
 
 /**
- * Class MyApplication.
+ * Category for tests which shall not run on Wildfly for some reason.
  *
- * @author Santiago Pericas-Geertsen
+ * @author Tobias Erdle
  */
-@ApplicationPath("resources")
-public class MyApplication extends Application {
+public interface IgnoreOnWildfly {
 
-    @Override
-    public Set<Class<?>> getClasses() {
-        return Collections.singleton(AnnotationsController.class);
-    }
 }

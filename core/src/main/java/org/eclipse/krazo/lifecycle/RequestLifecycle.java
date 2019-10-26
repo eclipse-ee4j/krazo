@@ -17,14 +17,16 @@
  */
 package org.eclipse.krazo.lifecycle;
 
-import org.eclipse.krazo.MvcContextImpl;
-import org.eclipse.krazo.locale.LocaleResolverChain;
+import java.lang.reflect.Method;
+import java.util.Locale;
+import java.util.concurrent.Callable;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.container.ContainerRequestContext;
-import java.util.Locale;
-import java.util.concurrent.Callable;
+
+import org.eclipse.krazo.MvcContextImpl;
+import org.eclipse.krazo.locale.LocaleResolverChain;
 
 /**
  * Implements the lifecycle of MVC requests
@@ -43,6 +45,8 @@ public class RequestLifecycle {
 
     private boolean controllerExecuted = false;
 
+    private Method controllerMethod;
+
     public void beforeAll(ContainerRequestContext context) {
 
         // initialize request locale
@@ -51,12 +55,12 @@ public class RequestLifecycle {
 
     }
 
-    public Object aroundController(Callable<Object> controllerMethod) throws Exception {
+    public Object aroundController(final Method method, Callable<Object> invocation) throws Exception {
+        this.controllerMethod = method;
 
         eventDispatcher.fireBeforeControllerEvent();
         try {
-
-            Object result = controllerMethod.call();
+            Object result = invocation.call();
             controllerExecuted = true;
 
             return result;
@@ -64,11 +68,13 @@ public class RequestLifecycle {
         } finally {
             eventDispatcher.fireAfterControllerEvent();
         }
-
     }
 
     public boolean isControllerExecuted() {
         return controllerExecuted;
     }
 
+    public Method getControllerMethod() {
+        return controllerMethod;
+    }
 }

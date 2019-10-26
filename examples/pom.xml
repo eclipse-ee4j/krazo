@@ -54,7 +54,6 @@
         </dependency>
     </dependencies>
     <modules>
-        <module>annotations</module>
         <module>application-path</module>
         <module>book-cdi</module>
         <module>book-models</module>

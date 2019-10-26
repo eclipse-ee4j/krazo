@@ -17,14 +17,15 @@
  */
 package org.eclipse.krazo.cdi;
 
-import org.eclipse.krazo.lifecycle.RequestLifecycle;
-
+import java.io.Serializable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.Priority;
 import javax.inject.Inject;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.Interceptor;
 import javax.interceptor.InvocationContext;
-import java.io.Serializable;
+import org.eclipse.krazo.lifecycle.RequestLifecycle;
 
 /**
  * @author Christian Kaltepoth
@@ -34,6 +35,8 @@ import java.io.Serializable;
 @Priority(Interceptor.Priority.PLATFORM_AFTER)
 public class AroundControllerInterceptor implements Serializable {
 
+    private static final Logger LOGGER = Logger.getLogger(AroundControllerInterceptor.class.getName());
+
     private static final long serialVersionUID = -5804986456381504613L;
 
     @Inject
@@ -41,7 +44,8 @@ public class AroundControllerInterceptor implements Serializable {
 
     @AroundInvoke
     public Object validateMethodInvocation(InvocationContext ctx) throws Exception {
-        return requestLifecycle.aroundController(ctx::proceed);
+        LOGGER.log(Level.FINE, "Invoking method: {0}#{1}", new Object[] { ctx.getMethod().getDeclaringClass().getName(), ctx.getMethod().getName() });
+        return requestLifecycle.aroundController(ctx.getMethod(), ctx::proceed);
     }
 
 }
