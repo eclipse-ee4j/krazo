@@ -24,7 +24,7 @@
     <parent>
         <groupId>org.eclipse.krazo.ext</groupId>
         <artifactId>krazo-ext-parent</artifactId>
-        <version>1.0.0-Beta1</version>
+        <version>1.0.0-SNAPSHOT</version>
     </parent>
     <artifactId>krazo-stringtemplate</artifactId>
     <packaging>jar</packaging>
