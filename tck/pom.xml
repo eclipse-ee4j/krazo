@@ -33,7 +33,7 @@
 
     <properties>
 
-        <tck.version>1.0-SNAPSHOT</tck.version>
+        <tck.version>1.0.0-RC1</tck.version>
 
         <!-- We don't deploy this module, because the TCK isn't in Maven Central yet -->
         <maven.deploy.skip>true</maven.deploy.skip>
