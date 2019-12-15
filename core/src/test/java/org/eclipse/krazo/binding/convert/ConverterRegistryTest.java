@@ -23,7 +23,6 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameter;
 
-import java.lang.annotation.Annotation;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Arrays;
@@ -65,7 +64,7 @@ public class ConverterRegistryTest {
 
     @Test
     public void testConverterRegistered() {
-        MvcConverter converter = registry.lookup(type, new Annotation[]{});
+        MvcConverter converter = registry.lookup(type);
         assertNotNull(converter);
     }
 }

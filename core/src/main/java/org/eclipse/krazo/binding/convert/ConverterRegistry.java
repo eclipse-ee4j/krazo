@@ -51,7 +51,7 @@ public class ConverterRegistry {
         converters.add(converter);
     }
 
-    <T> MvcConverter<T> lookup(Class<T> rawType, Annotation[] annotations) {
+    <T> MvcConverter<T> lookup(Class<T> rawType) {
         return converters.stream()
                 .filter(converter -> converter.supports(rawType))
                 .findFirst().orElse(null);
