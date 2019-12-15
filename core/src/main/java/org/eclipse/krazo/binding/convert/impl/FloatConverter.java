@@ -47,4 +47,9 @@ public class FloatConverter extends NumberConverter<Float> {
         }
 
     }
+
+    @Override
+    public int getPriority() {
+        return BUILT_IN_PRIORITY;
+    }
 }

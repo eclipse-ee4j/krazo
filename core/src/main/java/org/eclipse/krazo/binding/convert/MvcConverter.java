@@ -27,6 +27,11 @@ import java.util.Locale;
 public interface MvcConverter<T> {
 
     /**
+     * The common priority for built-in converters.
+     */
+    int BUILT_IN_PRIORITY = 0;
+
+    /**
      * Returns true if the converter supports the specified type.
      */
     boolean supports(Class<T> rawType);
@@ -42,4 +47,15 @@ public interface MvcConverter<T> {
      */
     ConverterResult<T> convert(String value, Class<T> rawType, Locale locale);
 
+    /**
+     * Return the priority of a {@link MvcConverter}. Converters with a higher priority (= higher number) are evaluated
+     * before those with a lower one. So for example, a built-in converter with the priority 0 is evaluated after
+     * a custom converter with priority 10.
+     * <br><br>
+     * <b>Note:</b> It is assumed that all built-in converters have a common, very low priority, so a client is free to prioritize
+     * its converters as he wants (@see {@link MvcConverter#BUILT_IN_PRIORITY}).
+     *
+     * @return the priority of the {@link MvcConverter}
+     */
+    int getPriority();
 }

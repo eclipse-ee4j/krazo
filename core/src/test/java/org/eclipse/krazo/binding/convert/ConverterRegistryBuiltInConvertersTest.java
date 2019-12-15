@@ -27,15 +27,18 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Locale;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Asserts that converters for all supported types have been registered
+ *
  * @author Gregor Tudan
  */
 @RunWith(Parameterized.class)
-public class ConverterRegistryTest {
+public class ConverterRegistryBuiltInConvertersTest {
 
     @Parameter
     public Class<Object> type;

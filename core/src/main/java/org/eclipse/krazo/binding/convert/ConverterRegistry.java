@@ -21,9 +21,12 @@ import org.eclipse.krazo.binding.convert.impl.*;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
-import java.lang.annotation.Annotation;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import static java.util.Comparator.reverseOrder;
 
 /**
  * Central registry for {@link MvcConverter} instances.
@@ -47,14 +50,14 @@ public class ConverterRegistry {
         register(new BooleanConverter());
     }
 
-    private void register(MvcConverter converter) {
+    public void register(MvcConverter converter) {
         converters.add(converter);
     }
 
     <T> MvcConverter<T> lookup(Class<T> rawType) {
         return converters.stream()
                 .filter(converter -> converter.supports(rawType))
+                .sorted(Comparator.comparing(MvcConverter::getPriority, reverseOrder()))
                 .findFirst().orElse(null);
     }
-
 }

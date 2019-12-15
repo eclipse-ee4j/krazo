@@ -47,4 +47,9 @@ public class DoubleConverter extends NumberConverter<Double> {
         }
 
     }
+
+    @Override
+    public int getPriority() {
+        return BUILT_IN_PRIORITY;
+    }
 }

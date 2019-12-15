@@ -47,4 +47,9 @@ public class LongConverter extends NumberConverter<Long> {
         }
 
     }
+
+    @Override
+    public int getPriority() {
+        return BUILT_IN_PRIORITY;
+    }
 }

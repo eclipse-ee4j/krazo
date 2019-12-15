@@ -46,4 +46,9 @@ public class BooleanConverter implements MvcConverter<Boolean> {
                 : ConverterResult.success("on".equals(normalized) || "true".equals(normalized));
 
     }
+
+    @Override
+    public int getPriority() {
+        return BUILT_IN_PRIORITY;
+    }
 }
