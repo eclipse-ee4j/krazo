@@ -332,7 +332,8 @@
                 <dependency>
                     <groupId>org.apache.tomee</groupId>
                     <artifactId>arquillian-tomee-remote</artifactId>
-                    <version>8.0.0-M3</version>
+                    <version>8.0.0</version>
+                    <scope>test</scope>
                 </dependency>
                 <dependency>
                     <groupId>org.eclipse.krazo</groupId>
