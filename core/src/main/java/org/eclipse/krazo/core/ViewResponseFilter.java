@@ -19,6 +19,7 @@
 package org.eclipse.krazo.core;
 
 import static javax.ws.rs.core.Response.Status.FOUND;
+
 import static javax.ws.rs.core.Response.Status.INTERNAL_SERVER_ERROR;
 import static javax.ws.rs.core.Response.Status.MOVED_PERMANENTLY;
 import static javax.ws.rs.core.Response.Status.SEE_OTHER;
@@ -41,7 +42,6 @@ import javax.annotation.Priority;
 import javax.enterprise.event.Event;
 import javax.inject.Inject;
 import javax.mvc.Controller;
-import javax.mvc.View;
 import javax.mvc.event.ControllerRedirectEvent;
 import javax.mvc.event.MvcEvent;
 import javax.servlet.http.HttpServletRequest;
@@ -115,6 +115,9 @@ public class ViewResponseFilter implements ContainerResponseFilter {
 
     @Inject
     private RequestLifecycle requestLifecycle;
+    
+    @Inject
+    private ViewPathResolver viewPathResolver;
 
     @Override
     public void filter(ContainerRequestContext requestContext,
@@ -142,16 +145,13 @@ public class ViewResponseFilter implements ContainerResponseFilter {
         Object entity = responseContext.getEntity();
         final Class<?> entityType = entity != null ? entity.getClass() : null;
         if (entityType == null) {       // NO_CONTENT
-            View an = getAnnotation(method, View.class);
-            if (an == null) {
-                an = getAnnotation(method.getDeclaringClass(), View.class);
-            }
-            if (an != null) {
+            String viewPath = viewPathResolver.pathFor(method);
+            if (viewPath != null && !viewPath.isEmpty()) {
                 MediaType contentType = selectVariant(requestContext.getRequest(), resourceInfo);
                 if (contentType == null) {
                     contentType = MediaType.TEXT_HTML_TYPE;     // default
                 }
-                responseContext.setEntity(new Viewable(appendExtensionIfRequired(an.value())), null, contentType);
+                responseContext.setEntity(new Viewable(appendExtensionIfRequired(viewPath)), null, contentType);
                 // If the entity is null the status will be set to 204 by Jersey. For void methods we need to
                 // set the status to 200 unless no other status was set by e.g. throwing an Exception.
 

@@ -18,6 +18,7 @@
  */
 package org.eclipse.krazo.util;
 
+import org.eclipse.krazo.core.DefaultViewPathResolver;
 import org.jboss.weld.environment.se.Weld;
 import org.jboss.weld.environment.se.WeldContainer;
 import org.junit.After;
@@ -61,7 +62,7 @@ public class AnnotationUtilsTest {
 	@Before
 	public void before() {
 
-		Weld weld = new Weld();
+		Weld weld = new Weld().addBeanClass(DefaultViewPathResolver.class);
 		container = weld.initialize();
 
 		injectFields(this, container.getBeanManager());
