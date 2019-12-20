@@ -62,7 +62,7 @@ public class AnnotationUtilsTest {
 	@Before
 	public void before() {
 
-		Weld weld = new Weld().addBeanClass(DefaultViewPathResolver.class);
+		Weld weld = new Weld();
 		container = weld.initialize();
 
 		injectFields(this, container.getBeanManager());

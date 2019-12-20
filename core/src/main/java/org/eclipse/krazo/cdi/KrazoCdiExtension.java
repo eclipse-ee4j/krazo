@@ -103,6 +103,7 @@ public class KrazoCdiExtension implements Extension {
                 ModelsImpl.class,
                 ViewableWriter.class,
                 ViewResponseFilter.class,
+                DefaultViewPathResolver.class,
                 
                 // lifecycle
                 EventDispatcher.class,
