@@ -24,7 +24,6 @@ import javax.enterprise.context.ApplicationScoped;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static java.util.Comparator.reverseOrder;
 
@@ -52,12 +51,13 @@ public class ConverterRegistry {
 
     public void register(MvcConverter converter) {
         converters.add(converter);
+
+        converters.sort(Comparator.comparing(MvcConverter::getPriority, reverseOrder()));
     }
 
     <T> MvcConverter<T> lookup(Class<T> rawType) {
         return converters.stream()
                 .filter(converter -> converter.supports(rawType))
-                .sorted(Comparator.comparing(MvcConverter::getPriority, reverseOrder()))
                 .findFirst().orElse(null);
     }
 }
