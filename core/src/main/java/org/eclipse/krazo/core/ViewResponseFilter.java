@@ -42,6 +42,7 @@ import javax.annotation.Priority;
 import javax.enterprise.event.Event;
 import javax.inject.Inject;
 import javax.mvc.Controller;
+import javax.mvc.View;
 import javax.mvc.event.ControllerRedirectEvent;
 import javax.mvc.event.MvcEvent;
 import javax.servlet.http.HttpServletRequest;
@@ -63,6 +64,7 @@ import javax.ws.rs.core.Variant;
 import org.eclipse.krazo.KrazoConfig;
 import org.eclipse.krazo.engine.Viewable;
 import org.eclipse.krazo.event.ControllerRedirectEventImpl;
+import org.eclipse.krazo.jaxrs.JaxRsContext;
 import org.eclipse.krazo.lifecycle.RequestLifecycle;
 
 /**
@@ -91,33 +93,43 @@ public class ViewResponseFilter implements ContainerResponseFilter {
 
     private static final Logger LOGGER = Logger.getLogger(ViewResponseFilter.class.getName());
 
-    private static final String FILTER_EXECUTED_KEY = ViewResponseFilter.class.getName() + ".EXECUTED";
+    public static final String FILTER_EXECUTED_KEY = ViewResponseFilter.class.getName() + ".EXECUTED";
 
-    private static final String REDIRECT = "redirect:";
+    public static final String REDIRECT = "redirect:";
 
-    @Context
     private UriInfo uriInfo;
 
-    @Context
     private ResourceInfo resourceInfo;
 
-    @Context
     private HttpServletRequest request;
 
-    @Inject
     private Event<MvcEvent> dispatcher;
 
-    @Inject
     private Messages messages;
 
-    @Inject
     private KrazoConfig krazoConfig;
 
-    @Inject
     private RequestLifecycle requestLifecycle;
     
-    @Inject
     private ViewPathResolver viewPathResolver;
+    
+    
+    @Deprecated
+    public ViewResponseFilter() {
+        // empty contructor for cdi eyes
+    }
+    
+    @Inject
+    public ViewResponseFilter(@JaxRsContext @Context UriInfo uriInfo,@JaxRsContext @Context ResourceInfo resourceInfo,@Context HttpServletRequest request,Event<MvcEvent> dispatcher,Messages messages,KrazoConfig krazoConfig,RequestLifecycle requestLifecycle,ViewPathResolver viewPathResolver) {
+        this.uriInfo = uriInfo;
+        this.resourceInfo = resourceInfo;
+        this.request = request;
+        this.dispatcher = dispatcher;
+        this.messages = messages;
+        this.krazoConfig = krazoConfig;
+        this.requestLifecycle = requestLifecycle;
+        this.viewPathResolver = viewPathResolver;
+    }
 
     @Override
     public void filter(ContainerRequestContext requestContext,
@@ -130,7 +142,7 @@ public class ViewResponseFilter implements ContainerResponseFilter {
         } else {
             request.setAttribute(FILTER_EXECUTED_KEY, true);
         }
-
+        
         // the following code should only execute for the controller happy path
         if (!requestLifecycle.isControllerExecuted()) {
             return;
@@ -145,7 +157,22 @@ public class ViewResponseFilter implements ContainerResponseFilter {
         Object entity = responseContext.getEntity();
         final Class<?> entityType = entity != null ? entity.getClass() : null;
         if (entityType == null) {       // NO_CONTENT
-            String viewPath = viewPathResolver.pathFor(method);
+            
+            
+            String viewPath = null;
+            
+            View an = getAnnotation(method, View.class);
+            if (an == null) {
+                an = getAnnotation(method.getDeclaringClass(), View.class);
+            }
+            
+            //give chance to viewPathResolver resolve view name before give up
+            if(an == null) {
+                viewPath = viewPathResolver.pathFor(method);
+            } else {
+                viewPath = an.value();
+            }
+            
             if (viewPath != null && !viewPath.isEmpty()) {
                 MediaType contentType = selectVariant(requestContext.getRequest(), resourceInfo);
                 if (contentType == null) {

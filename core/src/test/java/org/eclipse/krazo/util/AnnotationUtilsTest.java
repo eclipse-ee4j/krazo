@@ -18,7 +18,6 @@
  */
 package org.eclipse.krazo.util;
 
-import org.eclipse.krazo.core.DefaultViewPathResolver;
 import org.jboss.weld.environment.se.Weld;
 import org.jboss.weld.environment.se.WeldContainer;
 import org.junit.After;
