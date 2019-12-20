@@ -177,10 +177,16 @@
         </dependency>
         <dependency>
           <groupId>org.hibernate</groupId>
-          <artifactId>hibernate-validator-cdi</artifactId>
+          <artifactId>hibernate-validator</artifactId>
           <version>5.4.1.Final</version>
           <scope>test</scope>
         </dependency>
+        <dependency>
+			<groupId>com.fasterxml</groupId>
+			<artifactId>classmate</artifactId>
+			<version>1.5.1</version>
+			<scope>test</scope>
+		</dependency>
         <!-- Including some EL implementation required for Hibernate Validator -->
         <dependency>
           <groupId>org.glassfish</groupId>
