@@ -139,6 +139,7 @@ public class ViewResponseFilterTest {
         }).times(1);
         containerResponseContext.setStatusInfo(anyObject());
         expect(containerResponseContext.getEntity()).andReturn(null);
+        expect(containerResponseContext.getStatus()).andReturn(200);
 
         replay(statusType);
         replay(resourceInfo);
