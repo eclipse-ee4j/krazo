@@ -219,7 +219,7 @@ public class ViewResponseFilterTest {
     }
 
     private class MyTestClass3 extends MyTestClass2 {
-
+ 
     }
 
 }
