@@ -91,7 +91,10 @@ public class ViewResponseFilterTest {
         viewPathResolver = new DefaultViewPathResolver();
         containerResponseContext = createMock(ContainerResponseContext.class);
         containerRequestContext = createMock(ContainerRequestContext.class);
-        viewResponseFilter = new ViewResponseFilter(uriInfo, resourceInfo, request, dispatcher, messages, krazoConfig, requestLifecycle, viewPathResolver);
+        viewResponseFilter = new ViewResponseFilter(dispatcher, messages, krazoConfig, requestLifecycle, viewPathResolver);
+        viewResponseFilter.setRequest(request);
+        viewResponseFilter.setResourceInfo(resourceInfo);
+        viewResponseFilter.setUriInfo(uriInfo);
     }
 
     public static Collection<String[]> data() {

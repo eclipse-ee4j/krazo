@@ -19,7 +19,6 @@
 package org.eclipse.krazo.core;
 
 import static javax.ws.rs.core.Response.Status.FOUND;
-
 import static javax.ws.rs.core.Response.Status.INTERNAL_SERVER_ERROR;
 import static javax.ws.rs.core.Response.Status.MOVED_PERMANENTLY;
 import static javax.ws.rs.core.Response.Status.SEE_OTHER;
@@ -64,26 +63,28 @@ import javax.ws.rs.core.Variant;
 import org.eclipse.krazo.KrazoConfig;
 import org.eclipse.krazo.engine.Viewable;
 import org.eclipse.krazo.event.ControllerRedirectEventImpl;
-import org.eclipse.krazo.jaxrs.JaxRsContext;
 import org.eclipse.krazo.lifecycle.RequestLifecycle;
 
 /**
- * <p>A JAX-RS response filter that fires a {@link javax.mvc.event.AfterControllerEvent}
- * event. It also verifies the static return type of the controller method is correct,
- * and ensures that the entity is a {@link Viewable} to be processed by
- * {@link ViewableWriter}.</p>
+ * <p>
+ * A JAX-RS response filter that fires a {@link javax.mvc.event.AfterControllerEvent} event. It also verifies the static
+ * return type of the controller method is correct, and ensures that the entity is a {@link Viewable} to be processed by
+ * {@link ViewableWriter}.
+ * </p>
  *
- * <p>The class uses {@link javax.ws.rs.core.Request} which implements the algorithm in
- * Section 3.8 of the JAX-RS specification to compute the final Content-Type when
- * the method returns void (no entity). If unable to compute the final Content-Type,
- * e.g. if the controller method is not annotated by {@code @Produces}, it defaults to
- * {@code text/html}. If the method does not return void (has an entity), the computation
- * of the Content-Type is done by JAX-RS and is available via {@code responseContext}.</p>
+ * <p>
+ * The class uses {@link javax.ws.rs.core.Request} which implements the algorithm in Section 3.8 of the JAX-RS
+ * specification to compute the final Content-Type when the method returns void (no entity). If unable to compute the
+ * final Content-Type, e.g. if the controller method is not annotated by {@code @Produces}, it defaults to
+ * {@code text/html}. If the method does not return void (has an entity), the computation of the Content-Type is done by
+ * JAX-RS and is available via {@code responseContext}.
+ * </p>
  *
- * <p>Given that this filter is annotated with {@link Controller}, it
- * will be called after every controller method returns. Priority is set to
- * {@link javax.ws.rs.Priorities#ENTITY_CODER} which means it will be executed
- * after user-defined response filters (response filters are sorted in reverse order).</p>
+ * <p>
+ * Given that this filter is annotated with {@link Controller}, it will be called after every controller method returns.
+ * Priority is set to {@link javax.ws.rs.Priorities#ENTITY_CODER} which means it will be executed after user-defined
+ * response filters (response filters are sorted in reverse order).
+ * </p>
  *
  * @author Santiago Pericas-Geertsen
  */
@@ -97,10 +98,13 @@ public class ViewResponseFilter implements ContainerResponseFilter {
 
     public static final String REDIRECT = "redirect:";
 
+    @Context
     private UriInfo uriInfo;
 
+    @Context
     private ResourceInfo resourceInfo;
 
+    @Context
     private HttpServletRequest request;
 
     private Event<MvcEvent> dispatcher;
@@ -110,20 +114,17 @@ public class ViewResponseFilter implements ContainerResponseFilter {
     private KrazoConfig krazoConfig;
 
     private RequestLifecycle requestLifecycle;
-    
+
     private ViewPathResolver viewPathResolver;
-    
-    
+
     @Deprecated
     public ViewResponseFilter() {
         // empty contructor for cdi eyes
     }
-    
+
     @Inject
-    public ViewResponseFilter(@JaxRsContext @Context UriInfo uriInfo,@JaxRsContext @Context ResourceInfo resourceInfo,@Context HttpServletRequest request,Event<MvcEvent> dispatcher,Messages messages,KrazoConfig krazoConfig,RequestLifecycle requestLifecycle,ViewPathResolver viewPathResolver) {
-        this.uriInfo = uriInfo;
-        this.resourceInfo = resourceInfo;
-        this.request = request;
+    public ViewResponseFilter(Event<MvcEvent> dispatcher, Messages messages, KrazoConfig krazoConfig, RequestLifecycle requestLifecycle,
+            ViewPathResolver viewPathResolver) {
         this.dispatcher = dispatcher;
         this.messages = messages;
         this.krazoConfig = krazoConfig;
@@ -133,7 +134,7 @@ public class ViewResponseFilter implements ContainerResponseFilter {
 
     @Override
     public void filter(ContainerRequestContext requestContext,
-                       ContainerResponseContext responseContext) throws IOException {
+            ContainerResponseContext responseContext) throws IOException {
 
         // For some reason Jersey 2.28 executes our filter twice, resulting in weird side effects.
         // Therefore, we ensure that our filter is executed only once for each request.
@@ -142,7 +143,7 @@ public class ViewResponseFilter implements ContainerResponseFilter {
         } else {
             request.setAttribute(FILTER_EXECUTED_KEY, true);
         }
-        
+
         // the following code should only execute for the controller happy path
         if (!requestLifecycle.isControllerExecuted()) {
             return;
@@ -156,27 +157,26 @@ public class ViewResponseFilter implements ContainerResponseFilter {
         // Wrap entity type into Viewable, possibly looking at @View
         Object entity = responseContext.getEntity();
         final Class<?> entityType = entity != null ? entity.getClass() : null;
-        if (entityType == null) {       // NO_CONTENT
-            
-            
+        if (entityType == null) { // NO_CONTENT
+
             String viewPath = null;
-            
+
             View an = getAnnotation(method, View.class);
             if (an == null) {
                 an = getAnnotation(method.getDeclaringClass(), View.class);
             }
-            
-            //give chance to viewPathResolver resolve view name before give up
-            if(an == null) {
+
+            // give chance to viewPathResolver resolve view name before give up
+            if (an == null) {
                 viewPath = viewPathResolver.pathFor(method);
             } else {
                 viewPath = an.value();
             }
-            
+
             if (viewPath != null && !viewPath.isEmpty()) {
                 MediaType contentType = selectVariant(requestContext.getRequest(), resourceInfo);
                 if (contentType == null) {
-                    contentType = MediaType.TEXT_HTML_TYPE;     // default
+                    contentType = MediaType.TEXT_HTML_TYPE; // default
                 }
                 responseContext.setEntity(new Viewable(appendExtensionIfRequired(viewPath)), null, contentType);
                 // If the entity is null the status will be set to 204 by Jersey. For void methods we need to
@@ -268,6 +268,18 @@ public class ViewResponseFilter implements ContainerResponseFilter {
 
         return null;
 
+    }
+
+    public void setUriInfo(UriInfo uriInfo) {
+        this.uriInfo = uriInfo;
+    }
+
+    public void setResourceInfo(ResourceInfo resourceInfo) {
+        this.resourceInfo = resourceInfo;
+    }
+
+    public void setRequest(HttpServletRequest request) {
+        this.request = request;
     }
 
 }
