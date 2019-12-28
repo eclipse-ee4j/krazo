@@ -54,6 +54,7 @@
         <module>ext</module>
         <module>examples</module>
         <module>testsuite</module>
+        <module>documentation</module>
     </modules>
 
     <licenses>
