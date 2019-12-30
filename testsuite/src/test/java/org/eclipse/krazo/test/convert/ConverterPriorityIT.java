@@ -4,6 +4,7 @@ import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.HtmlForm;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import com.gargoylesoftware.htmlunit.html.HtmlSubmitInput;
+import org.eclipse.krazo.binding.convert.MvcConverter;
 import org.eclipse.krazo.test.util.WebArchiveBuilder;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
@@ -35,9 +36,7 @@ public class ConverterPriorityIT {
             .addView(Paths.get(RESOURCES)
                          .resolve("views/result.jsp")
                          .toFile(), "result.jsp")
-            .addService(Paths.get(RESOURCES)
-                                    .resolve("services/org.eclipse.krazo.binding.convert.MvcConverter")
-                                    .toFile(), "org.eclipse.krazo.binding.convert.MvcConverter")
+            .addService(MvcConverter.class, AnswerToAllDoubleConverter.class)
             .addBeansXml()
             .build();
     }

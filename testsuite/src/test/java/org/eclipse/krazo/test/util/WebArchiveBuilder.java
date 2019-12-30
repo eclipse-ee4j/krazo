@@ -74,8 +74,8 @@ public class WebArchiveBuilder {
         return this;
     }
 
-    public WebArchiveBuilder addService(final File file, final String target) {
-        archive.addAsManifestResource(new FileAsset(file), "services/" + target);
+    public WebArchiveBuilder addService(final Class<?> serviceInterface, final Class<?>... serviceImpls) {
+        archive.addAsServiceProviderAndClasses(serviceInterface, serviceImpls);
         return this;
     }
 
