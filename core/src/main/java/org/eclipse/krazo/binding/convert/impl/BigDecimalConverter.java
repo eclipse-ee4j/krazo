@@ -51,9 +51,4 @@ public class BigDecimalConverter extends NumberConverter<BigDecimal> {
         }
 
     }
-
-    @Override
-    public int getPriority() {
-        return BUILT_IN_PRIORITY;
-    }
 }

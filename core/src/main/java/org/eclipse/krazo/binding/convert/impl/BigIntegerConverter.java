@@ -51,9 +51,4 @@ public class BigIntegerConverter extends NumberConverter<BigInteger> {
         }
 
     }
-
-    @Override
-    public int getPriority() {
-        return BUILT_IN_PRIORITY;
-    }
 }

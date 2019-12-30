@@ -17,15 +17,12 @@
  */
 package org.eclipse.krazo.binding.convert;
 
-import org.eclipse.krazo.binding.convert.impl.*;
+import org.eclipse.krazo.util.ServiceLoaders;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
-
-import static java.util.Comparator.reverseOrder;
 
 /**
  * Central registry for {@link MvcConverter} instances.
@@ -39,23 +36,10 @@ public class ConverterRegistry {
 
     @PostConstruct
     public void init() {
-        register(new ShortConverter());
-        register(new IntegerConverter());
-        register(new LongConverter());
-        register(new DoubleConverter());
-        register(new FloatConverter());
-        register(new BigDecimalConverter());
-        register(new BigIntegerConverter());
-        register(new BooleanConverter());
+        converters.addAll(ServiceLoaders.list(MvcConverter.class));
     }
 
-    public void register(MvcConverter converter) {
-        converters.add(converter);
-
-        converters.sort(Comparator.comparing(MvcConverter::getPriority, reverseOrder()));
-    }
-
-    <T> MvcConverter<T> lookup(Class<T> rawType) {
+    public <T> MvcConverter<T> lookup(Class<T> rawType) {
         return converters.stream()
                 .filter(converter -> converter.supports(rawType))
                 .findFirst().orElse(null);

@@ -1,0 +1,8 @@
+org.eclipse.krazo.binding.convert.impl.ShortConverter
+org.eclipse.krazo.binding.convert.impl.BigDecimalConverter
+org.eclipse.krazo.binding.convert.impl.BigIntegerConverter
+org.eclipse.krazo.binding.convert.impl.BooleanConverter
+org.eclipse.krazo.binding.convert.impl.DoubleConverter
+org.eclipse.krazo.binding.convert.impl.FloatConverter
+org.eclipse.krazo.binding.convert.impl.IntegerConverter
+org.eclipse.krazo.binding.convert.impl.LongConverter

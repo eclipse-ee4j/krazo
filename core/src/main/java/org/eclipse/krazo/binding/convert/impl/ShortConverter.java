@@ -47,9 +47,4 @@ public class ShortConverter extends NumberConverter<Short> {
         }
 
     }
-
-    @Override
-    public int getPriority() {
-        return BUILT_IN_PRIORITY;
-    }
 }

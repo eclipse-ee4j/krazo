@@ -74,6 +74,11 @@ public class WebArchiveBuilder {
         return this;
     }
 
+    public WebArchiveBuilder addService(final File file, final String target) {
+        archive.addAsManifestResource(new FileAsset(file), "services/" + target);
+        return this;
+    }
+
     public WebArchive build() {
         PomEquippedResolveStage stage = Maven.configureResolver()
             .withClassPathResolution(true)

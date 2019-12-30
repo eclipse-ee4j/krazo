@@ -9,6 +9,7 @@ import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.jboss.shrinkwrap.api.Archive;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -22,18 +23,21 @@ import static org.junit.Assert.assertEquals;
 @RunWith(Arquillian.class)
 public class ConverterPriorityIT {
 
-    private static final String WEB_INF_SRC = "src/main/resources/convert";
+    private static final String RESOURCES = "src/main/resources/convert";
 
     @Deployment(testable = false, name = "convert")
-    public static Archive createDeployment() {
+    public static WebArchive createDeployment() {
         return new WebArchiveBuilder()
             .addPackage("org.eclipse.krazo.test.convert")
-            .addView(Paths.get(WEB_INF_SRC)
+            .addView(Paths.get(RESOURCES)
                          .resolve("views/index.jsp")
                          .toFile(), "index.jsp")
-            .addView(Paths.get(WEB_INF_SRC)
+            .addView(Paths.get(RESOURCES)
                          .resolve("views/result.jsp")
                          .toFile(), "result.jsp")
+            .addService(Paths.get(RESOURCES)
+                                    .resolve("services/org.eclipse.krazo.binding.convert.MvcConverter")
+                                    .toFile(), "org.eclipse.krazo.binding.convert.MvcConverter")
             .addBeansXml()
             .build();
     }

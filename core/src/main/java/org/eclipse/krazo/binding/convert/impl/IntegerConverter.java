@@ -47,9 +47,4 @@ public class IntegerConverter extends NumberConverter<Integer> {
         }
 
     }
-
-    @Override
-    public int getPriority() {
-        return BUILT_IN_PRIORITY;
-    }
 }

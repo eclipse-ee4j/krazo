@@ -22,14 +22,14 @@ import java.util.Locale;
 /**
  * Interface for MVC specific converter implementations.
  *
+ * {@link MvcConverter}s can be sorted by using the {@link javax.annotation.Priority} annotation on its implementation. In case there
+ * is no {@link javax.annotation.Priority} annotation available, it assumes a priority of 0 (zero). All internal converter implementations
+ * don't have a explicit priority set, so a custom converter can use any number greater than zero. There mustn't be a priority less than zero.
+ * Custom converters are REQUIRED to have a {@link javax.annotation.Priority} set.
+ *
  * @author Christian Kaltepoth
  */
 public interface MvcConverter<T> {
-
-    /**
-     * The common priority for built-in converters.
-     */
-    int BUILT_IN_PRIORITY = 0;
 
     /**
      * Returns true if the converter supports the specified type.
@@ -46,16 +46,4 @@ public interface MvcConverter<T> {
      * @return The result of the conversion
      */
     ConverterResult<T> convert(String value, Class<T> rawType, Locale locale);
-
-    /**
-     * Return the priority of a {@link MvcConverter}. Converters with a higher priority (= higher number) are evaluated
-     * before those with a lower one. So for example, a built-in converter with the priority 0 is evaluated after
-     * a custom converter with priority 10.
-     * <br><br>
-     * <b>Note:</b> It is assumed that all built-in converters have a common, very low priority, so a client is free to prioritize
-     * its converters as he wants (@see {@link MvcConverter#BUILT_IN_PRIORITY}).
-     *
-     * @return the priority of the {@link MvcConverter}
-     */
-    int getPriority();
 }
