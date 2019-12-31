@@ -17,25 +17,25 @@
     SPDX-License-Identifier: Apache-2.0
 
 ////
-= Eclipse Krazo: Documentation
-Eclipse Krazo committers and contributors
-:doctype: book
-:experimental:
-:reproducible:
-:icons: font
-:sectnums:
-:toc: left
-:toclevels: 3
-:autofit-option:
+== Quickstart
 
-include::_intro.adoc[]
+This section describes how to set up Eclipse Krazo.
 
-include::_quickstart.adoc[]
+=== Basic setup
 
-include::_configuration.adoc[]
+The required steps to set up Eclipse Krazo depends on your environment. The easiest way is to
+use a Java EE 8 / Jakarta EE environment, because in this case the server already provides all the
+prerequisites.
 
-include::_view-engines.adoc[]
+==== Java EE 8 / Jakarta EE
 
-include::_advanced.adoc[]
+TODO: Migrate relevant parts from the website
 
-include::_extensions.adoc[]
+==== Servlet Containers
+
+TODO: Migrate relevant parts from the website
+
+=== Creating you first controller
+
+TODO: Create Application class and create the first controller
+

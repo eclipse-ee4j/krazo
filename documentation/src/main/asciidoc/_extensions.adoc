@@ -17,25 +17,6 @@
     SPDX-License-Identifier: Apache-2.0
 
 ////
-= Eclipse Krazo: Documentation
-Eclipse Krazo committers and contributors
-:doctype: book
-:experimental:
-:reproducible:
-:icons: font
-:sectnums:
-:toc: left
-:toclevels: 3
-:autofit-option:
+== Writing Extensions
 
-include::_intro.adoc[]
-
-include::_quickstart.adoc[]
-
-include::_configuration.adoc[]
-
-include::_view-engines.adoc[]
-
-include::_advanced.adoc[]
-
-include::_extensions.adoc[]
+TODO: Describe Krazo extension points and SPIs
