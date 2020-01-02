@@ -74,6 +74,11 @@ public class WebArchiveBuilder {
         return this;
     }
 
+    public WebArchiveBuilder addService(final Class<?> serviceInterface, final Class<?>... serviceImpls) {
+        archive.addAsServiceProviderAndClasses(serviceInterface, serviceImpls);
+        return this;
+    }
+
     public WebArchive build() {
         PomEquippedResolveStage stage = Maven.configureResolver()
             .withClassPathResolution(true)

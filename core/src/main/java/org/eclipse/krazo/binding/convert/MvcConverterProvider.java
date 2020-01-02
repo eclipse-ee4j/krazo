@@ -33,7 +33,6 @@ import javax.ws.rs.ext.ParamConverter;
 import javax.ws.rs.ext.ParamConverterProvider;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
-import java.util.Locale;
 import java.util.stream.Stream;
 
 /**
@@ -64,7 +63,7 @@ public class MvcConverterProvider implements ParamConverterProvider {
 
         if (mvcBinding != null) {
 
-            MvcConverter<T> mvcConverter = converterRegistry.lookup(rawType, annotations);
+            MvcConverter<T> mvcConverter = converterRegistry.lookup(rawType);
 
             if (mvcConverter != null) {
 

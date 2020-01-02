@@ -22,6 +22,11 @@ import java.util.Locale;
 /**
  * Interface for MVC specific converter implementations.
  *
+ * {@link MvcConverter}s can be sorted by using the {@link javax.annotation.Priority} annotation on its implementation. In case there
+ * is no {@link javax.annotation.Priority} annotation available, it assumes a priority of 0 (zero). All internal converter implementations
+ * don't have a explicit priority set, so a custom converter can use any number greater than zero. There mustn't be a priority less than zero.
+ * Custom converters are REQUIRED to have a {@link javax.annotation.Priority} set.
+ *
  * @author Christian Kaltepoth
  */
 public interface MvcConverter<T> {
@@ -41,5 +46,4 @@ public interface MvcConverter<T> {
      * @return The result of the conversion
      */
     ConverterResult<T> convert(String value, Class<T> rawType, Locale locale);
-
 }
