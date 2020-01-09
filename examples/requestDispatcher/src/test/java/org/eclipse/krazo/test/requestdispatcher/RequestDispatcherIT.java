@@ -45,7 +45,7 @@ public class RequestDispatcherIT {
 
     @After
     public void tearDown() {
-        webClient.closeAllWindows();
+        webClient.close();
     }
 
     @Test

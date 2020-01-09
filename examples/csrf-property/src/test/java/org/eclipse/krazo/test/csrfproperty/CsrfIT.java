@@ -66,7 +66,7 @@ public class CsrfIT {
 
     @After
     public void tearDown() {
-        webClient.closeAllWindows();
+        webClient.close();
     }
 
     /**
@@ -77,18 +77,18 @@ public class CsrfIT {
     @Test
     public void testFormOk() throws Exception {
         HtmlPage page1 = webClient.getPage(webUrl + "resources/csrf");
-        HtmlForm form = (HtmlForm) page1.getDocumentElement().getHtmlElementsByTagName("form").get(0);
+        HtmlForm form = (HtmlForm) page1.getDocumentElement().getElementsByTagName("form").get(0);
 
         // Check hidden input field
-        HtmlElement input = form.getHtmlElementsByTagName("input").get(1);
+        HtmlElement input = form.getElementsByTagName("input").get(1);
         assertTrue(input.getAttribute("type").equals("hidden"));
         assertTrue(input.getAttribute("name").equals(CSRF_PARAM));
         assertTrue(input.hasAttribute("value"));        // token
 
         // Submit form
-        HtmlSubmitInput button = (HtmlSubmitInput) form.getHtmlElementsByTagName("input").get(0);
+        HtmlSubmitInput button = (HtmlSubmitInput) form.getElementsByTagName("input").get(0);
         HtmlPage page2 = button.click();
-        Iterator<HtmlElement> it = page2.getDocumentElement().getHtmlElementsByTagName("h1").iterator();
+        Iterator<HtmlElement> it = page2.getDocumentElement().getElementsByTagName("h1").iterator();
         assertTrue(it.next().asText().contains("CSRF Protection OK"));
     }
 
@@ -101,14 +101,14 @@ public class CsrfIT {
     @Test
     public void testFormFail() throws Exception {
         HtmlPage page1 = webClient.getPage(webUrl + "resources/csrf");
-        HtmlForm form = (HtmlForm) page1.getDocumentElement().getHtmlElementsByTagName("form").get(0);
+        HtmlForm form = (HtmlForm) page1.getDocumentElement().getElementsByTagName("form").get(0);
 
         // Remove hidden input field to cause a CSRF validation failure
-        HtmlElement input = form.getHtmlElementsByTagName("input").get(1);
+        HtmlElement input = form.getElementsByTagName("input").get(1);
         form.removeChild(input);
 
         // Submit form - should fail
-        HtmlSubmitInput button = (HtmlSubmitInput) form.getHtmlElementsByTagName("input").get(0);
+        HtmlSubmitInput button = (HtmlSubmitInput) form.getElementsByTagName("input").get(0);
         try {
             button.click();
             fail("CSRF validation should have failed!");

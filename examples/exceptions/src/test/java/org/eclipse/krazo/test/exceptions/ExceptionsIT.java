@@ -52,41 +52,41 @@ public class ExceptionsIT {
 
     @After
     public void tearDown() {
-        webClient.closeAllWindows();
+        webClient.close();
     }
 
     @Test
     public void testNotFound() throws Exception {
         final HtmlPage page = webClient.getPage(webUrl + "resources/exceptions/not_found");
-        final Iterator<HtmlElement> it = page.getDocumentElement().getHtmlElementsByTagName("h1").iterator();
+        final Iterator<HtmlElement> it = page.getDocumentElement().getElementsByTagName("h1").iterator();
         assertFalse(it.next().asText().contains("Hello World"));
     }
 
     @Test
     public void testNotFoundNoView() throws Exception {
         final HtmlPage page = webClient.getPage(webUrl + "resources/exceptions/not_found_no_view");
-        final Iterator<HtmlElement> it = page.getDocumentElement().getHtmlElementsByTagName("h1").iterator();
+        final Iterator<HtmlElement> it = page.getDocumentElement().getElementsByTagName("h1").iterator();
         assertFalse(it.next().asText().contains("Hello World"));
     }
 
     @Test
     public void testInternalError() throws Exception {
         final HtmlPage page = webClient.getPage(webUrl + "resources/exceptions/internal_error");
-        final Iterator<HtmlElement> it = page.getDocumentElement().getHtmlElementsByTagName("h1").iterator();
+        final Iterator<HtmlElement> it = page.getDocumentElement().getElementsByTagName("h1").iterator();
         assertTrue(it.next().asText().contains("Hello World"));
     }
 
     @Test
     public void testInternalErrorNoView() throws Exception {
         final HtmlPage page = webClient.getPage(webUrl + "resources/exceptions/internal_error_no_view");
-        final Iterator<HtmlElement> it = page.getDocumentElement().getHtmlElementsByTagName("h1").iterator();
+        final Iterator<HtmlElement> it = page.getDocumentElement().getElementsByTagName("h1").iterator();
         assertFalse(it.next().asText().contains("Hello World"));
     }
 
     @Test
     public void testInternalErrorMapped() throws Exception {
         final HtmlPage page = webClient.getPage(webUrl + "resources/exceptions/internal_error_mapped");
-        final Iterator<HtmlElement> it = page.getDocumentElement().getHtmlElementsByTagName("h1").iterator();
+        final Iterator<HtmlElement> it = page.getDocumentElement().getElementsByTagName("h1").iterator();
         assertTrue(it.next().asText().contains("Hello World"));
     }
 }

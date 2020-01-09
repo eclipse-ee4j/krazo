@@ -42,13 +42,13 @@ public class EventsIT {
 
     @After
     public void tearDown() {
-        webClient.closeAllWindows();
+        webClient.close();
     }
 
     @Test
     public void testEvents() throws Exception {
         final HtmlPage page = webClient.getPage(webUrl + "resources/event");
-        final Iterator<HtmlElement> it = page.getDocumentElement().getHtmlElementsByTagName("p").iterator();
+        final Iterator<HtmlElement> it = page.getDocumentElement().getElementsByTagName("p").iterator();
         assertTrue(it.next().asText().contains("test-events/resources/event"));
         assertTrue(it.next().asText().contains("EventController.get()"));
         assertTrue(it.next().asText().contains("test-events/resources/event"));
