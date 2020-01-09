@@ -102,5 +102,4 @@ public class ExceptionMapperIT {
             containsString("<h1>Exception caught: Error thrown by controller</h1>"));
 
     }
-
 }

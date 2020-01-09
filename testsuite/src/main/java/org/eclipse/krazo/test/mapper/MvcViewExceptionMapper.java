@@ -21,6 +21,7 @@ package org.eclipse.krazo.test.mapper;
 import org.eclipse.krazo.core.ModelsImpl;
 import org.eclipse.krazo.engine.Viewable;
 
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
@@ -36,6 +37,7 @@ public class MvcViewExceptionMapper implements ExceptionMapper<MvcViewException>
         Viewable viewable = new Viewable("mvc-error.jsp", models);
 
         return Response.status(492)
+            .type(MediaType.TEXT_HTML_TYPE)
             .entity(viewable)
             .build();
     }
