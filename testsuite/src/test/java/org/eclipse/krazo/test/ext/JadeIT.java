@@ -18,25 +18,24 @@
  */
 package org.eclipse.krazo.test.ext;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
+import com.gargoylesoftware.htmlunit.WebClient;
+import com.gargoylesoftware.htmlunit.html.DomElement;
+import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import org.eclipse.krazo.test.util.WebArchiveBuilder;
 import org.jboss.arquillian.container.test.api.Deployment;
-import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.test.api.ArquillianResource;
-import org.jboss.shrinkwrap.api.Archive;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.junit.Before;
 import org.junit.Test;
-
 import org.junit.runner.RunWith;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 
 import java.net.URL;
 import java.nio.file.Paths;
 import java.util.List;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * @author Florian Hirsch
@@ -49,11 +48,19 @@ public class JadeIT {
     @ArquillianResource
     private URL baseURL;
 
-    @Drone
-    private WebDriver webDriver;
+    private WebClient webClient;
+
+    @Before
+    public void setUp() {
+        webClient = new WebClient();
+        webClient.getOptions()
+            .setThrowExceptionOnFailingStatusCode(false);
+        webClient.getOptions()
+            .setRedirectEnabled(true);
+    }
 
     @Deployment(testable = false, name = "jade")
-    public static Archive createDeployment() {
+    public static WebArchive createDeployment() {
         return new WebArchiveBuilder()
             .addPackage("org.eclipse.krazo.test.ext.jade")
             .addView(Paths.get(WEB_INF_SRC).resolve("views/config.jade").toFile(), "config.jade")
@@ -68,44 +75,44 @@ public class JadeIT {
     }
 
     @Test
-    public void testUsesModel() {
+    public void testUsesModel() throws Exception {
         String path = baseURL + "jade?user=mvc%d";
-        webDriver.navigate().to(String.format(path, 0));
-        assertTrue(webDriver.getTitle().contains("Jade"));
+        final HtmlPage page = webClient.getPage(String.format(path, 0));
+        assertTrue(page.getTitleText().contains("Jade"));
         for (int i = 0; i < 10; i++) { // just to ensure that not the whole page is cached
-            webDriver.navigate().to(String.format(path, i));
-            WebElement h1 = webDriver.findElement(By.xpath("//html/body/h1"));
-            assertTrue(h1.getText().contains("mvc" + i));
+            final HtmlPage subPage = webClient.getPage(String.format(path, i));
+            final DomElement h1 = subPage.getFirstByXPath("//html/body/h1");
+            assertTrue(h1.getTextContent().contains("mvc" + i));
         }
     }
 
     @Test
-    public void testIncludesViews() {
-        webDriver.navigate().to(baseURL + "jade");
-        WebElement footer = webDriver.findElement(By.xpath("//p[@class='footer']"));
-        assertTrue(footer.getText().contains("Eclipse Krazo committers and contributors"));
+    public void testIncludesViews() throws Exception {
+        final HtmlPage page = webClient.getPage(baseURL + "jade");
+        final DomElement footer = page.getFirstByXPath("//p[@class='footer']");
+        assertTrue(footer.getTextContent().contains("Eclipse Krazo committers and contributors"));
     }
 
     @Test
-    public void testUsesFilters() {
-        webDriver.navigate().to(baseURL + "jade/markdown");
-        final List<WebElement> elements = webDriver.findElements(By.xpath("//html/body/ul/li"));
+    public void testUsesFilters() throws Exception {
+        final HtmlPage page = webClient.getPage(baseURL + "jade/markdown");
+        final List<DomElement> elements = page.getByXPath("//html/body/ul/li");
         assertEquals(3, elements.size());
     }
 
     @Test
-    public void testConfiguration() {
-        webDriver.navigate().to(baseURL + "jade/config");
-        WebElement systemProperties = webDriver.findElement(By.xpath("//p[@class='SystemProperties']"));
-        assertEquals("SystemProperties", systemProperties.getText());
-        WebElement configFile = webDriver.findElement(By.xpath("//p[@class='ConfigFile']"));
-        assertEquals("ConfigFile", configFile.getText());
+    public void testConfiguration() throws Exception {
+        final HtmlPage page = webClient.getPage(baseURL + "jade/config");
+        final DomElement systemProperties = page.getFirstByXPath("//p[@class='SystemProperties']");
+        assertEquals("SystemProperties", systemProperties.getTextContent());
+        final DomElement configFile = page.getFirstByXPath("//p[@class='ConfigFile']");
+        assertEquals("ConfigFile", configFile.getTextContent());
     }
 
     @Test
-    public void testHelper() {
-        webDriver.navigate().to(baseURL + "jade/helper");
-        final WebElement element = webDriver.findElement(By.xpath("//p[@class='result']"));
-        assertEquals("3", element.getText());
+    public void testHelper() throws Exception {
+        final HtmlPage page = webClient.getPage(baseURL + "jade/helper");
+        final DomElement element = page.getFirstByXPath("//p[@class='result']");
+        assertEquals("3", element.getTextContent());
     }
 }

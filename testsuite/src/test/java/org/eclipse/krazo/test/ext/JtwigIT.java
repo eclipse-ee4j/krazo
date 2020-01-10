@@ -18,23 +18,21 @@
  */
 package org.eclipse.krazo.test.ext;
 
-import static org.junit.Assert.assertEquals;
+import com.gargoylesoftware.htmlunit.WebClient;
+import com.gargoylesoftware.htmlunit.html.HtmlPage;
+import org.eclipse.krazo.test.util.WebArchiveBuilder;
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.junit.Arquillian;
+import org.jboss.arquillian.test.api.ArquillianResource;
+import org.jboss.shrinkwrap.api.Archive;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import java.net.URL;
 import java.nio.file.Paths;
 
-import org.eclipse.krazo.test.util.WebArchiveBuilder;
-import org.jboss.arquillian.container.test.api.Deployment;
-import org.jboss.arquillian.drone.api.annotation.Drone;
-import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.arquillian.test.api.ArquillianResource;
-import org.jboss.shrinkwrap.api.Archive;
-import org.junit.Test;
-
-import org.junit.runner.RunWith;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-
+import static org.junit.Assert.assertEquals;
 
 /**
  * Unit test for simple App.
@@ -47,8 +45,16 @@ public class JtwigIT {
     @ArquillianResource
     private URL baseURL;
 
-    @Drone
-    private WebDriver webDriver;
+    private WebClient webClient;
+
+    @Before
+    public void setUp() {
+        webClient = new WebClient();
+        webClient.getOptions()
+            .setThrowExceptionOnFailingStatusCode(false);
+        webClient.getOptions()
+            .setRedirectEnabled(true);
+    }
 
     @Deployment(testable = false, name = "jtwig")
     public static Archive createDeployment() {
@@ -62,8 +68,8 @@ public class JtwigIT {
 
     @Test
     public void testView1() throws Exception {
-        webDriver.navigate().to(baseURL + "resources/hello?user=mvc");
-        final String h1 = webDriver.findElement(By.tagName("h1")).getText();
+        final HtmlPage page = webClient.getPage(baseURL + "resources/hello?user=mvc");
+        final String h1 = page.getElementsByTagName("h1").get(0).getTextContent();
         assertEquals("Hello mvc", h1.trim());
     }
 }

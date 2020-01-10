@@ -18,23 +18,22 @@
  */
 package org.eclipse.krazo.test.ext;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import com.gargoylesoftware.htmlunit.WebClient;
+import com.gargoylesoftware.htmlunit.html.HtmlPage;
+import org.eclipse.krazo.test.util.WebArchiveBuilder;
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.junit.Arquillian;
+import org.jboss.arquillian.test.api.ArquillianResource;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
-import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Paths;
 
-import org.eclipse.krazo.test.util.WebArchiveBuilder;
-import org.jboss.arquillian.container.test.api.Deployment;
-import org.jboss.arquillian.drone.api.annotation.Drone;
-import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.arquillian.test.api.ArquillianResource;
-import org.jboss.shrinkwrap.api.Archive;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(Arquillian.class)
 public class PebbleIT {
@@ -44,11 +43,19 @@ public class PebbleIT {
     @ArquillianResource
     private URL baseURL;
 
-    @Drone
-    private WebDriver webDriver;
+    private WebClient webClient;
+
+    @Before
+    public void setUp() {
+        webClient = new WebClient();
+        webClient.getOptions()
+            .setThrowExceptionOnFailingStatusCode(false);
+        webClient.getOptions()
+            .setRedirectEnabled(true);
+    }
 
     @Deployment(testable = false, name = "pebble")
-    public static Archive createDeployment() {
+    public static WebArchive createDeployment() {
         return new WebArchiveBuilder()
             .addPackage("org.eclipse.krazo.test.ext.pebble")
             .addView(Paths.get(WEB_INF_SRC).resolve("views/filter.peb").toFile(), "filter.peb")
@@ -58,12 +65,12 @@ public class PebbleIT {
     }
 
     @Test
-    public void testUsesFilter() {
+    public void testUsesFilter() throws Exception {
         String text = "To be filtered";
 
-        webDriver.navigate().to(baseURL + "pebble/filter");
+        final HtmlPage page = webClient.getPage(baseURL + "pebble/filter");
 
-        final String body = webDriver.findElement(By.tagName("body")).getText();
+        final String body = page.getElementsByTagName("body").get(0).getTextContent();
         assertFalse(body.contains(text));
         assertTrue(body.contains(text.toUpperCase()));
     }
