@@ -81,6 +81,6 @@ public class Jsr223IT {
     @Category(IgnoreOnWildfly.class)
     public void testJython() throws Exception {
         final HtmlPage page = webClient.getPage(baseURL + "mvc/jython?name=Jython");
-        assertTrue(page.getTextContent().contains("Hello Jython"));
+        assertTrue(page.getBody().getTextContent().contains("Hello Jython"));
     }
 }
