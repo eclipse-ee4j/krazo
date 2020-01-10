@@ -43,7 +43,7 @@ public class ConversationIT {
 
     @After
     public void tearDown() {
-        webClient.closeAllWindows();
+        webClient.close();
     }
 
     @Test
@@ -52,18 +52,18 @@ public class ConversationIT {
         Iterator<HtmlElement> it;
 
         page = webClient.getPage(webUrl + "resources/converse/start");
-        it = page.getDocumentElement().getHtmlElementsByTagName("p").iterator();
+        it = page.getDocumentElement().getElementsByTagName("p").iterator();
         final String secret = it.next().asText();
         System.out.println(secret);
 
         page = webClient.getPage(webUrl + "resources/converse/" +
-            page.getDocumentElement().getHtmlElementsByTagName("a")
+            page.getDocumentElement().getElementsByTagName("a")
                 .iterator().next().getAttribute("href"));
-        it = page.getDocumentElement().getHtmlElementsByTagName("p").iterator();
+        it = page.getDocumentElement().getElementsByTagName("p").iterator();
         assertTrue(secret.equals(it.next().asText()));
 
         page = webClient.getPage(webUrl + "resources/converse/stop");
-        it = page.getDocumentElement().getHtmlElementsByTagName("p").iterator();
+        it = page.getDocumentElement().getElementsByTagName("p").iterator();
         assertFalse(secret.equals(it.next().asText()));
     }
 }

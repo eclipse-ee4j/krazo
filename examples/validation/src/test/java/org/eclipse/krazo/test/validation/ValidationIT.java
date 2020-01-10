@@ -44,7 +44,7 @@ public class ValidationIT {
 
     @After
     public void tearDown() {
-        webClient.closeAllWindows();
+        webClient.close();
     }
 
     @Test
@@ -57,7 +57,7 @@ public class ValidationIT {
         name.setValueAttribute("john");
         age.setValueAttribute("21");
         final HtmlPage page2 = button.click();
-        final Iterator<HtmlElement> it = page2.getDocumentElement().getHtmlElementsByTagName("p").iterator();
+        final Iterator<HtmlElement> it = page2.getDocumentElement().getElementsByTagName("p").iterator();
         assertTrue(it.next().asText().contains("john"));
         assertTrue(it.next().asText().contains("21"));
     }
@@ -91,7 +91,7 @@ public class ValidationIT {
         name.setValueAttribute("john");
         age.setValueAttribute("21");
         final HtmlPage page2 = button.click();
-        final Iterator<HtmlElement> it = page2.getDocumentElement().getHtmlElementsByTagName("p").iterator();
+        final Iterator<HtmlElement> it = page2.getDocumentElement().getElementsByTagName("p").iterator();
         assertTrue(it.next().asText().contains("john"));
         assertTrue(it.next().asText().contains("21"));
     }
@@ -119,7 +119,7 @@ public class ValidationIT {
     @Ignore         // Waiting for Jersey 2.22
     public void testBindingErrorFail() throws Exception {
         final HtmlPage page = webClient.getPage(webUrl + "resources/form?n=j");
-        final Iterator<HtmlElement> it = page.getDocumentElement().getHtmlElementsByTagName("p").iterator();
+        final Iterator<HtmlElement> it = page.getDocumentElement().getElementsByTagName("p").iterator();
         assertTrue(it.next().asText().contains("Param: n"));
         assertTrue(it.next().asText().contains("Message: java.lang.NumberFormatException: For input string: \"j\""));
     }

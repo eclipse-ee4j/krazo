@@ -44,7 +44,7 @@ public class I18NValidationIT {
 
     @After
     public void tearDown() {
-        webClient.closeAllWindows();
+        webClient.close();
     }
 
     @Test

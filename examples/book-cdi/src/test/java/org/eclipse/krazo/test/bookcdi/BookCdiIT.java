@@ -42,13 +42,13 @@ public class BookCdiIT {
 
     @After
     public void tearDown() {
-        webClient.closeAllWindows();
+        webClient.close();
     }
 
     @Test
     public void testView1() throws Exception {
         final HtmlPage page = webClient.getPage(webUrl + "resources/book/view1/1");
-        final Iterator<HtmlElement> it = page.getDocumentElement().getHtmlElementsByTagName("p").iterator();
+        final Iterator<HtmlElement> it = page.getDocumentElement().getElementsByTagName("p").iterator();
         assertTrue(it.next().asText().contains("Some title"));
         assertTrue(it.next().asText().contains("Some author"));
         assertTrue(it.next().asText().contains("Some ISBN"));
@@ -57,7 +57,7 @@ public class BookCdiIT {
     @Test
     public void testView2() throws Exception {
         final HtmlPage page = webClient.getPage(webUrl + "resources/book/view2/1");
-        final Iterator<HtmlElement> it = page.getDocumentElement().getHtmlElementsByTagName("p").iterator();
+        final Iterator<HtmlElement> it = page.getDocumentElement().getElementsByTagName("p").iterator();
         assertTrue(it.next().asText().contains("Some title"));
         assertTrue(it.next().asText().contains("Some author"));
         assertTrue(it.next().asText().contains("Some ISBN"));

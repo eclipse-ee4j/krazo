@@ -44,7 +44,7 @@ public class DefaultExtensionIT {
 
     @After
     public void tearDown() {
-        webClient.closeAllWindows();
+        webClient.close();
     }
 
     @Test
@@ -53,21 +53,21 @@ public class DefaultExtensionIT {
         assertEquals("/test-def-ext/resources", page.getElementById("basePath").asText());
         assertEquals("jsp", page.getElementById("defaultExtension").asText());
     }
-    
+
     @Test
     public void testViewable() throws Exception {
         HtmlPage page = webClient.getPage(webUrl + "resources/def-ext/viewable");
         assertEquals("/test-def-ext/resources", page.getElementById("basePath").asText());
         assertEquals("jsp", page.getElementById("defaultExtension").asText());
     }
-    
+
     @Test
     public void testResponse() throws Exception {
         HtmlPage page = webClient.getPage(webUrl + "resources/def-ext/response");
         assertEquals("/test-def-ext/resources", page.getElementById("basePath").asText());
         assertEquals("jsp", page.getElementById("defaultExtension").asText());
     }
-    
+
     @Test
     public void testVoid() throws Exception {
         HtmlPage page = webClient.getPage(webUrl + "resources/def-ext/void");
