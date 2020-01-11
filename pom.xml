@@ -39,7 +39,7 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
 
-        <spec.version>1.0.0-RC1</spec.version>
+        <spec.version>1.0.0</spec.version>
         <jersey.version>2.27</jersey.version>
         <javaee.version>8.0</javaee.version>
 

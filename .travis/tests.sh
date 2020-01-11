@@ -24,7 +24,7 @@ elif [ "${1}" == "glassfish-module" ]; then
   mvn -B -V -P\!bundled,module clean install
   cp core/target/krazo-core-*.jar ./glassfish5/glassfish/modules/
   cp jersey/target/krazo-jersey-*.jar ./glassfish5/glassfish/modules/
-  cp ~/.m2/repository/javax/mvc/javax.mvc-api/1.0.0-RC1/*.jar ./glassfish5/glassfish/modules/
+  cp ~/.m2/repository/javax/mvc/javax.mvc-api/1.0.0/*.jar ./glassfish5/glassfish/modules/
   find ./examples/ -name \*.war -exec cp {} ./glassfish5/glassfish/domains/domain1/autodeploy/ \;
   glassfish5/bin/asadmin start-domain
   sleep 120
