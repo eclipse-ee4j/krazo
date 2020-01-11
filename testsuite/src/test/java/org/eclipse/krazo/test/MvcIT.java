@@ -18,18 +18,16 @@
  */
 package org.eclipse.krazo.test;
 
+import com.gargoylesoftware.htmlunit.WebClient;
+import com.gargoylesoftware.htmlunit.html.HtmlPage;
+import org.eclipse.krazo.test.util.WebArchiveBuilder;
 import org.jboss.arquillian.container.test.api.Deployment;
-import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.jboss.shrinkwrap.api.Archive;
-import org.jboss.shrinkwrap.resolver.api.maven.ScopeType;
-import org.jboss.shrinkwrap.resolver.api.maven.coordinate.MavenDependencies;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.eclipse.krazo.test.util.WebArchiveBuilder;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 
 import java.net.URL;
 import java.nio.file.Paths;
@@ -51,8 +49,16 @@ public class MvcIT {
     @ArquillianResource
     private URL baseURL;
 
-    @Drone
-    private WebDriver webDriver;
+    private WebClient webClient;
+
+    @Before
+    public void setUp() {
+        webClient = new WebClient();
+        webClient.getOptions()
+            .setThrowExceptionOnFailingStatusCode(false);
+        webClient.getOptions()
+            .setRedirectEnabled(true);
+    }
 
     @Deployment(testable = false, name = "thymeleaf")
     public static Archive createDeployment() {
@@ -65,12 +71,12 @@ public class MvcIT {
 
     @Test
     public void test() throws Exception {
-        webDriver.get(baseURL + "resources/mvc");
+        final HtmlPage page = webClient.getPage(baseURL + "resources/mvc");
 
-        assertEquals(baseURL.getPath() + "resources", webDriver.findElement(By.id("basePath")).getText());
-        assertEquals(CSRF_PARAM, webDriver.findElement(By.id("csrf")).getText());
-        assertEquals("<&>", webDriver.findElement(By.id("encoders")).getText());
-        assertEquals("true", webDriver.findElement(By.id("config")).getText());
+        assertEquals(baseURL.getPath() + "resources", page.getElementById("basePath").getTextContent());
+        assertEquals(CSRF_PARAM, page.getElementById("csrf").getTextContent());
+        assertEquals("<&>", page.getElementById("encoders").getTextContent());
+        assertEquals("true", page.getElementById("config").getTextContent());
     }
 }
 

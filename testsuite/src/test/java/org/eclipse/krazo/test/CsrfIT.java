@@ -19,21 +19,15 @@
 package org.eclipse.krazo.test;
 
 import com.gargoylesoftware.htmlunit.*;
-import com.gargoylesoftware.htmlunit.html.HtmlElement;
-import com.gargoylesoftware.htmlunit.html.HtmlForm;
-import com.gargoylesoftware.htmlunit.html.HtmlPage;
-import com.gargoylesoftware.htmlunit.html.HtmlSubmitInput;
+import com.gargoylesoftware.htmlunit.html.*;
 import org.eclipse.krazo.test.util.WebArchiveBuilder;
 import org.jboss.arquillian.container.test.api.Deployment;
-import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.test.api.ArquillianResource;
-import org.jboss.shrinkwrap.api.Archive;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 
 import javax.ws.rs.core.Response;
 import java.io.IOException;
@@ -60,11 +54,19 @@ public class CsrfIT {
     @ArquillianResource
     private URL baseURL;
 
-    @Drone
-    private WebDriver webDriver;
+    private WebClient webClient;
+
+    @Before
+    public void setUp() {
+        webClient = new WebClient();
+        webClient.getOptions()
+            .setThrowExceptionOnFailingStatusCode(false);
+        webClient.getOptions()
+            .setRedirectEnabled(true);
+    }
 
     @Deployment(testable = false, name = "csrf")
-    public static Archive createDeployment() {
+    public static WebArchive createDeployment() {
         return new WebArchiveBuilder()
             .addPackage("org.eclipse.krazo.test.csrf.base")
             .addView(Paths.get(WEB_INF_SRC).resolve("views/csrf.jsp").toFile(), "csrf.jsp")
@@ -78,19 +80,21 @@ public class CsrfIT {
      *
      */
     @Test
-    public void testFormOk() {
-        webDriver.get(baseURL + "resources/csrf");
-        WebElement form = webDriver.findElement(By.tagName("form"));
+    public void testFormOk() throws Exception {
+        final HtmlPage page = webClient.getPage(baseURL + "resources/csrf");
+        final HtmlForm form = page.getForms().get(0);
 
         // Check hidden input field
-        WebElement input = form.findElement(By.name(CSRF_PARAM));
+        final HtmlInput input = form.getInputByName(CSRF_PARAM);
         assertEquals("hidden", input.getAttribute("type"));
         assertEquals(CSRF_PARAM, input.getAttribute("name"));
         assertNotNull(input.getAttribute("value"));        // token
 
-        form.submit();
-        WebElement h1 = webDriver.findElement(By.tagName("h1"));
-        assertTrue(h1.getText().contains("CSRF Protection OK"));
+        HtmlSubmitInput button = form.getInputByName("submit");
+        final HtmlPage newPage = button.click();
+
+        final DomElement h1 = newPage.getElementsByTagName("h1").get(0);
+        assertTrue(h1.getTextContent().contains("CSRF Protection OK"));
     }
 
     /**

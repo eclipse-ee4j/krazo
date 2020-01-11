@@ -18,17 +18,17 @@
  */
 package org.eclipse.krazo.test.ext;
 
+import com.gargoylesoftware.htmlunit.WebClient;
+import com.gargoylesoftware.htmlunit.html.DomElement;
+import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import org.eclipse.krazo.test.util.WebArchiveBuilder;
 import org.jboss.arquillian.container.test.api.Deployment;
-import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.jboss.shrinkwrap.api.Archive;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 
 import java.net.URL;
 import java.nio.file.Paths;
@@ -49,8 +49,16 @@ public class HandlebarsIT {
     @ArquillianResource
     private URL baseURL;
 
-    @Drone
-    private WebDriver webDriver;
+    private WebClient webClient;
+
+    @Before
+    public void setUp() {
+        webClient = new WebClient();
+        webClient.getOptions()
+            .setThrowExceptionOnFailingStatusCode(false);
+        webClient.getOptions()
+            .setRedirectEnabled(true);
+    }
 
     @Deployment(testable = false, name = "handlebars")
     public static Archive createDeployment() {
@@ -63,9 +71,9 @@ public class HandlebarsIT {
     }
 
     @Test
-    public void testView1() {
-        webDriver.navigate().to(baseURL + "resources/person");
-        final List<WebElement> divs = webDriver.findElements(By.tagName("div"));
+    public void testView1() throws Exception {
+        final HtmlPage page = webClient.getPage(baseURL + "resources/person");
+        final List<DomElement> divs = page.getElementsByTagName("div");
         assertEquals(3, divs.size());
     }
 }

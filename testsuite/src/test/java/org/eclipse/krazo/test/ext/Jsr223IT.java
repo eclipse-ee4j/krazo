@@ -18,21 +18,23 @@
  */
 package org.eclipse.krazo.test.ext;
 
-import static org.junit.Assert.assertTrue;
-
-import java.net.URL;
-import java.nio.file.Paths;
+import com.gargoylesoftware.htmlunit.WebClient;
+import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import org.eclipse.krazo.test.helper.annotation.IgnoreOnWildfly;
 import org.eclipse.krazo.test.util.WebArchiveBuilder;
 import org.jboss.arquillian.container.test.api.Deployment;
-import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.test.api.ArquillianResource;
-import org.jboss.shrinkwrap.api.Archive;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
-import org.openqa.selenium.WebDriver;
+
+import java.net.URL;
+import java.nio.file.Paths;
+
+import static org.junit.Assert.assertTrue;
 
 @RunWith(Arquillian.class)
 public class Jsr223IT {
@@ -42,11 +44,19 @@ public class Jsr223IT {
     @ArquillianResource
     private URL baseURL;
 
-    @Drone
-    private WebDriver webDriver;
+    private WebClient webClient;
+
+    @Before
+    public void setUp() {
+        webClient = new WebClient();
+        webClient.getOptions()
+            .setThrowExceptionOnFailingStatusCode(false);
+        webClient.getOptions()
+            .setRedirectEnabled(true);
+    }
 
     @Deployment(name = "jsr223", testable = false)
-    public static Archive createDeployment() {
+    public static WebArchive createDeployment() {
         return new WebArchiveBuilder()
             .addPackage("org.eclipse.krazo.test.ext.jsr223")
             .addView(Paths.get(WEB_INF_SRC).resolve("views/index.js").toFile(), "index.js")
@@ -58,9 +68,9 @@ public class Jsr223IT {
     }
 
     @Test
-    public void testNashorn() {
-        webDriver.navigate().to(baseURL + "mvc/nashorn?name=Nashorn");
-        assertTrue(webDriver.getPageSource().contains("Hello Nashorn"));
+    public void testNashorn() throws Exception {
+        final HtmlPage page = webClient.getPage(baseURL + "mvc/nashorn?name=Nashorn");
+        assertTrue(page.getBody().getTextContent().contains("Hello Nashorn"));
     }
 
     @Test
@@ -69,8 +79,8 @@ public class Jsr223IT {
     // in 2020 (EOL Python 2) we probably need to remove this test with Jython 2.7 anyway
     // and the above mentioned configuration effort would count for nothing.
     @Category(IgnoreOnWildfly.class)
-    public void testJython() {
-        webDriver.navigate().to(baseURL + "mvc/jython?name=Jython");
-        assertTrue(webDriver.getPageSource().contains("Hello Jython"));
+    public void testJython() throws Exception {
+        final HtmlPage page = webClient.getPage(baseURL + "mvc/jython?name=Jython");
+        assertTrue(page.getBody().getTextContent().contains("Hello Jython"));
     }
 }

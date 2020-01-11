@@ -18,18 +18,19 @@
  */
 package org.eclipse.krazo.test.ext;
 
+import com.gargoylesoftware.htmlunit.WebClient;
+import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import org.eclipse.krazo.test.helper.annotation.IgnoreOnWildfly;
 import org.eclipse.krazo.test.util.WebArchiveBuilder;
 import org.jboss.arquillian.container.test.api.Deployment;
-import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.jboss.shrinkwrap.api.Archive;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 
 import java.net.URL;
 import java.nio.file.Paths;
@@ -48,11 +49,19 @@ public class AsciiDocIT {
     @ArquillianResource
     private URL baseURL;
 
-    @Drone
-    private WebDriver webDriver;
+    private WebClient webClient;
+
+    @Before
+    public void setUp() {
+        webClient = new WebClient();
+        webClient.getOptions()
+            .setThrowExceptionOnFailingStatusCode(false);
+        webClient.getOptions()
+            .setRedirectEnabled(true);
+    }
 
     @Deployment(testable = false, name = "asciidoc")
-    public static Archive createDeployment() {
+    public static WebArchive createDeployment() {
         return new WebArchiveBuilder()
             .addPackage("org.eclipse.krazo.test.ext.asciidoc")
             .addView(Paths.get(WEB_INF_SRC).resolve("views/hello.adoc").toFile(), "hello.adoc")
@@ -62,9 +71,9 @@ public class AsciiDocIT {
     }
 
     @Test
-    public void testView1() {
-        webDriver.navigate().to(baseURL + "resources/hello?user=mvc");
-        final String h2 = webDriver.findElement(By.tagName("h2")).getText();
+    public void testView1() throws Exception {
+        final HtmlPage page = webClient.getPage(baseURL + "resources/hello?user=mvc");
+        final String h2 = page.getElementsByTagName("h2").get(0).getTextContent();
         assertTrue(h2.contains("mvc"));
     }
 }

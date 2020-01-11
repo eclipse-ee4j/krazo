@@ -55,13 +55,6 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-            <dependency>
-                <groupId>org.jboss.arquillian.extension</groupId>
-                <artifactId>arquillian-drone-bom</artifactId>
-                <version>2.3.1</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
 
             <!-- Define optional dependencies for the tests below -->
             <!-- EXT -->
@@ -161,13 +154,6 @@
         <dependency>
             <groupId>org.jboss.arquillian.protocol</groupId>
             <artifactId>arquillian-protocol-servlet</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.arquillian.graphene</groupId>
-            <artifactId>graphene-webdriver</artifactId>
-            <version>2.3.1</version>
-            <type>pom</type>
             <scope>test</scope>
         </dependency>
         <dependency>
