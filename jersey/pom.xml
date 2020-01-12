@@ -25,7 +25,7 @@
     <parent>
         <groupId>org.eclipse.krazo</groupId>
         <artifactId>krazo-parent</artifactId>
-        <version>1.0.0-RC1</version>
+        <version>1.0.0</version>
     </parent>
 
     <artifactId>krazo-jersey</artifactId>
