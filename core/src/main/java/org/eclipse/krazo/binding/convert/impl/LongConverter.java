@@ -19,6 +19,7 @@ package org.eclipse.krazo.binding.convert.impl;
 
 import org.eclipse.krazo.binding.convert.ConverterResult;
 
+import java.lang.annotation.Annotation;
 import java.text.ParseException;
 import java.util.Locale;
 
@@ -30,7 +31,7 @@ import java.util.Locale;
 public class LongConverter extends NumberConverter<Long> {
 
     @Override
-    public boolean supports(Class<Long> rawType) {
+    public boolean supports(Class<Long> rawType, Annotation[] annotations) {
         return Long.class.equals(rawType) || Long.TYPE.equals(rawType);
     }
 

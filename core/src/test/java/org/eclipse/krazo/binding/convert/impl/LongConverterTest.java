@@ -60,14 +60,14 @@ public class LongConverterTest {
             super(new LongConverter());
         }
 
-        @Parameters(name = "supports {0} = {1}")
+        @Parameters(name = "supports {0} | {1} = {2}")
         public static List<Object[]> getParameters() {
             return Arrays.asList(
-                new Object[]{Long.class, true},
-                new Object[]{Number.class, false},
-                new Object[]{Object.class, false},
-                new Object[]{Integer.class, false},
-                new Object[]{List.class, false}
+                new Object[]{Long.class, EMPTY_ANNOTATIONS, true},
+                new Object[]{Number.class, EMPTY_ANNOTATIONS, false},
+                new Object[]{Object.class, EMPTY_ANNOTATIONS, false},
+                new Object[]{Integer.class, EMPTY_ANNOTATIONS, false},
+                new Object[]{List.class, EMPTY_ANNOTATIONS, false}
             );
         }
     }

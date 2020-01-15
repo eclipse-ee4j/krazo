@@ -21,6 +21,7 @@ import org.eclipse.krazo.util.ServiceLoaders;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
+import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,9 +40,9 @@ public class ConverterRegistry {
         converters.addAll(ServiceLoaders.list(MvcConverter.class));
     }
 
-    public <T> MvcConverter<T> lookup(Class<T> rawType) {
+    public <T> MvcConverter<T> lookup(Class<T> rawType, Annotation[] annotations) {
         return converters.stream()
-                .filter(converter -> converter.supports(rawType))
+                .filter(converter -> converter.supports(rawType, annotations))
                 .findFirst().orElse(null);
     }
 }

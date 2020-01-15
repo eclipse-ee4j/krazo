@@ -63,7 +63,7 @@ public class MvcConverterProvider implements ParamConverterProvider {
 
         if (mvcBinding != null) {
 
-            MvcConverter<T> mvcConverter = converterRegistry.lookup(rawType);
+            MvcConverter<T> mvcConverter = converterRegistry.lookup(rawType, annotations);
 
             if (mvcConverter != null) {
 

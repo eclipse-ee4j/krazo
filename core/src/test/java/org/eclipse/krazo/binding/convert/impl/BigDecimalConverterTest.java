@@ -21,6 +21,7 @@ import org.junit.experimental.runners.Enclosed;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized.Parameters;
 
+import java.lang.annotation.Annotation;
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
@@ -60,14 +61,14 @@ public class BigDecimalConverterTest {
             super(new BigDecimalConverter());
         }
 
-        @Parameters(name = "supports {0} = {1}")
+        @Parameters(name = "supports {0} | {1} = {2}")
         public static List<Object[]> getParameters() {
             return Arrays.asList(
-                new Object[]{BigDecimal.class, true},
-                new Object[]{Number.class, false},
-                new Object[]{Object.class, false},
-                new Object[]{Float.class, false},
-                new Object[]{List.class, false}
+                new Object[]{BigDecimal.class, EMPTY_ANNOTATIONS, true},
+                new Object[]{Number.class, EMPTY_ANNOTATIONS, false},
+                new Object[]{Object.class, EMPTY_ANNOTATIONS, false},
+                new Object[]{Float.class, EMPTY_ANNOTATIONS, false},
+                new Object[]{List.class, EMPTY_ANNOTATIONS, false}
             );
         }
     }

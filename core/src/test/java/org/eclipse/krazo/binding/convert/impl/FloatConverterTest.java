@@ -62,14 +62,14 @@ public class FloatConverterTest {
             super(new FloatConverter());
         }
 
-        @Parameters(name = "supports {0} = {1}")
+        @Parameters(name = "supports {0} | {1} = {2}")
         public static List<Object[]> getParameters() {
             return Arrays.asList(
-                new Object[]{Float.class, true},
-                new Object[]{Number.class, false},
-                new Object[]{Object.class, false},
-                new Object[]{Double.class, false},
-                new Object[]{List.class, false}
+                new Object[]{Float.class, EMPTY_ANNOTATIONS, true},
+                new Object[]{Number.class, EMPTY_ANNOTATIONS, false},
+                new Object[]{Object.class, EMPTY_ANNOTATIONS, false},
+                new Object[]{Double.class, EMPTY_ANNOTATIONS, false},
+                new Object[]{List.class, EMPTY_ANNOTATIONS, false}
             );
         }
     }

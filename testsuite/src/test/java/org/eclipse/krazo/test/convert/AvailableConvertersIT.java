@@ -10,6 +10,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import javax.inject.Inject;
+import java.lang.annotation.Annotation;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
@@ -17,6 +18,8 @@ import static org.junit.Assert.assertNotNull;
 
 @RunWith(Arquillian.class)
 public class AvailableConvertersIT {
+
+    private static final Annotation[] EMPTY_ANNOTATIONS = new Annotation[]{};
 
     @Deployment(name = "available-converters")
     public static WebArchive createDeployment() {
@@ -30,49 +33,49 @@ public class AvailableConvertersIT {
 
     @Test
     public void shortConverterRegistered() {
-        final MvcConverter<Short> converter = converterRegistry.lookup(Short.class);
+        final MvcConverter<Short> converter = converterRegistry.lookup(Short.class, EMPTY_ANNOTATIONS);
 
         assertNotNull(formatErrorMessage(Short.class), converter);
     }
 
     @Test
     public void longConverterRegistered() {
-        final MvcConverter<Long> converter = converterRegistry.lookup(Long.class);
+        final MvcConverter<Long> converter = converterRegistry.lookup(Long.class, EMPTY_ANNOTATIONS);
 
         assertNotNull(formatErrorMessage(Long.class), converter);
     }
 
     @Test
     public void integerConverterRegistered() {
-        final MvcConverter<Integer> converter = converterRegistry.lookup(Integer.class);
+        final MvcConverter<Integer> converter = converterRegistry.lookup(Integer.class, EMPTY_ANNOTATIONS);
 
         assertNotNull(formatErrorMessage(Integer.class), converter);
     }
 
     @Test
     public void floatConverterRegistered() {
-        final MvcConverter<Float> converter = converterRegistry.lookup(Float.class);
+        final MvcConverter<Float> converter = converterRegistry.lookup(Float.class, EMPTY_ANNOTATIONS);
 
         assertNotNull(formatErrorMessage(Float.class), converter);
     }
 
     @Test
     public void doubleConverterRegistered() {
-        final MvcConverter<Double> converter = converterRegistry.lookup(Double.class);
+        final MvcConverter<Double> converter = converterRegistry.lookup(Double.class, EMPTY_ANNOTATIONS);
 
         assertNotNull(formatErrorMessage(Double.class), converter);
     }
 
     @Test
     public void bigIntegerConverterRegistered() {
-        final MvcConverter<BigInteger> converter = converterRegistry.lookup(BigInteger.class);
+        final MvcConverter<BigInteger> converter = converterRegistry.lookup(BigInteger.class, EMPTY_ANNOTATIONS);
 
         assertNotNull(formatErrorMessage(BigInteger.class), converter);
     }
 
     @Test
     public void bigDecimalConverterRegistered() {
-        final MvcConverter<BigDecimal> converter = converterRegistry.lookup(BigDecimal.class);
+        final MvcConverter<BigDecimal> converter = converterRegistry.lookup(BigDecimal.class, EMPTY_ANNOTATIONS);
 
         assertNotNull(formatErrorMessage(BigDecimal.class), converter);
     }
