@@ -5,11 +5,11 @@ import com.gargoylesoftware.htmlunit.html.HtmlForm;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import com.gargoylesoftware.htmlunit.html.HtmlSubmitInput;
 import org.eclipse.krazo.binding.convert.MvcConverter;
+import org.eclipse.krazo.test.convert.type.AnswerToAllDoubleConverter;
 import org.eclipse.krazo.test.util.WebArchiveBuilder;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.test.api.ArquillianResource;
-import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.After;
 import org.junit.Before;
@@ -24,12 +24,12 @@ import static org.junit.Assert.assertEquals;
 @RunWith(Arquillian.class)
 public class ConverterPriorityIT {
 
-    private static final String RESOURCES = "src/main/resources/convert";
+    private static final String RESOURCES = "src/main/resources/convert/type";
 
-    @Deployment(testable = false, name = "convert")
+    @Deployment(testable = false, name = "convert-type")
     public static WebArchive createDeployment() {
         return new WebArchiveBuilder()
-            .addPackage("org.eclipse.krazo.test.convert")
+            .addPackage("org.eclipse.krazo.test.convert.type")
             .addView(Paths.get(RESOURCES)
                          .resolve("views/index.jsp")
                          .toFile(), "index.jsp")

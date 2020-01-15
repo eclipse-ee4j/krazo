@@ -1,4 +1,4 @@
-package org.eclipse.krazo.test.convert;
+package org.eclipse.krazo.test.convert.type;
 
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;

@@ -1,4 +1,4 @@
-package org.eclipse.krazo.test.convert;
+package org.eclipse.krazo.test.convert.type;
 
 import org.eclipse.krazo.binding.convert.ConverterResult;
 import org.eclipse.krazo.binding.convert.MvcConverter;

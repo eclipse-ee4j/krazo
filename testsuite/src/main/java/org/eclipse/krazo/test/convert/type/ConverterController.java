@@ -1,4 +1,4 @@
-package org.eclipse.krazo.test.convert;
+package org.eclipse.krazo.test.convert.type;
 
 import javax.inject.Inject;
 import javax.mvc.Controller;
