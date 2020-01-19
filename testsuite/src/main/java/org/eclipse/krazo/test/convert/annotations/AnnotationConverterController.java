@@ -33,7 +33,7 @@ public class AnnotationConverterController {
     }
 
     @POST
-    public String doPost(@MvcBinding @AnswerToAll @FormParam("number") final double someNumber) {
+    public String doPost(@MvcBinding @AnswerToAll(theAnwser = 42.0D) @FormParam("number") final double someNumber) {
         numberTransporter.setNumber(someNumber);
         return "redirect:/converter-annotations/result";
     }

@@ -36,7 +36,7 @@ public class IntegerConverter extends NumberConverter<Integer> {
     }
 
     @Override
-    public ConverterResult<Integer> convert(String value, Class<Integer> rawType, Locale locale) {
+    public ConverterResult<Integer> convert(String value, Class<Integer> rawType, Annotation[] annotations, Locale locale) {
 
         Integer defaultValue = Integer.TYPE.equals(rawType) ? 0 : null;
         try {

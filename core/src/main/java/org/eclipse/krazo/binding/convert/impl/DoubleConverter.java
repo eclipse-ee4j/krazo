@@ -36,7 +36,7 @@ public class DoubleConverter extends NumberConverter<Double> {
     }
 
     @Override
-    public ConverterResult<Double> convert(String value, Class<Double> rawType, Locale locale) {
+    public ConverterResult<Double> convert(String value, Class<Double> rawType, Annotation[] annotations, Locale locale) {
 
         Double defaultValue = Double.TYPE.equals(rawType) ? 0.0 : null;
         try {

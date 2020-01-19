@@ -36,7 +36,7 @@ public class FloatConverter extends NumberConverter<Float> {
     }
 
     @Override
-    public ConverterResult<Float> convert(String value, Class<Float> rawType, Locale locale) {
+    public ConverterResult<Float> convert(String value, Class<Float> rawType, Annotation[] annotations, Locale locale) {
 
         Float defaultValue = Float.TYPE.equals(rawType) ? 0.0f : null;
         try {

@@ -37,7 +37,7 @@ public class BigIntegerConverter extends NumberConverter<BigInteger> {
     }
 
     @Override
-    public ConverterResult<BigInteger> convert(String value, Class<BigInteger> rawType, Locale locale) {
+    public ConverterResult<BigInteger> convert(String value, Class<BigInteger> rawType, Annotation[] annotations, Locale locale) {
 
         try {
 

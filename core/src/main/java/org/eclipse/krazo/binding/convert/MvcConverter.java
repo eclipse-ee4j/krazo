@@ -43,8 +43,9 @@ public interface MvcConverter<T> {
      *
      * @param value   The value to convert
      * @param rawType The target type
+     * @param annotations The annotations on the target attribute
      * @param locale  The request locale
      * @return The result of the conversion
      */
-    ConverterResult<T> convert(String value, Class<T> rawType, Locale locale);
+    ConverterResult<T> convert(String value, Class<T> rawType, Annotation[] annotations, Locale locale);
 }

@@ -16,7 +16,7 @@ public class AnswerToAllDoubleConverter implements MvcConverter<Double> {
     }
 
     @Override
-    public ConverterResult<Double> convert(String value, Class<Double> rawType, Locale locale) {
+    public ConverterResult<Double> convert(String value, Class<Double> rawType, Annotation[] annotations, Locale locale) {
         return ConverterResult.success(42.0D);
     }
 }

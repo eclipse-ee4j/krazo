@@ -36,7 +36,7 @@ public class BooleanConverter implements MvcConverter<Boolean> {
     }
 
     @Override
-    public ConverterResult<Boolean> convert(String value, Class<Boolean> rawType, Locale locale) {
+    public ConverterResult<Boolean> convert(String value, Class<Boolean> rawType, Annotation[] annotations, Locale locale) {
 
         Boolean defaultValue = Boolean.TYPE.equals(rawType) ? false : null;
 

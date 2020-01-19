@@ -36,7 +36,7 @@ public class LongConverter extends NumberConverter<Long> {
     }
 
     @Override
-    public ConverterResult<Long> convert(String value, Class<Long> rawType, Locale locale) {
+    public ConverterResult<Long> convert(String value, Class<Long> rawType, Annotation[] annotations, Locale locale) {
 
         Long defaultValue = Long.TYPE.equals(rawType) ? 0L : null;
         try {

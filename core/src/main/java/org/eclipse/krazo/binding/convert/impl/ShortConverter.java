@@ -36,7 +36,7 @@ public class ShortConverter extends NumberConverter<Short> {
     }
 
     @Override
-    public ConverterResult<Short> convert(String value, Class<Short> rawType, Locale locale) {
+    public ConverterResult<Short> convert(String value, Class<Short> rawType, Annotation[] annotations, Locale locale) {
 
         Short defaultValue = Short.TYPE.equals(rawType) ? (short) 0 : null;
         try {

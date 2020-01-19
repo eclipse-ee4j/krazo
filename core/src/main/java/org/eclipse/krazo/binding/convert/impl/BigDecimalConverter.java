@@ -37,7 +37,7 @@ public class BigDecimalConverter extends NumberConverter<BigDecimal> {
     }
 
     @Override
-    public ConverterResult<BigDecimal> convert(String value, Class<BigDecimal> rawType, Locale locale) {
+    public ConverterResult<BigDecimal> convert(String value, Class<BigDecimal> rawType, Annotation[] annotations, Locale locale) {
 
         try {
 
