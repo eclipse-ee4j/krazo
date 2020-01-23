@@ -1,4 +1,4 @@
-package org.eclipse.krazo.test.convert;
+package org.eclipse.krazo.test.convert.type;
 
 import javax.mvc.RedirectScoped;
 import java.io.Serializable;

@@ -17,6 +17,7 @@
  */
 package org.eclipse.krazo.binding.convert;
 
+import java.lang.annotation.Annotation;
 import java.util.Locale;
 
 /**
@@ -32,18 +33,19 @@ import java.util.Locale;
 public interface MvcConverter<T> {
 
     /**
-     * Returns true if the converter supports the specified type.
+     * Returns true if the converter supports the specified type or one of the annotations
      */
-    boolean supports(Class<T> rawType);
+    boolean supports(Class<T> rawType, Annotation[] annotations);
 
     /**
      * Try to convert the value to the specified target type. Must only be called if
-     * the converter returned true from {@link #supports(Class)} for the type.
+     * the converter returned true from {@link #supports(Class, Annotation[])} for the type.
      *
      * @param value   The value to convert
      * @param rawType The target type
+     * @param annotations The annotations on the target attribute
      * @param locale  The request locale
      * @return The result of the conversion
      */
-    ConverterResult<T> convert(String value, Class<T> rawType, Locale locale);
+    ConverterResult<T> convert(String value, Class<T> rawType, Annotation[] annotations, Locale locale);
 }

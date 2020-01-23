@@ -19,6 +19,7 @@ package org.eclipse.krazo.binding.convert.impl;
 
 import org.eclipse.krazo.binding.convert.ConverterResult;
 
+import java.lang.annotation.Annotation;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.util.Locale;
@@ -31,12 +32,12 @@ import java.util.Locale;
 public class BigDecimalConverter extends NumberConverter<BigDecimal> {
 
     @Override
-    public boolean supports(Class<BigDecimal> rawType) {
+    public boolean supports(Class<BigDecimal> rawType, Annotation[] annotations) {
         return BigDecimal.class.equals(rawType);
     }
 
     @Override
-    public ConverterResult<BigDecimal> convert(String value, Class<BigDecimal> rawType, Locale locale) {
+    public ConverterResult<BigDecimal> convert(String value, Class<BigDecimal> rawType, Annotation[] annotations, Locale locale) {
 
         try {
 

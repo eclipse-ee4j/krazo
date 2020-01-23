@@ -23,6 +23,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
+import java.lang.annotation.Annotation;
 import java.util.Locale;
 
 import static org.junit.Assert.*;
@@ -49,7 +50,7 @@ public abstract class ConversionTest<T> {
 
     @Test
     public void testConversionErrors() {
-        ConverterResult<T> converterResult = converter.convert(value, clazz, Locale.ENGLISH);
+        ConverterResult<T> converterResult = converter.convert(value, clazz, new Annotation[] {}, Locale.ENGLISH);
 
         assertEquals(convertedValue, converterResult.getValue());
         if (isError) {

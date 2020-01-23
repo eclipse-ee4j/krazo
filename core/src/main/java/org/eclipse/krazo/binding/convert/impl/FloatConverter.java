@@ -19,6 +19,7 @@ package org.eclipse.krazo.binding.convert.impl;
 
 import org.eclipse.krazo.binding.convert.ConverterResult;
 
+import java.lang.annotation.Annotation;
 import java.text.ParseException;
 import java.util.Locale;
 
@@ -30,12 +31,12 @@ import java.util.Locale;
 public class FloatConverter extends NumberConverter<Float> {
 
     @Override
-    public boolean supports(Class<Float> rawType) {
+    public boolean supports(Class<Float> rawType, Annotation[] annotations) {
         return Float.class.equals(rawType) || Float.TYPE.equals(rawType);
     }
 
     @Override
-    public ConverterResult<Float> convert(String value, Class<Float> rawType, Locale locale) {
+    public ConverterResult<Float> convert(String value, Class<Float> rawType, Annotation[] annotations, Locale locale) {
 
         Float defaultValue = Float.TYPE.equals(rawType) ? 0.0f : null;
         try {

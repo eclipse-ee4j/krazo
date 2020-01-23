@@ -20,6 +20,7 @@ package org.eclipse.krazo.binding.convert.impl;
 import org.eclipse.krazo.binding.convert.ConverterResult;
 import org.eclipse.krazo.binding.convert.MvcConverter;
 
+import java.lang.annotation.Annotation;
 import java.util.Locale;
 
 /**
@@ -30,12 +31,12 @@ import java.util.Locale;
 public class BooleanConverter implements MvcConverter<Boolean> {
 
     @Override
-    public boolean supports(Class<Boolean> rawType) {
+    public boolean supports(Class<Boolean> rawType, Annotation[] annotations) {
         return Boolean.class.equals(rawType) || Boolean.TYPE.equals(rawType);
     }
 
     @Override
-    public ConverterResult<Boolean> convert(String value, Class<Boolean> rawType, Locale locale) {
+    public ConverterResult<Boolean> convert(String value, Class<Boolean> rawType, Annotation[] annotations, Locale locale) {
 
         Boolean defaultValue = Boolean.TYPE.equals(rawType) ? false : null;
 

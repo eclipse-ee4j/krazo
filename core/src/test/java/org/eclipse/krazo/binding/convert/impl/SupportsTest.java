@@ -23,6 +23,8 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameter;
 
+import java.lang.annotation.Annotation;
+
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -31,6 +33,8 @@ import static org.junit.Assert.assertTrue;
  */
 @RunWith(Parameterized.class)
 public abstract class SupportsTest<T> {
+
+    protected static final Annotation[] EMPTY_ANNOTATIONS = new Annotation[]{};
 
     private MvcConverter<T> mvcConverter;
 
@@ -41,14 +45,16 @@ public abstract class SupportsTest<T> {
     @Parameter(0)
     public Class clazz;
     @Parameter(1)
+    public Annotation[] annotations;
+    @Parameter(2)
     public boolean isSupported;
 
     @Test
     public void testSupports() {
        if (isSupported) {
-           assertTrue(mvcConverter.supports(clazz));
+           assertTrue(mvcConverter.supports(clazz, annotations));
        } else {
-           assertFalse(mvcConverter.supports(clazz));
+           assertFalse(mvcConverter.supports(clazz, annotations));
        }
     }
 

@@ -58,12 +58,12 @@ public class BooleanConverterTest {
             super(new BooleanConverter());
         }
 
-        @Parameters(name = "supports {0} = {1}")
+        @Parameters(name = "supports {0} | {1} = {2}")
         public static List<Object[]> getParameters() {
             return Arrays.asList(
-                new Object[]{Boolean.class, true},
-                new Object[]{Integer.class, false},
-                new Object[]{null, false}
+                new Object[]{Boolean.class, EMPTY_ANNOTATIONS, true},
+                new Object[]{Integer.class, EMPTY_ANNOTATIONS, false},
+                new Object[]{null, EMPTY_ANNOTATIONS, false}
             );
         }
     }

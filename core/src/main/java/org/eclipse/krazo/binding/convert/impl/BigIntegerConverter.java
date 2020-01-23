@@ -19,6 +19,7 @@ package org.eclipse.krazo.binding.convert.impl;
 
 import org.eclipse.krazo.binding.convert.ConverterResult;
 
+import java.lang.annotation.Annotation;
 import java.math.BigInteger;
 import java.text.ParseException;
 import java.util.Locale;
@@ -31,12 +32,12 @@ import java.util.Locale;
 public class BigIntegerConverter extends NumberConverter<BigInteger> {
 
     @Override
-    public boolean supports(Class<BigInteger> rawType) {
+    public boolean supports(Class<BigInteger> rawType, Annotation[] annotations) {
         return BigInteger.class.equals(rawType);
     }
 
     @Override
-    public ConverterResult<BigInteger> convert(String value, Class<BigInteger> rawType, Locale locale) {
+    public ConverterResult<BigInteger> convert(String value, Class<BigInteger> rawType, Annotation[] annotations, Locale locale) {
 
         try {
 

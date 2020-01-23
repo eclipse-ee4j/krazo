@@ -63,7 +63,7 @@ public class MvcConverterProvider implements ParamConverterProvider {
 
         if (mvcBinding != null) {
 
-            MvcConverter<T> mvcConverter = converterRegistry.lookup(rawType);
+            MvcConverter<T> mvcConverter = converterRegistry.lookup(rawType, annotations);
 
             if (mvcConverter != null) {
 
@@ -73,7 +73,7 @@ public class MvcConverterProvider implements ParamConverterProvider {
                     public T fromString(String value) {
 
                         // execute the converter
-                        ConverterResult<T> result = mvcConverter.convert(value, rawType, mvcContext.getLocale());
+                        ConverterResult<T> result = mvcConverter.convert(value, rawType, annotations, mvcContext.getLocale());
 
                         // register possible errors in BindingResult
                         result.getError()

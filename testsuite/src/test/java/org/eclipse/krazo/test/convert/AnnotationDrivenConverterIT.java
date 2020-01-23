@@ -5,6 +5,7 @@ import com.gargoylesoftware.htmlunit.html.HtmlForm;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import com.gargoylesoftware.htmlunit.html.HtmlSubmitInput;
 import org.eclipse.krazo.binding.convert.MvcConverter;
+import org.eclipse.krazo.test.convert.annotations.AnnotationDrivenConverter;
 import org.eclipse.krazo.test.convert.type.AnswerToAllDoubleConverter;
 import org.eclipse.krazo.test.util.WebArchiveBuilder;
 import org.jboss.arquillian.container.test.api.Deployment;
@@ -22,21 +23,21 @@ import java.nio.file.Paths;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(Arquillian.class)
-public class ConverterPriorityIT {
+public class AnnotationDrivenConverterIT {
 
-    private static final String RESOURCES = "src/main/resources/convert/type";
+    private static final String RESOURCES = "src/main/resources/convert/annotations";
 
-    @Deployment(testable = false, name = "convert-type")
+    @Deployment(testable = false, name = "convert-annotations")
     public static WebArchive createDeployment() {
         return new WebArchiveBuilder()
-            .addPackage("org.eclipse.krazo.test.convert.type")
+            .addPackage("org.eclipse.krazo.test.convert.annotations")
             .addView(Paths.get(RESOURCES)
                          .resolve("views/index.jsp")
                          .toFile(), "index.jsp")
             .addView(Paths.get(RESOURCES)
                          .resolve("views/result.jsp")
                          .toFile(), "result.jsp")
-            .addService(MvcConverter.class, AnswerToAllDoubleConverter.class)
+            .addService(MvcConverter.class, AnnotationDrivenConverter.class)
             .addBeansXml()
             .build();
     }
@@ -62,7 +63,7 @@ public class ConverterPriorityIT {
 
     @Test
     public void testCorrectCustomConverterIsUsedForDoubleValue() throws Exception {
-        final HtmlPage page1 = webClient.getPage(baseURL + "resources/converter");
+        final HtmlPage page1 = webClient.getPage(baseURL + "resources/converter-annotations");
         final HtmlForm form = (HtmlForm) page1.getElementById("form");
         final HtmlSubmitInput button = form.getInputByName("submit");
 
