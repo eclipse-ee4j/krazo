@@ -51,4 +51,10 @@
             </property>
         </configuration>
     </container>
+
+    <container qualifier="liberty">
+        <configuration>
+            <property name="wlpHome">${liberty.home}</property>
+        </configuration>
+    </container>
 </arquillian>
