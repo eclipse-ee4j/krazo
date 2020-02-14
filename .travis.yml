@@ -62,3 +62,4 @@ jobs:
     - env: TYPE=tck-tomee
     - env: TYPE=tck-liberty
     - env: TYPE=glassfish-module
+    - env: TYPE=testsuite-liberty
