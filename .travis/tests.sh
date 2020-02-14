@@ -112,7 +112,7 @@ elif [ "${1}" == "tck-tomee" ]; then
 
 elif [ "${1}" == "tck-liberty" ]; then
 
-  sh .travis/install-liberty.sh
+  source .travis/install-liberty.sh
   mvn -B -V -DskipTests clean install
   pushd tck
   mvn -B -V -Dtck-env=liberty -Dliberty.home=${LIBERTY_HOME} verify
