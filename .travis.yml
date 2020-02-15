@@ -37,6 +37,9 @@ jobs:
       before_script: .travis/docker-tomee.sh
       script: mvn -P${TYPE} --projects testsuite clean verify
     - stage: test
+      env: TYPE=testsuite-liberty
+      script: source .travis/install-liberty.sh && mvn -P${TYPE} -Dliberty.home=${LIBERTY_HOME} --projects testsuite clean verify
+    - stage: test
       env: TYPE=tck-glassfish51-patched
       script: .travis/tests.sh ${TYPE}
     - stage: test
@@ -58,3 +61,4 @@ jobs:
     - env: TYPE=tck-tomee
     - env: TYPE=tck-liberty
     - env: TYPE=glassfish-module
+    - env: TYPE=testsuite-liberty
