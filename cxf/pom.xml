@@ -98,6 +98,13 @@
             <scope>provided</scope>
         </dependency>
 
+        <!-- Servlet API -->
+        <dependency>
+            <groupId>jakarta.servlet</groupId>
+            <artifactId>jakarta.servlet-api</artifactId>
+            <version>4.0.3</version>
+        </dependency>
+
     </dependencies>
 
 </project>

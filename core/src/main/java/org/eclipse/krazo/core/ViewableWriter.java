@@ -22,6 +22,7 @@ import org.eclipse.krazo.engine.ViewEngineContextImpl;
 import org.eclipse.krazo.engine.ViewEngineFinder;
 import org.eclipse.krazo.engine.Viewable;
 import org.eclipse.krazo.lifecycle.EventDispatcher;
+import org.eclipse.krazo.util.ServiceLoaders;
 
 import javax.enterprise.event.Event;
 import javax.enterprise.inject.Instance;
@@ -47,7 +48,6 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.lang.annotation.Annotation;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Type;
 import java.nio.charset.Charset;
 
@@ -102,7 +102,7 @@ public class ViewableWriter implements MessageBodyWriter<Viewable> {
 
     @Inject
     private MvcContext mvc;
-    
+
     @Inject
     private EventDispatcher eventDispatcher;
 
@@ -123,7 +123,7 @@ public class ViewableWriter implements MessageBodyWriter<Viewable> {
     @Override
     public void writeTo(Viewable viewable, Class<?> aClass, Type type, Annotation[] annotations, MediaType mediaType,
                         MultivaluedMap<String, Object> headers, OutputStream out)
-            throws IOException, WebApplicationException {
+        throws IOException, WebApplicationException {
 
         // Find engine for this Viewable
         final ViewEngine engine = engineFinder.find(viewable);
@@ -131,10 +131,9 @@ public class ViewableWriter implements MessageBodyWriter<Viewable> {
             throw new ServerErrorException(messages.get("NoViewEngine", viewable), INTERNAL_SERVER_ERROR);
         }
 
-        // Special hack for WebSphere Liberty
-        HttpServletRequest request = unwrap(injectedRequest, HttpServletRequest.class);
-        HttpServletResponse response = unwrap(injectedResponse, HttpServletResponse.class);
-        
+        HttpServletRequest request = unwrap(injectedRequest);
+        HttpServletResponse response = unwrap(injectedResponse);
+
         // Create wrapper for response
         final ServletOutputStream responseStream = new DelegatingServletOutputStream(out);
         final PrintWriter responseWriter = new PrintWriter(new OutputStreamWriter(responseStream, getCharset(headers)));
@@ -157,7 +156,7 @@ public class ViewableWriter implements MessageBodyWriter<Viewable> {
 
                 // Process view using selected engine
                 engine.processView(new ViewEngineContextImpl(viewable.getView(), models, request, responseWrapper,
-                        headers, responseStream, mediaType, uriInfo, resourceInfo, config, mvc.getLocale()));
+                                                             headers, responseStream, mediaType, uriInfo, resourceInfo, config, mvc.getLocale()));
 
             } finally {
                 eventDispatcher.fireAfterProcessViewEvent(engine, viewable);
@@ -170,31 +169,20 @@ public class ViewableWriter implements MessageBodyWriter<Viewable> {
         }
     }
 
-    /**
-     * This method is basically a dirty hack to get Eclipse Krazo work on WebSphere Liberty.
-     * The primary use case is to unwrap the original request/response from the wrapper we get
-     * from CXF. This is required because the wrappers don't use the official wrapper base classes
-     * and therefore Liberty fails to forward such requests because unwrapping isn't possible.
-     */
-    private <T> T unwrap(T obj, Class<T> type) {
+    private HttpServletRequest unwrap(HttpServletRequest origRequest) {
+        return ServiceLoaders.list(HttpCommunicationUnwrapper.class).stream()
+            .filter(unwrapper -> unwrapper.supports(origRequest))
+            .findFirst()
+            .map(unwrapper -> unwrapper.unwrapRequest(origRequest, HttpServletRequest.class))
+            .orElseThrow(() -> new IllegalStateException("no HttpCommunicationUnwrapper found for " + origRequest));
+    }
 
-        String implName = obj.getClass().getName();
-
-        if (implName.equals("org.apache.cxf.jaxrs.impl.tl.ThreadLocalHttpServletRequest")
-                || implName.equals("org.apache.cxf.jaxrs.impl.tl.ThreadLocalHttpServletResponse")) {
-
-            try {
-                return type.cast(
-                        obj.getClass().getMethod("get").invoke(obj)
-                );
-            } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
-                throw new IllegalStateException("Failed to unwrap", e);
-            }
-
-        }
-
-        return obj;
-
+    private HttpServletResponse unwrap(HttpServletResponse origRequest) {
+        return ServiceLoaders.list(HttpCommunicationUnwrapper.class).stream()
+            .filter(unwrapper -> unwrapper.supports(origRequest))
+            .findFirst()
+            .map(unwrapper -> unwrapper.unwrapResponse(origRequest, HttpServletResponse.class))
+            .orElseThrow(() -> new IllegalStateException("no HttpCommunicationUnwrapper found for " + origRequest));
     }
 
     /**
@@ -236,7 +224,7 @@ public class ViewableWriter implements MessageBodyWriter<Viewable> {
      * to an underlying {@link OutputStream} provided by JAX-RS.
      */
     private static class DelegatingServletOutputStream extends ServletOutputStream {
-        
+
         private final OutputStream out;
 
         public DelegatingServletOutputStream(OutputStream out) {
