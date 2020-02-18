@@ -21,6 +21,7 @@ package org.eclipse.krazo.cxf.http;
 
 import org.eclipse.krazo.core.HttpCommunicationUnwrapper;
 
+import javax.annotation.Priority;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.InvocationTargetException;
@@ -29,7 +30,11 @@ import java.lang.reflect.InvocationTargetException;
  * Unwrapper for CXF which extracts the original {@link HttpServletRequest} and / or {@link HttpServletResponse}
  * from the wrapper which are used e.g. by Liberty. This is required because the wrappers don't use the official wrapper base classes
  * and therefore Liberty fails to forward such requests because unwrapping isn't possible.
+ * <p>
+ * Instances of this class are put directly before the {@link org.eclipse.krazo.core.DefaultHttpCommunicationUnwrapper} to ensure, that
+ * they are executed before user created ones.
  */
+@Priority(1)
 public class CXFHttpCommunicationUnwrapper implements HttpCommunicationUnwrapper {
 
     @Override
