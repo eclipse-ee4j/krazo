@@ -45,12 +45,12 @@ public class CXFHttpCommunicationUnwrapper implements HttpCommunicationUnwrapper
     }
 
     @Override
-    public <T extends HttpServletResponse> T unwrapResponse(final T obj, final Class<T> type) {
+    public HttpServletRequest unwrapRequest(final HttpServletRequest obj, final Class<HttpServletRequest> type) {
         return unwrap(obj, type);
     }
 
     @Override
-    public <T extends HttpServletRequest> T unwrapRequest(final T obj, final Class<T> type) {
+    public HttpServletResponse unwrapResponse(final HttpServletResponse obj, final Class<HttpServletResponse> type) {
         return unwrap(obj, type);
     }
 

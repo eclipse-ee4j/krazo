@@ -42,18 +42,16 @@ public interface HttpCommunicationUnwrapper {
      *
      * @param obj the object to unwrap
      * @param type the target type of the object
-     * @param <T> the generic type of the object
      * @return the unwrapped {@link javax.servlet.http.HttpServletRequest}
      */
-    <T extends HttpServletRequest> T unwrapRequest(final T obj, final Class<T> type);
+    HttpServletRequest unwrapRequest(final HttpServletRequest obj, final Class<HttpServletRequest> type);
 
     /**
      * Unwraps a {@link javax.servlet.http.HttpServletResponse} from a custom wrapper into its original class.
      *
      * @param obj the object to unwrap
      * @param type the target type of the object
-     * @param <T> the generic type of the object
      * @return the unwrapped {@link javax.servlet.http.HttpServletResponse}
      */
-    <T extends HttpServletResponse> T unwrapResponse(final T obj, final Class<T> type);
+    HttpServletResponse unwrapResponse(final HttpServletResponse obj, final Class<HttpServletResponse> type);
 }
