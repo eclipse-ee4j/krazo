@@ -55,6 +55,8 @@
     <container qualifier="liberty">
         <configuration>
             <property name="wlpHome">${liberty.home}</property>
+            <!-- Uncomment for local debugging -->
+            <!-- <property name="javaVmArguments">-Xrunjdwp:transport=dt_socket,address=7777,server=y,suspend=y</property> -->
         </configuration>
     </container>
 </arquillian>
