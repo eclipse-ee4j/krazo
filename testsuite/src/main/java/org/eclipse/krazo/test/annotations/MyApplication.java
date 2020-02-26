@@ -31,8 +31,4 @@ import javax.ws.rs.core.Application;
 @ApplicationPath("resources")
 public class MyApplication extends Application {
 
-    @Override
-    public Set<Class<?>> getClasses() {
-        return Collections.singleton(AnnotationsController.class);
-    }
 }

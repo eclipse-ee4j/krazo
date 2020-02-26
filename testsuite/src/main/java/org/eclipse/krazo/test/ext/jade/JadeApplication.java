@@ -29,18 +29,10 @@ import java.util.Set;
 @ApplicationPath("/jade")
 public class JadeApplication extends Application {
 
-    private final Set<Class<?>> classes;
 
     public JadeApplication() {
-        classes = new HashSet<>();
-        classes.add(JadeController.class);
         // Register a filter to test if configuration via SystemProperties works
         String filterName = String.format("%s.%s", "org.eclipse.krazo.ext.jade.filter", "systemProperties");
         System.setProperty(filterName, DummyFilter.class.getName());
-    }
-
-    @Override
-    public Set<Class<?>> getClasses() {
-        return classes;
     }
 }

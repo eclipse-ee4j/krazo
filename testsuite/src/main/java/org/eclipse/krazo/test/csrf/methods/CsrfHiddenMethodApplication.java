@@ -25,11 +25,4 @@ import javax.ws.rs.core.Application;
 
 @ApplicationPath("resources")
 public class CsrfHiddenMethodApplication extends Application {
-
-    @Override
-    public Set<Class<?>> getClasses() {
-        final Set<Class<?>> set = new HashSet<>();
-        set.add(CsrfHiddenMethodController.class);
-        return set;
-    }
 }

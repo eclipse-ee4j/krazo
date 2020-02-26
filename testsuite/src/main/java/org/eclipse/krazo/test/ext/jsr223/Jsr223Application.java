@@ -31,11 +31,4 @@ import java.util.Set;
 @ApplicationPath("mvc")
 public class Jsr223Application extends Application {
 
-    @Override
-    public Set<Class<?>> getClasses() {
-        HashSet<Class<?>> classes = new HashSet<>();
-        classes.add(NashornController.class);
-        classes.add(JythonController.class);
-        return classes;
-    }
 }
