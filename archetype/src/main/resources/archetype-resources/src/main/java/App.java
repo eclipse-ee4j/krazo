@@ -1,7 +1,9 @@
-package ${package};
+package $
 
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
+
+{package};
 
 /**
  * Default JAX-RS application listening on /mvc

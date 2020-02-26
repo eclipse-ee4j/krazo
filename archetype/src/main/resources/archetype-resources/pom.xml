@@ -1,100 +1,100 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-  <groupId>${groupId}</groupId>
-  <artifactId>${artifactId}</artifactId>
-  <version>${version}</version>
-  <packaging>war</packaging>
+    <groupId>${groupId}</groupId>
+    <artifactId>${artifactId}</artifactId>
+    <version>${version}</version>
+    <packaging>war</packaging>
 
-  <name>${artifactId}</name>
+    <name>${artifactId}</name>
 
-  <properties>
-    <jakartaee-api.version>8.0.0</jakartaee-api.version>
-    <krazo.version>1.0.0</krazo.version>
-    <javax.mvc-api.version>1.0.0</javax.mvc-api.version>
-    <junit.version>4.12</junit.version>
-  </properties>
+    <properties>
+        <jakartaee-api.version>8.0.0</jakartaee-api.version>
+        <krazo.version>1.0.0</krazo.version>
+        <javax.mvc-api.version>1.0.0</javax.mvc-api.version>
+        <junit.version>4.12</junit.version>
+    </properties>
 
-  <dependencies>
-   <dependency>
-      <groupId>jakarta.platform</groupId>
-      <artifactId>jakarta.jakartaee-web-api</artifactId>
-      <version>${jakartaee-api.version}</version>
-      <scope>provided</scope>
-    </dependency>
+    <dependencies>
+        <dependency>
+            <groupId>jakarta.platform</groupId>
+            <artifactId>jakarta.jakartaee-web-api</artifactId>
+            <version>${jakartaee-api.version}</version>
+            <scope>provided</scope>
+        </dependency>
 
-    <dependency>
-      <groupId>javax.mvc</groupId>
-      <artifactId>javax.mvc-api</artifactId>
-      <version>${javax.mvc-api.version}</version>
-    </dependency>
+        <dependency>
+            <groupId>javax.mvc</groupId>
+            <artifactId>javax.mvc-api</artifactId>
+            <version>${javax.mvc-api.version}</version>
+        </dependency>
 
-#if (${krazoImpl} == 'resteasy')
-    <dependency>
-      <groupId>org.eclipse.krazo</groupId>
-      <artifactId>krazo-resteasy</artifactId>
-      <version>${krazo.version}</version>
-    </dependency>
-#elseif (${krazoImpl} == 'cxf')
-    <dependency>
-      <groupId>org.eclipse.krazo</groupId>
-      <artifactId>krazo-cxf</artifactId>
-      <version>${krazo.version}</version>
-    </dependency>
-#else
-    <dependency>
-      <groupId>org.eclipse.krazo</groupId>
-      <artifactId>krazo-jersey</artifactId>
-      <version>${krazo.version}</version>
-    </dependency>
-#end
+        #if (${krazoImpl} == 'resteasy')
+        <dependency>
+            <groupId>org.eclipse.krazo</groupId>
+            <artifactId>krazo-resteasy</artifactId>
+            <version>${krazo.version}</version>
+        </dependency>
+        #elseif (${krazoImpl} == 'cxf')
+        <dependency>
+            <groupId>org.eclipse.krazo</groupId>
+            <artifactId>krazo-cxf</artifactId>
+            <version>${krazo.version}</version>
+        </dependency>
+        #else
+        <dependency>
+            <groupId>org.eclipse.krazo</groupId>
+            <artifactId>krazo-jersey</artifactId>
+            <version>${krazo.version}</version>
+        </dependency>
+        #end
 
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>${junit.version}</version>
-      <scope>test</scope>
-    </dependency>
-  </dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
 
-  <build>
-    <finalName>${artifactId}</finalName>
-    <plugins>
-#if (${javaRelease} != '1.8' || '1.7' || '1.6')
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.8.0</version>
-        <configuration>
-          <release>${javaRelease}</release>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-war-plugin</artifactId>
-        <configuration>
-          <failOnMissingWebXml>false</failOnMissingWebXml>
-        </configuration>
-      </plugin>
-#else
-      <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-compiler-plugin</artifactId>
-          <version>3.8.0</version>
-          <configuration>
-            <source>${javaRelease}</source>
-            <target>${javaRelease}</target>
-          </configuration>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-war-plugin</artifactId>
-          <configuration>
-            <failOnMissingWebXml>false</failOnMissingWebXml>
-          </configuration>
-      </plugin>
-#end
-    </plugins>
-  </build>
+    <build>
+        <finalName>${artifactId}</finalName>
+        <plugins>
+            #if (${javaRelease} != '1.8' || '1.7' || '1.6')
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.0</version>
+                <configuration>
+                    <release>${javaRelease}</release>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <configuration>
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
+                </configuration>
+            </plugin>
+            #else
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.0</version>
+                <configuration>
+                    <source>${javaRelease}</source>
+                    <target>${javaRelease}</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <configuration>
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
+                </configuration>
+            </plugin>
+            #end
+        </plugins>
+    </build>
 </project>

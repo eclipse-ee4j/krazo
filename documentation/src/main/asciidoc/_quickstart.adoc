@@ -29,7 +29,52 @@ prerequisites.
 
 ==== Java EE 8 / Jakarta EE
 
-TODO: Migrate relevant parts from the website
+The easiest way getting started with Eclipse Krazo is to generate a Jakarta EE project with our
+archetype. This archetype generates a simple project including the Jakarta EE Web Profile and the selected,
+server-specific Krazo implementation.
+
+
+===== How to use the archetype
+
+The usage of the archetype is really easy. Depending on your application server, just run one of these commands in your command line.
+
+====== Glassfish / Payara (Jersey)
+
+[source, subs="attributes"]
+....
+mvn archetype:generate \
+-DarchetypeGroupId=org.eclipse.krazo \
+-DarchetypeArtifactId=jakartaee8-archetype \
+-DarchetypeVersion={krazo-version}  \
+-DgroupId=YOUR GROUP ID\
+-DartifactId=YOUR ARTIFACT ID
+....
+
+====== Wildfly (RESTEasy)
+
+[source, subs="attributes"]
+....
+mvn archetype:generate \
+-DarchetypeGroupId=org.eclipse.krazo \
+-DarchetypeArtifactId=jakartaee8-archetype \
+-DarchetypeVersion={krazo-version} \
+-DgroupId=YOUR GROUP ID \
+-DartifactId=YOUR ARTIFACT ID \
+-DkrazoImpl=resteasy
+....
+
+====== TomEE / OpenLiberty (CXF)
+
+[source, subs="attributes"]
+....
+mvn archetype:generate \
+-DarchetypeGroupId=org.eclipse.krazo \
+-DarchetypeArtifactId=jakartaee8-archetype \
+-DarchetypeVersion={krazo-version} \
+-DgroupId=YOUR GROUP ID \
+-DartifactId=YOUR ARTIFACT ID \
+-DkrazoImpl=cxf
+....
 
 ==== Servlet Containers
 

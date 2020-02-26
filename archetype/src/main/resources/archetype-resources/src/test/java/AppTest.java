@@ -1,15 +1,18 @@
-package ${package};
+package $
+
+import org.junit.Test;
 
 import static org.junit.Assert.assertTrue;
-import org.junit.Test;
+
+{package};
 
 /**
  * Dummy Test
  */
 public class AppTest {
 
-  @Test
-  public void test() {
-    assertTrue(true);
-  }
+    @Test
+    public void test() {
+        assertTrue(true);
+    }
 }
