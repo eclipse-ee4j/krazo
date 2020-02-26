@@ -17,6 +17,8 @@
  */
 package org.eclipse.krazo.security;
 
+import org.eclipse.krazo.util.HttpUtil;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -42,8 +44,9 @@ public class SessionCsrfTokenStrategy implements CsrfTokenStrategy {
 
     @Override
     public Optional<CsrfToken> getToken(HttpServletRequest request, HttpServletResponse response, boolean create) {
+        final HttpServletRequest originalRequest = HttpUtil.unwrapOriginalRequest(request);
 
-        HttpSession session = request.getSession(false);
+        HttpSession session = originalRequest.getSession(false);
         if (session != null) {
             Object value = session.getAttribute(SESSION_KEY);
             if (value instanceof CsrfToken) {
@@ -53,12 +56,11 @@ public class SessionCsrfTokenStrategy implements CsrfTokenStrategy {
 
         if (create) {
             CsrfToken token = new CsrfToken(headerName, paramName, UUID.randomUUID().toString());
-            request.getSession(true).setAttribute(SESSION_KEY, token);
+            originalRequest.getSession(true).setAttribute(SESSION_KEY, token);
             return Optional.of(token);
         }
 
         return Optional.empty();
-
     }
 
     public static final class Builder {

@@ -22,6 +22,7 @@ import org.eclipse.krazo.engine.ViewEngineContextImpl;
 import org.eclipse.krazo.engine.ViewEngineFinder;
 import org.eclipse.krazo.engine.Viewable;
 import org.eclipse.krazo.lifecycle.EventDispatcher;
+import org.eclipse.krazo.util.HttpUtil;
 import org.eclipse.krazo.util.ServiceLoaders;
 
 import javax.enterprise.event.Event;
@@ -52,6 +53,8 @@ import java.lang.reflect.Type;
 import java.nio.charset.Charset;
 
 import static javax.ws.rs.core.Response.Status.INTERNAL_SERVER_ERROR;
+import static org.eclipse.krazo.util.HttpUtil.unwrapOriginalRequest;
+import static org.eclipse.krazo.util.HttpUtil.unwrapOriginalResponse;
 
 /**
  * <p>Body writer for a {@link Viewable} instance. Looks for a
@@ -131,8 +134,8 @@ public class ViewableWriter implements MessageBodyWriter<Viewable> {
             throw new ServerErrorException(messages.get("NoViewEngine", viewable), INTERNAL_SERVER_ERROR);
         }
 
-        HttpServletRequest request = unwrap(injectedRequest);
-        HttpServletResponse response = unwrap(injectedResponse);
+        HttpServletRequest request = unwrapOriginalRequest(injectedRequest);
+        HttpServletResponse response = unwrapOriginalResponse(injectedResponse);
 
         // Create wrapper for response
         final ServletOutputStream responseStream = new DelegatingServletOutputStream(out);
@@ -167,22 +170,6 @@ public class ViewableWriter implements MessageBodyWriter<Viewable> {
         } finally {
             responseWriter.flush();
         }
-    }
-
-    private HttpServletRequest unwrap(HttpServletRequest origRequest) {
-        return ServiceLoaders.list(HttpCommunicationUnwrapper.class).stream()
-            .filter(unwrapper -> unwrapper.supports(origRequest))
-            .findFirst()
-            .map(unwrapper -> unwrapper.unwrapRequest(origRequest, HttpServletRequest.class))
-            .orElseThrow(() -> new IllegalStateException("no HttpCommunicationUnwrapper found for " + origRequest));
-    }
-
-    private HttpServletResponse unwrap(HttpServletResponse origRequest) {
-        return ServiceLoaders.list(HttpCommunicationUnwrapper.class).stream()
-            .filter(unwrapper -> unwrapper.supports(origRequest))
-            .findFirst()
-            .map(unwrapper -> unwrapper.unwrapResponse(origRequest, HttpServletResponse.class))
-            .orElseThrow(() -> new IllegalStateException("no HttpCommunicationUnwrapper found for " + origRequest));
     }
 
     /**
