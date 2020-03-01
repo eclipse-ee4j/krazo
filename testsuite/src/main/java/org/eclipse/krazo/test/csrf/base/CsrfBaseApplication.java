@@ -35,13 +35,6 @@ import java.util.Set;
 public class CsrfBaseApplication extends Application {
 
     @Override
-    public Set<Class<?>> getClasses() {
-        final Set<Class<?>> set = new HashSet<>();
-        set.add(CsrfBaseController.class);
-        return set;
-    }
-
-    @Override
     public Map<String, Object> getProperties() {
         final Map<String, Object> map = new HashMap<>();
         map.put(Csrf.CSRF_PROTECTION, Csrf.CsrfOptions.EXPLICIT);

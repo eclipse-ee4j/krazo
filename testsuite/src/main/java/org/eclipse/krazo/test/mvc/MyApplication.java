@@ -21,9 +21,7 @@ package org.eclipse.krazo.test.mvc;
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * Class MyApplication.
@@ -32,13 +30,6 @@ import java.util.Set;
  */
 @ApplicationPath("resources")
 public class MyApplication extends Application {
-
-    @Override
-    public Set<Class<?>> getClasses() {
-        final Set<Class<?>> set = new HashSet<>();
-        set.add(MvcController.class);
-        return set;
-    }
 
     @Override
     public Map<String, Object> getProperties() {
