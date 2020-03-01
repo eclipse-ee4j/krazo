@@ -35,7 +35,51 @@ TODO: Migrate relevant parts from the website
 
 TODO: Migrate relevant parts from the website
 
+==== Mixed configuration with Application#getClasses and JAX-RS auto discovery
+
+As an alternative to the resource auto-discovery of JAX-RS, someone can use `Application#getClasses` to configure
+endpoints or other providers. Unfortunately, this disables the auto-discovery of JAX-RS completely, which leads to
+not loaded Krazo classes and errors or misbehavior during runtime. In case you want to use the manual approach together
+with Eclipse Krazo, you have to consider following configurations.
+
+===== RESTEasy and Jersey
+
+You don't need additional configuration, as Krazo is auto-loaded by implementation-specific SPIs.
+
+===== CXF
+
+As CXF doesn't provide any SPI to enforce the initialization of Eclipse Krazo, you need to configure all necessary
+providers manually in `Application#getClasses`. Please have a look into the snippet below, which shows an example
+implementation of `Application#getClasses`.
+
+....
+public class MyApplication extends Application {
+
+    @Override
+    public Set<Class<?>> getClasses() {
+        final Set<Class<?>> classes = new HashSet<>();
+
+        ...
+
+        // Add Krazo features
+        classes.add(HiddenMethodFilter.class);
+        classes.add(ViewResponseFilter.class);
+        classes.add(ViewableWriter.class);
+        classes.add(CsrfValidateFilter.class);
+        classes.add(CsrfProtectFilter.class);
+        classes.add(CsrfExceptionMapper.class);
+        classes.add(PreMatchingRequestFilter.class);
+        classes.add(PostMatchingRequestFilter.class);
+        classes.add(MvcConverterProvider.class);
+        classes.add(HiddenMethodFilter.class);
+
+        return classes;
+    }
+}
+....
+
 === Creating you first controller
 
 TODO: Create Application class and create the first controller
+
 
