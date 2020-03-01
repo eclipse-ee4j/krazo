@@ -62,7 +62,6 @@ public class MyApplication extends Application {
         ...
 
         // Add Krazo features
-        classes.add(HiddenMethodFilter.class);
         classes.add(ViewResponseFilter.class);
         classes.add(ViewableWriter.class);
         classes.add(CsrfValidateFilter.class);
