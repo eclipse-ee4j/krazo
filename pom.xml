@@ -55,6 +55,7 @@
         <module>examples</module>
         <module>testsuite</module>
         <module>documentation</module>
+        <module>archetype</module>
     </modules>
 
     <licenses>
