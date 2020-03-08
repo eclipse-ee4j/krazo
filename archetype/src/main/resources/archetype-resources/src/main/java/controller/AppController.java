@@ -1,10 +1,8 @@
-package $
+package ${package}.controller;
 
 import javax.mvc.Controller;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
-
-{package}.controller;
 
 @Path("app")
 @Controller
