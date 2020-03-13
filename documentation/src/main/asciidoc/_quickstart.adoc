@@ -44,7 +44,7 @@ The usage of the archetype is really easy. Depending on your application server,
 ....
 mvn archetype:generate \
 -DarchetypeGroupId=org.eclipse.krazo \
--DarchetypeArtifactId=jakartaee8-archetype \
+-DarchetypeArtifactId=krazo-jakartaee8-archetype \
 -DarchetypeVersion={krazo-version}  \
 -DgroupId=YOUR GROUP ID\
 -DartifactId=YOUR ARTIFACT ID
@@ -56,7 +56,7 @@ mvn archetype:generate \
 ....
 mvn archetype:generate \
 -DarchetypeGroupId=org.eclipse.krazo \
--DarchetypeArtifactId=jakartaee8-archetype \
+-DarchetypeArtifactId=krazo-jakartaee8-archetype \
 -DarchetypeVersion={krazo-version} \
 -DgroupId=YOUR GROUP ID \
 -DartifactId=YOUR ARTIFACT ID \
@@ -69,7 +69,7 @@ mvn archetype:generate \
 ....
 mvn archetype:generate \
 -DarchetypeGroupId=org.eclipse.krazo \
--DarchetypeArtifactId=jakartaee8-archetype \
+-DarchetypeArtifactId=krazo-jakartaee8-archetype \
 -DarchetypeVersion={krazo-version} \
 -DgroupId=YOUR GROUP ID \
 -DartifactId=YOUR ARTIFACT ID \
