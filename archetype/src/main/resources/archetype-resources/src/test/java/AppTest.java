@@ -1,10 +1,8 @@
-package $
+package ${package};
 
 import org.junit.Test;
 
 import static org.junit.Assert.assertTrue;
-
-{package};
 
 /**
  * Dummy Test
