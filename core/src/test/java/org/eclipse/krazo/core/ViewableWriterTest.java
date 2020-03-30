@@ -39,6 +39,7 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 import static org.easymock.EasyMock.anyObject;
+import static org.easymock.EasyMock.eq;
 import static org.easymock.EasyMock.expect;
 import static org.easymock.EasyMock.replay;
 import static org.easymock.EasyMock.verify;
@@ -85,7 +86,7 @@ public class ViewableWriterTest {
         Field mvcField = writer.getClass().getDeclaredField("mvc");
         mvcField.setAccessible(true);
         mvcField.set(writer, new MvcContextImpl());
-        
+
         ViewEngineFinder finder = EasyMock.createStrictMock(ViewEngineFinder.class);
         Field finderField = writer.getClass().getDeclaredField("engineFinder");
         finderField.setAccessible(true);
@@ -109,6 +110,8 @@ public class ViewableWriterTest {
         ViewEngine viewEngine = EasyMock.createStrictMock(ViewEngine.class);
 
         HttpServletResponse response = EasyMock.createStrictMock(HttpServletResponse.class);
+        response.setCharacterEncoding(eq("UTF-8"));
+        expect(response.getCharacterEncoding()).andReturn("UTF-8");
         Field responseField = writer.getClass().getDeclaredField("injectedResponse");
         responseField.setAccessible(true);
         responseField.set(writer, response);

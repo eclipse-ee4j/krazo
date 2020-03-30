@@ -22,8 +22,6 @@ import org.eclipse.krazo.engine.ViewEngineContextImpl;
 import org.eclipse.krazo.engine.ViewEngineFinder;
 import org.eclipse.krazo.engine.Viewable;
 import org.eclipse.krazo.lifecycle.EventDispatcher;
-import org.eclipse.krazo.util.HttpUtil;
-import org.eclipse.krazo.util.ServiceLoaders;
 
 import javax.enterprise.event.Event;
 import javax.enterprise.inject.Instance;
@@ -50,7 +48,7 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 import static javax.ws.rs.core.Response.Status.INTERNAL_SERVER_ERROR;
 import static org.eclipse.krazo.util.HttpUtil.unwrapOriginalRequest;
@@ -72,9 +70,6 @@ import static org.eclipse.krazo.util.HttpUtil.unwrapOriginalResponse;
  */
 @Produces(MediaType.WILDCARD)
 public class ViewableWriter implements MessageBodyWriter<Viewable> {
-
-    public static final String CONTENT_TYPE = "Content-Type";
-    public static final Charset UTF8 = Charset.forName("UTF-8");
 
     @Inject
     private Instance<Models> modelsInstance;
@@ -139,8 +134,7 @@ public class ViewableWriter implements MessageBodyWriter<Viewable> {
 
         // Create wrapper for response
         final ServletOutputStream responseStream = new DelegatingServletOutputStream(out);
-        final PrintWriter responseWriter = new PrintWriter(new OutputStreamWriter(responseStream, getCharset(headers)));
-        final HttpServletResponse responseWrapper = new MvcHttpServletResponse(response, responseStream, responseWriter);
+        final HttpServletResponse responseWrapper = new MvcHttpServletResponse(response, responseStream, headers);
 
         // Pass request to view engine
         try {
@@ -168,42 +162,8 @@ public class ViewableWriter implements MessageBodyWriter<Viewable> {
         } catch (ViewEngineException e) {
             throw new ServerErrorException(INTERNAL_SERVER_ERROR, e);
         } finally {
-            responseWriter.flush();
+            responseWrapper.getWriter().flush();
         }
-    }
-
-    /**
-     * Looks for a character set as part of the Content-Type header. Returns it
-     * if specified or {@link #UTF8} if not.
-     *
-     * @param headers Response headers.
-     * @return Character set to use.
-     */
-    private Charset getCharset(MultivaluedMap<String, Object> headers) {
-        final MediaType mt = getMediaTypeFromHeaders(headers);
-        final String charset = mt.getParameters().get(MediaType.CHARSET_PARAMETER);
-        return charset != null ? Charset.forName(charset) : UTF8;
-    }
-
-    /**
-     * JAX-RS implementations are using different types for representing the content type.
-     */
-    private MediaType getMediaTypeFromHeaders(MultivaluedMap<String, Object> headers) {
-
-        Object value = headers.get(CONTENT_TYPE).get(0);
-
-        // Jersey + RESTEasy
-        if (value instanceof MediaType) {
-            return (MediaType) value;
-        }
-
-        // CXF
-        if (value instanceof String) {
-            return MediaType.valueOf((String) value);
-        }
-
-        return null;
-
     }
 
     /**
@@ -241,12 +201,48 @@ public class ViewableWriter implements MessageBodyWriter<Viewable> {
     private static class MvcHttpServletResponse extends HttpServletResponseWrapper {
 
         private final ServletOutputStream responseStream;
-        private final PrintWriter responseWriter;
+        private final MultivaluedMap<String, Object> responseHeaders;
+        private PrintWriter responseWriter;
 
-        public MvcHttpServletResponse(HttpServletResponse response, ServletOutputStream responseStream, PrintWriter responseWriter) {
+        public MvcHttpServletResponse(HttpServletResponse response, ServletOutputStream responseStream, MultivaluedMap<String, Object> responseHeaders) {
             super(response);
             this.responseStream = responseStream;
-            this.responseWriter = responseWriter;
+            this.responseHeaders = responseHeaders;
+            setCharacterEncoding(getCharsetFromHeaders(responseHeaders));
+        }
+
+        /**
+         * Looks for a character set as part of the Content-Type header. Returns it
+         * if specified or UTF-8 if not.
+         *
+         * @param headers Response headers.
+         * @return Character set to use.
+         */
+        private String getCharsetFromHeaders(MultivaluedMap<String, Object> headers) {
+            final MediaType mt = getMediaTypeFromHeaders(headers);
+            final String charset = mt != null ? mt.getParameters().get(MediaType.CHARSET_PARAMETER) : null;
+            return charset != null ? charset : StandardCharsets.UTF_8.name();
+        }
+
+        /**
+         * JAX-RS implementations are using different types for representing the content type.
+         */
+        private MediaType getMediaTypeFromHeaders(MultivaluedMap<String, Object> headers) {
+
+            Object value = headers.get(HttpHeaders.CONTENT_TYPE).get(0);
+
+            // Jersey + RESTEasy
+            if (value instanceof MediaType) {
+                return (MediaType) value;
+            }
+
+            // CXF
+            if (value instanceof String) {
+                return MediaType.valueOf((String) value);
+            }
+
+            return null;
+
         }
 
         @Override
@@ -255,7 +251,24 @@ public class ViewableWriter implements MessageBodyWriter<Viewable> {
         }
 
         @Override
+        public void setContentType(String type) {
+            // Update the Content-Type header and the character encoding if found in the JSP page directive.
+            // Ignore text/html which is used if nothing is specified in the JSP.
+            if (!MediaType.TEXT_HTML.equals(type)) {
+                responseHeaders.putSingle(HttpHeaders.CONTENT_TYPE, type);
+                String charset = MediaType.valueOf(type).getParameters().get(MediaType.CHARSET_PARAMETER);
+                if (charset != null) {
+                    setCharacterEncoding(charset);
+                }
+            }
+            super.setContentType(type);
+        }
+
+        @Override
         public PrintWriter getWriter() throws IOException {
+            if (responseWriter == null) {
+                responseWriter = new PrintWriter(new OutputStreamWriter(this.responseStream, getCharacterEncoding()));
+            }
             return responseWriter;
         }
     }
