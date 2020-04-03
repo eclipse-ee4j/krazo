@@ -76,9 +76,262 @@ mvn archetype:generate \
 -DkrazoImpl=cxf
 ....
 
+===== Manual setup
+If you can't or just don't want to use the archetype, you can set up Krazo easily by yourself. Please follow the guides below for
+your server. The dependencies you need to add to your `pom.xml` file depend on which application server your are using.
+
+====== Glassfish/Payara
+
+Glassfish comes with Jersey as its JAX-RS implementation. Please add the following dependencies to your
+application:
+
+[source,xml]
+----
+<dependency>
+    <groupId>javax.mvc</groupId>
+    <artifactId>javax.mvc-api</artifactId>
+    <version>{{versions.spec.latest}}</version>
+</dependency>
+<dependency>
+    <groupId>org.eclipse.krazo</groupId>
+    <artifactId>krazo-jersey</artifactId>
+    <version>{{versions.krazo.latest}}</version>
+</dependency>
+----
+
+====== Wildfly and JBoss EAP
+
+Wildfly is using RESTEasy for JAX-RS. So you need the Eclipse Krazo RESTEasy integration module:
+
+[source,xml]
+----
+<dependency>
+    <groupId>javax.mvc</groupId>
+    <artifactId>javax.mvc-api</artifactId>
+    <version>{{versions.spec.latest}}</version>
+</dependency>
+<dependency>
+    <groupId>org.eclipse.krazo</groupId>
+    <artifactId>krazo-resteasy</artifactId>
+    <version>{{versions.krazo.latest}}</version>
+</dependency>
+----
+
+====== Apache TomEE
+
+Apache TomEE uses CXF as the JAX-RS implementation. Unfortunately there are some known bugs in CXF
+which are causing trouble for Eclipse Krazo. The latest CXF release should fix these issues, but
+Apache TomEE currently ships with an older CXF release.
+
+If you want to give Eclipse Krazo on Apache TomEE a try, add the following dependencies to your `pom.xml`:
+
+[source,xml]
+----
+<dependency>
+    <groupId>javax.mvc</groupId>
+    <artifactId>javax.mvc-api</artifactId>
+    <version>{{versions.spec.latest}}</version>
+</dependency>
+<dependency>
+    <groupId>org.eclipse.krazo</groupId>
+    <artifactId>krazo-core</artifactId>
+    <version>{{versions.krazo.latest}}</version>
+</dependency>
+----
+
+If using CXF with Eclipse Krazo is causing trouble, you can also manually add RESTEasy to your application and
+use this instead of CXF. To do so, use the following depndencies instead.
+
+[source,xml]
+----
+<dependency>
+    <groupId>javax.mvc</groupId>
+    <artifactId>javax.mvc-api</artifactId>
+    <version>{{versions.spec.latest}}</version>
+</dependency>
+<dependency>
+    <groupId>org.eclipse.krazo</groupId>
+    <artifactId>krazo-resteasy</artifactId>
+    <version>{{versions.krazo.latest}}</version>
+</dependency>
+<dependency>
+    <groupId>org.jboss.resteasy</groupId>
+    <artifactId>resteasy-cdi</artifactId>
+    <version>3.6.1.Final</version>
+</dependency>
+<dependency>
+    <groupId>org.jboss.resteasy</groupId>
+    <artifactId>resteasy-servlet-initializer</artifactId>
+    <version>3.6.1.Final</version>
+</dependency>
+<dependency>
+    <groupId>org.jboss.resteasy</groupId>
+    <artifactId>resteasy-validator-provider-11</artifactId>
+    <version>3.6.1.Final</version>
+</dependency>
+----
+
+====== Thorntail
+
+Coming with version 2.6.1., Thorntail provides a stable fraction for MVC with Krazo. In the meantime, you can use the JAX-RS fraction and add
+the same dependencies as required for Thorntail:
+
+[source,xml]
+----
+<dependency>
+    <groupId>io.thorntail</groupId>
+    <artifactId>jaxrs</artifactId>
+</dependency>
+<dependency>
+    <groupId>javax.mvc</groupId>
+    <artifactId>javax.mvc-api</artifactId>
+    <version>{{versions.spec.latest}}</version>
+</dependency>
+<dependency>
+    <groupId>org.eclipse.krazo</groupId>
+    <artifactId>krazo-resteasy</artifactId>
+    <version>{{versions.krazo.latest}}</version>
+</dependency>
+----
+
+using fraction :
+
+[source,xml]
+----
+<dependency>
+    <groupId>io.thorntail</groupId>
+    <artifactId>mvc</artifactId>
+</dependency>
+----
+
+*Note:* The existing, experimental fraction is still based on a 2 year old version Ozark, the predecessor of Krazo. Please don't use it, as you won't
+get the features Krazo provides in the meantime.
+
 ==== Servlet Containers
 
-TODO: Migrate relevant parts from the website
+The simplest way to get started with MVC is to deploy your app to a JavaEE 8 application server.
+In this setup the application server will provide JAX-RS, CDI and Bean Validation implementations
+for you. However, there is a large number of users who prefer to run their applications on plain Servlet containers
+like Apache Tomcat and Jetty. In this setup you will have to provide JAX-RS, CDI and Bean Validations
+yourself.
+
+The following steps will show you how to run Eclipse Krazo on Apache Tomcat using Weld, RESTEasy and Hibernate Validator.
+
+=== Required dependencies
+
+The following `pom.xml` example shows the dependency configuration for your application:
+
+[source,xml]
+----
+<!-- Get the API JARs for Jakarta EE 8 -->
+<dependency>
+    <groupId>jakarta.platform</groupId>
+    <artifactId>jakarta.jakartaee-web-api</artifactId>
+    <version>8.0.0</version>
+</dependency>
+
+<!-- Weld  -->
+<dependency>
+    <groupId>org.jboss.weld.servlet</groupId>
+    <artifactId>weld-servlet-core</artifactId>
+    <version>3.0.5.Final</version>
+</dependency>
+
+<!-- RESTEasy -->
+<dependency>
+    <groupId>org.jboss.resteasy</groupId>
+    <artifactId>resteasy-cdi</artifactId>
+    <version>3.6.1.Final</version>
+</dependency>
+<dependency>
+    <groupId>org.jboss.resteasy</groupId>
+    <artifactId>resteasy-servlet-initializer</artifactId>
+    <version>3.6.1.Final</version>
+</dependency>
+
+<!-- Bean Validation -->
+<dependency>
+    <groupId>org.jboss.resteasy</groupId>
+    <artifactId>resteasy-validator-provider-11</artifactId>
+    <version>3.6.1.Final</version>
+</dependency>
+
+<!-- MVC + Eclipse Krazo for RESTEasy-->
+<dependency>
+    <groupId>javax.mvc</groupId>
+    <artifactId>javax.mvc-api</artifactId>
+    <version>{{versions.spec.latest}}</version>
+</dependency>
+<dependency>
+    <groupId>org.eclipse.krazo</groupId>
+    <artifactId>krazo-resteasy</artifactId>
+    <version>{{versions.krazo.latest}}</version>
+</dependency>
+----
+
+=== Configuration files
+
+Make sure to add an empty `beans.xml` file in your `/src/main/webapp/WEB-INF` folder:
+
+[source,xml]
+----
+<?xml version="1.0"?>
+<beans xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/beans_2_0.xsd"
+       version="2.0" bean-discovery-mode="all"
+       metadata-complete="true">
+
+</beans>
+----
+
+Note that the `metadata-complete` isn't strictly necessary.
+It works around an link:https://issues.jboss.org/browse/RESTEASY-2289[an issue in RESTEasy] that would otherwise cause RESTEasy (and thus Krazo) to start _twice_.
+
+Please also add a file called `context.xml` to `src/main/resources/META-INF`:
+
+[source,xml]
+----
+<?xml version="1.0" encoding="UTF-8"?>
+<Context>
+
+   <Resource name="BeanManager" auth="Container"
+             type="javax.enterprise.inject.spi.BeanManager"
+             factory="org.jboss.weld.resources.ManagerObjectFactory"/>
+
+</Context>
+----
+
+This file `context.xml` is essential for the operation of the CDI in Tomcat as described in the
+link:http://docs.jboss.org/weld/reference/latest/en-US/html_single/#tomcat[Weld documentation].
+
+The file to create is called `web.xml` and should be placed in the `src/main/webapp/WEB-INF` directory:
+
+[source,xml]
+----
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://java.sun.com/xml/ns/javaee"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_4_0.xsd"
+         version="4.0">
+
+  <listener>
+    <listener-class>org.jboss.weld.environment.servlet.Listener</listener-class>
+  </listener>
+
+  <resource-env-ref>
+    <resource-env-ref-name>BeanManager</resource-env-ref-name>
+    <resource-env-ref-type>javax.enterprise.inject.spi.BeanManager</resource-env-ref-type>
+  </resource-env-ref>
+
+  <!--http://docs.jboss.org/resteasy/docs/3.6.1.Final/userguide/html_single/index.html#d4e143 -->
+  <context-param>
+    <param-name>resteasy.injector.factory</param-name>
+    <param-value>org.jboss.resteasy.cdi.CdiInjectorFactory</param-value>
+  </context-param>
+
+</web-app>
+----
 
 ==== Mixed configuration with Application#getClasses and JAX-RS auto discovery
 
@@ -124,6 +377,39 @@ public class MyApplication extends Application {
 
 === Creating you first controller
 
-TODO: Create Application class and create the first controller
+The following steps will show you how to create your first Controller using Eclipse Krazo. It assumes, that you've set up a project like we described before.
+
+The first step is to create an Application class, which serves as root resource for our Controllers. The Application class extends from JAX-RS `Application` and provides
+the base path of our application.
+
+[source,java]
+....
+import javax.ws.rs.Application;
+import javax.ws.rs.core.Application;
+
+@Application("mvc")
+public class MyApplication extends Application {
+
+}
+....
+
+Please note that, according to the MVC specification, it is not recommended to use an empty application path, as this can lead to problems during request handling.
+
+After we created the Application class, we need to add our Controller. Therefore you need to add a simple JAX-RS resource and decorate it with the
+`javax.mvc.Controller` interface.
 
 
+[source,java]
+....
+@Path("hello")
+public class HelloController {
+
+    @GET
+    @Controller
+    public String hello() {
+        return "hello.jsp";
+    }
+}
+....
+
+Now you should see the content of `hello.jsp` when you access the URI `/mvc/hello` in your browser.
