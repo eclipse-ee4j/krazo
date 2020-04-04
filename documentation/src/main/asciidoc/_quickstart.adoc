@@ -140,7 +140,7 @@ If you want to give Eclipse Krazo on Apache TomEE a try, add the following depen
 ----
 
 If using CXF with Eclipse Krazo is causing trouble, you can also manually add RESTEasy to your application and
-use this instead of CXF. To do so, use the following depndencies instead.
+use this instead of CXF. To do so, use the following dependencies instead.
 
 [source,xml]
 ----
@@ -324,7 +324,7 @@ The file to create is called `web.xml` and should be placed in the `src/main/web
     <resource-env-ref-type>javax.enterprise.inject.spi.BeanManager</resource-env-ref-type>
   </resource-env-ref>
 
-  <!--http://docs.jboss.org/resteasy/docs/3.6.1.Final/userguide/html_single/index.html#d4e143 -->
+  <!-- http://docs.jboss.org/resteasy/docs/3.6.1.Final/userguide/html_single/index.html#d4e143 -->
   <context-param>
     <param-name>resteasy.injector.factory</param-name>
     <param-value>org.jboss.resteasy.cdi.CdiInjectorFactory</param-value>
