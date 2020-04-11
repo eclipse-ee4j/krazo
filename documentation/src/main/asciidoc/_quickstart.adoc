@@ -360,15 +360,7 @@ public class MyApplication extends Application {
         ...
 
         // Add Krazo features
-        classes.add(ViewResponseFilter.class);
-        classes.add(ViewableWriter.class);
-        classes.add(CsrfValidateFilter.class);
-        classes.add(CsrfProtectFilter.class);
-        classes.add(CsrfExceptionMapper.class);
-        classes.add(PreMatchingRequestFilter.class);
-        classes.add(PostMatchingRequestFilter.class);
-        classes.add(MvcConverterProvider.class);
-        classes.add(HiddenMethodFilter.class);
+        classes.addAll(org.eclipse.krazo.bootstrap.DefaultConfigProvider.PROVIDERS);
 
         return classes;
     }

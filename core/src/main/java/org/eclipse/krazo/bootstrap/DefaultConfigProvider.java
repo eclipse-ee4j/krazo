@@ -29,7 +29,10 @@ import org.eclipse.krazo.security.CsrfValidateFilter;
 import org.eclipse.krazo.util.CdiUtils;
 
 import javax.ws.rs.core.FeatureContext;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Implementation of ConfigProvider which registers all providers of the core module.
@@ -38,19 +41,23 @@ import java.util.List;
  */
 public class DefaultConfigProvider implements ConfigProvider {
 
+    public static final Set<Class<?>> PROVIDERS = new HashSet<>(
+        Arrays.asList(
+            ViewResponseFilter.class,
+            ViewableWriter.class,
+            CsrfValidateFilter.class,
+            CsrfProtectFilter.class,
+            CsrfExceptionMapper.class,
+            PreMatchingRequestFilter.class,
+            PostMatchingRequestFilter.class,
+            MvcConverterProvider.class,
+            HiddenMethodFilter.class
+        )
+    );
+
     @Override
     public void configure(FeatureContext context) {
-
-        register(context, ViewResponseFilter.class);
-        register(context, ViewableWriter.class);
-        register(context, CsrfValidateFilter.class);
-        register(context, CsrfProtectFilter.class);
-        register(context, CsrfExceptionMapper.class);
-        register(context, PreMatchingRequestFilter.class);
-        register(context, PostMatchingRequestFilter.class);
-        register(context, MvcConverterProvider.class);
-        register(context, HiddenMethodFilter.class);
-
+        PROVIDERS.forEach(provider -> register(context, provider));
     }
 
     private void register(FeatureContext context, Class<?> providerClass) {
