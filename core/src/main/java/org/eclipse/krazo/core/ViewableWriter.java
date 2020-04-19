@@ -49,6 +49,7 @@ import java.io.PrintWriter;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 import java.nio.charset.StandardCharsets;
+import java.util.Optional;
 
 import static javax.ws.rs.core.Response.Status.INTERNAL_SERVER_ERROR;
 import static org.eclipse.krazo.util.HttpUtil.unwrapOriginalRequest;
@@ -252,14 +253,10 @@ public class ViewableWriter implements MessageBodyWriter<Viewable> {
 
         @Override
         public void setContentType(String type) {
-            // Update the Content-Type header and the character encoding if found in the JSP page directive.
-            // Ignore text/html which is used if nothing is specified in the JSP.
-            if (!MediaType.TEXT_HTML.equals(type)) {
-                responseHeaders.putSingle(HttpHeaders.CONTENT_TYPE, type);
-                String charset = MediaType.valueOf(type).getParameters().get(MediaType.CHARSET_PARAMETER);
-                if (charset != null) {
-                    setCharacterEncoding(charset);
-                }
+            // Update the character encoding if found for instance in the JSP page directive.
+            String charset = MediaType.valueOf(type).getParameters().get(MediaType.CHARSET_PARAMETER);
+            if (charset != null) {
+                setCharacterEncoding(charset);
             }
             super.setContentType(type);
         }
@@ -267,7 +264,10 @@ public class ViewableWriter implements MessageBodyWriter<Viewable> {
         @Override
         public PrintWriter getWriter() throws IOException {
             if (responseWriter == null) {
-                responseWriter = new PrintWriter(new OutputStreamWriter(this.responseStream, getCharacterEncoding()));
+                String characterEncoding = getCharacterEncoding();
+                responseWriter = new PrintWriter(new OutputStreamWriter(this.responseStream, characterEncoding));
+                MediaType mt = Optional.ofNullable(getMediaTypeFromHeaders(responseHeaders)).orElse(MediaType.TEXT_HTML_TYPE);
+                responseHeaders.putSingle(HttpHeaders.CONTENT_TYPE, mt.withCharset(characterEncoding));
             }
             return responseWriter;
         }
