@@ -110,7 +110,7 @@ public class ViewableWriterTest {
         ViewEngine viewEngine = EasyMock.createStrictMock(ViewEngine.class);
 
         HttpServletResponse response = EasyMock.createStrictMock(HttpServletResponse.class);
-        response.setCharacterEncoding(eq("UTF-8"));
+        response.setContentType(eq("text/html;charset=UTF-8"));
         expect(response.getCharacterEncoding()).andReturn("UTF-8");
         Field responseField = writer.getClass().getDeclaredField("injectedResponse");
         responseField.setAccessible(true);
@@ -133,7 +133,7 @@ public class ViewableWriterTest {
         viewEngine.processView((ViewEngineContext) anyObject());
 
         replay(finder, request, viewEngine, response);
-        writer.writeTo(viewable, null, null, new Annotation[] {}, MediaType.WILDCARD_TYPE, map, null);
+        writer.writeTo(viewable, null, null, new Annotation[] {}, MediaType.TEXT_HTML_TYPE, map, null);
         verify(finder, request, viewEngine, response);
     }
 }
