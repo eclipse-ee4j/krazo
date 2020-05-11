@@ -22,4 +22,4 @@ All the default values are the same as described in Pebble's documentation excep
     
     loader is forced to ServletLoader as it is recommended for application server usage
 
- [pebble]: http://www.mitchellbosecke.com/pebble/home
+ [pebble]: https://pebbletemplates.io/
