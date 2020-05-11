@@ -39,7 +39,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @see <a href="http://www.mitchellbosecke.com/pebble/home">Pebble</a>
+ * @see <a href="https://pebbletemplates.io/">Pebble</a>
  */
 @ApplicationScoped
 @Priority(ViewEngine.PRIORITY_FRAMEWORK)
