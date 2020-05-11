@@ -35,13 +35,20 @@ import java.util.stream.Stream;
 
 public class PebbleEngineProducer {
 
-    private Properties pebbleConfiguration;
-    private ServletContext servletContext;
+    protected Properties pebbleConfiguration;
+    protected ServletContext servletContext;
 
     @Inject
     public PebbleEngineProducer(Properties pebbleConfiguration, ServletContext servletContext) {
         this.pebbleConfiguration = pebbleConfiguration;
         this.servletContext = servletContext;
+    }
+
+    protected PebbleEngineProducer(ServletContext servletContext) {
+        this.servletContext = servletContext;
+    }
+
+    protected PebbleEngineProducer() {
     }
 
     @Produces
