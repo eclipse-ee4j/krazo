@@ -81,42 +81,42 @@ public class EncodingIT {
     public void jsp_should_use_content_type_page_directive() throws Exception {
         HtmlPage page = webClient.getPage(baseURL + "resources/encoding/jsp/iso-8859-15");
         checkContentType(page, "text/html; charset=ISO-8859-15");
-        checkUmlatus(page);
+        checkUmlauts(page);
     }
 
     @Test
     public void jsp_should_allow_produces_text_html() throws Exception {
         HtmlPage page = webClient.getPage(baseURL + "resources/encoding/jsp/iso-8859-15-text-html");
         checkContentType(page, "text/html; charset=ISO-8859-15");
-        checkUmlatus(page);
+        checkUmlauts(page);
     }
 
     @Test
     public void jsp_should_ignore_produces_text_html_with_charset() throws Exception {
         HtmlPage page = webClient.getPage(baseURL + "resources/encoding/jsp/iso-8859-15-text-html-charset-utf-8");
         checkContentType(page, "text/html; charset=ISO-8859-15");
-        checkUmlatus(page);
+        checkUmlauts(page);
     }
 
     @Test
     public void facelets_should_use_content_type_view_attribute() throws Exception {
         HtmlPage page = webClient.getPage(baseURL + "resources/encoding/facelets/iso-8859-15");
         checkContentType(page, "text/html; charset=ISO-8859-15");
-        checkUmlatus(page);
+        checkUmlauts(page);
     }
 
     @Test
     public void facelets_should_allow_produces_text_html() throws Exception {
         HtmlPage page = webClient.getPage(baseURL + "resources/encoding/facelets/iso-8859-15-text-html");
         checkContentType(page, "text/html; charset=ISO-8859-15");
-        checkUmlatus(page);
+        checkUmlauts(page);
     }
 
     @Test
     public void facelets_should_ignore_produces_text_html_with_charset() throws Exception {
         HtmlPage page = webClient.getPage(baseURL + "resources/encoding/facelets/iso-8859-15-text-html-charset-utf-8");
         checkContentType(page, "text/html; charset=ISO-8859-15");
-        checkUmlatus(page);
+        checkUmlauts(page);
     }
 
     private void checkContentType(HtmlPage page, String expectedContentType) {
@@ -132,7 +132,7 @@ public class EncodingIT {
         );
     }
 
-    private void checkUmlatus(HtmlPage page) {
+    private void checkUmlauts(HtmlPage page) {
         String umlauts = page.getElementById("umlauts").asText();
         assertThat(umlauts, is("äöü"));
     }
