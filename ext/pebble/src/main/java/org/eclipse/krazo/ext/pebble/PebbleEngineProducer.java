@@ -22,6 +22,7 @@ import com.mitchellbosecke.pebble.PebbleEngine;
 import com.mitchellbosecke.pebble.extension.Extension;
 import com.mitchellbosecke.pebble.extension.escaper.EscapingStrategy;
 import com.mitchellbosecke.pebble.loader.ServletLoader;
+import java.lang.reflect.InvocationTargetException;
 import org.eclipse.krazo.engine.ViewEngineConfig;
 
 import javax.enterprise.inject.Produces;
@@ -34,13 +35,20 @@ import java.util.stream.Stream;
 
 public class PebbleEngineProducer {
 
-    private Properties pebbleConfiguration;
-    private ServletContext servletContext;
+    protected Properties pebbleConfiguration;
+    protected ServletContext servletContext;
 
     @Inject
     public PebbleEngineProducer(Properties pebbleConfiguration, ServletContext servletContext) {
         this.pebbleConfiguration = pebbleConfiguration;
         this.servletContext = servletContext;
+    }
+
+    protected PebbleEngineProducer(ServletContext servletContext) {
+        this.servletContext = servletContext;
+    }
+
+    protected PebbleEngineProducer() {
     }
 
     @Produces
@@ -66,9 +74,9 @@ public class PebbleEngineProducer {
                     case ESCAPING_STRATEGY:
                         try {
                             String escapingStrategyKey = "userDefinedEscapingStrategy";
-                            engine.addEscapingStrategy(escapingStrategyKey, (EscapingStrategy) Class.forName(val).newInstance());
+                            engine.addEscapingStrategy(escapingStrategyKey, (EscapingStrategy) Class.forName(val).getDeclaredConstructor().newInstance());
                             engine.defaultEscapingStrategy(escapingStrategyKey);
-                        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException ex) {
+                        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | NoSuchMethodException | InvocationTargetException ex) {
                             String msg = String.format("Pebble initialization error: Could not register escaping strategy '%s' of type %s", String.valueOf(e.getKey()), val);
                             throw new IllegalArgumentException(msg, ex);
                         }
@@ -84,8 +92,8 @@ public class PebbleEngineProducer {
                         break;
                     case EXECUTOR_SERVICE:
                         try {
-                            engine.executorService((ExecutorService) Class.forName(val).newInstance());
-                        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException ex) {
+                            engine.executorService((ExecutorService) Class.forName(val).getDeclaredConstructor().newInstance());
+                        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | NoSuchMethodException | InvocationTargetException ex) {
                             String msg = String.format("Pebble initialization error: Could not register executor service type %s", val);
                             throw new IllegalArgumentException(msg, ex);
                         }
@@ -96,8 +104,8 @@ public class PebbleEngineProducer {
                         Extension[] extensionArray = Stream.of(extensions)
                             .map(clazzName -> {
                                 try {
-                                    return (Extension) Class.forName(clazzName.trim()).newInstance();
-                                } catch (ClassNotFoundException | IllegalAccessException | InstantiationException ex) {
+                                    return (Extension) Class.forName(clazzName.trim()).getDeclaredConstructor().newInstance();
+                                } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | NoSuchMethodException | InvocationTargetException ex) {
                                     String msg = String.format("Pebble initialization error: Could not register extension of type %s", clazzName);
                                     throw new IllegalArgumentException(msg, ex);
                                 }
