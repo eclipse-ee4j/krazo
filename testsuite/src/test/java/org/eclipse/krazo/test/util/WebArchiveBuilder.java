@@ -25,7 +25,6 @@ import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.jboss.shrinkwrap.resolver.api.maven.PomEquippedResolveStage;
 import org.jboss.shrinkwrap.resolver.api.maven.ScopeType;
-import org.jboss.shrinkwrap.resolver.api.maven.coordinate.MavenCoordinates;
 import org.jboss.shrinkwrap.resolver.api.maven.coordinate.MavenDependencies;
 import org.jboss.shrinkwrap.resolver.api.maven.coordinate.MavenDependency;
 
@@ -56,6 +55,11 @@ public class WebArchiveBuilder {
 
     public WebArchiveBuilder addBeansXml() {
         archive.addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
+        return this;
+    }
+
+    public WebArchiveBuilder addWebXml(File file) {
+        archive.setWebXML(file);
         return this;
     }
 
