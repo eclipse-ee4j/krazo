@@ -26,17 +26,4 @@
         <cve>CVE-2015-9251</cve>
         <cve>CVE-2019-11358</cve>
     </suppress>
-    <suppress>
-        <notes><![CDATA[
-        Most of the rendering in handlebars.java has been rewritten to Java. Only if the user wishes to write
-        util functions in javascript, those functions are executed using Nashorn and the original handlebars JS-source.
-
-        That does not mean this issue should not be fixed. We created an upsteam issue for it:
-        https://github.com/jknack/handlebars.java/issues/703
-       ]]></notes>
-        <packageUrl regex="true">pkg:javascript/handlebars\.js@4.0.4$</packageUrl>
-        <vulnerabilityName>A prototype pollution vulnerability in handlebars is exploitable if an attacker can control
-            the template
-        </vulnerabilityName>
-    </suppress>
 </suppressions>
