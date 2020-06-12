@@ -64,6 +64,7 @@ public class HandlebarsIT {
     public static Archive createDeployment() {
         return new WebArchiveBuilder()
             .addPackage("org.eclipse.krazo.test.ext.handlebars")
+            .addView(Paths.get(WEB_INF_SRC).resolve("views/head.hbs").toFile(), "head.hbs")
             .addView(Paths.get(WEB_INF_SRC).resolve("views/person.hbs").toFile(), "person.hbs")
             .addBeansXml()
             .addDependency("org.eclipse.krazo.ext:krazo-handlebars")

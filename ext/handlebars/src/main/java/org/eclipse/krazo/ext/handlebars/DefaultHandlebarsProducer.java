@@ -20,11 +20,15 @@ package org.eclipse.krazo.ext.handlebars;
 
 import com.github.jknack.handlebars.Handlebars;
 import com.github.jknack.handlebars.io.ServletContextTemplateLoader;
+
+import javax.inject.*;
 import javax.mvc.engine.ViewEngine;
 import javax.servlet.ServletContext;
 import org.eclipse.krazo.engine.ViewEngineConfig;
+import org.eclipse.krazo.util.*;
 
 import javax.enterprise.inject.Produces;
+import javax.ws.rs.core.*;
 
 /**
  * Producer for the Handlebars instance used by HandlebarsViewEngine.
@@ -32,6 +36,9 @@ import javax.enterprise.inject.Produces;
  * @author Christian Kaltepoth
  */
 public class DefaultHandlebarsProducer {
+    @Context
+    private Configuration config;
+
     @Inject
     private ServletContext servletContext;
 
@@ -39,10 +46,12 @@ public class DefaultHandlebarsProducer {
     @ViewEngineConfig
     public Handlebars getHandlebars() {
         Handlebars handlebars = new Handlebars();
-        
+
         // setup TemplateLoader to allow for finding partials
-        handlebars.with(new ServletContextTemplateLoader(servletContext, ViewEngine.DEFAULT_VIEW_FOLDER));
-        
+        final String viewFolder = PropertyUtils
+            .getProperty(config, ViewEngine.VIEW_FOLDER, ViewEngine.DEFAULT_VIEW_FOLDER);
+        handlebars.with(new ServletContextTemplateLoader(servletContext, viewFolder));
+
         return handlebars;
     }
 
