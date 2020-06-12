@@ -173,8 +173,8 @@ use this instead of CXF. To do so, use the following dependencies instead.
 
 ====== Thorntail
 
-Coming with version 2.6.1., Thorntail provides a stable fraction for MVC with Krazo. In the meantime, you can use the JAX-RS fraction and add
-the same dependencies as required for Thorntail:
+Since version 2.7.0, Thorntail provides a stable fraction for MVC with Krazo. For older versions of Thorntail you can use the JAX-RS fraction and add
+the same dependencies as required for WildFly:
 
 [source,xml]
 ----
@@ -203,9 +203,6 @@ using fraction :
     <artifactId>mvc</artifactId>
 </dependency>
 ----
-
-*Note:* The existing, experimental fraction is still based on a 2 year old version Ozark, the predecessor of Krazo. Please don't use it, as you won't
-get the features Krazo provides in the meantime.
 
 ==== Servlet Containers
 
