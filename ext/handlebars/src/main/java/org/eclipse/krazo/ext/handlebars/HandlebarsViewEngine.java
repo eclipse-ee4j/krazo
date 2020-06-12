@@ -20,6 +20,7 @@ package org.eclipse.krazo.ext.handlebars;
 
 import com.github.jknack.handlebars.Handlebars;
 import com.github.jknack.handlebars.Template;
+import com.github.jknack.handlebars.io.ServletContextTemplateLoader;
 import org.eclipse.krazo.engine.ViewEngineBase;
 import org.eclipse.krazo.engine.ViewEngineConfig;
 
@@ -65,14 +66,15 @@ public class HandlebarsViewEngine extends ViewEngineBase {
 
     @Override
     public void processView(ViewEngineContext context) throws ViewEngineException {
+        handlebars.with(new ServletContextTemplateLoader(servletContext, getViewFolder(context)));
 
         Map<String, Object> model = new HashMap<>(context.getModels().asMap());
         model.put("request", context.getRequest(HttpServletRequest.class));
-        
+
         Charset charset = resolveCharsetAndSetContentType(context);
 
         try (Writer writer = new OutputStreamWriter(context.getOutputStream(), charset);
-             
+
             InputStream resourceAsStream = servletContext.getResourceAsStream(resolveView(context));
             InputStreamReader in = new InputStreamReader(resourceAsStream, "UTF-8");
             BufferedReader bufferedReader = new BufferedReader(in);) {
@@ -81,7 +83,7 @@ public class HandlebarsViewEngine extends ViewEngineBase {
 
             Template template = handlebars.compileInline(viewContent);
             template.apply(model, writer);
-            
+
         } catch (IOException e) {
             throw new ViewEngineException(e);
         }

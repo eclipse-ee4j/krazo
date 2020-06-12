@@ -45,10 +45,21 @@ public abstract class ViewEngineBase implements ViewEngine {
     protected String resolveView(ViewEngineContext context) {
         final String view = context.getView();
         if (!PathUtils.hasStartingSlash(view)) {        // Relative?
-            final String viewFolder = PropertyUtils.getProperty(context.getConfiguration(), VIEW_FOLDER, DEFAULT_VIEW_FOLDER);
-            return PathUtils.ensureEndingSlash(viewFolder) + view;
+            return PathUtils.ensureEndingSlash(getViewFolder(context)) + view;
         }
         return view;
+    }
+
+    /**
+     * Gets the configured view folder, based on {@link javax.mvc.engine.ViewEngine#VIEW_FOLDER},
+     * using {@link javax.mvc.engine.ViewEngine#DEFAULT_VIEW_FOLDER} as the default.
+     *
+     * @param context the context
+     * @return the view folder
+     */
+    protected String getViewFolder(ViewEngineContext context) {
+        return PropertyUtils
+            .getProperty(context.getConfiguration(), VIEW_FOLDER, DEFAULT_VIEW_FOLDER);
     }
 
     /**
