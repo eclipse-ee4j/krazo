@@ -29,7 +29,6 @@ import javax.enterprise.inject.Produces;
  * @author Christian Kaltepoth
  */
 public class DefaultHandlebarsProducer {
-
     @Produces
     @ViewEngineConfig
     public Handlebars getHandlebars() {
