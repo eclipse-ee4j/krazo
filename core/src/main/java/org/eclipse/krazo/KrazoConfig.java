@@ -76,14 +76,12 @@ public class KrazoConfig {
 
     public String getCsrfHeaderName() {
 
-        // TODO: Replace with constant from Csrf class after updating spec dependency
-        Object value = config.getProperty("javax.mvc.security.CsrfHeaderName");
+        Object value = config.getProperty(Csrf.CSRF_HEADER_NAME);
         if (value != null) {
             return value.toString();
         }
 
-        // TODO: Replace with constant from Csrf class after updating spec dependency
-        return "X-CSRF-TOKEN";
+        return Csrf.DEFAULT_CSRF_HEADER_NAME;
 
     }
 
