@@ -17,12 +17,13 @@
  */
 package org.eclipse.krazo.test.encoding;
 
-import javax.ws.rs.ApplicationPath;
-import javax.ws.rs.core.Application;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
+
+import javax.ws.rs.ApplicationPath;
+import javax.ws.rs.core.Application;
+
+import org.eclipse.krazo.bootstrap.DefaultConfigProvider;
 
 /**
  * @author Florian Hirsch
@@ -32,6 +33,10 @@ public class MyApplication extends Application {
 
     @Override
     public Set<Class<?>> getClasses() {
-        return Collections.singleton(EncodingController.class);
+        final Set<Class<?>> classes = new HashSet<>();
+        classes.add(EncodingController.class);
+        classes.addAll(DefaultConfigProvider.PROVIDERS);
+        
+        return classes;
     }
 }
