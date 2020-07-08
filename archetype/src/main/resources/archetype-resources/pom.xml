@@ -12,7 +12,7 @@
     <properties>
         <jakartaee-api.version>8.0.0</jakartaee-api.version>
         <krazo.version>${project.version}</krazo.version>
-        <javax.mvc-api.version>${spec.version}</javax.mvc-api.version>
+        <jakarta.mvc-api.version>${spec.version}</jakarta.mvc-api.version>
         <junit.version>4.12</junit.version>
     </properties>
 
@@ -25,9 +25,9 @@
         </dependency>
 
         <dependency>
-            <groupId>javax.mvc</groupId>
-            <artifactId>javax.mvc-api</artifactId>
-            <version>\${javax.mvc-api.version}</version>
+            <groupId>jakarta.mvc</groupId>
+            <artifactId>jakarta.mvc-api</artifactId>
+            <version>\${jakarta.mvc-api.version}</version>
         </dependency>
 
         #if (${krazoImpl} == 'resteasy')
