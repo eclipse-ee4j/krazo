@@ -45,7 +45,7 @@ elif [[ ${1} == tck-glassfish51-* ]]; then
   fi
 
   echo "Building Krazo..."
-  mvn -B -V -DskipTests clean install
+  mvn -B -V -DskipTests clean install -Psnapshots
 
   echo "Starting Glassfish..."
   glassfish5/bin/asadmin start-domain
@@ -53,7 +53,7 @@ elif [[ ${1} == tck-glassfish51-* ]]; then
 
   echo "Running TCK..."
   pushd tck
-  mvn -B -V -Dtck-env=glassfish verify
+  mvn -B -V -Dtck-env=glassfish verify -Psnapshots
   popd
 
   echo "Stopping Glassfish..."
@@ -67,7 +67,7 @@ elif [[ ${1} == tck-wildfly18* ]]; then
   mv wildfly-18.0.0.Final wildfly
 
   echo "Building Krazo..."
-  mvn -B -V -DskipTests clean install
+  mvn -B -V -DskipTests clean install -Psnapshots
 
   echo "Starting Wildfly..."
   LAUNCH_JBOSS_IN_BACKGROUND=1 JBOSS_PIDFILE=wildfly.pid ./wildfly/bin/standalone.sh > wildfly.log 2>&1 &
@@ -75,7 +75,7 @@ elif [[ ${1} == tck-wildfly18* ]]; then
 
   echo "Running TCK..."
   pushd tck
-  mvn -B -V -Dtck-env=wildfly verify
+  mvn -B -V -Dtck-env=wildfly verify -Psnapshots
   popd
 
   echo "Stopping Wildfly..."
@@ -89,7 +89,7 @@ elif [[ ${1} == tck-wildfly19* ]]; then
   mv wildfly-19.0.0.Beta1 wildfly
 
   echo "Building Krazo..."
-  mvn -B -V -DskipTests clean install
+  mvn -B -V -DskipTests clean install -Psnapshots
 
   echo "Starting Wildfly..."
   LAUNCH_JBOSS_IN_BACKGROUND=1 JBOSS_PIDFILE=wildfly.pid ./wildfly/bin/standalone.sh > wildfly.log 2>&1 &
@@ -97,7 +97,7 @@ elif [[ ${1} == tck-wildfly19* ]]; then
 
   echo "Running TCK..."
   pushd tck
-  mvn -B -V -Dtck-env=wildfly verify
+  mvn -B -V -Dtck-env=wildfly verify -Psnapshots
   popd
 
   echo "Stopping Wildfly..."
@@ -105,17 +105,17 @@ elif [[ ${1} == tck-wildfly19* ]]; then
 
 elif [ "${1}" == "tck-tomee" ]; then
 
-  mvn -B -V -DskipTests clean install
+  mvn -B -V -DskipTests clean install -Psnapshots
   pushd tck
-  mvn -B -V -Dtck-env=tomee verify
+  mvn -B -V -Dtck-env=tomee verify -Psnapshots
   popd
 
 elif [ "${1}" == "tck-liberty" ]; then
 
   source .travis/install-liberty.sh
-  mvn -B -V -DskipTests clean install
+  mvn -B -V -DskipTests clean install -Psnapshots
   pushd tck
-  mvn -B -V -Dtck-env=liberty -Dliberty.home=${LIBERTY_HOME} verify
+  mvn -B -V -Dtck-env=liberty -Dliberty.home=${LIBERTY_HOME} verify -Psnapshots
   popd
 
 else
