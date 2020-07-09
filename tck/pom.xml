@@ -84,8 +84,8 @@
 
             <!-- Used by archive provider to lookup versions -->
             <dependency>
-                <groupId>javax.mvc</groupId>
-                <artifactId>javax.mvc-api</artifactId>
+                <groupId>jakarta.mvc</groupId>
+                <artifactId>jakarta.mvc-api</artifactId>
                 <version>${spec.version}</version>
             </dependency>
             <dependency>

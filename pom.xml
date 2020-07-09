@@ -32,6 +32,12 @@
     <description>Eclipse Krazo Parent</description>
     <url>https://projects.eclipse.org/projects/ee4j.krazo</url>
 
+     <parent>
+        <groupId>org.eclipse.ee4j</groupId>
+        <artifactId>project</artifactId>
+        <version>1.0.6</version>
+    </parent>
+
     <properties>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -39,7 +45,7 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
 
-        <spec.version>1.0.0</spec.version>
+        <spec.version>1.1-SNAPSHOT</spec.version>
         <jersey.version>2.27</jersey.version>
         <javaee.version>8.0</javaee.version>
 
@@ -308,37 +314,6 @@
 
                 </plugins>
             </build>
-        </profile>
-
-        <!-- Profile to enable ossrh snapshots -->
-        <profile>
-            <id>snapshots</id>
-            <repositories>
-                <repository>
-                    <id>sonatype-nexus-snapshots</id>
-                    <name>Sonatype Nexus Snapshots</name>
-                    <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-                    <releases>
-                        <enabled>false</enabled>
-                    </releases>
-                    <snapshots>
-                        <enabled>true</enabled>
-                    </snapshots>
-                </repository>
-            </repositories>
-            <pluginRepositories>
-                <pluginRepository>
-                    <id>sonatype-nexus-snapshots</id>
-                    <name>Sonatype Nexus Snapshots</name>
-                    <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-                    <releases>
-                        <enabled>false</enabled>
-                    </releases>
-                    <snapshots>
-                        <enabled>true</enabled>
-                    </snapshots>
-                </pluginRepository>
-            </pluginRepositories>
         </profile>
 
     </profiles>
