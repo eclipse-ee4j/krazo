@@ -8,18 +8,22 @@ services:
 cache:
   directories:
   - $HOME/.m2
+ 
+env:
+     global:
+         - BUILD_PROFILE=${BUILD_PROFILE}
 
 install: /bin/true
 
 jobs:
   include:
     - stage: build
-      script: mvn -B -V -DskipTests -DperformRelease -Dgpg.skip clean install -Psnapshots
+      script: mvn -B -V -DskipTests -DperformRelease -Dgpg.skip clean install ${BUILD_PROFILE}
     - stage: build
-      script: mvn -B -V -DskipTests clean install -Psnapshots
+      script: mvn -B -V -DskipTests clean install ${BUILD_PROFILE}
       jdk: openjdk11
     - stage: test
-      script: mvn -B -V test -Psnapshots
+      script: mvn -B -V test ${BUILD_PROFILE}
     - stage: test
       env: TYPE=glassfish-module
       script: .travis/tests.sh ${TYPE}
@@ -29,18 +33,18 @@ jobs:
     - stage: test
       env: TYPE=testsuite-wildfly
       before_script: .travis/docker-wildfly.sh
-      script: mvn -P${TYPE} --projects testsuite clean verify -Psnapshots
+      script: mvn -P${TYPE} --projects testsuite clean verify ${BUILD_PROFILE}
     - stage: test
       env: TYPE=testsuite-payara
       before_script: .travis/docker-payara.sh
-      script: mvn -P${TYPE} --projects testsuite clean verify -Psnapshots
+      script: mvn -P${TYPE} --projects testsuite clean verify ${BUILD_PROFILE}
     - stage: test
       env: TYPE=testsuite-tomee
       before_script: .travis/docker-tomee.sh
-      script: mvn -P${TYPE} --projects testsuite clean verify -Psnapshots
+      script: mvn -P${TYPE} --projects testsuite clean verify ${BUILD_PROFILE}
     - stage: test
       env: TYPE=testsuite-liberty
-      script: source .travis/install-liberty.sh && mvn -P${TYPE} -Dliberty.home=${LIBERTY_HOME} --projects testsuite clean verify -Psnapshots
+      script: source .travis/install-liberty.sh && mvn -P${TYPE} -Dliberty.home=${LIBERTY_HOME} --projects testsuite clean verify ${BUILD_PROFILE}
     - stage: test
       env: TYPE=tck-glassfish51-patched
       script: .travis/tests.sh ${TYPE}
@@ -58,7 +62,7 @@ jobs:
       script: .travis/tests.sh ${TYPE}
     - stage: test
       env: TYPE=dependency-check
-      script: mvn org.owasp:dependency-check-maven:aggregate -Psnapshots
+      script: mvn org.owasp:dependency-check-maven:aggregate ${BUILD_PROFILE}
   allow_failures:
     - env: TYPE=tck-tomee
     - env: TYPE=tck-liberty
