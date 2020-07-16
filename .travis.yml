@@ -8,10 +8,10 @@ services:
 cache:
   directories:
   - $HOME/.m2
- 
+
 env:
      global:
-         - BUILD_PROFILE=-Psnapshots
+         - BUILD_PROFILE=-Pstaging
 
 install: /bin/true
 
