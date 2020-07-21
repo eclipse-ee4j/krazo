@@ -4,7 +4,8 @@ set -euo pipefail
 
 GLASSFISH_URL="http://download.eclipse.org/glassfish/web-5.1.0.zip"
 WILDFLY_URL="https://download.jboss.org/wildfly/18.0.0.Final/wildfly-18.0.0.Final.zip"
-BUILD_PROFILE="-Pstaging"
+BUILD_PROFILE=""
+#BUILD_PROFILE="-Pstaging"
 
 if [ "${1}" == "glassfish-bundled" ]; then
 
