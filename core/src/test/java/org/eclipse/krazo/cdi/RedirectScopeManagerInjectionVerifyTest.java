@@ -18,6 +18,7 @@
  */
 package org.eclipse.krazo.cdi;
 
+import org.eclipse.krazo.KrazoConfig;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -50,6 +51,7 @@ public class RedirectScopeManagerInjectionVerifyTest {
     RedirectScopeManager redirectScopeManager = new RedirectScopeManager();
     setFieldValue(redirectScopeManager, "config", createDummyInstance(Configuration.class));
     setFieldValue(redirectScopeManager, "response", createDummyInstance(HttpServletResponse.class));
+    setFieldValue(redirectScopeManager, "krazoConfig", createDummyInstance(KrazoConfig.class));
     redirectScopeManager.init();
 
   }

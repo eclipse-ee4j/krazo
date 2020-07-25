@@ -10,7 +10,7 @@ BUILD_PROFILE=""
 if [ "${1}" == "glassfish-bundled" ]; then
 
   curl -L -s -o glassfish5.zip "${GLASSFISH_URL}"
-  unzip -q glassfish5.zip
+  unzip -qf glassfish5.zip
   mvn -B -V -Pbundled clean install ${BUILD_PROFILE}
   find ./examples/ -name \*.war -exec cp {} ./glassfish5/glassfish/domains/domain1/autodeploy/ \;
   glassfish5/bin/asadmin start-domain
@@ -21,7 +21,7 @@ if [ "${1}" == "glassfish-bundled" ]; then
 elif [ "${1}" == "glassfish-module" ]; then
 
   curl -L -s -o glassfish5.zip "${GLASSFISH_URL}"
-  unzip -q glassfish5.zip
+  unzip -qf glassfish5.zip
   mvn -B -V -P\!bundled,module clean install ${BUILD_PROFILE}
   cp core/target/krazo-core-*.jar ./glassfish5/glassfish/modules/
   cp jersey/target/krazo-jersey-*.jar ./glassfish5/glassfish/modules/
@@ -36,7 +36,7 @@ elif [[ ${1} == tck-glassfish51-* ]]; then
 
   echo "Downloading Glassfish..."
   curl -L -s -o glassfish5.zip "${GLASSFISH_URL}"
-  unzip -q glassfish5.zip
+  unzip -qf glassfish5.zip
 
   if [[ ${1} == *-patched ]]; then
     echo "Patching Glassfish..."
@@ -65,7 +65,7 @@ elif [[ ${1} == tck-wildfly18* ]]; then
 
   echo "Downloading Wildfly..."
   curl -L -s -o wildfly-18.0.0.Final.zip $WILDFLY_URL
-  unzip wildfly-18.0.0.Final.zip
+  unzip -qf wildfly-18.0.0.Final.zip
   mv wildfly-18.0.0.Final wildfly
 
   echo "Building Krazo..."
@@ -87,7 +87,7 @@ elif [[ ${1} == tck-wildfly19* ]]; then
 
   echo "Downloading Wildfly..."
   curl -L -s -o wildfly-19.0.0.Beta1.zip https://download.jboss.org/wildfly/19.0.0.Beta1/wildfly-19.0.0.Beta1.zip
-  unzip wildfly-19.0.0.Beta1.zip
+  unzip -wf wildfly-19.0.0.Beta1.zip
   mv wildfly-19.0.0.Beta1 wildfly
 
   echo "Building Krazo..."

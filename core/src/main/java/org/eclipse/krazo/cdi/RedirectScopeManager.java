@@ -18,6 +18,7 @@
  */
 package org.eclipse.krazo.cdi;
 
+import org.eclipse.krazo.KrazoConfig;
 import org.eclipse.krazo.Properties;
 import org.eclipse.krazo.event.ControllerRedirectEventImpl;
 import org.eclipse.krazo.jaxrs.JaxRsContext;
@@ -43,6 +44,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.ws.rs.container.ContainerResponseContext;
 import javax.ws.rs.core.Configuration;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.UriBuilder;
 import java.util.HashMap;
@@ -59,11 +61,10 @@ import java.util.UUID;
 @SuppressWarnings("unchecked")
 public class RedirectScopeManager {
 
-    private static final String PREFIX = "org.eclipse.krazo.redirect.";
-    private static final String SCOPE_ID = PREFIX + "ScopeId";
+    public static final String DEFAULT_ATTR_NAME = "org.eclipse.krazo.redirect.ScopeId";
+    public static final String DEFAULT_COOKIE_NAME = "org.eclipse.krazo.redirect.Cookie";
     private static final String INSTANCE = "Instance-";
     private static final String CREATIONAL = "Creational-";
-    private static final String COOKIE_NAME = PREFIX + "Cookie";
 
     /**
      * Stores the HTTP servlet request we are working for.
@@ -91,17 +92,31 @@ public class RedirectScopeManager {
     @Inject
     private MvcContext mvc;
 
+    @Inject
+    private KrazoConfig krazoConfig;
+
+    /**
+     * The name of Request Attribute/Parameter to use when redirecting
+     */
+    private String scopeAttrName;
+
+    /**
+     * The name of Cookie to use when redirecting
+     */
+    private String cookieName;
+
     /**
      * Check that {@literal @}Context injection worked correctly
      */
     @PostConstruct
     public void init() {
-
-        if (config == null || response == null) {
+        if (config == null || response == null || krazoConfig == null) {
             throw new IllegalStateException("It looks like @Context injection doesn't work for CDI beans. Please " +
                 "make sure you are using a recent version of Jersey.");
         }
 
+        scopeAttrName = krazoConfig.getRedirectScopeAttributeName();
+        cookieName = krazoConfig.getRedirectScopeCookieName();
     }
 
     /**
@@ -110,14 +125,14 @@ public class RedirectScopeManager {
      * @param contextual the contextual.
      */
     public void destroy(Contextual contextual) {
-        String scopeId = (String) request.getAttribute(SCOPE_ID);
+        String scopeId = (String) request.getAttribute(this.scopeAttrName);
         if (null != scopeId) {
             HttpSession session = request.getSession();
             if (contextual instanceof PassivationCapable == false) {
                 throw new RuntimeException("Unexpected type for contextual");
             }
             PassivationCapable pc = (PassivationCapable) contextual;
-            final String sessionKey = SCOPE_ID + "-" + scopeId;
+            final String sessionKey = this.scopeAttrName + "-" + scopeId;
             Map<String, Object> scopeMap = (Map<String, Object>) session.getAttribute(sessionKey);
             if (null != scopeMap) {
                 Object instance = scopeMap.get(INSTANCE + pc.getId());
@@ -140,19 +155,19 @@ public class RedirectScopeManager {
     public <T> T get(Contextual<T> contextual) {
         T result = null;
 
-        String scopeId = (String) request.getAttribute(SCOPE_ID);
+        String scopeId = (String) request.getAttribute(this.scopeAttrName);
         if (null != scopeId) {
             HttpSession session = request.getSession();
             if (contextual instanceof PassivationCapable == false) {
                 throw new RuntimeException("Unexpected type for contextual");
             }
             PassivationCapable pc = (PassivationCapable) contextual;
-            final String sessionKey = SCOPE_ID + "-" + scopeId;
+            final String sessionKey = this.scopeAttrName + "-" + scopeId;
             Map<String, Object> scopeMap = (Map<String, Object>) session.getAttribute(sessionKey);
             if (null != scopeMap) {
                 result = (T) scopeMap.get(INSTANCE + pc.getId());
             } else {
-                request.setAttribute(SCOPE_ID, null);       // old cookie, force new scope generation
+                request.setAttribute(this.scopeAttrName, null);       // old cookie, force new scope generation
             }
         }
 
@@ -171,7 +186,7 @@ public class RedirectScopeManager {
         T result = get(contextual);
 
         if (result == null) {
-            String scopeId = (String) request.getAttribute(SCOPE_ID);
+            String scopeId = (String) request.getAttribute(this.scopeAttrName);
             if (null == scopeId) {
                 scopeId = generateScopeId();
             }
@@ -181,7 +196,7 @@ public class RedirectScopeManager {
                 throw new RuntimeException("Unexpected type for contextual");
             }
             PassivationCapable pc = (PassivationCapable) contextual;
-            final String sessionKey = SCOPE_ID + "-" + scopeId;
+            final String sessionKey = this.scopeAttrName + "-" + scopeId;
             Map<String, Object> scopeMap = (Map<String, Object>) session.getAttribute(sessionKey);
             if (null != scopeMap) {
                 session.setAttribute(sessionKey, scopeMap);
@@ -194,7 +209,7 @@ public class RedirectScopeManager {
     }
 
     /**
-     * Update SCOPE_ID request attribute based on either cookie or URL query param
+     * Update scopeId request attribute based on either cookie or URL query param
      * information received in the request.
      *
      * @param event the event.
@@ -204,16 +219,16 @@ public class RedirectScopeManager {
             final Cookie[] cookies = request.getCookies();
             if (null != cookies) {
                 for (Cookie cookie : cookies) {
-                    if (cookie.getName().equals(COOKIE_NAME)) {
-                        request.setAttribute(SCOPE_ID, cookie.getValue());
+                    if (cookie.getName().equals(this.cookieName)) {
+                        request.setAttribute(this.scopeAttrName, cookie.getValue());
                         return;     // we're done
                     }
                 }
             }
         } else {
-            final String scopeId = event.getUriInfo().getQueryParameters().getFirst(SCOPE_ID);
+            final String scopeId = event.getUriInfo().getQueryParameters().getFirst(this.scopeAttrName);
             if (scopeId != null) {
-                request.setAttribute(SCOPE_ID, scopeId);
+                request.setAttribute(this.scopeAttrName, scopeId);
             }
         }
     }
@@ -224,10 +239,10 @@ public class RedirectScopeManager {
      * @param event the event.
      */
     public void afterProcessViewEvent(@Observes AfterProcessViewEvent event) {
-        if (request.getAttribute(SCOPE_ID) != null) {
-            String scopeId = (String) request.getAttribute(SCOPE_ID);
+        if (request.getAttribute(this.scopeAttrName) != null) {
+            String scopeId = (String) request.getAttribute(this.scopeAttrName);
             HttpSession session = request.getSession();
-            final String sessionKey = SCOPE_ID + "-" + scopeId;
+            final String sessionKey = this.scopeAttrName + "-" + scopeId;
             Map<String, Object> scopeMap = (Map<String, Object>) session.getAttribute(sessionKey);
             if (null != scopeMap) {
                 scopeMap.entrySet().stream().forEach((entrySet) -> {
@@ -252,9 +267,9 @@ public class RedirectScopeManager {
      * @param event the event.
      */
     public void controllerRedirectEvent(@Observes ControllerRedirectEvent event) {
-        if (request.getAttribute(SCOPE_ID) != null) {
+        if (request.getAttribute(this.scopeAttrName) != null) {
             if (usingCookies()) {
-                Cookie cookie = new Cookie(COOKIE_NAME, request.getAttribute(SCOPE_ID).toString());
+                Cookie cookie = new Cookie(this.cookieName, request.getAttribute(this.scopeAttrName).toString());
                 cookie.setPath(request.getContextPath());
                 cookie.setMaxAge(600);
                 cookie.setHttpOnly(true);
@@ -262,7 +277,7 @@ public class RedirectScopeManager {
             } else {
                 final ContainerResponseContext crc = ((ControllerRedirectEventImpl) event).getContainerResponseContext();
                 final UriBuilder builder = UriBuilder.fromUri(crc.getStringHeaders().getFirst(HttpHeaders.LOCATION));
-                builder.queryParam(SCOPE_ID, request.getAttribute(SCOPE_ID).toString());
+                builder.queryParam(this.scopeAttrName, request.getAttribute(this.scopeAttrName).toString());
                 crc.getHeaders().putSingle(HttpHeaders.LOCATION, builder.build());
             }
         }
@@ -276,14 +291,14 @@ public class RedirectScopeManager {
     private String generateScopeId() {
         HttpSession session = request.getSession();
         String scopeId = UUID.randomUUID().toString();
-        String sessionKey = SCOPE_ID + "-" + scopeId;
+        String sessionKey = this.scopeAttrName + "-" + scopeId;
         synchronized (this) {
             while (session.getAttribute(sessionKey) != null) {
                 scopeId = UUID.randomUUID().toString();
-                sessionKey = SCOPE_ID + "-" + scopeId;
+                sessionKey = this.scopeAttrName + "-" + scopeId;
             }
             session.setAttribute(sessionKey, new HashMap<>());
-            request.setAttribute(SCOPE_ID, scopeId);
+            request.setAttribute(this.scopeAttrName, scopeId);
         }
         return scopeId;
     }

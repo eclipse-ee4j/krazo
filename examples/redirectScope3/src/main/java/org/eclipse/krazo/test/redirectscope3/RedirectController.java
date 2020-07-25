@@ -16,22 +16,40 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  */
-package org.eclipse.krazo;
+package org.eclipse.krazo.test.redirectscope3;
 
-import org.eclipse.krazo.security.CsrfTokenStrategy;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
+import javax.mvc.Controller;
 
-import javax.mvc.security.Csrf;
+/**
+ * RedirectController test.
+ *
+ * @author Santiago Pericas-Geertsen
+ */
+@Path("redirect")
+@Controller
+@RequestScoped
+public class RedirectController {
 
-public interface KrazoConfig {
-    Csrf.CsrfOptions getCsrfOptions();
+    @Inject
+    RedirectBean redirectBean;
 
-    CsrfTokenStrategy getCsrfTokenStrategy();
+    @GET
+    @Path("from")
+    @Produces("text/html")
+    public String getSource() {
+        redirectBean.setValue("Redirect about to happen");
+        return "redirect:/redirect/to";
+    }
 
-    String getDefaultViewFileExtension();
-
-    String getCsrfHeaderName();
-
-    String getRedirectScopeCookieName();
-
-    String getRedirectScopeAttributeName();
+    @GET
+    @Path("to")
+    @Produces("text/html")
+    public String getTarget() {
+        return "redirect.jsp";
+    }
 }
