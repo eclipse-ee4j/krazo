@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-WILDFLY_VERSION=19.1.0.Final
+WILDFLY_VERSION=20.0.1.Final
 set -eu
 
 docker pull jboss/wildfly:$WILDFLY_VERSION
