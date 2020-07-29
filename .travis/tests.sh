@@ -88,7 +88,7 @@ elif [[ ${1} == tck-wildfly20* ]]; then
   echo "Downloading Wildfly..."
   curl -L -s -o wildfly-20.0.1.Final.zip https://download.jboss.org/wildfly/20.0.1.Final/wildfly-20.0.1.Final.zip
   unzip wildfly-20.0.1.Final.zip
-  mv wildfly-20.0.1.Final.zip wildfly
+  mv wildfly-20.0.1.Final wildfly
 
   echo "Building Krazo..."
   mvn -B -V -DskipTests clean install ${BUILD_PROFILE}
