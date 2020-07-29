@@ -3,7 +3,7 @@
 set -euo pipefail
 
 GLASSFISH_URL="http://download.eclipse.org/glassfish/web-5.1.0.zip"
-WILDFLY_URL="https://download.jboss.org/wildfly/18.0.0.Final/wildfly-18.0.0.Final.zip"
+WILDFLY_URL="https://download.jboss.org/wildfly/19.1.0.Final/wildfly-19.1.0.Final.zip"
 #BUILD_PROFILE=""
 BUILD_PROFILE="-Pstaging"
 
@@ -61,12 +61,12 @@ elif [[ ${1} == tck-glassfish51-* ]]; then
   echo "Stopping Glassfish..."
   glassfish5/bin/asadmin stop-domain
 
-elif [[ ${1} == tck-wildfly18* ]]; then
+elif [[ ${1} == tck-wildfly19* ]]; then
 
   echo "Downloading Wildfly..."
-  curl -L -s -o wildfly-18.0.0.Final.zip $WILDFLY_URL
-  unzip wildfly-18.0.0.Final.zip
-  mv wildfly-18.0.0.Final wildfly
+  curl -L -s -o wildfly-19.1.0.Final.zip $WILDFLY_URL
+  unzip wildfly-19.1.0.Final.zip
+  mv wildfly-19.1.0.Final wildfly
 
   echo "Building Krazo..."
   mvn -B -V -DskipTests clean install ${BUILD_PROFILE}
@@ -83,12 +83,12 @@ elif [[ ${1} == tck-wildfly18* ]]; then
   echo "Stopping Wildfly..."
   kill "$(cat wildfly.pid)"
 
-elif [[ ${1} == tck-wildfly19* ]]; then
+elif [[ ${1} == tck-wildfly20* ]]; then
 
   echo "Downloading Wildfly..."
-  curl -L -s -o wildfly-19.0.0.Beta1.zip https://download.jboss.org/wildfly/19.0.0.Beta1/wildfly-19.0.0.Beta1.zip
-  unzip wildfly-19.0.0.Beta1.zip
-  mv wildfly-19.0.0.Beta1 wildfly
+  curl -L -s -o wildfly-20.0.0.Final.zip https://download.jboss.org/wildfly/20.0.0.Final/wildfly-20.0.0.Final.zip
+  unzip wildfly-20.0.0.Final.zip
+  mv wildfly-20.0.0.Final.zip wildfly
 
   echo "Building Krazo..."
   mvn -B -V -DskipTests clean install ${BUILD_PROFILE}
