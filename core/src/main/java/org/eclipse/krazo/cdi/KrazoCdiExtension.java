@@ -18,7 +18,7 @@
  */
 package org.eclipse.krazo.cdi;
 
-import org.eclipse.krazo.KrazoConfigImpl;
+import org.eclipse.krazo.KrazoConfig;
 import org.eclipse.krazo.MvcContextImpl;
 import org.eclipse.krazo.binding.BeanValidationProducer;
 import org.eclipse.krazo.binding.BindingResultManager;
@@ -89,7 +89,7 @@ public class KrazoCdiExtension implements Extension {
 
                 // .
                 MvcContextImpl.class,
-                KrazoConfigImpl.class,
+                KrazoConfig.class,
 
                 // binding
                 BeanValidationProducer.class,

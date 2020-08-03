@@ -45,7 +45,7 @@ public class MyApplication extends Application {
     @Override
     public Map<String, Object> getProperties() {
         final Map<String, Object> map = new HashMap<>();
-        map.put(Properties.REDIRECT_SCOPE_ATTRIBUTE_NAME, "org.eclipse.krazo.redirectScope3.ScopeId"); // Set the Scope ID name
+        map.put(Properties.REDIRECT_SCOPE_QUERY_PARAM_NAME, "org.eclipse.krazo.redirectScope3.ScopeId"); // Set the Scope ID name
         return map;
     }
 }
