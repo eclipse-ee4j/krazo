@@ -18,8 +18,8 @@
  */
 package org.eclipse.krazo.cdi;
 
-import org.eclipse.krazo.MvcContextImpl;
 import org.eclipse.krazo.KrazoConfig;
+import org.eclipse.krazo.MvcContextImpl;
 import org.eclipse.krazo.binding.BeanValidationProducer;
 import org.eclipse.krazo.binding.BindingResultManager;
 import org.eclipse.krazo.binding.ConstraintViolationTranslator;
@@ -103,7 +103,7 @@ public class KrazoCdiExtension implements Extension {
                 ModelsImpl.class,
                 ViewableWriter.class,
                 ViewResponseFilter.class,
-                
+
                 // lifecycle
                 EventDispatcher.class,
                 RequestLifecycle.class,

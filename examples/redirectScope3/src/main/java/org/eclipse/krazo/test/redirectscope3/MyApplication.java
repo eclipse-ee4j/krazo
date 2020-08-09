@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2014-2015 Oracle and/or its affiliates. All rights reserved.
- * Copyright (c) 2018, 2019 Eclipse Krazo committers and contributors
+ * Copyright (c) 2018, 2020 Eclipse Krazo committers and contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  */
-package org.eclipse.krazo.test.redirectscope2;
+package org.eclipse.krazo.test.redirectscope3;
 
 import org.eclipse.krazo.Properties;
 
@@ -45,8 +45,7 @@ public class MyApplication extends Application {
     @Override
     public Map<String, Object> getProperties() {
         final Map<String, Object> map = new HashMap<>();
-        map.put(Properties.REDIRECT_SCOPE_COOKIES, true);       // turn on cookies
-        map.put(Properties.REDIRECT_SCOPE_COOKIE_NAME, "org.eclipse.krazo.redirectScope2.Cookie"); // Set the Cookie name
+        map.put(Properties.REDIRECT_SCOPE_QUERY_PARAM_NAME, "org.eclipse.krazo.redirectScope3.ScopeId"); // Set the Scope ID name
         return map;
     }
 }

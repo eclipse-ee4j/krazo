@@ -68,6 +68,7 @@
         <module>redirect</module>
         <module>redirectScope</module>
         <module>redirectScope2</module>
+        <module>redirectScope3</module>
         <module>requestDispatcher</module>
         <module>returns</module>
         <module>validation</module>

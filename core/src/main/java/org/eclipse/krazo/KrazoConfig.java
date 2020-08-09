@@ -18,6 +18,7 @@
  */
 package org.eclipse.krazo;
 
+import org.eclipse.krazo.cdi.RedirectScopeManager;
 import org.eclipse.krazo.jaxrs.JaxRsContext;
 import org.eclipse.krazo.security.CsrfTokenStrategy;
 import org.eclipse.krazo.security.SessionCsrfTokenStrategy;
@@ -61,8 +62,8 @@ public class KrazoConfig {
 
         // default
         return new SessionCsrfTokenStrategy.Builder()
-                .headerName(getCsrfHeaderName())
-                .build();
+            .headerName(getCsrfHeaderName())
+            .build();
 
     }
 
@@ -83,6 +84,22 @@ public class KrazoConfig {
 
         return Csrf.DEFAULT_CSRF_HEADER_NAME;
 
+    }
+
+    public String getRedirectScopeCookieName() {
+        Object value = config.getProperty(Properties.REDIRECT_SCOPE_COOKIE_NAME);
+        if (value instanceof String) {
+            return (String) value;
+        }
+        return RedirectScopeManager.DEFAULT_COOKIE_NAME;
+    }
+
+    public String getRedirectScopeAttributeName() {
+        Object value = config.getProperty(Properties.REDIRECT_SCOPE_QUERY_PARAM_NAME);
+        if (value instanceof String) {
+            return (String) value;
+        }
+        return RedirectScopeManager.DEFAULT_QUERY_PARAM_NAME;
     }
 
 }

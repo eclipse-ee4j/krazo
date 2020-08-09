@@ -18,6 +18,7 @@
  */
 package org.eclipse.krazo.cdi;
 
+import org.eclipse.krazo.KrazoConfig;
 import org.eclipse.krazo.Properties;
 import org.eclipse.krazo.event.ControllerRedirectEventImpl;
 import org.eclipse.krazo.jaxrs.JaxRsContext;
@@ -58,12 +59,12 @@ import java.util.UUID;
 @ApplicationScoped
 @SuppressWarnings("unchecked")
 public class RedirectScopeManager {
+    public static final String DEFAULT_QUERY_PARAM_NAME = "org.eclipse.krazo.redirect.param.ScopeId";
+    public static final String DEFAULT_COOKIE_NAME = "org.eclipse.krazo.redirect.Cookie";
 
-    private static final String PREFIX = "org.eclipse.krazo.redirect.";
-    private static final String SCOPE_ID = PREFIX + "ScopeId";
+    private static final String SCOPE_ID = "org.eclipse.krazo.redirect.attribute.ScopeId";
     private static final String INSTANCE = "Instance-";
     private static final String CREATIONAL = "Creational-";
-    private static final String COOKIE_NAME = PREFIX + "Cookie";
 
     /**
      * Stores the HTTP servlet request we are working for.
@@ -91,17 +92,18 @@ public class RedirectScopeManager {
     @Inject
     private MvcContext mvc;
 
+    @Inject
+    private KrazoConfig krazoConfig;
+
     /**
      * Check that {@literal @}Context injection worked correctly
      */
     @PostConstruct
     public void init() {
-
-        if (config == null || response == null) {
+        if (config == null || response == null || krazoConfig == null) {
             throw new IllegalStateException("It looks like @Context injection doesn't work for CDI beans. Please " +
                 "make sure you are using a recent version of Jersey.");
         }
-
     }
 
     /**
@@ -194,7 +196,7 @@ public class RedirectScopeManager {
     }
 
     /**
-     * Update SCOPE_ID request attribute based on either cookie or URL query param
+     * Update scopeId request attribute based on either cookie or URL query param
      * information received in the request.
      *
      * @param event the event.
@@ -204,14 +206,14 @@ public class RedirectScopeManager {
             final Cookie[] cookies = request.getCookies();
             if (null != cookies) {
                 for (Cookie cookie : cookies) {
-                    if (cookie.getName().equals(COOKIE_NAME)) {
+                    if (cookie.getName().equals(krazoConfig.getRedirectScopeCookieName())) {
                         request.setAttribute(SCOPE_ID, cookie.getValue());
                         return;     // we're done
                     }
                 }
             }
         } else {
-            final String scopeId = event.getUriInfo().getQueryParameters().getFirst(SCOPE_ID);
+            final String scopeId = event.getUriInfo().getQueryParameters().getFirst(krazoConfig.getRedirectScopeAttributeName());
             if (scopeId != null) {
                 request.setAttribute(SCOPE_ID, scopeId);
             }
@@ -254,7 +256,7 @@ public class RedirectScopeManager {
     public void controllerRedirectEvent(@Observes ControllerRedirectEvent event) {
         if (request.getAttribute(SCOPE_ID) != null) {
             if (usingCookies()) {
-                Cookie cookie = new Cookie(COOKIE_NAME, request.getAttribute(SCOPE_ID).toString());
+                Cookie cookie = new Cookie(krazoConfig.getRedirectScopeCookieName(), request.getAttribute(SCOPE_ID).toString());
                 cookie.setPath(request.getContextPath());
                 cookie.setMaxAge(600);
                 cookie.setHttpOnly(true);
@@ -262,7 +264,7 @@ public class RedirectScopeManager {
             } else {
                 final ContainerResponseContext crc = ((ControllerRedirectEventImpl) event).getContainerResponseContext();
                 final UriBuilder builder = UriBuilder.fromUri(crc.getStringHeaders().getFirst(HttpHeaders.LOCATION));
-                builder.queryParam(SCOPE_ID, request.getAttribute(SCOPE_ID).toString());
+                builder.queryParam(krazoConfig.getRedirectScopeAttributeName(), request.getAttribute(SCOPE_ID).toString());
                 crc.getHeaders().putSingle(HttpHeaders.LOCATION, builder.build());
             }
         }

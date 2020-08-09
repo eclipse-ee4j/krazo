@@ -33,6 +33,18 @@ public interface Properties {
     String REDIRECT_SCOPE_COOKIES = "org.eclipse.krazo.redirectScopeCookies";
 
     /**
+     * String property that determines the name of the request attribute/parameter
+     * to be used in {@link org.eclipse.krazo.cdi.RedirectScopeManager}
+     */
+    String REDIRECT_SCOPE_QUERY_PARAM_NAME = "org.eclipse.krazo.redirectScopeQueryParamName";
+
+    /**
+     * String property that determines the redirect Cookie name to be used in
+     * {@link org.eclipse.krazo.cdi.RedirectScopeManager}
+     */
+    String REDIRECT_SCOPE_COOKIE_NAME = "org.eclipse.krazo.redirectScopeCookieName";
+
+    /**
      * The implementation of {@link org.eclipse.krazo.security.CsrfTokenStrategy}
      * to use for storing tokens.
      */

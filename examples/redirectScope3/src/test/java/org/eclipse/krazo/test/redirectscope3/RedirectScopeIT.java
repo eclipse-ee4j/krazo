@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2014-2015 Oracle and/or its affiliates. All rights reserved.
- * Copyright (c) 2018, 2019 Eclipse Krazo committers and contributors
+ * Copyright (c) 2018, 2020 Eclipse Krazo committers and contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  */
-package org.eclipse.krazo.test.redirectscope2;
+package org.eclipse.krazo.test.redirectscope3;
 
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
@@ -24,7 +24,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 public class RedirectScopeIT {
@@ -36,6 +35,7 @@ public class RedirectScopeIT {
     public void setUp() {
         webUrl = System.getProperty("integration.url");
         webClient = new WebClient();
+        webClient.getOptions().setRedirectEnabled(true);        // enable redirect!
     }
 
     @After
@@ -47,14 +47,6 @@ public class RedirectScopeIT {
     public void testSingleRequest() throws Exception {
         HtmlPage page = webClient.getPage(webUrl + "resources/redirect/from");
         assertTrue(page.asXml().contains("Redirect about to happen"));
-    }
-
-    @Test
-    public void testDoubleRequest() throws Exception {
-        HtmlPage page = webClient.getPage(webUrl + "resources/redirect/from");
-        assertTrue(page.asXml().contains("Redirect about to happen"));
-        page = webClient.getPage(webUrl + "resources/redirect/from");
-        assertTrue(page.asXml().contains("Redirect about to happen"));
-        assertNotNull(webClient.getCookieManager().getCookie("org.eclipse.krazo.redirectScope2.Cookie"));
+        assertTrue(page.getUrl().toURI().getQuery().contains("org.eclipse.krazo.redirectScope3.ScopeId"));
     }
 }
