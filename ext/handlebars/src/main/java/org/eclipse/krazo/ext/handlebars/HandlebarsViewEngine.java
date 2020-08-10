@@ -79,7 +79,7 @@ public class HandlebarsViewEngine extends ViewEngineBase {
             InputStreamReader in = new InputStreamReader(resourceAsStream, "UTF-8");
             BufferedReader bufferedReader = new BufferedReader(in);) {
 
-            String viewContent = bufferedReader.lines().collect(Collectors.joining());
+            String viewContent = bufferedReader.lines().collect(Collectors.joining("\n"));
 
             Template template = handlebars.compileInline(viewContent);
             template.apply(model, writer);
