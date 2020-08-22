@@ -271,6 +271,39 @@
             </build>
         </profile>
         <profile>
+            <id>testsuite-glassfish</id>
+            <properties>
+                <skipITs>false</skipITs>
+            </properties>
+            <dependencies>
+                <dependency>
+                    <groupId>org.eclipse.krazo</groupId>
+                    <artifactId>krazo-jersey</artifactId>
+                    <version>${project.version}</version>
+                    <scope>runtime</scope>
+                </dependency>
+                <dependency>
+                    <groupId>org.jboss.arquillian.container</groupId>
+                    <artifactId>arquillian-glassfish-remote-3.1</artifactId>
+                    <version>1.0.0.Final</version>
+                    <scope>test</scope>
+                </dependency>
+            </dependencies>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-failsafe-plugin</artifactId>
+                        <configuration>
+                            <systemProperties>
+                                <arquillian.launch>glassfish</arquillian.launch>
+                                <testsuite.profile>testsuite-glassfish</testsuite.profile>
+                            </systemProperties>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
             <id>testsuite-payara</id>
 
             <properties>
