@@ -47,6 +47,10 @@ jobs:
       env: TYPE=testsuite-liberty
       script: source .travis/install-liberty.sh && mvn -P${TYPE} -Dliberty.home=${LIBERTY_HOME} --projects testsuite clean verify ${BUILD_PROFILE}
     - stage: test
+      env: TYPE=testsuite-glassfish
+      before_script: .travis/start-glassfish.sh
+      script: mvn -P${TYPE} --projects testsuite clean verify ${BUILD_PROFILE}
+    - stage: test
       env: TYPE=tck-glassfish51-patched
       script: .travis/tests.sh ${TYPE}
     - stage: test
