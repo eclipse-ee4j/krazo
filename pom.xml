@@ -32,7 +32,7 @@
     <description>Eclipse Krazo Parent</description>
     <url>https://projects.eclipse.org/projects/ee4j.krazo</url>
 
-     <parent>
+    <parent>
         <groupId>org.eclipse.ee4j</groupId>
         <artifactId>project</artifactId>
         <version>1.0.6</version>
@@ -95,17 +95,6 @@
             <timezone>CET</timezone>
         </developer>
     </developers>
-
-    <distributionManagement>
-        <snapshotRepository>
-            <id>ossrh</id>
-            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-        </snapshotRepository>
-        <repository>
-            <id>ossrh</id>
-            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-        </repository>
-    </distributionManagement>
 
     <issueManagement>
         <system>GitHub</system>
