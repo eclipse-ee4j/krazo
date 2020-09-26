@@ -11,8 +11,8 @@ cache:
 
 env:
      global:
-         - BUILD_PROFILE=
-#         - BUILD_PROFILE=-Pstaging
+#         - BUILD_PROFILE=
+         - BUILD_PROFILE=-Pstaging
 
 install: /bin/true
 
