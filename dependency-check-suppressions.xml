@@ -26,4 +26,41 @@
         <cve>CVE-2015-9251</cve>
         <cve>CVE-2019-11358</cve>
     </suppress>
+    <suppress>
+        <notes><![CDATA[
+    file name: guava-18.0.jar
+    ]]></notes>
+        <packageUrl regex="true">^pkg:maven/com\.google\.guava/guava@.*$</packageUrl>
+        <cve>CVE-2018-10237</cve>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[
+    file name: jruby-stdlib-9.2.7.0.jar: jopenssl.jar (shaded: rubygems:jruby-openssl:0.10.2)
+    ]]></notes>
+        <packageUrl regex="true">^pkg:maven/rubygems/jruby\-openssl@.*$</packageUrl>
+        <cve>CVE-1999-0428</cve>
+        <cve>CVE-2009-0590</cve>
+        <cve>CVE-2011-4838</cve>
+        <cve>CVE-2016-2106</cve>
+        <cve>CVE-2010-4252</cve>
+        <cve>CVE-2016-2176</cve>
+        <cve>CVE-2016-2108</cve>
+        <cve>CVE-2016-2109</cve>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[
+    file name: jruby-stdlib-9.2.7.0.jar: readline.jar (shaded: rubygems:jruby-readline:1.3.7)
+    ]]></notes>
+        <packageUrl regex="true">^pkg:maven/rubygems/jruby\-readline@.*$</packageUrl>
+        <cve>CVE-2010-1330</cve>
+        <cve>CVE-2011-4838</cve>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[
+    file name: jruby-stdlib-9.2.7.0.jar: snakeyaml-1.23.jar
+    ]]></notes>
+        <packageUrl regex="true">^pkg:maven/org\.yaml/snakeyaml@.*$</packageUrl>
+        <cve>CVE-2017-18640</cve>
+        <cve>CVE-2011-4838</cve>
+    </suppress>
 </suppressions>
