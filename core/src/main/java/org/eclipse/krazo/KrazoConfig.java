@@ -102,4 +102,12 @@ public class KrazoConfig {
         return RedirectScopeManager.DEFAULT_QUERY_PARAM_NAME;
     }
 
+    public boolean isHiddenMethodFilterActive() {
+        final Object value = config.getProperty(Properties.HIDDEN_METHOD_FILTER_ACTIVE);
+        if (value instanceof Boolean) {
+            return (boolean) value;
+        }
+
+        return false;
+    }
 }

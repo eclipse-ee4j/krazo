@@ -17,10 +17,12 @@
  */
 package org.eclipse.krazo.forms;
 
-import java.io.IOException;
-import java.util.Collections;
-import java.util.List;
+import org.eclipse.krazo.KrazoConfig;
+import org.eclipse.krazo.security.FormEntityProvider;
+import org.eclipse.krazo.util.ServiceLoaders;
+
 import javax.annotation.Priority;
+import javax.inject.Inject;
 import javax.ws.rs.Priorities;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
@@ -28,8 +30,9 @@ import javax.ws.rs.container.PreMatching;
 import javax.ws.rs.core.Form;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.ext.Provider;
-import org.eclipse.krazo.security.FormEntityProvider;
-import org.eclipse.krazo.util.ServiceLoaders;
+import java.io.IOException;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * <p>
@@ -62,41 +65,44 @@ import org.eclipse.krazo.util.ServiceLoaders;
 @Priority(Priorities.HEADER_DECORATOR)
 public class HiddenMethodFilter implements ContainerRequestFilter {
 
-  private static final String HIDDEN_METHOD_NAME = "_method";
+    private static final String HIDDEN_METHOD_NAME = "_method";
 
-  private final FormEntityProvider formEntityProvider;
+    private final FormEntityProvider formEntityProvider;
 
-  public HiddenMethodFilter() {
-    formEntityProvider = ServiceLoaders.list(FormEntityProvider.class).get(0);
-  }
+    @Inject
+    private KrazoConfig krazoConfig;
 
-  @Override
-  public void filter(ContainerRequestContext requestContext) throws IOException {
-
-    if (isFormData(requestContext)) {
-      final Form form = formEntityProvider.getForm(requestContext);
-      final String hiddenMethod = getHiddenMethod(form);
-
-      if (hiddenMethod != null && !hiddenMethod.isEmpty()) {
-        requestContext.setMethod(hiddenMethod);
-      }
-    }
-  }
-
-  private boolean isFormData(ContainerRequestContext requestContext) {
-    return MediaType.APPLICATION_FORM_URLENCODED_TYPE
-        .isCompatible(requestContext.getMediaType());
-  }
-
-  private String getHiddenMethod(final Form form) {
-    String hiddenMethod = null;
-    final List<String> hiddenFieldValues = form.asMap().getOrDefault(HIDDEN_METHOD_NAME, Collections
-        .emptyList());
-
-    if (!hiddenFieldValues.isEmpty()) {
-      hiddenMethod = hiddenFieldValues.get(0);
+    public HiddenMethodFilter() {
+        formEntityProvider = ServiceLoaders.list(FormEntityProvider.class).get(0);
     }
 
-    return hiddenMethod;
-  }
+    @Override
+    public void filter(ContainerRequestContext requestContext) throws IOException {
+
+        if (krazoConfig.isHiddenMethodFilterActive() && isFormData(requestContext)) {
+            final Form form = formEntityProvider.getForm(requestContext);
+            final String hiddenMethod = getHiddenMethod(form);
+
+            if (hiddenMethod != null && !hiddenMethod.isEmpty()) {
+                requestContext.setMethod(hiddenMethod);
+            }
+        }
+    }
+
+    private boolean isFormData(ContainerRequestContext requestContext) {
+        return MediaType.APPLICATION_FORM_URLENCODED_TYPE
+            .isCompatible(requestContext.getMediaType());
+    }
+
+    private String getHiddenMethod(final Form form) {
+        String hiddenMethod = null;
+        final List<String> hiddenFieldValues = form.asMap().getOrDefault(HIDDEN_METHOD_NAME, Collections
+            .emptyList());
+
+        if (!hiddenFieldValues.isEmpty()) {
+            hiddenMethod = hiddenFieldValues.get(0);
+        }
+
+        return hiddenMethod;
+    }
 }
