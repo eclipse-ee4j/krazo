@@ -29,8 +29,8 @@ import java.util.Optional;
  */
 public class ConverterResult<T> {
 
-    private T value;
-    private String error;
+    private final T value;
+    private final String error;
 
     private ConverterResult(T value, String error) {
         this.value = value;

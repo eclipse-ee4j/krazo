@@ -49,7 +49,6 @@ import java.io.PrintWriter;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 import java.nio.charset.StandardCharsets;
-import java.util.Optional;
 
 import static javax.ws.rs.core.Response.Status.INTERNAL_SERVER_ERROR;
 import static org.eclipse.krazo.util.HttpUtil.unwrapOriginalRequest;
@@ -231,7 +230,7 @@ public class ViewableWriter implements MessageBodyWriter<Viewable> {
         }
 
         @Override
-        public ServletOutputStream getOutputStream() throws IOException {
+        public ServletOutputStream getOutputStream() {
             if (responseWriter != null) {
                 throw new IllegalStateException("Calling getOutputStream() after getWriter() is not allowed. ");
             }

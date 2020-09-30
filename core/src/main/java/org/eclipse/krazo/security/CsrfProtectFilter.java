@@ -61,11 +61,9 @@ public class CsrfProtectFilter implements ContainerResponseFilter {
      *
      * @param requestContext the request context.
      * @param responseContext the response context.
-     * @throws IOException if a problem occurs writing a response.
      */
     @Override
-    public void filter(ContainerRequestContext requestContext, ContainerResponseContext responseContext)
-            throws IOException {
+    public void filter(ContainerRequestContext requestContext, ContainerResponseContext responseContext) {
         if (isCsrfEnabled()) {
             final CsrfToken token = csrfTokenManager.getOrCreateToken();
             final MultivaluedMap<String, Object> headers = responseContext.getHeaders();

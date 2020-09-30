@@ -43,7 +43,7 @@ import java.util.stream.Collectors;
 @Vetoed // produced by UriTemplateParser
 public class ApplicationUris {
 
-    private MultivaluedMap<String, UriTemplate> uriTemplates = new MultivaluedHashMap<>();
+    private final MultivaluedMap<String, UriTemplate> uriTemplates = new MultivaluedHashMap<>();
 
     /**
      * @see javax.mvc.MvcContext#uri(String)

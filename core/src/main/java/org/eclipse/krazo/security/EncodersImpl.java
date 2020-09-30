@@ -73,7 +73,7 @@ public class EncodersImpl implements Encoders {
                     break;
                 default:
                     if (ch >= '\u0000' && ch <= '\u001F') {
-                        sb.append("\\x").append(ch <= '\u000F' ? "0" : "").append(Integer.toHexString((int) ch));
+                        sb.append("\\x").append(ch <= '\u000F' ? "0" : "").append(Integer.toHexString(ch));
                     } else {
                         sb.append(ch);
                     }
