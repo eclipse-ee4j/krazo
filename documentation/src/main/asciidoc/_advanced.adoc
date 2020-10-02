@@ -17,6 +17,29 @@
     SPDX-License-Identifier: Apache-2.0
 
 ////
+
 == Advanced Features
 
-TODO: Describe advanced features (like "change HTTP method via form parameter")
+This section describes features which are built for advanced use-cases.
+
+=== Change HTTP method for Form submissions
+
+There are architectural approaches which use the power of HTTP verbs for processing views.
+For example, the update of a resource can be performed by a `PUT` or `PATCH` request.
+Unfortunately, the HTML specification doesn't support `PUT`, `PATCH` or `DELETE`
+as valid methods for forms.
+To bypass the lack of this possibility, Krazo provides the link:https://github.com/eclipse-ee4j/krazo/blob/master/core/src/main/java/org/eclipse/krazo/forms/HiddenMethodFilter.java[`org.eclipse.krazo.forms.HiddenMethodFilter`].
+This filter enables users to override the `POST` method for form actions by setting an hidden input field, so they can target resources mapped to the supported HTTP vers `PUT`, `PATCH` or `DELETE`.
+When a form uses the `GET` method, this filter is not applied.
+
+The following example shows the code of a form, which performs some `DELETE` request on a resource:
+
+[source,html]
+----
+<form action="/foobar/123" method="POST">
+  <!-- Use the hidden '_method' input for overriding the 'POST'  -->
+  <input name="_method" type="hidden" value="DELETE">
+
+  <input type="submit" name="submit" value="Submit"/>
+</form>
+----
