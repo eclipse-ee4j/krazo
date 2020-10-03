@@ -1,5 +1,0 @@
-<html>
-    <body>
-       {{ text | upper }}
-    </body>
-</html>

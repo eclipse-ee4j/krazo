@@ -1,60 +1,121 @@
-[![Build Status](https://travis-ci.org/eclipse-ee4j/krazo.svg?branch=master)](https://travis-ci.org/eclipse-ee4j/krazo)
+<h3>About</h3>
 
-# Eclipse Krazo
+Developing RESTful Web services that seamlessly support exposing your data in a
+variety of representation media types and abstract away the low-level details
+of the client-server communication is not an easy task without a good toolkit.
+In order to simplify development of RESTful Web services and their clients in Java,
+a standard and portable [JAX-RS API][jax-rs] has been designed.
+Jersey RESTful Web Services framework is open source, production quality,
+framework for developing RESTful Web Services in Java that provides support for
+JAX-RS APIs and serves as a JAX-RS (JSR 311 & JSR 339) Reference Implementation.
 
-Eclipse Krazo is an implementation of action-based MVC specified by MVC 1.0 (JSR-371). It builds on top of JAX-RS 
-and currently contains support for RESTEasy, Jersey and CXF with a well-defined SPI for other implementations.
+Jersey framework is more than the JAX-RS Reference Implementation. Jersey provides
+it's own [API][jersey-api] that extend the JAX-RS toolkit with additional features
+and utilities to further simplify RESTful service and client development. Jersey
+also exposes numerous extension SPIs so that developers may extend Jersey to best
+suit their needs.
 
-## Running the testsuite
+Goals of Jersey project can be summarized in the following points:
 
-Eclipse Krazo has configurations to run the testsuite against a bunch of application servers like WildFly, Payara, Glassfish or Liberty.
-The following sections describe how you test Eclipse Krazo against them. At the moment, we test against following servers:
+*   Track the JAX-RS API and provide regular releases of production quality
+    Reference Implementations that ships with GlassFish;
+*   Provide APIs to extend Jersey & Build a community of users and developers;
+    and finally
+*   Make it easy to build RESTful Web services utilising Java and the
+    Java Virtual Machine.
 
-- Glassfish 5
-- WildFly 18.0.0
-- TomEE 8.0.2 Plus
-- Payara 5.193.1
-- Liberty WebProfile 8 19.0.0.11
+The latest stable release of Jersey is [{{ site.latestVersion }}][dwnld].
 
-### Preconditions
-- JDK 8
-- SNAPSHOTs are up to date in your local repository
+---
 
-### Glassfish
-To run the Krazo testsuite with Eclipse Glassfish, you need to follow these steps:
+<table style="border:none;">
+<tr>
+<td  style="width:30%;border:none;vertical-align: top;">
+<h3><a class="headerlink" href="{{ site.links.newJerseyURL }}/documentation/latest/getting-started.html">
+    <var class="icon-compass"></var> Get Started
+</a></h3>
 
-1. Download Eclipse Glassfish from the [official download page](https://projects.eclipse.org/projects/ee4j.glassfish/downloads) and unzip it.
-2. Start Eclipse Glassfish via `glassfish5/glassfish/bin/startserv`
-3. Go into the `testsuite` package of Eclipse Krazo and execute `mvn clean integration-test -Ptestsuite-glassfish`
+<a href ="{{ site.links.newJerseyURL }}/documentation/latest/getting-started.html">Learn</a> how to use Jersey in your projects.
+</td><td style="border:none;vertical-align: top;">
 
-### WildFly
-To run the Krazo testsuite with WildFly, you need to follow these steps:
+<h3><a class="headerlink" href="{{ site.links.newJerseyURL }}/documentation/latest/index.html">
+    <var class="icon-book"></var> Documentation
+</a></h3>
 
-1. Download WildFly from the WildFly [download page](https://wildfly.org/downloads/) and unzip it somewhere you'll find it again.
-2. Start WildFly with `sh standalone.sh --debug`. This enables you to remote-debug the Arquillian tests.
-3. Go into the `testsuite` package of Eclipse Krazo and execute `mvn clean integration-test -Ptestsuite-wildfly`
+Read  <a href="{{ site.links.newJerseyURL }}/documentation/latest/index.html">latest Jersey User Guide</a> or browse <a href="{{ site.links.newJerseyURL }}/apidocs/latest/jersey/index.html">latest Jersey API</a>.
 
-### TomEE
-To run the Krazo testsuite with TomEE, you need to follow these steps:
-1. Download TomEE from the TomEE [download page](https://tomee.apache.org/download-ng.html) and unzip it somewhere you'll find it again.
-2. Overwrite or enable the following settings in `${TOMEE_HOME}/conf/system.properties` to get Arquillian to run:
-```
-tomee.remote.support=true
-tomee.serialization.class.blacklist=-
-openejb.system.apps = true
-```
-3. Start TomEE with `sh catalina.sh jpda start`. This enables you to remote-debug the Arquillian tests.
-4. Go into the `testsuite` package of Eclipse Krazo and execute `mvn clean integration-test -Ptestsuite-tomee`
+Jersey 1.x users may access the <a href="{{ site.links.newJerseyURL }}/documentation/1.19.1/index.html">Jersey 1.19.1 User Guide</a> and <a href="{{ site.links.newJerseyURL }}/apidocs/1.19.1/jersey/index.html">Jersey 1.19.1 API</a>.
+</td><td style="border:none;vertical-align: top;">
 
-### OpenLiberty
-To run the Krazo testsuite with OpenLiberty, you need to follow these steps. Please note that this process has been tested with 19.x only.
+<h3><a class="headerlink" href="download.html">
+    <var class="icon-cloud-download"></var> Download
+</a></h3>
 
-1. Download OpenLiberty from the [official download page](https://openliberty.io/downloads/) and unzip it.
-2. Replace the file `wlp/templates/servers/defaultServer/server.xml` with `.travis/wlp-server-template.xml` from the Eclipse Krazo repository.
-3. Go into the `testsuite` package of Eclipse Krazo and execute `mvn clean integration-test -Ptestsuite-glassfish -Dliberty.home=c:/somewhere/wlp/`.
-   Please make sure to replace `c:/somewhere/wlp/` with the absolute path to the unpacked OpenLiberty distribution.
+Jersey is distributed mainly via Maven and it offers some extra modules.
+Check the <a href="download.html">How to Download</a> page or see our list of <a href="{{ site.links.newJerseyURL }}/documentation/latest/modules-and-dependencies.html">dependencies</a> for details.
+</td></tr>
+<tr><td style="border:none;vertical-align: top;">
+<h3><a class="headerlink" href="related.html">
+    <var class="icon-tags"></var> Related Projects
+</a></h3>
 
-### Troubleshooting
+List of projects related to Jersey.
 
-#### Tests are failing locally but not on Travis CI
-In this case, ensure that your local SNAPSHOTS are the newest version of Krazo. Most of time, this solves the problem.
+</td><td style="border:none;vertical-align: top;">
+<h3><a class="headerlink" href="contribute.html">
+    <var class="icon-group"></var> Contribute
+</a></h3>
+
+<a href="contribute.html">Learn</a> how you can contribute to the project by:
+<ul class="icons-ul">
+    <li><var class="icon-li icon-bug"></var> Reporting issues</li>
+    <li><var class="icon-li icon-code-fork"></var> Submitting patches</li>
+    <li><var class="icon-li icon-eye-open"></var> Reviewing code</li>
+</ul>
+
+</td><td style="border:none;vertical-align: top;">
+<h3><a class="headerlink" href="bloggers.html">
+    <var class="icon-rss"></var> Developer Blogs
+</a></h3>
+
+Find out what our developers <a href="bloggers.html">blog</a> about.
+</td></tr>
+</table>
+
+---
+
+[jersey-api]: {{ site.links.newJerseyURL }}/apidocs/latest/jersey/index.html
+[dwnld]: download.html
+[jax-rs]: http://jax-rs-spec.java.net/
+
+<table style="border:none">
+<tr>
+<td style="width: 30%;
+               text-align: start;
+               vertical-align: top;
+               border:none;">
+<h3> <a name="Links"></a>Links</h3>
+
+- <a href="https://projects.eclipse.org/projects/ee4j.jersey">Jersey project page</a><br/>
+- <a href="{{ site.links.newJerseyURL }}">jersey.github.io</a><br/>
+- <a href="https://jcp.org/en/jsr/detail?id=370">JSR-370 page on JCP site</a><br/>
+- <a href="https://stackoverflow.com/questions/tagged/jersey">Stack Overflow</a><br/>
+</td>
+ <td style="border:none;width:70%">
+ <h3>Latest Articles</h3>
+
+<table>
+<tr> <td> <a class="article" href="{{ site.links.honzablog }}/?p=190" target="_blank">Jersey 2.30.1 has been released</a>                         </td><td> March 1, 2020 </td><td> Jan Supol </td> </tr>
+<tr> <td> <a class="article" href="{{ site.links.honzablog }}/?p=171" target="_blank">New Features in Jersey Client</a>                         </td><td> Jan 13, 2020 </td><td> Jan Supol </td> </tr>
+<tr> <td> <a class="article" href="{{ site.links.honzablog }}/?p=164" target="_blank">Jersey Apache Connector Hangs …?</a>                      </td><td> Jan 7, 2020 </td><td> Jan Supol </td> </tr>
+<tr> <td> <a class="article" href="{{ site.links.honzablog }}/?p=150" target="_blank">Configuring Jersey Application</a>                        </td><td> Oct 4, 2019 </td><td> Jan Supol </td> </tr>
+<tr> <td> <a class="article" href="{{ site.links.honzablog }}/?p=147" target="_blank">Jersey 2.29.1 Has Been Released</a>                       </td><td> Sep 10, 2019 </td><td> Jan Supol </td> </tr>
+<tr> <td> <a class="article" href="{{ site.links.honzablog }}/?p=144" target="_blank">Jersey 2.29 Has Been Released</a>                         </td><td> Jun 25, 2019 </td><td> Jan Supol </td> </tr>
+<tr> <td> <a class="article" href="{{ site.links.honzablog }}/?p=130" target="_blank">Jersey 2.28 Has Been Released</a>                         </td><td> Jan 28, 2019 </td><td> Jan Supol </td> </tr>
+</table>
+
+
+<a href="older-articles.html">Older Articles &hellip;</a>
+
+ </td></tr>
+    </table>
