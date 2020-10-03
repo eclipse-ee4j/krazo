@@ -33,7 +33,7 @@
 
     <properties>
 
-        <tck.version>1.0.0</tck.version>
+        <tck.version>1.1.0</tck.version>
 
         <!-- We don't deploy this module, because the TCK isn't in Maven Central yet -->
         <maven.deploy.skip>true</maven.deploy.skip>
@@ -43,12 +43,12 @@
     <dependencies>
 
         <dependency>
-            <groupId>org.mvc-spec.tck</groupId>
+            <groupId>jakarta.mvc.tck</groupId>
             <artifactId>mvc-tck-api</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>org.mvc-spec.tck</groupId>
+            <groupId>jakarta.mvc.tck</groupId>
             <artifactId>mvc-tck-tests</artifactId>
             <scope>test</scope>
         </dependency>
@@ -75,7 +75,7 @@
 
             <!-- TCK BOM -->
             <dependency>
-                <groupId>org.mvc-spec.tck</groupId>
+                <groupId>jakarta.mvc.tck</groupId>
                 <artifactId>mvc-tck-bom</artifactId>
                 <version>${tck.version}</version>
                 <scope>import</scope>
@@ -128,7 +128,7 @@
                     <plugin>
                         <artifactId>maven-surefire-plugin</artifactId>
                         <configuration>
-                            <dependenciesToScan>org.mvc-spec.tck:mvc-tck-tests</dependenciesToScan>
+                            <dependenciesToScan>jakarta.mvc.tck:mvc-tck-tests</dependenciesToScan>
                             <systemPropertyVariables>
                                 <arquillian.launch>glassfish</arquillian.launch>
                                 <org.mvcspec.tck.api.BaseArchiveProvider>
@@ -163,7 +163,7 @@
                     <plugin>
                         <artifactId>maven-surefire-plugin</artifactId>
                         <configuration>
-                            <dependenciesToScan>org.mvc-spec.tck:mvc-tck-tests</dependenciesToScan>
+                            <dependenciesToScan>jakarta.mvc.tck:mvc-tck-tests</dependenciesToScan>
                             <systemPropertyVariables>
                                 <arquillian.launch>wildfly</arquillian.launch>
                                 <org.mvcspec.tck.api.BaseArchiveProvider>
@@ -202,7 +202,7 @@
                     <plugin>
                         <artifactId>maven-surefire-plugin</artifactId>
                         <configuration>
-                            <dependenciesToScan>org.mvc-spec.tck:mvc-tck-tests</dependenciesToScan>
+                            <dependenciesToScan>jakarta.mvc.tck:mvc-tck-tests</dependenciesToScan>
                             <systemPropertyVariables>
                                 <tomee.version>${tomee.version}</tomee.version>
                                 <arquillian.launch>tomee</arquillian.launch>
@@ -244,7 +244,7 @@
                     <plugin>
                         <artifactId>maven-surefire-plugin</artifactId>
                         <configuration>
-                            <dependenciesToScan>org.mvc-spec.tck:mvc-tck-tests</dependenciesToScan>
+                            <dependenciesToScan>jakarta.mvc.tck:mvc-tck-tests</dependenciesToScan>
                             <systemPropertyVariables>
                                 <arquillian.launch>liberty</arquillian.launch>
                                 <org.mvcspec.tck.api.BaseArchiveProvider>
@@ -267,4 +267,16 @@
 
     </profiles>
 
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-report-plugin</artifactId>
+                <version>3.0.0-M5</version>
+                <configuration>
+                    <showSuccess>true</showSuccess>
+                </configuration>
+            </plugin>
+        </plugins>
+    </reporting>
 </project>
