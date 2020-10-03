@@ -204,6 +204,8 @@ using fraction :
 </dependency>
 ----
 
+Please note, that Thorntail link:https://thorntail.io/posts/the-end-of-an-era/[reached end of life] and therefore the MVC fraction will only receive critical bug fixes.
+
 ==== Servlet Containers
 
 The simplest way to get started with MVC is to deploy your app to a JavaEE 8 application server.
