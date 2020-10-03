@@ -37,10 +37,15 @@ public abstract class AbstractArchiveProvider implements BaseArchiveProvider {
     public AbstractArchiveProvider() {
 
         sonatypeRepo = MavenRemoteRepositories.createRemoteRepository(
-            "sonatype-oss-snapshots",
-            "https://oss.sonatype.org/content/repositories/snapshots",
+            "jakarta-staging",
+            "https://jakarta.oss.sonatype.org/content/groups/staging",
             "default"
         );
+//        sonatypeRepo = MavenRemoteRepositories.createRemoteRepository(
+//            "sonatype-oss-snapshots",
+//            "https://oss.sonatype.org/content/repositories/snapshots",
+//            "default"
+//        );
 
         // prevent weird errors logged during test execution
         sonatypeRepo.setUpdatePolicy(MavenUpdatePolicy.UPDATE_POLICY_ALWAYS);
@@ -53,7 +58,7 @@ public abstract class AbstractArchiveProvider implements BaseArchiveProvider {
         return Maven.configureResolver()
             .withRemoteRepo(sonatypeRepo)
             .loadPomFromFile("pom.xml")  // see <dependencyManagment> for artifact versions
-            .resolve("javax.mvc:javax.mvc-api")
+            .resolve("jakarta.mvc:jakarta.mvc-api")
             .withTransitivity()
             .asFile();
 
