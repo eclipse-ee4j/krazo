@@ -4,7 +4,7 @@ remote_theme: eclipsefdn/jekyll-theme-eclipsefdn
 #theme: jekyll-theme-eclipsefdn # for local execution
 
 title: [Eclipse Krazo]
-description: [Eclipse Krazo is an implementation of action-based MVC specified by Jakarta MVC.
+description: [Eclipse Krazo is an implementation of action-based MVC specified by Jakarta MVC.]
 
 latestVersion: '1.1.0'
 
