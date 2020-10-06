@@ -8,7 +8,7 @@ following is a summary of the TCK results for releases of Jakarta MVC.
 # Jakarta MVC 1.1 Certification Summary
 
 - Product Name, Version and download URL (if applicable): <br/>
-  [Eclipse Krazo 1.1.0](https://projects.eclipse.org/projects/ee4j.krazo)
+  [Eclipse Krazo 1.1.0](https://eclipse-ee4j.github.io/krazo/downloads/1.1.0.html)
 - Specification Name, Version and download URL: <br/>
    [Jakarta MVC 1.1](https://jakarta.ee/specifications/mvc/1.1)
 - TCK Version, digital SHA-256 fingerprint and download URL: <br/>
