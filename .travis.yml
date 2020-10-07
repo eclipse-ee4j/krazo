@@ -36,15 +36,13 @@ jobs:
       script: .travis/tests.sh ${TYPE}
     - stage: test
       env: TYPE=testsuite-payara
-      before_script: .travis/docker-payara.sh
       script: .travis/tests.sh ${TYPE}
     - stage: test
       env: TYPE=testsuite-tomee
-      before_script: .travis/docker-tomee.sh
-      script: mvn -P${TYPE} --projects testsuite clean verify ${BUILD_PROFILE}
+      script: .travis/tests.sh ${TYPE}
     - stage: test
       env: TYPE=testsuite-liberty
-      script: source .travis/install-liberty.sh && mvn -P${TYPE} -Dliberty.home=${LIBERTY_HOME} --projects testsuite clean verify ${BUILD_PROFILE}
+      script: .travis/tests.sh ${TYPE}
     - stage: test
       env: TYPE=testsuite-glassfish
       before_script: .travis/start-glassfish.sh
