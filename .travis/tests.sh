@@ -130,7 +130,6 @@ elif [[ ${1} == testsuite-wildfly ]]; then
 
 elif [[ ${1} == testsuite-payara ]]; then
 
-   source .travis/docker-payara.sh
    echo "Building Krazo..."
    mvn -B -V -DskipTests clean install ${BUILD_PROFILE}
    echo "Running test suite on Payara"
