@@ -152,6 +152,14 @@ elif [[ ${1} == testsuite-liberty ]]; then
    echo "Running test suite on Liberty"
    mvn -P${TYPE} -Dliberty.home=${LIBERTY_HOME} --projects testsuite clean verify ${BUILD_PROFILE}
 
+elif [[ ${1} == testsuite-glassfish ]]; then
+
+   source .travis/start-glassfish.sh
+   echo "Building Krazo..."
+   mvn -B -V -DskipTests clean install ${BUILD_PROFILE}
+   echo "Running test suite on Glassfish"
+   mvn -P${TYPE} -Dliberty.home=${LIBERTY_HOME} --projects testsuite clean verify ${BUILD_PROFILE}
+
 else
   echo "Unknown test type: $1"
   exit 1;

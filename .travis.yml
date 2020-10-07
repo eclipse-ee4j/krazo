@@ -45,8 +45,7 @@ jobs:
       script: .travis/tests.sh ${TYPE}
     - stage: test
       env: TYPE=testsuite-glassfish
-      before_script: .travis/start-glassfish.sh
-      script: mvn -P${TYPE} --projects testsuite clean verify ${BUILD_PROFILE}
+      script: .travis/tests.sh ${TYPE}
     - stage: test
       env: TYPE=tck-glassfish51-patched
       script: .travis/tests.sh ${TYPE}
