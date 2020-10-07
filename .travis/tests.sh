@@ -125,7 +125,15 @@ elif [[ ${1} == testsuite-wildfly ]]; then
    source .travis/docker-wildfly.sh
    echo "Building Krazo..."
    mvn -B -V -DskipTests clean install ${BUILD_PROFILE}
-   echo "Running test suite"
+   echo "Running test suite on Wildfly"
+   mvn -P${TYPE} --projects testsuite clean verify ${BUILD_PROFILE}
+
+elif [[ ${1} == testsuite-payara ]]; then
+
+   source .travis/docker-payara.sh
+   echo "Building Krazo..."
+   mvn -B -V -DskipTests clean install ${BUILD_PROFILE}
+   echo "Running test suite on Payara"
    mvn -P${TYPE} --projects testsuite clean verify ${BUILD_PROFILE}
 
 else

@@ -37,7 +37,7 @@ jobs:
     - stage: test
       env: TYPE=testsuite-payara
       before_script: .travis/docker-payara.sh
-      script: mvn -P${TYPE} --projects testsuite clean verify ${BUILD_PROFILE}
+      script: .travis/tests.sh ${TYPE}
     - stage: test
       env: TYPE=testsuite-tomee
       before_script: .travis/docker-tomee.sh
