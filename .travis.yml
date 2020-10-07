@@ -34,7 +34,7 @@ jobs:
     - stage: test
       env: TYPE=testsuite-wildfly
       before_script: .travis/docker-wildfly.sh
-      script: mvn -P${TYPE} testsuite-wildfly clean verify ${BUILD_PROFILE}
+      script: mvn -P${TYPE} --projects testsuite-wildfly clean verify ${BUILD_PROFILE}
     - stage: test
       env: TYPE=testsuite-payara
       before_script: .travis/docker-payara.sh
