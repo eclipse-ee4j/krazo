@@ -18,6 +18,8 @@
  */
 package org.eclipse.krazo;
 
+import org.eclipse.krazo.forms.HiddenMethodFilter;
+
 /**
  * Interface Properties. Application-level properties used to configure Krazo.
  *
@@ -54,5 +56,9 @@ public interface Properties {
      * Property for defining default file extension for usage in views
      */
     String DEFAULT_VIEW_FILE_EXTENSION = "org.eclipse.krazo.defaultViewFileExtension";
-
+    
+    /**
+     * Boolean property which enables the {@link HiddenMethodFilter} when set to <code>true</code>.
+     */
+    String HIDDEN_METHOD_FILTER_ACTIVE = "org.eclipse.krazo.hiddenMethodFilterActive";
 }
