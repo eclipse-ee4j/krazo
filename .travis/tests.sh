@@ -120,6 +120,14 @@ elif [ "${1}" == "tck-liberty" ]; then
   mvn -B -V -Dtck-env=liberty -Dliberty.home=${LIBERTY_HOME} verify ${BUILD_PROFILE}
   popd
 
+elif [[ ${1} == ttestsuite-wildfly ]]; then
+
+   source .travis/docker-wildfly.sh
+   echo "Building Krazo..."
+   mvn -B -V -DskipTests clean install ${BUILD_PROFILE}
+   echo "Running test suite"
+   mvn -P${TYPE} --projects testsuite clean verify ${BUILD_PROFILE}
+
 else
   echo "Unknown test type: $1"
   exit 1;
