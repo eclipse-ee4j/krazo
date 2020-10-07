@@ -130,10 +130,27 @@ elif [[ ${1} == testsuite-wildfly ]]; then
 
 elif [[ ${1} == testsuite-payara ]]; then
 
+   source .travis/docker-payara.sh
    echo "Building Krazo..."
    mvn -B -V -DskipTests clean install ${BUILD_PROFILE}
    echo "Running test suite on Payara"
    mvn -P${TYPE} --projects testsuite clean verify ${BUILD_PROFILE}
+
+elif [[ ${1} == testsuite-tomee ]]; then
+
+   source .travis/docker-tomee.sh
+   echo "Building Krazo..."
+   mvn -B -V -DskipTests clean install ${BUILD_PROFILE}
+   echo "Running test suite on TomEE"
+   mvn -P${TYPE} --projects testsuite clean verify ${BUILD_PROFILE}
+
+elif [[ ${1} == testsuite-liberty ]]; then
+
+   source .travis/install-liberty.sh && mvn -P${TYPE} -Dliberty.home=${LIBERTY_HOME} --projects testsuite clean verify ${BUILD_PROFILE}
+   echo "Building Krazo..."
+   mvn -B -V -DskipTests clean install ${BUILD_PROFILE}
+   echo "Running test suite on Liberty"
+   mvn -P${TYPE} -Dliberty.home=${LIBERTY_HOME} --projects testsuite clean verify ${BUILD_PROFILE}
 
 else
   echo "Unknown test type: $1"
