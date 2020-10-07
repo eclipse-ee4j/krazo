@@ -14,9 +14,6 @@ env:
 #         - BUILD_PROFILE=
          - BUILD_PROFILE=-Pstaging
 
-before_install:
-  - rm ~/.m2/settings.xml
-
 install: /bin/true
 
 jobs:
