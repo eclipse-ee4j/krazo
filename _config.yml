@@ -12,7 +12,7 @@ links:
   source: https://github.com/eclipse-ee4j/krazo
   #docs: https://eclipse-ee4j.github.io/krazo.github.io/documentation/latest/index.html
   #javadocs: https://eclipse-ee4j.github.io/krazo.github.io/apidocs/latest/krazo/index.html
-  download: https://eclipse-ee4j.github.io/krazo/download/index.html
+  download: https://eclipse-ee4j.github.io/krazo/downloads/index.html
   mailinglist: https://accounts.eclipse.org/mailing-list/krazo-dev
   hide_issuetracker: true
   #faq: FAQ
