@@ -120,7 +120,7 @@ elif [ "${1}" == "tck-liberty" ]; then
   mvn -B -V -Dtck-env=liberty -Dliberty.home=${LIBERTY_HOME} verify ${BUILD_PROFILE}
   popd
 
-elif [[ ${1} == ttestsuite-wildfly ]]; then
+elif [[ ${1} == testsuite-wildfly ]]; then
 
    source .travis/docker-wildfly.sh
    echo "Building Krazo..."
