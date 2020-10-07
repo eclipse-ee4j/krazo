@@ -33,7 +33,6 @@ jobs:
       script: .travis/tests.sh ${TYPE}
     - stage: test
       env: TYPE=testsuite-wildfly
-      before_script: .travis/docker-wildfly.sh
       script: .travis/tests.sh ${TYPE}
     - stage: test
       env: TYPE=testsuite-payara
