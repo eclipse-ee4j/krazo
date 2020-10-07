@@ -76,7 +76,7 @@ public class CsrfValidateFilter implements ContainerRequestFilter {
     @Inject
     private Messages messages;
 
-    private FormEntityProvider formEntityProvider;
+    private final FormEntityProvider formEntityProvider;
 
     public CsrfValidateFilter() {
         this.formEntityProvider = ServiceLoaders.list(FormEntityProvider.class).get(0);

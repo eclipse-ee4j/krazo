@@ -52,7 +52,6 @@ public class CdiUtils {
      * @param <T>   class parameter.
      * @return newly allocated CDI bean.
      */
-    @SuppressWarnings("unchecked")
     public <T> T newBean(Class<T> clazz) {
         return newBean(beanManager, clazz);
     }

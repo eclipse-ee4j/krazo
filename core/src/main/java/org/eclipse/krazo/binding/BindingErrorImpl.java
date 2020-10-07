@@ -31,7 +31,7 @@ public class BindingErrorImpl implements BindingError {
 
     private String paramName;
 
-    private String submittedValue;
+    private final String submittedValue;
 
     public BindingErrorImpl(String message, String paramName, String submittedValue) {
         this.message = message;

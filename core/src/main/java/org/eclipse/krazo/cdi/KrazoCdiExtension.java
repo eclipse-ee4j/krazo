@@ -213,6 +213,6 @@ public class KrazoCdiExtension implements Extension {
      * @return outcome of test.
      */
     public static synchronized boolean isEventObserved(Class<? extends MvcEvent> eventType) {
-        return observedEvents == null ? false : observedEvents.contains(eventType);
+        return observedEvents != null && observedEvents.contains(eventType);
     }
 }

@@ -63,7 +63,7 @@ public class LocaleResolverChain {
         List<LocaleResolver> resolvers = CdiUtils.getApplicationBeans(LocaleResolver.class);
 
         // candidates as sorted list
-        List<LocaleResolver> candidates = StreamSupport.stream(resolvers.spliterator(), false)
+        List<LocaleResolver> candidates = resolvers.stream()
                 .sorted((resolver1, resolver2) -> {
                     final Priority prio1 = getAnnotation(resolver1.getClass(), Priority.class);
                     final Priority prio2 = getAnnotation(resolver2.getClass(), Priority.class);

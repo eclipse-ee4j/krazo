@@ -87,7 +87,7 @@ public class UriTemplate {
      */
     static class Builder {
 
-        private String path;
+        private final String path;
 
         private Set<String> queryParams;
 

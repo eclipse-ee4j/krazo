@@ -115,7 +115,7 @@ public class RedirectScopeManager {
         String scopeId = (String) request.getAttribute(SCOPE_ID);
         if (null != scopeId) {
             HttpSession session = request.getSession();
-            if (contextual instanceof PassivationCapable == false) {
+            if (!(contextual instanceof PassivationCapable)) {
                 throw new RuntimeException("Unexpected type for contextual");
             }
             PassivationCapable pc = (PassivationCapable) contextual;
@@ -179,7 +179,7 @@ public class RedirectScopeManager {
             }
             HttpSession session = request.getSession();
             result = contextual.create(creational);
-            if (contextual instanceof PassivationCapable == false) {
+            if (!(contextual instanceof PassivationCapable)) {
                 throw new RuntimeException("Unexpected type for contextual");
             }
             PassivationCapable pc = (PassivationCapable) contextual;
@@ -232,7 +232,7 @@ public class RedirectScopeManager {
             final String sessionKey = SCOPE_ID + "-" + scopeId;
             Map<String, Object> scopeMap = (Map<String, Object>) session.getAttribute(sessionKey);
             if (null != scopeMap) {
-                scopeMap.entrySet().stream().forEach((entrySet) -> {
+                scopeMap.entrySet().forEach((entrySet) -> {
                     String key = entrySet.getKey();
                     Object value = entrySet.getValue();
                     if (key.startsWith(INSTANCE)) {

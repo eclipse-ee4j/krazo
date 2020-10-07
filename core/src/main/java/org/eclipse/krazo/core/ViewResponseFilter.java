@@ -118,7 +118,7 @@ public class ViewResponseFilter implements ContainerResponseFilter {
 
     @Override
     public void filter(ContainerRequestContext requestContext,
-                       ContainerResponseContext responseContext) throws IOException {
+                       ContainerResponseContext responseContext) {
 
         // For some reason Jersey 2.28 executes our filter twice, resulting in weird side effects.
         // Therefore, we ensure that our filter is executed only once for each request.

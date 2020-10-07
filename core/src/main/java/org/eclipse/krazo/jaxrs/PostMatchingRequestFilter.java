@@ -60,7 +60,7 @@ public class PostMatchingRequestFilter implements ContainerRequestFilter {
     private ResourceInfo resourceInfo;
 
     @Override
-    public void filter(ContainerRequestContext requestContext) throws IOException {
+    public void filter(ContainerRequestContext requestContext) {
 
         /*
          * Please note that we CANNOT inject JaxRsContextProducer here, because this will

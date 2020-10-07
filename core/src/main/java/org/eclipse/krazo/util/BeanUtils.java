@@ -41,8 +41,7 @@ public final class BeanUtils {
      * @return a List of all fields and getters/setters of given class.
      */
     public static List<AnnotatedElement> getFieldsAndAccessors(Class<?> clazz) {
-        List<AnnotatedElement> properties = new ArrayList<>();
-        properties.addAll(Arrays.stream(clazz.getDeclaredFields()).filter(f -> !f.isSynthetic()).collect(Collectors.toList()));
+        final List<AnnotatedElement> properties = Arrays.stream(clazz.getDeclaredFields()).filter(f -> !f.isSynthetic()).collect(Collectors.toCollection(ArrayList::new));
         try {
             Arrays.asList(Introspector.getBeanInfo(clazz, Object.class).getPropertyDescriptors()).forEach(prop -> {
                 if (prop.getReadMethod() != null) {

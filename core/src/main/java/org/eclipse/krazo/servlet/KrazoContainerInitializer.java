@@ -47,7 +47,7 @@ public class KrazoContainerInitializer implements ServletContainerInitializer {
     private static final Logger LOG = Logger.getLogger(KrazoContainerInitializer.class.getName());
 
     @Override
-    public void onStartup(Set<Class<?>> classes, ServletContext servletContext) throws ServletException {
+    public void onStartup(Set<Class<?>> classes, ServletContext servletContext) {
 
         if (classes == null || classes.isEmpty()) {
             return;

@@ -57,7 +57,7 @@ public class AnnotatedTypeProcessor {
         }
 
         if (modified) {
-            return new AnnotatedTypeWrapper<T>(originalType, methods);
+            return new AnnotatedTypeWrapper<>(originalType, methods);
         }
         return null;
 
@@ -73,7 +73,7 @@ public class AnnotatedTypeProcessor {
         ));
 
         // drop Hibernate Validator's marker annotations to skip the native validation
-        Predicate<Class> annotationBlacklist = clazz -> isHibernateValidatorMarkerAnnotation(clazz);
+        Predicate<Class> annotationBlacklist = this::isHibernateValidatorMarkerAnnotation;
 
         if (ControllerUtils.isControllerMethod(method.getJavaMember())) {
 

@@ -56,7 +56,7 @@ public class ViewEngineFinder {
     @Inject
     private CdiUtils cdiUtils;
 
-    private Map<String, ViewEngine> cache = new HashMap<>();
+    private final Map<String, ViewEngine> cache = new HashMap<>();
 
     /**
      * Finds view engine for a viewable.
@@ -93,11 +93,9 @@ public class ViewEngineFinder {
                             return v1 - v2;
                         });
                 // Update cache
-                if (engine.isPresent()) {
-                    cache.put(view, engine.get());
-                }
+                engine.ifPresent(viewEngine -> cache.put(view, viewEngine));
             }
         }
-        return engine.isPresent() ? engine.get() : null;
+        return engine.orElse(null);
     }
 }

@@ -57,7 +57,7 @@ public class PreMatchingRequestFilter implements ContainerRequestFilter {
     private UriInfo uriInfo;
 
     @Override
-    public void filter(ContainerRequestContext requestContext) throws IOException {
+    public void filter(ContainerRequestContext requestContext) {
 
         /*
          * Please note that we CANNOT inject JaxRsContextProducer here, because this will
