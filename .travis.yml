@@ -19,7 +19,7 @@ install: /bin/true
 jobs:
   include:
     - stage: build
-      script: mvn -B -V -DskipTests -DperformRelease -Dgpg.skip clean install ${BUILD_PROFILE}
+      script: mvn -B -V -DskipTests clean install ${BUILD_PROFILE}
     - stage: build
       script: mvn -B -V -DskipTests clean install ${BUILD_PROFILE}
       jdk: openjdk11
