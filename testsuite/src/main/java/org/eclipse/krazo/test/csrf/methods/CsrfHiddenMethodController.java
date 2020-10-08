@@ -18,16 +18,16 @@
  */
 package org.eclipse.krazo.test.csrf.methods;
 
-import javax.mvc.Controller;
-import javax.mvc.UriRef;
-import javax.mvc.View;
-import javax.mvc.security.CsrfProtected;
-import javax.ws.rs.DELETE;
-import javax.ws.rs.GET;
-import javax.ws.rs.PATCH;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
+import jakarta.mvc.Controller;
+import jakarta.mvc.UriRef;
+import jakarta.mvc.View;
+import jakarta.mvc.security.CsrfProtected;
+import jakarta.ws.rs.DELETE;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.PATCH;
+import jakarta.ws.rs.POST;
+import jakarta.ws.rs.PUT;
+import jakarta.ws.rs.Path;
 
 @Path("csrf-methods")
 @Controller

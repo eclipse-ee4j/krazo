@@ -18,11 +18,11 @@
  */
 package org.eclipse.krazo.binding;
 
-import javax.enterprise.inject.Vetoed;
-import javax.mvc.binding.BindingError;
-import javax.mvc.binding.BindingResult;
-import javax.mvc.binding.ParamError;
-import javax.mvc.binding.ValidationError;
+import jakarta.enterprise.inject.Vetoed;
+import jakarta.mvc.binding.BindingError;
+import jakarta.mvc.binding.BindingResult;
+import jakarta.mvc.binding.ParamError;
+import jakarta.mvc.binding.ValidationError;
 import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -32,7 +32,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
- * Implementation for {@link javax.mvc.binding.BindingResult} interface.
+ * Implementation for {@link jakarta.mvc.binding.BindingResult} interface.
  *
  * @author Santiago Pericas-Geertsen
  * @author Christian Kaltepoth

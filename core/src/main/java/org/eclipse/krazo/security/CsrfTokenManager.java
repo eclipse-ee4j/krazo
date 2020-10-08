@@ -20,11 +20,11 @@ package org.eclipse.krazo.security;
 import org.eclipse.krazo.KrazoConfig;
 import org.eclipse.krazo.jaxrs.JaxRsContext;
 
-import javax.annotation.PostConstruct;
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.annotation.PostConstruct;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;

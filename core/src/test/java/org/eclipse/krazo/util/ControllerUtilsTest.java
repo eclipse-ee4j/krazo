@@ -20,9 +20,9 @@ package org.eclipse.krazo.util;
 
 import org.junit.Test;
 
-import javax.mvc.Controller;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
+import jakarta.mvc.Controller;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.Path;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;

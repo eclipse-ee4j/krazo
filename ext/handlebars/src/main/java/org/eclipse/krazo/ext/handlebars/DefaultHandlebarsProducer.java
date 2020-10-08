@@ -21,7 +21,7 @@ package org.eclipse.krazo.ext.handlebars;
 import com.github.jknack.handlebars.Handlebars;
 import org.eclipse.krazo.engine.ViewEngineConfig;
 
-import javax.enterprise.inject.Produces;
+import jakarta.enterprise.inject.Produces;
 
 /**
  * Producer for the Handlebars instance used by HandlebarsViewEngine.

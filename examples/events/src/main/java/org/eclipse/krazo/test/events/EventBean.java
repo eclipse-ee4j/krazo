@@ -18,12 +18,12 @@
  */
 package org.eclipse.krazo.test.events;
 
-import javax.enterprise.context.RequestScoped;
-import javax.inject.Named;
-import javax.mvc.event.AfterControllerEvent;
-import javax.mvc.event.AfterProcessViewEvent;
-import javax.mvc.event.BeforeControllerEvent;
-import javax.mvc.event.BeforeProcessViewEvent;
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.inject.Named;
+import jakarta.mvc.event.AfterControllerEvent;
+import jakarta.mvc.event.AfterProcessViewEvent;
+import jakarta.mvc.event.BeforeControllerEvent;
+import jakarta.mvc.event.BeforeProcessViewEvent;
 
 /**
  * Class EventBean.

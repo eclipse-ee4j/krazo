@@ -18,14 +18,14 @@
  */
 package org.eclipse.krazo.test.uribuilder;
 
-import javax.mvc.Controller;
-import javax.mvc.UriRef;
-import javax.ws.rs.BeanParam;
-import javax.ws.rs.GET;
-import javax.ws.rs.MatrixParam;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.QueryParam;
+import jakarta.mvc.Controller;
+import jakarta.mvc.UriRef;
+import jakarta.ws.rs.BeanParam;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.MatrixParam;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
+import jakarta.ws.rs.QueryParam;
 
 /**
  * @author Florian Hirsch

@@ -20,9 +20,9 @@ package org.eclipse.krazo.cxf.http;
 
 import org.eclipse.krazo.core.HttpCommunicationUnwrapper;
 
-import javax.annotation.Priority;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.annotation.Priority;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import java.lang.reflect.InvocationTargetException;
 
 /**

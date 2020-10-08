@@ -18,14 +18,14 @@
  */
 package org.eclipse.krazo.test.redirect;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.event.Observes;
-import javax.mvc.Controller;
-import javax.mvc.event.ControllerRedirectEvent;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.Response;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.event.Observes;
+import jakarta.mvc.Controller;
+import jakarta.mvc.event.ControllerRedirectEvent;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.core.Response;
 import java.net.URI;
 
 /**

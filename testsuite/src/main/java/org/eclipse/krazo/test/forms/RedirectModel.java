@@ -1,7 +1,7 @@
 package org.eclipse.krazo.test.forms;
 
 import java.io.Serializable;
-import javax.mvc.RedirectScoped;
+import jakarta.mvc.RedirectScoped;
 
 @RedirectScoped
 public class RedirectModel implements Serializable {

@@ -22,22 +22,22 @@ import static org.eclipse.krazo.util.AnnotationUtils.hasAnnotation;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.List;
-import javax.annotation.Priority;
-import javax.inject.Inject;
-import javax.mvc.Controller;
-import javax.mvc.security.CsrfProtected;
-import javax.mvc.security.CsrfValidationException;
-import javax.ws.rs.DELETE;
-import javax.ws.rs.PATCH;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Priorities;
-import javax.ws.rs.container.ContainerRequestContext;
-import javax.ws.rs.container.ContainerRequestFilter;
-import javax.ws.rs.container.ResourceInfo;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.Form;
-import javax.ws.rs.core.MediaType;
+import jakarta.annotation.Priority;
+import jakarta.inject.Inject;
+import jakarta.mvc.Controller;
+import jakarta.mvc.security.CsrfProtected;
+import jakarta.mvc.security.CsrfValidationException;
+import jakarta.ws.rs.DELETE;
+import jakarta.ws.rs.PATCH;
+import jakarta.ws.rs.POST;
+import jakarta.ws.rs.PUT;
+import jakarta.ws.rs.Priorities;
+import jakarta.ws.rs.container.ContainerRequestContext;
+import jakarta.ws.rs.container.ContainerRequestFilter;
+import jakarta.ws.rs.container.ResourceInfo;
+import jakarta.ws.rs.core.Context;
+import jakarta.ws.rs.core.Form;
+import jakarta.ws.rs.core.MediaType;
 import org.eclipse.krazo.KrazoConfig;
 import org.eclipse.krazo.core.Messages;
 import org.eclipse.krazo.util.ServiceLoaders;
@@ -45,7 +45,7 @@ import org.eclipse.krazo.util.ServiceLoaders;
 /**
  * <p>Reader interceptor that checks for the CSRF header and token. If not available as
  * an HTTP header, it looks for it as a form parameter in which case the media type must be
- * {@link javax.ws.rs.core.MediaType#APPLICATION_FORM_URLENCODED_TYPE}. If validation
+ * {@link jakarta.ws.rs.core.MediaType#APPLICATION_FORM_URLENCODED_TYPE}. If validation
  * fails, a 403 error is returned.
  * </p>
  *

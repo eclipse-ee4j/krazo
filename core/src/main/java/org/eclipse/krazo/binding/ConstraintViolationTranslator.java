@@ -20,12 +20,12 @@ package org.eclipse.krazo.binding;
 
 import org.eclipse.krazo.cdi.Internal;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
-import javax.validation.ConstraintViolation;
-import javax.validation.MessageInterpolator;
-import javax.validation.ValidatorFactory;
-import javax.validation.metadata.ConstraintDescriptor;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.MessageInterpolator;
+import jakarta.validation.ValidatorFactory;
+import jakarta.validation.metadata.ConstraintDescriptor;
 import java.util.Locale;
 import java.util.logging.Logger;
 
@@ -62,7 +62,7 @@ public class ConstraintViolationTranslator {
     }
 
     /**
-     * Simple implementation of {@link javax.validation.MessageInterpolator.Context} wrapping
+     * Simple implementation of {@link jakarta.validation.MessageInterpolator.Context} wrapping
      * a {@link ConstraintViolation}.
      */
     private static class SimpleMessageInterpolatorContext implements MessageInterpolator.Context {

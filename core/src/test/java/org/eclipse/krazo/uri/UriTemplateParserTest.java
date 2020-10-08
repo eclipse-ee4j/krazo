@@ -21,7 +21,7 @@ package org.eclipse.krazo.uri;
 import org.junit.Before;
 import org.junit.Test;
 
-import javax.mvc.MvcContext;
+import jakarta.mvc.MvcContext;
 
 import java.util.Arrays;
 import java.util.HashSet;

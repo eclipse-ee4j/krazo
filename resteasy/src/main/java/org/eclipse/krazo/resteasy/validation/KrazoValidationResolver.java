@@ -20,7 +20,7 @@ package org.eclipse.krazo.resteasy.validation;
 import org.jboss.resteasy.plugins.validation.ValidatorContextResolver;
 import org.jboss.resteasy.spi.validation.GeneralValidator;
 
-import javax.ws.rs.ext.ContextResolver;
+import jakarta.ws.rs.ext.ContextResolver;
 
 /**
  * This {@link ContextResolver} will resolve our own {@link GeneralValidator} which will ignore

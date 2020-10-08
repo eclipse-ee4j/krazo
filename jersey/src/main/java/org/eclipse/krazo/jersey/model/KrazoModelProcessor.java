@@ -23,9 +23,9 @@ import org.glassfish.jersey.server.model.Resource;
 import org.glassfish.jersey.server.model.ResourceMethod;
 import org.glassfish.jersey.server.model.ResourceModel;
 
-import javax.mvc.Controller;
-import javax.ws.rs.core.Configuration;
-import javax.ws.rs.core.MediaType;
+import jakarta.mvc.Controller;
+import jakarta.ws.rs.core.Configuration;
+import jakarta.ws.rs.core.MediaType;
 
 /**
  * A Jersey model processor to ensure that all controller methods whose {@code @Produces}

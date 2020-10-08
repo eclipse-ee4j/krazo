@@ -19,7 +19,7 @@ package org.eclipse.krazo.util;
 
 import org.eclipse.krazo.bootstrap.ConfigProvider;
 
-import javax.annotation.Priority;
+import jakarta.annotation.Priority;
 import java.util.Comparator;
 import java.util.List;
 import java.util.ServiceLoader;

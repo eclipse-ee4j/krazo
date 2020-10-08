@@ -18,11 +18,11 @@
  */
 package org.eclipse.krazo.engine;
 
-import javax.annotation.Priority;
-import javax.mvc.engine.ViewEngine;
-import javax.mvc.engine.ViewEngineContext;
-import javax.mvc.engine.ViewEngineException;
-import javax.servlet.ServletException;
+import jakarta.annotation.Priority;
+import jakarta.mvc.engine.ViewEngine;
+import jakarta.mvc.engine.ViewEngineContext;
+import jakarta.mvc.engine.ViewEngineException;
+import jakarta.servlet.ServletException;
 import java.io.IOException;
 
 /**
@@ -30,7 +30,7 @@ import java.io.IOException;
  * a request back to the servlet container.
  *
  * @author Santiago Pericas-Geertsen
- * @see ViewEngineBase#resolveView(javax.mvc.engine.ViewEngineContext)
+ * @see ViewEngineBase#resolveView(jakarta.mvc.engine.ViewEngineContext)
  */
 @Priority(ViewEngine.PRIORITY_BUILTIN)
 public class JspViewEngine extends ServletViewEngine {

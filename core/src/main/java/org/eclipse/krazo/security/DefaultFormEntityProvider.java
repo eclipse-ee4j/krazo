@@ -17,9 +17,9 @@
  */
 package org.eclipse.krazo.security;
 
-import javax.ws.rs.container.ContainerRequestContext;
-import javax.ws.rs.core.Form;
-import javax.ws.rs.core.MediaType;
+import jakarta.ws.rs.container.ContainerRequestContext;
+import jakarta.ws.rs.core.Form;
+import jakarta.ws.rs.core.MediaType;
 import java.io.*;
 import java.net.URLDecoder;
 

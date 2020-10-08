@@ -18,8 +18,8 @@
  */
 package org.eclipse.krazo.binding.validate;
 
-import javax.mvc.binding.MvcBinding;
-import javax.ws.rs.FormParam;
+import jakarta.mvc.binding.MvcBinding;
+import jakarta.ws.rs.FormParam;
 
 /**
  * Example MVC extension of BaseUser. The scenario is we have been provided the

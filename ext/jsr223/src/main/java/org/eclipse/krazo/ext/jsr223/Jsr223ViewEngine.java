@@ -26,17 +26,17 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.nio.charset.Charset;
-import javax.annotation.Priority;
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
-import javax.mvc.engine.ViewEngine;
-import javax.mvc.engine.ViewEngineContext;
-import javax.mvc.engine.ViewEngineException;
+import jakarta.annotation.Priority;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import jakarta.mvc.engine.ViewEngine;
+import jakarta.mvc.engine.ViewEngineContext;
+import jakarta.mvc.engine.ViewEngineException;
 import javax.script.Bindings;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
-import javax.servlet.ServletContext;
+import jakarta.servlet.ServletContext;
 
 /**
  * The JSR-223 ViewEngine.

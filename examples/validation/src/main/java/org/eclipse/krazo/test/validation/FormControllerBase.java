@@ -18,8 +18,8 @@
  */
 package org.eclipse.krazo.test.validation;
 
-import javax.inject.Inject;
-import javax.mvc.binding.BindingResult;
+import jakarta.inject.Inject;
+import jakarta.mvc.binding.BindingResult;
 
 /**
  * Class FormControllerBase. Base class for controllers that inherit a BindingResult

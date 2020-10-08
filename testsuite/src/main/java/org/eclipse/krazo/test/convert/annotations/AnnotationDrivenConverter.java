@@ -3,7 +3,7 @@ package org.eclipse.krazo.test.convert.annotations;
 import org.eclipse.krazo.binding.convert.ConverterResult;
 import org.eclipse.krazo.binding.convert.MvcConverter;
 
-import javax.annotation.Priority;
+import jakarta.annotation.Priority;
 import java.lang.annotation.Annotation;
 import java.util.Arrays;
 import java.util.Locale;

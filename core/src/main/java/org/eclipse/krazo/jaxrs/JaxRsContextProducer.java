@@ -17,14 +17,14 @@
  */
 package org.eclipse.krazo.jaxrs;
 
-import javax.enterprise.context.RequestScoped;
-import javax.enterprise.inject.Produces;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.ws.rs.container.ResourceInfo;
-import javax.ws.rs.core.Application;
-import javax.ws.rs.core.Configuration;
-import javax.ws.rs.core.UriInfo;
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.enterprise.inject.Produces;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.ws.rs.container.ResourceInfo;
+import jakarta.ws.rs.core.Application;
+import jakarta.ws.rs.core.Configuration;
+import jakarta.ws.rs.core.UriInfo;
 import java.util.Objects;
 
 /**
@@ -112,5 +112,5 @@ public class JaxRsContextProducer {
     void setResourceInfo(ResourceInfo resourceInfo) {
         this.resourceInfo = Objects.requireNonNull(resourceInfo, "ResourceInfo must not be null");
     }
-    
+
 }

@@ -17,12 +17,12 @@
  */
 package org.eclipse.krazo.binding.validate;
 
-import javax.validation.ConstraintViolation;
-import javax.ws.rs.CookieParam;
-import javax.ws.rs.FormParam;
-import javax.ws.rs.MatrixParam;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.QueryParam;
+import jakarta.validation.ConstraintViolation;
+import jakarta.ws.rs.CookieParam;
+import jakarta.ws.rs.FormParam;
+import jakarta.ws.rs.MatrixParam;
+import jakarta.ws.rs.PathParam;
+import jakarta.ws.rs.QueryParam;
 import java.lang.annotation.Annotation;
 import java.util.Arrays;
 import java.util.Objects;

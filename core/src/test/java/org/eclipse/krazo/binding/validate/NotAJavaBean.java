@@ -18,10 +18,10 @@
  */
 package org.eclipse.krazo.binding.validate;
 
-import javax.mvc.binding.MvcBinding;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-import javax.ws.rs.FormParam;
+import jakarta.mvc.binding.MvcBinding;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import jakarta.ws.rs.FormParam;
 
 /**
  * A java class that is not a valid java bean.

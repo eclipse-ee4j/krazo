@@ -28,7 +28,7 @@ import org.eclipse.krazo.security.CsrfProtectFilter;
 import org.eclipse.krazo.security.CsrfValidateFilter;
 import org.eclipse.krazo.util.CdiUtils;
 
-import javax.ws.rs.core.FeatureContext;
+import jakarta.ws.rs.core.FeatureContext;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;

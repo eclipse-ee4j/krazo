@@ -18,13 +18,13 @@
  */
 package org.eclipse.krazo.security;
 
-import javax.enterprise.context.RequestScoped;
-import javax.inject.Inject;
-import javax.mvc.security.Csrf;
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.inject.Inject;
+import jakarta.mvc.security.Csrf;
 
 /**
  * CSRF bean in request scope available for injection and in EL via the {@link
- * javax.mvc.MvcContext} object as {@code mvc.csrf}. Provides access to the CSRF
+ * jakarta.mvc.MvcContext} object as {@code mvc.csrf}. Provides access to the CSRF
  * header name (a constant) and the CSRF token value (retrieved from CsrfTokenManager).
  *
  * @author Santiago Pericas-Geertsen

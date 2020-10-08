@@ -17,11 +17,11 @@
  */
 package org.eclipse.krazo.security;
 
-import javax.annotation.Priority;
-import javax.mvc.security.CsrfValidationException;
-import javax.ws.rs.Priorities;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.ext.ExceptionMapper;
+import jakarta.annotation.Priority;
+import jakarta.mvc.security.CsrfValidationException;
+import jakarta.ws.rs.Priorities;
+import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.ext.ExceptionMapper;
 
 /**
  * Default mapper for {@link CsrfValidationException}.
@@ -41,7 +41,7 @@ public class CsrfExceptionMapper implements ExceptionMapper<CsrfValidationExcept
     }
 
     /**
-     * Custom implementation of {@link javax.ws.rs.core.Response.StatusType} that allows
+     * Custom implementation of {@link jakarta.ws.rs.core.Response.StatusType} that allows
      * to customize the response phrase.
      */
     private static class CsrfValidationStatusType implements Response.StatusType {

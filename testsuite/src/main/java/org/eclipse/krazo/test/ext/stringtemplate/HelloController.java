@@ -18,11 +18,11 @@
  */
 package org.eclipse.krazo.test.ext.stringtemplate;
 
-import javax.inject.Inject;
-import javax.mvc.Controller;
-import javax.mvc.Models;
-import javax.mvc.View;
-import javax.ws.rs.*;
+import jakarta.inject.Inject;
+import jakarta.mvc.Controller;
+import jakarta.mvc.Models;
+import jakarta.mvc.View;
+import jakarta.ws.rs.*;
 
 /**
  * HelloController test.

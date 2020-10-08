@@ -18,12 +18,12 @@
  */
 package org.eclipse.krazo.event;
 
-import javax.enterprise.context.Dependent;
-import javax.mvc.engine.ViewEngine;
-import javax.mvc.event.AfterProcessViewEvent;
+import jakarta.enterprise.context.Dependent;
+import jakarta.mvc.engine.ViewEngine;
+import jakarta.mvc.event.AfterProcessViewEvent;
 
 /**
- * An implementation of {@link javax.mvc.event.AfterProcessViewEvent}.
+ * An implementation of {@link jakarta.mvc.event.AfterProcessViewEvent}.
  *
  * @author Santiago Pericas-Geertsen
  */

@@ -18,13 +18,13 @@
  */
 package org.eclipse.krazo.test.csrf.base;
 
-import javax.mvc.Controller;
-import javax.mvc.security.CsrfProtected;
-import javax.mvc.View;
-import javax.ws.rs.FormParam;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
+import jakarta.mvc.Controller;
+import jakarta.mvc.security.CsrfProtected;
+import jakarta.mvc.View;
+import jakarta.ws.rs.FormParam;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.POST;
+import jakarta.ws.rs.Path;
 
 /**
  * CsrfController test.

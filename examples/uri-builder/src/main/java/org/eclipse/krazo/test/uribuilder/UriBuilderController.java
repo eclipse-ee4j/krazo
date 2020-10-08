@@ -18,10 +18,10 @@
  */
 package org.eclipse.krazo.test.uribuilder;
 
-import javax.mvc.Controller;
-import javax.mvc.UriRef;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
+import jakarta.mvc.Controller;
+import jakarta.mvc.UriRef;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.Path;
 
 /**
  * @author Florian Hirsch

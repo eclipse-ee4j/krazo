@@ -36,16 +36,21 @@
     <modules>
         <module>asciidoc</module>
         <module>freemarker</module>
-        <module>handlebars</module>
+        <!-- remove until jakarta servlet is supported by handlebars -->
+<!--        <module>handlebars</module>-->
         <module>jade</module>
-        <module>jetbrick</module>
+        <!-- remove until jakarta servlet is supported by jetbrick -->
+<!--        <module>jetbrick</module>-->
         <module>jsr223</module>
         <module>mustache</module>
         <module>stringtemplate</module>
-        <module>thymeleaf</module>
+        <!-- remove until jakarta is supported by thymeleaf -->
+<!--        <module>thymeleaf</module>-->
         <module>velocity</module>
-        <module>pebble</module>
-        <module>jtwig</module>
+        <!-- remove until jakarta servlet is supported by pebble -->
+<!--        <module>pebble</module>-->
+        <!-- remove until jakarta servlet is supported by jtwig -->
+<!--        <module>jtwig</module>-->
     </modules>
 
     <dependencies>

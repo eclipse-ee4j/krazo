@@ -18,16 +18,16 @@
  */
 package org.eclipse.krazo.event;
 
-import javax.enterprise.context.Dependent;
-import javax.mvc.event.ControllerRedirectEvent;
-import javax.ws.rs.container.ContainerRequestContext;
-import javax.ws.rs.container.ContainerResponseContext;
-import javax.ws.rs.container.ResourceInfo;
-import javax.ws.rs.core.UriInfo;
+import jakarta.enterprise.context.Dependent;
+import jakarta.mvc.event.ControllerRedirectEvent;
+import jakarta.ws.rs.container.ContainerRequestContext;
+import jakarta.ws.rs.container.ContainerResponseContext;
+import jakarta.ws.rs.container.ResourceInfo;
+import jakarta.ws.rs.core.UriInfo;
 import java.net.URI;
 
 /**
- * An implementation of {@link javax.mvc.event.ControllerRedirectEvent}.
+ * An implementation of {@link jakarta.mvc.event.ControllerRedirectEvent}.
  *
  * @author Santiago Pericas-Geertsen
  */

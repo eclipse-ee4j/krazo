@@ -19,8 +19,8 @@ package org.eclipse.krazo.binding.convert;
 
 import org.eclipse.krazo.util.ServiceLoaders;
 
-import javax.annotation.PostConstruct;
-import javax.enterprise.context.ApplicationScoped;
+import jakarta.annotation.PostConstruct;
+import jakarta.enterprise.context.ApplicationScoped;
 import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.List;

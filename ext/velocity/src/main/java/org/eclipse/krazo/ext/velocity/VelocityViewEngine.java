@@ -24,13 +24,13 @@ import org.apache.velocity.app.VelocityEngine;
 import org.eclipse.krazo.engine.ViewEngineBase;
 import org.eclipse.krazo.engine.ViewEngineConfig;
 
-import javax.annotation.Priority;
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
-import javax.mvc.engine.ViewEngine;
-import javax.mvc.engine.ViewEngineContext;
-import javax.mvc.engine.ViewEngineException;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.annotation.Priority;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import jakarta.mvc.engine.ViewEngine;
+import jakarta.mvc.engine.ViewEngineContext;
+import jakarta.mvc.engine.ViewEngineException;
+import jakarta.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
@@ -58,19 +58,19 @@ public class VelocityViewEngine extends ViewEngineBase {
 
     @Override
     public void processView(ViewEngineContext context) throws ViewEngineException {
-        
+
         Charset charset = resolveCharsetAndSetContentType(context);
-        
+
         try (Writer writer = new OutputStreamWriter(context.getOutputStream(), charset)) {
-            
+
             Template template = velocityEngine.getTemplate(resolveView(context));
 
             Map<String, Object> model = new HashMap<>(context.getModels().asMap());
             model.put("request", context.getRequest(HttpServletRequest.class));
             VelocityContext velocityContext = new VelocityContext(model);
-            
+
             template.merge(velocityContext, writer);
-            
+
         } catch (IOException e) {
             throw new ViewEngineException(e);
         }

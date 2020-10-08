@@ -21,10 +21,10 @@ package org.eclipse.krazo.resteasy.security;
 import org.eclipse.krazo.security.FormEntityProvider;
 import org.eclipse.krazo.util.CdiUtils;
 
-import javax.annotation.Priority;
-import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.container.ContainerRequestContext;
-import javax.ws.rs.core.Form;
+import jakarta.annotation.Priority;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.ws.rs.container.ContainerRequestContext;
+import jakarta.ws.rs.core.Form;
 import java.io.InputStream;
 import java.util.Arrays;
 

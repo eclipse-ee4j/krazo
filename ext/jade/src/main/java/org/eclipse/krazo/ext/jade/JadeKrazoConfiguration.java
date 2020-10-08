@@ -23,10 +23,10 @@ import de.neuland.jade4j.JadeConfiguration;
 import de.neuland.jade4j.filter.Filter;
 import org.eclipse.krazo.engine.ViewEngineConfig;
 
-import javax.enterprise.inject.Disposes;
-import javax.enterprise.inject.Produces;
-import javax.inject.Inject;
-import javax.servlet.ServletContext;
+import jakarta.enterprise.inject.Disposes;
+import jakarta.enterprise.inject.Produces;
+import jakarta.inject.Inject;
+import jakarta.servlet.ServletContext;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;

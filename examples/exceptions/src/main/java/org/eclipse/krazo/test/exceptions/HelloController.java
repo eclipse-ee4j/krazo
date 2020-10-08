@@ -20,14 +20,14 @@ package org.eclipse.krazo.test.exceptions;
 
 import org.eclipse.krazo.engine.Viewable;
 
-import javax.mvc.Controller;
-import javax.mvc.View;
-import javax.ws.rs.ClientErrorException;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.WebApplicationException;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.ext.ExceptionMapper;
+import jakarta.mvc.Controller;
+import jakarta.mvc.View;
+import jakarta.ws.rs.ClientErrorException;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.WebApplicationException;
+import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.ext.ExceptionMapper;
 
 /**
  * Tests various exception mapping cases for controllers.
