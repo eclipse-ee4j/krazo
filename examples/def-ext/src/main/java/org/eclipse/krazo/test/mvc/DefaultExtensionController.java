@@ -18,11 +18,11 @@
  */
 package org.eclipse.krazo.test.mvc;
 
-import javax.mvc.Controller;
-import javax.mvc.View;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.core.Response;
+import jakarta.mvc.Controller;
+import jakarta.mvc.View;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.core.Response;
 
 import org.eclipse.krazo.engine.Viewable;
 
@@ -40,18 +40,18 @@ public class DefaultExtensionController {
     public String getString() {
         return "extension";
     }
-    
+
     @GET
     @Path("void")
     @View("extension")
     public void getView() { }
-    
+
     @GET
     @Path("viewable")
     public Viewable getViewAble() {
         return new Viewable("extension");
     }
-    
+
     @GET
     @Path("response")
     public Response getResponse() {

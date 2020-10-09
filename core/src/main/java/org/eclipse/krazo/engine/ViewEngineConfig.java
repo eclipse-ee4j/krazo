@@ -18,12 +18,12 @@
  */
 package org.eclipse.krazo.engine;
 
-import javax.inject.Qualifier;
+import jakarta.inject.Qualifier;
 import java.lang.annotation.*;
 
 /**
  * Qualifier used for beans representing the configuration of a template engine used by a
- * {@link javax.mvc.engine.ViewEngine} implementation
+ * {@link jakarta.mvc.engine.ViewEngine} implementation
  *
  * @author Christian Kaltepoth
  */

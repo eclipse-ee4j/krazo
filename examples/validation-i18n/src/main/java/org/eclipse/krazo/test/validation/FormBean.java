@@ -18,9 +18,9 @@
  */
 package org.eclipse.krazo.test.validation;
 
-import javax.mvc.binding.MvcBinding;
-import javax.validation.constraints.Size;
-import javax.ws.rs.FormParam;
+import jakarta.mvc.binding.MvcBinding;
+import jakarta.validation.constraints.Size;
+import jakarta.ws.rs.FormParam;
 
 /**
  * @author Christian Kaltepoth

@@ -23,25 +23,25 @@ import org.eclipse.krazo.engine.ViewEngineFinder;
 import org.eclipse.krazo.engine.Viewable;
 import org.eclipse.krazo.lifecycle.EventDispatcher;
 
-import javax.enterprise.event.Event;
-import javax.enterprise.inject.Instance;
-import javax.inject.Inject;
-import javax.mvc.Models;
-import javax.mvc.MvcContext;
-import javax.mvc.engine.ViewEngine;
-import javax.mvc.engine.ViewEngineException;
-import javax.mvc.event.MvcEvent;
-import javax.servlet.ServletOutputStream;
-import javax.servlet.WriteListener;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpServletResponseWrapper;
-import javax.ws.rs.Produces;
-import javax.ws.rs.ServerErrorException;
-import javax.ws.rs.WebApplicationException;
-import javax.ws.rs.container.ResourceInfo;
-import javax.ws.rs.core.*;
-import javax.ws.rs.ext.MessageBodyWriter;
+import jakarta.enterprise.event.Event;
+import jakarta.enterprise.inject.Instance;
+import jakarta.inject.Inject;
+import jakarta.mvc.Models;
+import jakarta.mvc.MvcContext;
+import jakarta.mvc.engine.ViewEngine;
+import jakarta.mvc.engine.ViewEngineException;
+import jakarta.mvc.event.MvcEvent;
+import jakarta.servlet.ServletOutputStream;
+import jakarta.servlet.WriteListener;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletResponseWrapper;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.ServerErrorException;
+import jakarta.ws.rs.WebApplicationException;
+import jakarta.ws.rs.container.ResourceInfo;
+import jakarta.ws.rs.core.*;
+import jakarta.ws.rs.ext.MessageBodyWriter;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
@@ -50,16 +50,16 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 import java.nio.charset.StandardCharsets;
 
-import static javax.ws.rs.core.Response.Status.INTERNAL_SERVER_ERROR;
+import static jakarta.ws.rs.core.Response.Status.INTERNAL_SERVER_ERROR;
 import static org.eclipse.krazo.util.HttpUtil.unwrapOriginalRequest;
 import static org.eclipse.krazo.util.HttpUtil.unwrapOriginalResponse;
 
 /**
  * <p>Body writer for a {@link Viewable} instance. Looks for a
- * {@link javax.mvc.engine.ViewEngine} that is capable of processing the view. If no
+ * {@link jakarta.mvc.engine.ViewEngine} that is capable of processing the view. If no
  * engine is found, it forwards the request back to the servlet container.</p>
  *
- * <p>If {@link javax.mvc.Models} is available in the viewable, it is used; otherwise,
+ * <p>If {@link jakarta.mvc.Models} is available in the viewable, it is used; otherwise,
  * this class is injected via CDI. A view engine in the viewable can also bypass
  * the lookup mechanism.</p>
  *
@@ -115,7 +115,7 @@ public class ViewableWriter implements MessageBodyWriter<Viewable> {
     }
 
     /**
-     * Searches for a suitable {@link javax.mvc.engine.ViewEngine} to process the view. If no engine
+     * Searches for a suitable {@link jakarta.mvc.engine.ViewEngine} to process the view. If no engine
      * is found, is forwards the request back to the servlet container.
      */
     @Override

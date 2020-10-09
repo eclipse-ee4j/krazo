@@ -18,9 +18,9 @@
  */
 package org.eclipse.krazo.test.conversation;
 
-import javax.inject.Inject;
-import javax.mvc.Controller;
-import javax.ws.rs.*;
+import jakarta.inject.Inject;
+import jakarta.mvc.Controller;
+import jakarta.ws.rs.*;
 
 /**
  * ConversationController test.

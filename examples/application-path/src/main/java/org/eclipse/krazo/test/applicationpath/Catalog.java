@@ -18,7 +18,7 @@
  */
 package org.eclipse.krazo.test.applicationpath;
 
-import javax.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.context.ApplicationScoped;
 
 /**
  * Class Catalog.

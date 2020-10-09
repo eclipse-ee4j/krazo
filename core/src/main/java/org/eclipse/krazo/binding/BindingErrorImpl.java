@@ -18,10 +18,10 @@
  */
 package org.eclipse.krazo.binding;
 
-import javax.mvc.binding.BindingError;
+import jakarta.mvc.binding.BindingError;
 
 /**
- * Implementation for {@link javax.mvc.binding.BindingError} interface.
+ * Implementation for {@link jakarta.mvc.binding.BindingError} interface.
  *
  * @author Santiago Pericas-Geertsen
  */

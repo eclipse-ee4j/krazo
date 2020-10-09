@@ -20,13 +20,14 @@ package org.eclipse.krazo.binding;
 
 import org.eclipse.krazo.cdi.Internal;
 
-import javax.annotation.PostConstruct;
-import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.inject.Instance;
-import javax.enterprise.inject.Produces;
-import javax.inject.Inject;
-import javax.validation.Validation;
-import javax.validation.ValidatorFactory;
+import jakarta.annotation.PostConstruct;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.inject.Instance;
+import jakarta.enterprise.inject.Produces;
+import jakarta.inject.Inject;
+import jakarta.validation.Validation;
+import jakarta.validation.ValidatorFactory;
+
 import java.util.Iterator;
 import java.util.logging.Logger;
 

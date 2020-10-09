@@ -21,7 +21,7 @@ package org.eclipse.krazo.util;
 import org.easymock.EasyMock;
 import org.junit.Test;
 
-import javax.ws.rs.core.Configuration;
+import jakarta.ws.rs.core.Configuration;
 
 import static org.easymock.EasyMock.eq;
 import static org.easymock.EasyMock.expect;

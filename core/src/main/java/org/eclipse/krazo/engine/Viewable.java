@@ -18,19 +18,19 @@
  */
 package org.eclipse.krazo.engine;
 
-import javax.mvc.Controller;
-import javax.mvc.Models;
-import javax.mvc.engine.ViewEngine;
+import jakarta.mvc.Controller;
+import jakarta.mvc.Models;
+import jakarta.mvc.engine.ViewEngine;
 
 /**
  * <p>An abstraction that encapsulates information about a view as well as an instance
- * of {@link javax.mvc.Models} and a {@link javax.mvc.engine.ViewEngine} class, in
+ * of {@link jakarta.mvc.Models} and a {@link jakarta.mvc.engine.ViewEngine} class, in
  * which only the view information is mandatory.
  *
  * @author Santiago Pericas-Geertsen
- * @see javax.mvc.Models
+ * @see jakarta.mvc.Models
  * @see Controller
- * @see javax.mvc.engine.ViewEngine
+ * @see jakarta.mvc.engine.ViewEngine
  * @since 1.0
  */
 public class Viewable {

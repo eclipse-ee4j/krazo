@@ -18,13 +18,13 @@
  */
 package org.eclipse.krazo.event;
 
-import javax.enterprise.context.Dependent;
-import javax.mvc.event.AfterControllerEvent;
-import javax.ws.rs.container.ResourceInfo;
-import javax.ws.rs.core.UriInfo;
+import jakarta.enterprise.context.Dependent;
+import jakarta.mvc.event.AfterControllerEvent;
+import jakarta.ws.rs.container.ResourceInfo;
+import jakarta.ws.rs.core.UriInfo;
 
 /**
- * An implementation of {@link javax.mvc.event.AfterControllerEvent}.
+ * An implementation of {@link jakarta.mvc.event.AfterControllerEvent}.
  *
  * @author Santiago Pericas-Geertsen
  */

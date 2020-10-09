@@ -21,9 +21,9 @@ import java.lang.reflect.Method;
 import java.util.Locale;
 import java.util.concurrent.Callable;
 
-import javax.enterprise.context.RequestScoped;
-import javax.inject.Inject;
-import javax.ws.rs.container.ContainerRequestContext;
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.inject.Inject;
+import jakarta.ws.rs.container.ContainerRequestContext;
 
 import org.eclipse.krazo.MvcContextImpl;
 import org.eclipse.krazo.locale.LocaleResolverChain;

@@ -21,8 +21,8 @@ import org.eclipse.krazo.binding.validate.ValidationInterceptorBinding;
 import org.eclipse.krazo.cdi.AroundController;
 import org.eclipse.krazo.util.ControllerUtils;
 
-import javax.enterprise.inject.spi.AnnotatedMethod;
-import javax.enterprise.inject.spi.AnnotatedType;
+import jakarta.enterprise.inject.spi.AnnotatedMethod;
+import jakarta.enterprise.inject.spi.AnnotatedType;
 import java.lang.annotation.Annotation;
 import java.util.Arrays;
 import java.util.LinkedHashSet;

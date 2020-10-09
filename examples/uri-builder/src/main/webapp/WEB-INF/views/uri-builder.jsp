@@ -37,7 +37,7 @@ public class UriBuilderController {
     <p>A controller method to build the URI for can be referenced in two ways.</p>
 
     <p>
-        First you can use the <a href="https://github.com/mvc-spec/mvc-spec/blob/master/api/src/main/java/javax/mvc/annotation/UriRef.java">UriRef</a>
+        First you can use the <a href="https://github.com/mvc-spec/mvc-spec/blob/master/api/src/main/java/jakarta.mvc/annotation/UriRef.java">UriRef</a>
         annotation to define a symbolic name for a controller method.
         To do so just place the annotation on the controller method and specify the name in the value attribute as shown in the controller above.
     </p>

@@ -21,7 +21,7 @@ import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.jboss.shrinkwrap.resolver.api.maven.repository.MavenRemoteRepositories;
 import org.jboss.shrinkwrap.resolver.api.maven.repository.MavenRemoteRepository;
 import org.jboss.shrinkwrap.resolver.api.maven.repository.MavenUpdatePolicy;
-import org.mvcspec.tck.api.BaseArchiveProvider;
+import jakarta.mvc.tck.api.BaseArchiveProvider;
 
 import java.io.File;
 

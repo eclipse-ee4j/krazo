@@ -19,8 +19,8 @@
 package org.eclipse.krazo.test.redirectscope2;
 
 import java.io.Serializable;
-import javax.inject.Named;
-import javax.mvc.RedirectScoped;
+import jakarta.inject.Named;
+import jakarta.mvc.RedirectScoped;
 
 /**
  * A simple RedirectScoped bean.

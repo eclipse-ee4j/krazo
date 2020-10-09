@@ -20,13 +20,13 @@ package org.eclipse.krazo.util;
 
 import org.junit.Test;
 
-import javax.enterprise.context.RequestScoped;
-import javax.inject.Named;
-import javax.mvc.Controller;
-import javax.mvc.View;
-import javax.validation.constraints.NotNull;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.inject.Named;
+import jakarta.mvc.Controller;
+import jakarta.mvc.View;
+import jakarta.validation.constraints.NotNull;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.Path;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;

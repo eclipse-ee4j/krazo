@@ -22,17 +22,17 @@ import org.eclipse.krazo.jaxrs.JaxRsContext;
 import org.eclipse.krazo.uri.ApplicationUris;
 import org.eclipse.krazo.util.PathUtils;
 
-import javax.annotation.PostConstruct;
-import javax.enterprise.context.RequestScoped;
-import javax.inject.Inject;
-import javax.inject.Named;
-import javax.mvc.MvcContext;
-import javax.mvc.security.Csrf;
-import javax.mvc.security.Encoders;
-import javax.servlet.ServletContext;
-import javax.ws.rs.core.Configuration;
-import javax.ws.rs.core.UriBuilder;
-import javax.ws.rs.core.UriInfo;
+import jakarta.annotation.PostConstruct;
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.inject.Inject;
+import jakarta.inject.Named;
+import jakarta.mvc.MvcContext;
+import jakarta.mvc.security.Csrf;
+import jakarta.mvc.security.Encoders;
+import jakarta.servlet.ServletContext;
+import jakarta.ws.rs.core.Configuration;
+import jakarta.ws.rs.core.UriBuilder;
+import jakarta.ws.rs.core.UriInfo;
 import java.net.URI;
 import java.util.Locale;
 import java.util.Map;
@@ -40,7 +40,7 @@ import java.util.Objects;
 import java.util.logging.Logger;
 
 /**
- * Implementation of {@link javax.mvc.MvcContext}.
+ * Implementation of {@link jakarta.mvc.MvcContext}.
  *
  * @author Santiago Pericas-Geertsen
  */

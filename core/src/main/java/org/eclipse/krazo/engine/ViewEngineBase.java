@@ -21,10 +21,10 @@ package org.eclipse.krazo.engine;
 import org.eclipse.krazo.util.PathUtils;
 import org.eclipse.krazo.util.PropertyUtils;
 
-import javax.mvc.engine.ViewEngine;
-import javax.mvc.engine.ViewEngineContext;
-import javax.ws.rs.core.HttpHeaders;
-import javax.ws.rs.core.MediaType;
+import jakarta.mvc.engine.ViewEngine;
+import jakarta.mvc.engine.ViewEngineContext;
+import jakarta.ws.rs.core.HttpHeaders;
+import jakarta.ws.rs.core.MediaType;
 import java.nio.charset.Charset;
 
 /**
@@ -35,7 +35,7 @@ import java.nio.charset.Charset;
 public abstract class ViewEngineBase implements ViewEngine {
 
     /**
-     * Resolves a view path based on {@link javax.mvc.engine.ViewEngine#VIEW_FOLDER}
+     * Resolves a view path based on {@link jakarta.mvc.engine.ViewEngine#VIEW_FOLDER}
      * in the active configuration. If the view is absolute, starts with '/', then
      * it is returned unchanged.
      *
@@ -51,8 +51,8 @@ public abstract class ViewEngineBase implements ViewEngine {
     }
 
     /**
-     * Gets the configured view folder, based on {@link javax.mvc.engine.ViewEngine#VIEW_FOLDER},
-     * using {@link javax.mvc.engine.ViewEngine#DEFAULT_VIEW_FOLDER} as the default.
+     * Gets the configured view folder, based on {@link jakarta.mvc.engine.ViewEngine#VIEW_FOLDER},
+     * using {@link jakarta.mvc.engine.ViewEngine#DEFAULT_VIEW_FOLDER} as the default.
      *
      * @param context the context
      * @return the view folder

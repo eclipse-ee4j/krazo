@@ -20,7 +20,7 @@ package org.eclipse.krazo.ext.jade;
 
 import de.neuland.jade4j.template.TemplateLoader;
 
-import javax.servlet.ServletContext;
+import jakarta.servlet.ServletContext;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;

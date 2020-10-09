@@ -18,8 +18,8 @@
  */
 package org.eclipse.krazo.test.validation;
 
-import javax.enterprise.context.RequestScoped;
-import javax.inject.Named;
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.inject.Named;
 
 /**
  * Class FormDataBean.

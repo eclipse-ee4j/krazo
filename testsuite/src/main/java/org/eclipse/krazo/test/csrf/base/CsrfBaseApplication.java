@@ -18,9 +18,9 @@
  */
 package org.eclipse.krazo.test.csrf.base;
 
-import javax.mvc.security.Csrf;
-import javax.ws.rs.ApplicationPath;
-import javax.ws.rs.core.Application;
+import jakarta.mvc.security.Csrf;
+import jakarta.ws.rs.ApplicationPath;
+import jakarta.ws.rs.core.Application;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;

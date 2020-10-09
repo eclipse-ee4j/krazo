@@ -19,11 +19,11 @@ package org.eclipse.krazo.uri;
 
 import org.eclipse.krazo.util.AnnotationUtils;
 
-import javax.enterprise.inject.Vetoed;
-import javax.mvc.UriRef;
-import javax.ws.rs.core.MultivaluedHashMap;
-import javax.ws.rs.core.MultivaluedMap;
-import javax.ws.rs.core.UriBuilder;
+import jakarta.enterprise.inject.Vetoed;
+import jakarta.mvc.UriRef;
+import jakarta.ws.rs.core.MultivaluedHashMap;
+import jakarta.ws.rs.core.MultivaluedMap;
+import jakarta.ws.rs.core.UriBuilder;
 import java.lang.reflect.Method;
 import java.net.URI;
 import java.util.HashMap;
@@ -46,14 +46,14 @@ public class ApplicationUris {
     private final MultivaluedMap<String, UriTemplate> uriTemplates = new MultivaluedHashMap<>();
 
     /**
-     * @see javax.mvc.MvcContext#uri(String)
+     * @see jakarta.mvc.MvcContext#uri(String)
      */
     public URI get(String identifier) {
         return getUriBuilder(identifier).build();
     }
 
     /**
-     * @see javax.mvc.MvcContext#uri(String, Map)
+     * @see jakarta.mvc.MvcContext#uri(String, Map)
      */
     public URI get(String identifier, Map<String, Object> params) {
         UriTemplate uriTemplate = getUriTemplate(identifier);
@@ -73,7 +73,7 @@ public class ApplicationUris {
     }
 
     /**
-     * @see javax.mvc.MvcContext#uriBuilder(String)
+     * @see jakarta.mvc.MvcContext#uriBuilder(String)
      */
     public UriBuilder getUriBuilder(String identifier) {
         UriTemplate uriTemplate = getUriTemplate(identifier);

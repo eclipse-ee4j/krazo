@@ -18,11 +18,11 @@
  */
 package org.eclipse.krazo.core;
 
-import static javax.ws.rs.core.Response.Status.FOUND;
-import static javax.ws.rs.core.Response.Status.INTERNAL_SERVER_ERROR;
-import static javax.ws.rs.core.Response.Status.MOVED_PERMANENTLY;
-import static javax.ws.rs.core.Response.Status.SEE_OTHER;
-import static javax.ws.rs.core.Response.Status.TEMPORARY_REDIRECT;
+import static jakarta.ws.rs.core.Response.Status.FOUND;
+import static jakarta.ws.rs.core.Response.Status.INTERNAL_SERVER_ERROR;
+import static jakarta.ws.rs.core.Response.Status.MOVED_PERMANENTLY;
+import static jakarta.ws.rs.core.Response.Status.SEE_OTHER;
+import static jakarta.ws.rs.core.Response.Status.TEMPORARY_REDIRECT;
 import static org.eclipse.krazo.cdi.KrazoCdiExtension.isEventObserved;
 import static org.eclipse.krazo.util.AnnotationUtils.getAnnotation;
 import static org.eclipse.krazo.util.PathUtils.noPrefix;
@@ -37,28 +37,28 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
-import javax.annotation.Priority;
-import javax.enterprise.event.Event;
-import javax.inject.Inject;
-import javax.mvc.Controller;
-import javax.mvc.View;
-import javax.mvc.event.ControllerRedirectEvent;
-import javax.mvc.event.MvcEvent;
-import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.Priorities;
-import javax.ws.rs.Produces;
-import javax.ws.rs.ServerErrorException;
-import javax.ws.rs.container.ContainerRequestContext;
-import javax.ws.rs.container.ContainerResponseContext;
-import javax.ws.rs.container.ContainerResponseFilter;
-import javax.ws.rs.container.ResourceInfo;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.HttpHeaders;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Request;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriInfo;
-import javax.ws.rs.core.Variant;
+import jakarta.annotation.Priority;
+import jakarta.enterprise.event.Event;
+import jakarta.inject.Inject;
+import jakarta.mvc.Controller;
+import jakarta.mvc.View;
+import jakarta.mvc.event.ControllerRedirectEvent;
+import jakarta.mvc.event.MvcEvent;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.ws.rs.Priorities;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.ServerErrorException;
+import jakarta.ws.rs.container.ContainerRequestContext;
+import jakarta.ws.rs.container.ContainerResponseContext;
+import jakarta.ws.rs.container.ContainerResponseFilter;
+import jakarta.ws.rs.container.ResourceInfo;
+import jakarta.ws.rs.core.Context;
+import jakarta.ws.rs.core.HttpHeaders;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Request;
+import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.UriInfo;
+import jakarta.ws.rs.core.Variant;
 
 import org.eclipse.krazo.KrazoConfig;
 import org.eclipse.krazo.engine.Viewable;
@@ -66,12 +66,12 @@ import org.eclipse.krazo.event.ControllerRedirectEventImpl;
 import org.eclipse.krazo.lifecycle.RequestLifecycle;
 
 /**
- * <p>A JAX-RS response filter that fires a {@link javax.mvc.event.AfterControllerEvent}
+ * <p>A JAX-RS response filter that fires a {@link jakarta.mvc.event.AfterControllerEvent}
  * event. It also verifies the static return type of the controller method is correct,
  * and ensures that the entity is a {@link Viewable} to be processed by
  * {@link ViewableWriter}.</p>
  *
- * <p>The class uses {@link javax.ws.rs.core.Request} which implements the algorithm in
+ * <p>The class uses {@link jakarta.ws.rs.core.Request} which implements the algorithm in
  * Section 3.8 of the JAX-RS specification to compute the final Content-Type when
  * the method returns void (no entity). If unable to compute the final Content-Type,
  * e.g. if the controller method is not annotated by {@code @Produces}, it defaults to
@@ -80,7 +80,7 @@ import org.eclipse.krazo.lifecycle.RequestLifecycle;
  *
  * <p>Given that this filter is annotated with {@link Controller}, it
  * will be called after every controller method returns. Priority is set to
- * {@link javax.ws.rs.Priorities#ENTITY_CODER} which means it will be executed
+ * {@link jakarta.ws.rs.Priorities#ENTITY_CODER} which means it will be executed
  * after user-defined response filters (response filters are sorted in reverse order).</p>
  *
  * @author Santiago Pericas-Geertsen

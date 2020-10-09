@@ -42,10 +42,10 @@ public class MyApplication extends Application {
 
 For the usage of CSRF, the MVC API and Krazo provide different properties to customize its behavior.
 
-==== javax.mvc.security.CsrfProtection
+==== jakarta.mvc.security.CsrfProtection
 
 By default, the CSRF protection for MVC resources is set to `Csrf.CsrfOptions#EXPLICIT`, which means, that you're required to set the `@CsrfProtected` annotation over a Controller method annotated with `@POST`, `@PUT`, `@PATCH` or `@DELETE`.
-In case you want to use CSRF protection in all methods annotated with one of these HTTP verbs, you can set the property `javax.mvc.security.CsrfProtection` to `CsrfOptions#IMPLICIT`.
+In case you want to use CSRF protection in all methods annotated with one of these HTTP verbs, you can set the property `jakarta.mvc.security.CsrfProtection` to `CsrfOptions#IMPLICIT`.
 
 [source,java]
 ....
@@ -55,7 +55,7 @@ public class MyApplication extends Application {
     public Map<String, Object> getProperties() {
         final Map<String, Object> props = new HashSet<>();
 
-        props.put("javax.mvc.security.CsrfProtection", CsrfOptions.IMPLICIT);
+        props.put("jakarta.mvc.security.CsrfProtection", CsrfOptions.IMPLICIT);
 
         return props;
     }
@@ -66,10 +66,10 @@ Although, you might want to disable CSRF protection completely for you applicati
 Therefore exists the `CsrfOptions#OFF` value, which can be set like the
 `CsrfOptions#IMPLICIT` value in the example above.
 
-==== javax.mvc.security.CsrfHeaderName
+==== jakarta.mvc.security.CsrfHeaderName
 
 Sometimes you may want to set a custom value for the header transporting the CSRF token.
-For this task you can use the property `javax.mvc.security.CsrfHeaderName`.
+For this task you can use the property `jakarta.mvc.security.CsrfHeaderName`.
 Overwriting this property will change the default name of the HTTP header from `X-CSRF-TOKEN` to any valid HTTP header name.
 The property can be changed like this:
 
@@ -81,7 +81,7 @@ public class MyApplication extends Application {
     public Map<String, Object> getProperties() {
         final Map<String, Object> props = new HashSet<>();
 
-        props.put("javax.mvc.security.CsrfHeaderName", "X-CUSTOM-CSRF-HEADER");
+        props.put("jakarta.mvc.security.CsrfHeaderName", "X-CUSTOM-CSRF-HEADER");
 
         return props;
     }

@@ -20,10 +20,10 @@ package org.eclipse.krazo.test.returns;
 
 import org.eclipse.krazo.engine.Viewable;
 
-import javax.mvc.Controller;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.core.Response;
+import jakarta.mvc.Controller;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.core.Response;
 
 /**
  * Tests all possible return types from a controller method, including an arbitrary

@@ -18,8 +18,8 @@
  */
 package org.eclipse.krazo.ext.pebble;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.inject.Produces;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.inject.Produces;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Objects;
