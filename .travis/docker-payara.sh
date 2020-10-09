@@ -2,7 +2,7 @@
 
 set -eu
 
-docker run --name=payara -d -p 8080:8080 -p 4848:4848 -it payara/server-web:5.2020.3
+docker run --name=payara -d -p 8080:8080 -p 4848:4848 -it payara/server-web:5.2020.4
 
 # Payara uses a self signed certificate for the management-api.
 # The certificate is generated during the release and differs for every version.
