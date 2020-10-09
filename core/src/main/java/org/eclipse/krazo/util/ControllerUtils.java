@@ -17,8 +17,8 @@
  */
 package org.eclipse.krazo.util;
 
-import javax.mvc.Controller;
-import javax.ws.rs.HttpMethod;
+import jakarta.mvc.Controller;
+import jakarta.ws.rs.HttpMethod;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 

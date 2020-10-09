@@ -18,9 +18,9 @@
  */
 package org.eclipse.krazo.test.annotations;
 
-import javax.mvc.Controller;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
+import jakarta.mvc.Controller;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.Path;
 
 @Path("annotations")
 public class AnnotationsController extends BaseController implements BaseInterface {

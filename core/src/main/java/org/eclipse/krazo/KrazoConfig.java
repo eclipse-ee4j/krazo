@@ -23,9 +23,9 @@ import org.eclipse.krazo.jaxrs.JaxRsContext;
 import org.eclipse.krazo.security.CsrfTokenStrategy;
 import org.eclipse.krazo.security.SessionCsrfTokenStrategy;
 
-import javax.inject.Inject;
-import javax.mvc.security.Csrf;
-import javax.ws.rs.core.Configuration;
+import jakarta.inject.Inject;
+import jakarta.mvc.security.Csrf;
+import jakarta.ws.rs.core.Configuration;
 
 /**
  * This class encapsulates the effective runtime configuration. All methods

@@ -17,8 +17,8 @@
  */
 package org.eclipse.krazo.binding.validate;
 
-import javax.interceptor.InterceptorBinding;
-import javax.mvc.Controller;
+import jakarta.interceptor.InterceptorBinding;
+import jakarta.mvc.Controller;
 import java.lang.annotation.*;
 
 import static java.lang.annotation.ElementType.METHOD;

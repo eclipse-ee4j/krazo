@@ -18,12 +18,12 @@
  */
 package org.eclipse.krazo.cdi;
 
-import javax.enterprise.context.ContextNotActiveException;
-import javax.enterprise.context.spi.AlterableContext;
-import javax.enterprise.context.spi.Contextual;
-import javax.enterprise.context.spi.CreationalContext;
-import javax.enterprise.inject.spi.CDI;
-import javax.mvc.RedirectScoped;
+import jakarta.enterprise.context.ContextNotActiveException;
+import jakarta.enterprise.context.spi.AlterableContext;
+import jakarta.enterprise.context.spi.Contextual;
+import jakarta.enterprise.context.spi.CreationalContext;
+import jakarta.enterprise.inject.spi.CDI;
+import jakarta.mvc.RedirectScoped;
 import java.io.Serializable;
 import java.lang.annotation.Annotation;
 

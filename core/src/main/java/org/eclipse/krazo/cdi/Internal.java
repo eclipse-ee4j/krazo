@@ -17,7 +17,7 @@
  */
 package org.eclipse.krazo.cdi;
 
-import javax.inject.Qualifier;
+import jakarta.inject.Qualifier;
 import java.lang.annotation.*;
 
 /**

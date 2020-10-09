@@ -21,12 +21,12 @@ import org.glassfish.jersey.internal.spi.AutoDiscoverable;
 import org.glassfish.jersey.internal.spi.ForcedAutoDiscoverable;
 import org.eclipse.krazo.bootstrap.Initializer;
 
-import javax.annotation.Priority;
-import javax.servlet.ServletContext;
-import javax.ws.rs.ConstrainedTo;
-import javax.ws.rs.RuntimeType;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.FeatureContext;
+import jakarta.annotation.Priority;
+import jakarta.servlet.ServletContext;
+import jakarta.ws.rs.ConstrainedTo;
+import jakarta.ws.rs.RuntimeType;
+import jakarta.ws.rs.core.Context;
+import jakarta.ws.rs.core.FeatureContext;
 
 /**
  * This class uses the Jersey specific ForcedAutoDiscoverable SPI to trigger the Krazo initialization

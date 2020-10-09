@@ -22,17 +22,17 @@ import org.eclipse.krazo.util.AnnotationUtils;
 import org.eclipse.krazo.util.BeanUtils;
 import org.eclipse.krazo.util.ControllerUtils;
 
-import javax.annotation.PostConstruct;
-import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.inject.Produces;
-import javax.inject.Inject;
-import javax.mvc.MvcContext;
-import javax.servlet.ServletContext;
-import javax.ws.rs.BeanParam;
-import javax.ws.rs.MatrixParam;
-import javax.ws.rs.Path;
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.UriBuilder;
+import jakarta.annotation.PostConstruct;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.inject.Produces;
+import jakarta.inject.Inject;
+import jakarta.mvc.MvcContext;
+import jakarta.servlet.ServletContext;
+import jakarta.ws.rs.BeanParam;
+import jakarta.ws.rs.MatrixParam;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.QueryParam;
+import jakarta.ws.rs.core.UriBuilder;
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Method;
 import java.util.Arrays;
@@ -83,8 +83,8 @@ public class UriTemplateParser {
 
     /**
      * <p>Parses given method and constructs a {@link UriTemplate} containing
-     * all the information found in the annotations {@link javax.ws.rs.Path},
-     * {@link javax.ws.rs.QueryParam} and {@link javax.ws.rs.MatrixParam}.</p>
+     * all the information found in the annotations {@link jakarta.ws.rs.Path},
+     * {@link jakarta.ws.rs.QueryParam} and {@link jakarta.ws.rs.MatrixParam}.</p>
      */
     UriTemplate parseMethod(Method method, String basePath) {
         UriBuilder uriBuilder = UriBuilder.fromPath(basePath);

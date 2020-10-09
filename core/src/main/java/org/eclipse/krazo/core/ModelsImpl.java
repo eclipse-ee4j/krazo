@@ -18,8 +18,8 @@
  */
 package org.eclipse.krazo.core;
 
-import javax.enterprise.context.RequestScoped;
-import javax.mvc.Models;
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.mvc.Models;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -27,7 +27,7 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
- * Implementation of {@link javax.mvc.Models} interface. A CDI class that delegates
+ * Implementation of {@link jakarta.mvc.Models} interface. A CDI class that delegates
  * to a {@link java.util.Map} implementation.
  *
  * @author Santiago Pericas-Geertsen

@@ -176,12 +176,12 @@ public final class AnnotationUtils {
 
     static boolean hasJaxrsAnnotations(Method method) {
         return Arrays.stream(method.getDeclaredAnnotations())
-            .anyMatch(a -> a.annotationType().getName().startsWith("javax.ws.rs."));
+            .anyMatch(a -> a.annotationType().getName().startsWith("jakarta.ws.rs."));
     }
 
     static boolean hasMvcAnnotations(Method method) {
         return Arrays.stream(method.getDeclaredAnnotations())
-            .anyMatch(a -> a.annotationType().getName().startsWith("javax.mvc."));
+            .anyMatch(a -> a.annotationType().getName().startsWith("jakarta.mvc."));
     }
 
 }

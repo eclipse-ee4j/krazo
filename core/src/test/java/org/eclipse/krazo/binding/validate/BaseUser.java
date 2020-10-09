@@ -18,8 +18,8 @@
  */
 package org.eclipse.krazo.binding.validate;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 /**
  * POJO bean for a user, with bean validation constraints on both a field and a

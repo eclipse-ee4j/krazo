@@ -18,11 +18,11 @@
  */
 package org.eclipse.krazo.engine;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.ws.rs.container.ResourceInfo;
-import javax.ws.rs.core.Configuration;
-import javax.ws.rs.core.UriInfo;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.ws.rs.container.ResourceInfo;
+import jakarta.ws.rs.core.Configuration;
+import jakarta.ws.rs.core.UriInfo;
 import org.easymock.EasyMock;
 import static org.easymock.EasyMock.replay;
 import static org.easymock.EasyMock.verify;

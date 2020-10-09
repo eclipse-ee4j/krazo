@@ -21,11 +21,11 @@ package org.eclipse.krazo.ext.stringtemplate;
 import org.eclipse.krazo.engine.ViewEngineBase;
 import org.stringtemplate.v4.*;
 
-import javax.annotation.Priority;
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
-import javax.mvc.engine.*;
-import javax.servlet.ServletContext;
+import jakarta.annotation.Priority;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import jakarta.mvc.engine.*;
+import jakarta.servlet.ServletContext;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.io.Writer;

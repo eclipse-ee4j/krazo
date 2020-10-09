@@ -21,10 +21,10 @@ package org.eclipse.krazo.engine;
 import org.easymock.EasyMock;
 import org.junit.Test;
 
-import javax.mvc.engine.ViewEngine;
-import javax.mvc.engine.ViewEngineContext;
-import javax.mvc.engine.ViewEngineException;
-import javax.ws.rs.core.Configuration;
+import jakarta.mvc.engine.ViewEngine;
+import jakarta.mvc.engine.ViewEngineContext;
+import jakarta.mvc.engine.ViewEngineException;
+import jakarta.ws.rs.core.Configuration;
 
 import static org.easymock.EasyMock.eq;
 import static org.easymock.EasyMock.expect;

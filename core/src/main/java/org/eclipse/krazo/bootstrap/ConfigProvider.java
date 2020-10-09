@@ -17,7 +17,7 @@
  */
 package org.eclipse.krazo.bootstrap;
 
-import javax.ws.rs.core.FeatureContext;
+import jakarta.ws.rs.core.FeatureContext;
 
 /**
  * SPI used to register providers when Krazo is initialized. Implementations are discovered

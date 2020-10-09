@@ -21,9 +21,9 @@ package org.eclipse.krazo.ext.velocity;
 import org.apache.velocity.app.VelocityEngine;
 import org.eclipse.krazo.engine.ViewEngineConfig;
 
-import javax.enterprise.inject.Produces;
-import javax.inject.Inject;
-import javax.servlet.ServletContext;
+import jakarta.enterprise.inject.Produces;
+import jakarta.inject.Inject;
+import jakarta.servlet.ServletContext;
 
 /**
  * Producer for the VelocityEngine used by VelocityViewEngine.
@@ -41,7 +41,7 @@ public class DefaultVelocityEngineProducer {
         VelocityEngine velocityEngine = new VelocityEngine();
         velocityEngine.setProperty("resource.loader", "webapp");
         velocityEngine.setProperty("webapp.resource.loader.class", ServletContextResourceLoader.class.getCanonicalName());
-        velocityEngine.setApplicationAttribute("javax.servlet.ServletContext", servletContext);
+        velocityEngine.setApplicationAttribute("jakarta.servlet.ServletContext", servletContext);
         velocityEngine.init();
         return velocityEngine;
     }

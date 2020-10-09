@@ -20,10 +20,10 @@ package org.eclipse.krazo.engine;
 
 import org.eclipse.krazo.util.CdiUtils;
 
-import javax.annotation.Priority;
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
-import javax.mvc.engine.ViewEngine;
+import jakarta.annotation.Priority;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import jakarta.mvc.engine.ViewEngine;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,12 +36,12 @@ import static org.eclipse.krazo.util.AnnotationUtils.getAnnotation;
 /**
  * <p>Selects the view engine for a {@link Viewable}. If the viewable
  * includes a reference to an engine, the selection process stops and returns
- * it. Otherwise, the method {@link javax.mvc.engine.ViewEngine#supports(String)}
+ * it. Otherwise, the method {@link jakarta.mvc.engine.ViewEngine#supports(String)}
  * is called for each of the view engines injectable via CDI (i.e., all classes
- * that implement {@link javax.mvc.engine.ViewEngine}).</p>
+ * that implement {@link jakarta.mvc.engine.ViewEngine}).</p>
  *
  * <p>The resulting set of candidates is sorted based on its priority as
- * defined by the annotation {@link javax.annotation.Priority} on the view engine
+ * defined by the annotation {@link jakarta.annotation.Priority} on the view engine
  * implementation.</p>
  *
  * <p>This class implements a simple cache to avoid repeated look-ups for the same

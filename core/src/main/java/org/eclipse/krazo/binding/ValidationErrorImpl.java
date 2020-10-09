@@ -18,8 +18,8 @@
  */
 package org.eclipse.krazo.binding;
 
-import javax.mvc.binding.ValidationError;
-import javax.validation.ConstraintViolation;
+import jakarta.mvc.binding.ValidationError;
+import jakarta.validation.ConstraintViolation;
 
 /**
  * Implementation of the {@link ValidationError} interface.

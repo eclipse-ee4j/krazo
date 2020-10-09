@@ -22,9 +22,9 @@ import org.eclipse.krazo.engine.ViewEngineConfig;
 import freemarker.cache.TemplateLoader;
 import freemarker.template.Configuration;
 
-import javax.enterprise.inject.Produces;
-import javax.inject.Inject;
-import javax.servlet.ServletContext;
+import jakarta.enterprise.inject.Produces;
+import jakarta.inject.Inject;
+import jakarta.servlet.ServletContext;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;

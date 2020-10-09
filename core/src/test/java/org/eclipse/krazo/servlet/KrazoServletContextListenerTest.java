@@ -21,9 +21,9 @@ package org.eclipse.krazo.servlet;
 import org.easymock.EasyMock;
 import org.junit.Test;
 
-import javax.enterprise.inject.spi.BeanManager;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletContextEvent;
+import jakarta.enterprise.inject.spi.BeanManager;
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.ServletContextEvent;
 import java.util.HashSet;
 import java.util.Set;
 

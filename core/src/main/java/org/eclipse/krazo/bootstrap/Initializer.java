@@ -21,9 +21,9 @@ import org.eclipse.krazo.core.ViewResponseFilter;
 import org.eclipse.krazo.servlet.KrazoContainerInitializer;
 import org.eclipse.krazo.util.ServiceLoaders;
 
-import javax.servlet.ServletContext;
-import javax.ws.rs.core.Configuration;
-import javax.ws.rs.core.FeatureContext;
+import jakarta.servlet.ServletContext;
+import jakarta.ws.rs.core.Configuration;
+import jakarta.ws.rs.core.FeatureContext;
 import java.util.Objects;
 import java.util.Set;
 import java.util.logging.Level;

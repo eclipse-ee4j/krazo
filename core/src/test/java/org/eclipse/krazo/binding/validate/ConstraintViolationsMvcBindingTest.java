@@ -26,13 +26,13 @@ import static org.junit.Assert.assertTrue;
 import java.util.Optional;
 import java.util.Set;
 
-import javax.mvc.binding.MvcBinding;
-import javax.validation.ConstraintViolation;
-import javax.validation.Validation;
-import javax.validation.Validator;
-import javax.validation.ValidatorFactory;
-import javax.validation.constraints.Pattern;
-import javax.ws.rs.FormParam;
+import jakarta.mvc.binding.MvcBinding;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.Validation;
+import jakarta.validation.Validator;
+import jakarta.validation.ValidatorFactory;
+import jakarta.validation.constraints.Pattern;
+import jakarta.ws.rs.FormParam;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -44,8 +44,8 @@ import org.junit.Test;
  * bean classes that have bean validation constraints already applied to both
  * fields and getter methods. We extend those beans so that we can annotate the
  * field getter methods with {@link MvcBinding}, and annotate the setter methods
- * with {@link javax.ws.rs.FormParam}, as would be done on a JAX-RS/MVC {@link
- * javax.ws.rs.BeanParam}.
+ * with {@link jakarta.ws.rs.FormParam}, as would be done on a JAX-RS/MVC {@link
+ * jakarta.ws.rs.BeanParam}.
  */
 public class ConstraintViolationsMvcBindingTest {
 

@@ -33,7 +33,7 @@
 
     <properties>
 
-        <tck.version>1.1.0</tck.version>
+        <tck.version>2.0.0.M1</tck.version>
 
         <!-- We don't deploy this module, because the TCK isn't in Maven Central yet -->
         <maven.deploy.skip>true</maven.deploy.skip>
@@ -57,7 +57,7 @@
         <dependency>
             <groupId>jakarta.platform</groupId>
             <artifactId>jakarta.jakartaee-api</artifactId>
-            <version>8.0.0</version>
+            <version>9.0.0-RC2</version>
             <scope>provided</scope>
         </dependency>
 
@@ -131,9 +131,9 @@
                             <dependenciesToScan>jakarta.mvc.tck:mvc-tck-tests</dependenciesToScan>
                             <systemPropertyVariables>
                                 <arquillian.launch>glassfish</arquillian.launch>
-                                <org.mvcspec.tck.api.BaseArchiveProvider>
+                                <jakarta.mvc.tck.api.BaseArchiveProvider>
                                     org.eclipse.krazo.tck.glassfish.GlassfishArchiveProvider
-                                </org.mvcspec.tck.api.BaseArchiveProvider>
+                                </jakarta.mvc.tck.api.BaseArchiveProvider>
                             </systemPropertyVariables>
                         </configuration>
                     </plugin>
@@ -166,9 +166,9 @@
                             <dependenciesToScan>jakarta.mvc.tck:mvc-tck-tests</dependenciesToScan>
                             <systemPropertyVariables>
                                 <arquillian.launch>wildfly</arquillian.launch>
-                                <org.mvcspec.tck.api.BaseArchiveProvider>
+                                <jakarta.mvc.tck.api.BaseArchiveProvider>
                                     org.eclipse.krazo.tck.wildfly.WildflyArchiveProvider
-                                </org.mvcspec.tck.api.BaseArchiveProvider>
+                                </jakarta.mvc.tck.api.BaseArchiveProvider>
                             </systemPropertyVariables>
                         </configuration>
                     </plugin>
@@ -206,9 +206,9 @@
                             <systemPropertyVariables>
                                 <tomee.version>${tomee.version}</tomee.version>
                                 <arquillian.launch>tomee</arquillian.launch>
-                                <org.mvcspec.tck.api.BaseArchiveProvider>
+                                <jakarta.mvc.tck.api.BaseArchiveProvider>
                                     org.eclipse.krazo.tck.tomee.TomeeArchiveProvider
-                                </org.mvcspec.tck.api.BaseArchiveProvider>
+                                </jakarta.mvc.tck.api.BaseArchiveProvider>
                             </systemPropertyVariables>
                         </configuration>
                     </plugin>
@@ -247,9 +247,9 @@
                             <dependenciesToScan>jakarta.mvc.tck:mvc-tck-tests</dependenciesToScan>
                             <systemPropertyVariables>
                                 <arquillian.launch>liberty</arquillian.launch>
-                                <org.mvcspec.tck.api.BaseArchiveProvider>
+                                <jakarta.mvc.tck.api.BaseArchiveProvider>
                                     org.eclipse.krazo.tck.liberty.LibertyArchiveProvider
-                                </org.mvcspec.tck.api.BaseArchiveProvider>
+                                </jakarta.mvc.tck.api.BaseArchiveProvider>
                             </systemPropertyVariables>
                         </configuration>
                     </plugin>

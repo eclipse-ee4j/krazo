@@ -17,8 +17,8 @@
  */
 package org.eclipse.krazo.core;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 /**
  * Default implementation of the {@link HttpCommunicationUnwrapper}. This class is just a fallback

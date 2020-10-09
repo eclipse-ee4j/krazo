@@ -18,18 +18,18 @@
  */
 package org.eclipse.krazo.engine;
 
-import javax.mvc.Models;
-import javax.mvc.engine.ViewEngineContext;
-import javax.ws.rs.container.ResourceInfo;
-import javax.ws.rs.core.Configuration;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.MultivaluedMap;
-import javax.ws.rs.core.UriInfo;
+import jakarta.mvc.Models;
+import jakarta.mvc.engine.ViewEngineContext;
+import jakarta.ws.rs.container.ResourceInfo;
+import jakarta.ws.rs.core.Configuration;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.MultivaluedMap;
+import jakarta.ws.rs.core.UriInfo;
 import java.io.OutputStream;
 import java.util.Locale;
 
 /**
- * Implementation of {@link javax.mvc.engine.ViewEngineContext}. Provides all the information
+ * Implementation of {@link jakarta.mvc.engine.ViewEngineContext}. Provides all the information
  * needed for a view engine to process a view.
  *
  * @author Santiago Pericas-Geertsen

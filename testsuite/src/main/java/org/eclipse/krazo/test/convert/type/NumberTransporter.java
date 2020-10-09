@@ -1,6 +1,6 @@
 package org.eclipse.krazo.test.convert.type;
 
-import javax.mvc.RedirectScoped;
+import jakarta.mvc.RedirectScoped;
 import java.io.Serializable;
 
 @RedirectScoped

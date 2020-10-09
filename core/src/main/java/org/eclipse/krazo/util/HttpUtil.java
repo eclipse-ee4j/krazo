@@ -20,8 +20,8 @@ package org.eclipse.krazo.util;
 
 import org.eclipse.krazo.core.HttpCommunicationUnwrapper;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 /**
  * Utility class containing helper methods for HTTP related tasks.
@@ -43,7 +43,7 @@ public final class HttpUtil {
     }
 
     /**
-     * Unwrap the original {@link javax.servlet.http.HttpServletResponse} from a wrapper, so someone can access the original values.
+     * Unwrap the original {@link jakarta.servlet.http.HttpServletResponse} from a wrapper, so someone can access the original values.
      *
      * @param currentResponse the request provided by the runtime. Might be a wrapper around the original response.
      * @return the origin {@link HttpServletRequest}

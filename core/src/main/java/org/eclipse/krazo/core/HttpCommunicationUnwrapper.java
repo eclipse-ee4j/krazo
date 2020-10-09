@@ -17,12 +17,12 @@
  */
 package org.eclipse.krazo.core;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 /**
  * Defines an SPI which allows the client to unwrap a HTTP request or response
- * into a standard {@link javax.servlet.http.HttpServletRequest} or {@link javax.servlet.http.HttpServletResponse}.
+ * into a standard {@link jakarta.servlet.http.HttpServletRequest} or {@link jakarta.servlet.http.HttpServletResponse}.
  * <p>
  * This SPI is intended to be used in case a JAX-RS implementation uses its own wrapper classes for HTTP requests and responses.
  */
@@ -37,20 +37,20 @@ public interface HttpCommunicationUnwrapper {
     boolean supports(final Object obj);
 
     /**
-     * Unwraps a {@link javax.servlet.http.HttpServletRequest} from a custom wrapper into its original class.
+     * Unwraps a {@link jakarta.servlet.http.HttpServletRequest} from a custom wrapper into its original class.
      *
      * @param obj the object to unwrap
      * @param type the target type of the object
-     * @return the unwrapped {@link javax.servlet.http.HttpServletRequest}
+     * @return the unwrapped {@link jakarta.servlet.http.HttpServletRequest}
      */
     HttpServletRequest unwrapRequest(final HttpServletRequest obj, final Class<HttpServletRequest> type);
 
     /**
-     * Unwraps a {@link javax.servlet.http.HttpServletResponse} from a custom wrapper into its original class.
+     * Unwraps a {@link jakarta.servlet.http.HttpServletResponse} from a custom wrapper into its original class.
      *
      * @param obj the object to unwrap
      * @param type the target type of the object
-     * @return the unwrapped {@link javax.servlet.http.HttpServletResponse}
+     * @return the unwrapped {@link jakarta.servlet.http.HttpServletResponse}
      */
     HttpServletResponse unwrapResponse(final HttpServletResponse obj, final Class<HttpServletResponse> type);
 }

@@ -20,12 +20,12 @@ package org.eclipse.krazo.servlet;
 
 import org.eclipse.krazo.util.AnnotationUtils;
 
-import javax.mvc.Controller;
-import javax.servlet.ServletContainerInitializer;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.HandlesTypes;
-import javax.ws.rs.Path;
+import jakarta.mvc.Controller;
+import jakarta.servlet.ServletContainerInitializer;
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.HandlesTypes;
+import jakarta.ws.rs.Path;
 import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.Set;

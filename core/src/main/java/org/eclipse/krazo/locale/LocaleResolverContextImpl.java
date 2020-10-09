@@ -18,12 +18,12 @@
  */
 package org.eclipse.krazo.locale;
 
-import javax.mvc.locale.LocaleResolverContext;
-import javax.ws.rs.container.ContainerRequestContext;
-import javax.ws.rs.core.Configuration;
-import javax.ws.rs.core.Cookie;
-import javax.ws.rs.core.Request;
-import javax.ws.rs.core.UriInfo;
+import jakarta.mvc.locale.LocaleResolverContext;
+import jakarta.ws.rs.container.ContainerRequestContext;
+import jakarta.ws.rs.core.Configuration;
+import jakarta.ws.rs.core.Cookie;
+import jakarta.ws.rs.core.Request;
+import jakarta.ws.rs.core.UriInfo;
 import java.util.List;
 import java.util.Locale;
 

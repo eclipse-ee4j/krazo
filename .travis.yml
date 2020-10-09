@@ -1,6 +1,6 @@
 language: java
 sudo: required
-jdk: openjdk8
+jdk: openjdk11
 
 services:
 - docker
@@ -20,52 +20,49 @@ jobs:
   include:
     - stage: build
       script: mvn -B -V -DskipTests clean install ${BUILD_PROFILE}
-    - stage: build
-      script: mvn -B -V -DskipTests clean install ${BUILD_PROFILE}
-      jdk: openjdk11
-    - stage: test
-      script: mvn -B -V test ${BUILD_PROFILE}
-    - stage: test
-      env: TYPE=glassfish-module
-      script: .travis/tests.sh ${TYPE}
-    - stage: test
-      env: TYPE=glassfish-bundled
-      script: .travis/tests.sh ${TYPE}
-    - stage: test
-      env: TYPE=testsuite-wildfly
-      script: .travis/tests.sh ${TYPE}
-    - stage: test
-      env: TYPE=testsuite-payara
-      script: .travis/tests.sh ${TYPE}
-    - stage: test
-      env: TYPE=testsuite-tomee
-      script: .travis/tests.sh ${TYPE}
-    - stage: test
-      env: TYPE=testsuite-liberty
-      script: .travis/tests.sh ${TYPE}
-    - stage: test
-      env: TYPE=testsuite-glassfish
-      script: .travis/tests.sh ${TYPE}
-    - stage: test
-      env: TYPE=tck-glassfish51-patched
-      script: .travis/tests.sh ${TYPE}
-    - stage: test
-      env: TYPE=tck-wildfly19
-      script: .travis/tests.sh ${TYPE}
-    - stage: test
-      env: TYPE=tck-wildfly20
-      script: .travis/tests.sh ${TYPE}
-    - stage: test
-      env: TYPE=tck-tomee
-      script: .travis/tests.sh ${TYPE}
-    - stage: test
-      env: TYPE=tck-liberty
-      script: .travis/tests.sh ${TYPE}
-    - stage: test
-      env: TYPE=dependency-check
-      script: mvn org.owasp:dependency-check-maven:aggregate ${BUILD_PROFILE}
-  allow_failures:
-    - env: TYPE=tck-tomee
-    - env: TYPE=tck-liberty
-    - env: TYPE=glassfish-module
-    - env: TYPE=testsuite-liberty
+#    - stage: test
+#      script: mvn -B -V test ${BUILD_PROFILE}
+#    - stage: test
+#      env: TYPE=glassfish-module
+#      script: .travis/tests.sh ${TYPE}
+#    - stage: test
+#      env: TYPE=glassfish-bundled
+#      script: .travis/tests.sh ${TYPE}
+#    - stage: test
+#      env: TYPE=testsuite-wildfly
+#      script: .travis/tests.sh ${TYPE}
+#    - stage: test
+#      env: TYPE=testsuite-payara
+#      script: .travis/tests.sh ${TYPE}
+#    - stage: test
+#      env: TYPE=testsuite-tomee
+#      script: .travis/tests.sh ${TYPE}
+#    - stage: test
+#      env: TYPE=testsuite-liberty
+#      script: .travis/tests.sh ${TYPE}
+#    - stage: test
+#      env: TYPE=testsuite-glassfish
+#      script: .travis/tests.sh ${TYPE}
+#    - stage: test
+#      env: TYPE=tck-glassfish51-patched
+#      script: .travis/tests.sh ${TYPE}
+#    - stage: test
+#      env: TYPE=tck-wildfly19
+#      script: .travis/tests.sh ${TYPE}
+#    - stage: test
+#      env: TYPE=tck-wildfly20
+#      script: .travis/tests.sh ${TYPE}
+#    - stage: test
+#      env: TYPE=tck-tomee
+#      script: .travis/tests.sh ${TYPE}
+#    - stage: test
+#      env: TYPE=tck-liberty
+#      script: .travis/tests.sh ${TYPE}
+#    - stage: test
+#      env: TYPE=dependency-check
+#      script: mvn org.owasp:dependency-check-maven:aggregate ${BUILD_PROFILE}
+#  allow_failures:
+#    - env: TYPE=tck-tomee
+#    - env: TYPE=tck-liberty
+#    - env: TYPE=glassfish-module
+#    - env: TYPE=testsuite-liberty

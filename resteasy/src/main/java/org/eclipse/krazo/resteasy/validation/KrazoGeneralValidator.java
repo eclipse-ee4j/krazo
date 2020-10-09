@@ -21,7 +21,7 @@ import org.jboss.resteasy.spi.HttpRequest;
 import org.jboss.resteasy.spi.validation.GeneralValidator;
 import org.eclipse.krazo.util.AnnotationUtils;
 
-import javax.mvc.Controller;
+import jakarta.mvc.Controller;
 import java.lang.reflect.Method;
 
 /**

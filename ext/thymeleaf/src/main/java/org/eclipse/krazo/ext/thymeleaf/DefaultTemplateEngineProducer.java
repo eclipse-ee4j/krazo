@@ -23,9 +23,9 @@ import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 import org.thymeleaf.templateresolver.ITemplateResolver;
 
-import javax.enterprise.inject.Produces;
-import javax.inject.Inject;
-import javax.servlet.ServletContext;
+import jakarta.enterprise.inject.Produces;
+import jakarta.inject.Inject;
+import jakarta.servlet.ServletContext;
 
 /**
  * Producer for the TemplateEngine used by ThymeleafViewEngine.

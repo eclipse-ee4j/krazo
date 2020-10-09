@@ -21,21 +21,21 @@ package org.eclipse.krazo.ext.thymeleaf;
 import org.thymeleaf.context.IWebContext;
 import org.thymeleaf.context.LazyContextVariable;
 
-import javax.enterprise.context.spi.CreationalContext;
-import javax.enterprise.inject.Any;
-import javax.enterprise.inject.spi.Bean;
-import javax.enterprise.inject.spi.BeanManager;
-import javax.enterprise.util.AnnotationLiteral;
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import jakarta.enterprise.context.spi.CreationalContext;
+import jakarta.enterprise.inject.Any;
+import jakarta.enterprise.inject.spi.Bean;
+import jakarta.enterprise.inject.spi.BeanManager;
+import jakarta.enterprise.util.AnnotationLiteral;
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.util.*;
 import java.util.stream.Collectors;
 
 /**
  * Thymeleaf context for resolving variables from the model or cdi context. In addition to the functions provided by
- * {@link org.thymeleaf.context.WebContext} this allows to resolve beans annotated with {@linkplain javax.inject.Named}
+ * {@link org.thymeleaf.context.WebContext} this allows to resolve beans annotated with {@linkplain jakarta.inject.Named}
  * from the cdi context.
  * <p>
  * Beans will be resolved in this order:
@@ -136,7 +136,7 @@ class CDIWebContext implements IWebContext {
         return new LazyContextVariable<Object>() {
             @Override
             protected Object loadValue() {
-                Bean<?> bean = beanManager.getBeans(name).iterator().next();
+                javax.enterprise.inject.spi.Bean<?> bean = beanManager.getBeans(name).iterator().next();
                 CreationalContext ctx = beanManager.createCreationalContext(bean);
                 // push the context a list so they can be disposed after the template has been processed
                 contexts.add(ctx);

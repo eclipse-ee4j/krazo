@@ -25,9 +25,9 @@ import com.mitchellbosecke.pebble.loader.ServletLoader;
 import java.lang.reflect.InvocationTargetException;
 import org.eclipse.krazo.engine.ViewEngineConfig;
 
-import javax.enterprise.inject.Produces;
-import javax.inject.Inject;
-import javax.servlet.ServletContext;
+import jakarta.enterprise.inject.Produces;
+import jakarta.inject.Inject;
+import jakarta.servlet.ServletContext;
 import java.util.Locale;
 import java.util.Properties;
 import java.util.concurrent.ExecutorService;

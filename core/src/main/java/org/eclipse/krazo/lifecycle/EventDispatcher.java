@@ -25,12 +25,12 @@ import org.eclipse.krazo.event.BeforeControllerEventImpl;
 import org.eclipse.krazo.event.BeforeProcessViewEventImpl;
 import org.eclipse.krazo.jaxrs.JaxRsContext;
 
-import javax.enterprise.event.Event;
-import javax.inject.Inject;
-import javax.mvc.engine.ViewEngine;
-import javax.mvc.event.*;
-import javax.ws.rs.container.ResourceInfo;
-import javax.ws.rs.core.UriInfo;
+import jakarta.enterprise.event.Event;
+import jakarta.inject.Inject;
+import jakarta.mvc.engine.ViewEngine;
+import jakarta.mvc.event.*;
+import jakarta.ws.rs.container.ResourceInfo;
+import jakarta.ws.rs.core.UriInfo;
 
 import static org.eclipse.krazo.cdi.KrazoCdiExtension.isEventObserved;
 

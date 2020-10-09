@@ -20,8 +20,8 @@ package org.eclipse.krazo.test.encoding;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.ws.rs.ApplicationPath;
-import javax.ws.rs.core.Application;
+import jakarta.ws.rs.ApplicationPath;
+import jakarta.ws.rs.core.Application;
 
 import org.eclipse.krazo.bootstrap.DefaultConfigProvider;
 
@@ -36,7 +36,7 @@ public class MyApplication extends Application {
         final Set<Class<?>> classes = new HashSet<>();
         classes.add(EncodingController.class);
         classes.addAll(DefaultConfigProvider.PROVIDERS);
-        
+
         return classes;
     }
 }

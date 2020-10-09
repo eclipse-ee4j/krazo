@@ -18,7 +18,7 @@
  */
 package org.eclipse.krazo.util;
 
-import javax.ws.rs.core.Configuration;
+import jakarta.ws.rs.core.Configuration;
 
 /**
  * Utility methods for properties.

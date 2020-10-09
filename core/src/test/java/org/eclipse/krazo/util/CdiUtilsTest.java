@@ -21,7 +21,7 @@ package org.eclipse.krazo.util;
 import org.easymock.EasyMock;
 import org.junit.Test;
 
-import javax.enterprise.inject.spi.BeanManager;
+import jakarta.enterprise.inject.spi.BeanManager;
 import java.lang.reflect.Field;
 
 import static org.easymock.EasyMock.expect;

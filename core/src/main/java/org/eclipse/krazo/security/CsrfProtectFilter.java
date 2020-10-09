@@ -20,29 +20,29 @@ package org.eclipse.krazo.security;
 
 import org.eclipse.krazo.KrazoConfig;
 
-import javax.annotation.Priority;
-import javax.inject.Inject;
-import javax.mvc.Controller;
-import javax.mvc.security.Csrf;
-import javax.mvc.security.CsrfProtected;
-import javax.ws.rs.Priorities;
-import javax.ws.rs.container.ContainerRequestContext;
-import javax.ws.rs.container.ContainerResponseContext;
-import javax.ws.rs.container.ContainerResponseFilter;
-import javax.ws.rs.core.MultivaluedMap;
+import jakarta.annotation.Priority;
+import jakarta.inject.Inject;
+import jakarta.mvc.Controller;
+import jakarta.mvc.security.Csrf;
+import jakarta.mvc.security.CsrfProtected;
+import jakarta.ws.rs.Priorities;
+import jakarta.ws.rs.container.ContainerRequestContext;
+import jakarta.ws.rs.container.ContainerResponseContext;
+import jakarta.ws.rs.container.ContainerResponseFilter;
+import jakarta.ws.rs.core.MultivaluedMap;
 import java.io.IOException;
 
 /**
  * <p>Response filter that adds the CSRF header with a unique token value. When CSRF
  * is enabled, clients must submit this header or a form field of name
- * {@link javax.mvc.security.Csrf#getName()} with the same token value for validation
+ * {@link jakarta.mvc.security.Csrf#getName()} with the same token value for validation
  * to succeed.</p>
  *
- * <p>CSRF can be enabled by setting the property {@link javax.mvc.security.Csrf#CSRF_PROTECTION}
- * to {@link javax.mvc.security.Csrf.CsrfOptions#IMPLICIT}, to by setting it to
- * {@link javax.mvc.security.Csrf.CsrfOptions#EXPLICIT} and annotating the desired
+ * <p>CSRF can be enabled by setting the property {@link jakarta.mvc.security.Csrf#CSRF_PROTECTION}
+ * to {@link jakarta.mvc.security.Csrf.CsrfOptions#IMPLICIT}, to by setting it to
+ * {@link jakarta.mvc.security.Csrf.CsrfOptions#EXPLICIT} and annotating the desired
  * controllers with {@link CsrfProtected}. Note that validation only
- * applies to controllers also annotated by {@link javax.ws.rs.POST}.</p>
+ * applies to controllers also annotated by {@link jakarta.ws.rs.POST}.</p>
  *
  * @author Santiago Pericas-Geertsen
  */

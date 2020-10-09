@@ -21,7 +21,7 @@ import org.eclipse.krazo.bootstrap.ConfigProvider;
 import org.eclipse.krazo.jersey.model.KrazoModelProcessor;
 import org.eclipse.krazo.jersey.validation.KrazoValidationInterceptor;
 
-import javax.ws.rs.core.FeatureContext;
+import jakarta.ws.rs.core.FeatureContext;
 
 /**
  * Implementation of ConfigProvider for the Jersey module.
