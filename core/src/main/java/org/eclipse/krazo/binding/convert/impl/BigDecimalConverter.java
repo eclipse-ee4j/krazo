@@ -43,7 +43,7 @@ public class BigDecimalConverter extends NumberConverter<BigDecimal> {
 
             return ConverterResult.success(
                     parseNumber(value, locale)
-                            .map(val -> new BigDecimal(val.toString()))
+                            .map(val -> val.equals(Double.NaN) ? null : new BigDecimal(val.toString()))
                             .orElse(null)
             );
 
