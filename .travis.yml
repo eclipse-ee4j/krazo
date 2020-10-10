@@ -20,8 +20,8 @@ jobs:
   include:
     - stage: build
       script: mvn -B -V clean install ${BUILD_PROFILE}
-#    - stage: test
-#      script: mvn -B -V test ${BUILD_PROFILE}
+    - stage: test
+      script: mvn -B -V test ${BUILD_PROFILE}
 #    - stage: test
 #      env: TYPE=glassfish-module
 #      script: .travis/tests.sh ${TYPE}
