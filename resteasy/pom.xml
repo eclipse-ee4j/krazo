@@ -32,7 +32,7 @@
     <name>Eclipse Krazo RESTEasy</name>
 
     <properties>
-        <resteasy.version>3.6.3.Final</resteasy.version>
+        <resteasy.version>3.13.2.Final</resteasy.version>
     </properties>
 
     <build>
@@ -100,7 +100,7 @@
         <dependency>
             <groupId>org.jboss.resteasy</groupId>
             <artifactId>resteasy-validator-provider-11</artifactId>
-            <version>${resteasy.version}</version>
+            <version>3.6.1.SP8</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
