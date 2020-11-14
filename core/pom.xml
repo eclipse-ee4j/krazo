@@ -122,7 +122,7 @@
         <dependency>
             <groupId>jakarta.ws.rs</groupId>
             <artifactId>jakarta.ws.rs-api</artifactId>
-            <version>3.0.0-M1</version>
+            <version>3.0.0</version>
 <!--            <type>bundle</type>-->
         </dependency>
         <dependency>
@@ -146,21 +146,21 @@
         <dependency>
             <groupId>jakarta.annotation</groupId>
             <artifactId>jakarta.annotation-api</artifactId>
-            <version>2.0.0-RC1</version>
+            <version>2.0.0</version>
 <!--            <scope>provided</scope>-->
         </dependency>
 
         <!-- TODO remove -->
-        <dependency>
-            <groupId>jakarta.el</groupId>
-            <artifactId>jakarta.el-api</artifactId>
-            <version>4.0.0-RC2</version>
-        </dependency>
-        <dependency>
-            <groupId>jakarta.interceptor</groupId>
-            <artifactId>jakarta.interceptor-api</artifactId>
-            <version>2.0.0-RC2</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>jakarta.el</groupId>-->
+<!--            <artifactId>jakarta.el-api</artifactId>-->
+<!--            <version>4.0.0-RC2</version>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>jakarta.interceptor</groupId>-->
+<!--            <artifactId>jakarta.interceptor-api</artifactId>-->
+<!--            <version>2.0.0-RC2</version>-->
+<!--        </dependency>-->
         <!-- Test scope -->
         <dependency>
             <groupId>org.glassfish.jersey.core</groupId>

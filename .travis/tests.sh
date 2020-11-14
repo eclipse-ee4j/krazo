@@ -83,27 +83,13 @@ elif [[ ${1} == tck-wildfly19* ]]; then
   echo "Stopping Wildfly..."
   kill "$(cat wildfly.pid)"
 
-elif [[ ${1} == tck-wildfly20* ]]; then
+elif [[ ${1} == tck-wildfly22* ]]; then
 
-  echo "Downloading Wildfly..."
-  curl -L -s -o wildfly-20.0.1.Final.zip https://download.jboss.org/wildfly/20.0.1.Final/wildfly-20.0.1.Final.zip
-  unzip wildfly-20.0.1.Final.zip
-  mv wildfly-20.0.1.Final wildfly
-
-  echo "Building Krazo..."
+  source .travis/start-wildfly.sh
   mvn -B -V -DskipTests clean install ${BUILD_PROFILE}
-
-  echo "Starting Wildfly..."
-  LAUNCH_JBOSS_IN_BACKGROUND=1 JBOSS_PIDFILE=wildfly.pid ./wildfly/bin/standalone.sh > wildfly.log 2>&1 &
-  timeout 30 tail -F wildfly.log || true
-
-  echo "Running TCK..."
   pushd tck
   mvn -B -V -Dtck-env=wildfly verify ${BUILD_PROFILE}
   popd
-
-  echo "Stopping Wildfly..."
-  kill "$(cat wildfly.pid)"
 
 elif [ "${1}" == "tck-tomee" ]; then
 

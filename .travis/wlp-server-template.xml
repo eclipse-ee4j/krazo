@@ -3,10 +3,10 @@
 
     <!-- Enable features -->
     <featureManager>
-        <feature>webProfile-8.0</feature>
+        <feature>jakartaee-9.0</feature>
 
         <!-- For Arquillian -->
-        <feature>jsp-2.2</feature>
+        <feature>jsp-3.0</feature>
         <feature>localConnector-1.0</feature>
 
     </featureManager>
@@ -21,5 +21,8 @@
 
     <!-- For Arquillian -->
     <applicationMonitor updateTrigger="mbean"/>
+
+    <!-- Default SSL configuration enables trust for default certificates from the Java runtime -->
+    <ssl id="defaultSSLConfig" trustDefaultCerts="true" />
 
 </server>
