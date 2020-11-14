@@ -33,7 +33,7 @@
 
     <properties>
 
-        <tck.version>2.0.0.RC1</tck.version>
+        <tck.version>2.0.0.RC2</tck.version>
 
         <!-- We don't deploy this module, because the TCK isn't in Maven Central yet -->
         <maven.deploy.skip>true</maven.deploy.skip>
@@ -57,7 +57,7 @@
         <dependency>
             <groupId>jakarta.platform</groupId>
             <artifactId>jakarta.jakartaee-api</artifactId>
-            <version>9.0.0-RC2</version>
+            <version>9.0.0-RC3</version>
             <scope>provided</scope>
         </dependency>
 
@@ -259,10 +259,31 @@
                 <dependency>
                     <groupId>io.openliberty.arquillian</groupId>
                     <artifactId>arquillian-liberty-managed</artifactId>
-                    <version>1.0.6</version>
+                    <version>1.0.7-SNAPSHOT</version>
+                    <scope>test</scope>
+                </dependency>
+                <dependency>
+                    <groupId>io.openliberty.arquillian</groupId>
+                    <artifactId>arquillian-liberty-managed-junit</artifactId>
+                    <version>1.1.6</version>
+                    <type>pom</type>
                     <scope>test</scope>
                 </dependency>
             </dependencies>
+
+            <repositories>
+                <repository>
+                    <id>sonatype-oss-snapshots</id>
+                    <name>Sonatype OSS Nexus Snapshots</name>
+                    <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+                    <releases>
+                        <enabled>false</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>true</enabled>
+                    </snapshots>
+                </repository>
+            </repositories>
         </profile>
 
     </profiles>
