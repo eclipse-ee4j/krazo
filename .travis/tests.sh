@@ -99,7 +99,7 @@ elif [[ ${1} == tck-wildfly22* ]]; then
 
   echo "Running TCK..."
   pushd tck
-  mvn -B -V -Dtck-env=wildfly verify ${BUILD_PROFILE}
+  mvn -B -V verify -Ptck-wildfly,staging
   popd
 
   echo "Stopping Wildfly..."
