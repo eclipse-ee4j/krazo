@@ -83,12 +83,12 @@ elif [[ ${1} == tck-wildfly19* ]]; then
   echo "Stopping Wildfly..."
   kill "$(cat wildfly.pid)"
 
-elif [[ ${1} == tck-wildfly20* ]]; then
+elif [[ ${1} == tck-wildfly22* ]]; then
 
   echo "Downloading Wildfly..."
-  curl -L -s -o wildfly-20.0.1.Final.zip https://download.jboss.org/wildfly/20.0.1.Final/wildfly-20.0.1.Final.zip
-  unzip wildfly-20.0.1.Final.zip
-  mv wildfly-20.0.1.Final wildfly
+  curl -L -s -o wildfly-22.0.0.Alpha1.zip https://download.jboss.org/wildfly/22.0.0.Alpha1/wildfly-22.0.0.Alpha1.zip
+  unzip  wildfly-22.0.0.Alpha1.zip
+  mv  wildfly-22.0.0.Alpha1 wildfly
 
   echo "Building Krazo..."
   mvn -B -V -DskipTests clean install ${BUILD_PROFILE}

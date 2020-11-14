@@ -45,9 +45,9 @@
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
 
-        <spec.version>2.0.0.M1</spec.version>
-        <jersey.version>3.0.0-M6</jersey.version>
-        <javaee.version>9.0.0-RC2</javaee.version>
+        <spec.version>2.0.0.RC1</spec.version>
+        <jersey.version>3.0.0</jersey.version>
+        <jakartaee.version>9.0.0</jakartaee.version>
 
     </properties>
 

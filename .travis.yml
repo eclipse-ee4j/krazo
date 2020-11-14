@@ -50,7 +50,7 @@ jobs:
 #      env: TYPE=tck-wildfly19
 #      script: .travis/tests.sh ${TYPE}
 #    - stage: test
-#      env: TYPE=tck-wildfly20
+#      env: TYPE=tck-wildfly22
 #      script: .travis/tests.sh ${TYPE}
 #    - stage: test
 #      env: TYPE=tck-tomee
