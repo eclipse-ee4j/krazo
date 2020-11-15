@@ -33,7 +33,7 @@
 
     <properties>
 
-        <tck.version>2.0.0.RC2</tck.version>
+        <tck.version>2.0.0.RC3</tck.version>
 
         <!-- We don't deploy this module, because the TCK isn't in Maven Central yet -->
         <maven.deploy.skip>true</maven.deploy.skip>
@@ -57,7 +57,7 @@
         <dependency>
             <groupId>jakarta.platform</groupId>
             <artifactId>jakarta.jakartaee-api</artifactId>
-            <version>9.0.0-RC3</version>
+            <version>9.0.0</version>
             <scope>provided</scope>
         </dependency>
 
