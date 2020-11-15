@@ -100,11 +100,6 @@
             </dependency>
             <dependency>
                 <groupId>org.eclipse.krazo.ext</groupId>
-                <artifactId>krazo-jtwig</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.eclipse.krazo.ext</groupId>
                 <artifactId>krazo-jsr223</artifactId>
                 <version>${project.version}</version>
             </dependency>
