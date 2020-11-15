@@ -108,11 +108,9 @@ elif [ "${1}" == "tck-liberty" ]; then
 
 elif [[ ${1} == testsuite-wildfly ]]; then
 
-   source .travis/docker-wildfly.sh
-   echo "Building Krazo..."
-   mvn -B -V -DskipTests clean install ${BUILD_PROFILE}
-   echo "Running test suite on Wildfly"
-   mvn -P${TYPE} --projects testsuite clean verify ${BUILD_PROFILE}
+  source .travis/start-wildfly.sh
+  mvn -B -V -DskipTests clean install ${BUILD_PROFILE}
+  mvn -P${TYPE} --projects testsuite clean verify ${BUILD_PROFILE}
 
 elif [[ ${1} == testsuite-payara ]]; then
 

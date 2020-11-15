@@ -27,6 +27,7 @@ import org.jboss.shrinkwrap.resolver.api.maven.PomEquippedResolveStage;
 import org.jboss.shrinkwrap.resolver.api.maven.ScopeType;
 import org.jboss.shrinkwrap.resolver.api.maven.coordinate.MavenDependencies;
 import org.jboss.shrinkwrap.resolver.api.maven.coordinate.MavenDependency;
+import org.jboss.shrinkwrap.resolver.api.maven.repository.MavenRemoteRepositories;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -86,6 +87,11 @@ public class WebArchiveBuilder {
     public WebArchive build() {
         PomEquippedResolveStage stage = Maven.configureResolver()
             .withClassPathResolution(true)
+            .withRemoteRepo(MavenRemoteRepositories.createRemoteRepository(
+                "jakarta-staging",
+                "https://jakarta.oss.sonatype.org/content/groups/staging",
+                "default"
+            ))
             .loadPomFromFile("pom.xml", System.getProperty("testsuite.profile", ""))
             .importCompileAndRuntimeDependencies();
 
