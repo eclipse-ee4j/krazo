@@ -49,8 +49,6 @@
         <module>velocity</module>
         <!-- remove until jakarta servlet is supported by pebble -->
 <!--        <module>pebble</module>-->
-        <!-- remove until jakarta servlet is supported by jtwig -->
-<!--        <module>jtwig</module>-->
     </modules>
 
     <dependencies>
