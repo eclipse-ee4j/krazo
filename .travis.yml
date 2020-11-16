@@ -49,20 +49,20 @@ jobs:
 #    - stage: test
 #      env: TYPE=tck-wildfly19
 #      script: .travis/tests.sh ${TYPE}
-    - stage: test
-      env: TYPE=tck-wildfly22
-      script: .travis/tests.sh ${TYPE}
+#    - stage: test
+#      env: TYPE=tck-wildfly22
+#      script: .travis/tests.sh ${TYPE}
 #    - stage: test
 #      env: TYPE=tck-tomee
 #      script: .travis/tests.sh ${TYPE}
-    - stage: test
-      env: TYPE=tck-liberty
-      script: .travis/tests.sh ${TYPE}
+#    - stage: test
+#      env: TYPE=tck-liberty
+#      script: .travis/tests.sh ${TYPE}
 #    - stage: test
 #      env: TYPE=dependency-check
 #      script: mvn org.owasp:dependency-check-maven:aggregate ${BUILD_PROFILE}
   allow_failures:
 #    - env: TYPE=tck-tomee
-    - env: TYPE=tck-liberty
+#    - env: TYPE=tck-liberty
 #    - env: TYPE=glassfish-module
 #    - env: TYPE=testsuite-liberty

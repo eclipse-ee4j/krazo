@@ -28,12 +28,12 @@
         <version>2.0.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>krazo-jakartaee8-archetype</artifactId>
+    <artifactId>krazo-jakartaee9-archetype</artifactId>
     <packaging>maven-archetype</packaging>
-    <name>Archetype for Jakarta EE 8 with Eclipse Krazo</name>
+    <name>Archetype for Jakarta EE 9 with Eclipse Krazo</name>
 
     <description>
-        Archetype for basic Jakarta EE 8 App with the MVC API and Eclipse Krazo
+        Archetype for basic Jakarta EE 9 App with the MVC API and Eclipse Krazo
     </description>
 
     <build>
