@@ -45,11 +45,13 @@
         <dependency>
             <groupId>jakarta.mvc.tck</groupId>
             <artifactId>mvc-tck-api</artifactId>
+            <version>${tck.version}</version>
         </dependency>
 
         <dependency>
             <groupId>jakarta.mvc.tck</groupId>
             <artifactId>mvc-tck-tests</artifactId>
+            <version>${tck.version}</version>
             <scope>test</scope>
         </dependency>
 

@@ -10,7 +10,7 @@
     <name>\${artifactId}</name>
 
     <properties>
-        <jakartaee-api.version>8.0.0</jakartaee-api.version>
+        <jakartaee-api.version>9.0.0</jakartaee-api.version>
         <krazo.version>${project.version}</krazo.version>
         <jakarta.mvc-api.version>${spec.version}</jakarta.mvc-api.version>
         <junit.version>4.12</junit.version>
