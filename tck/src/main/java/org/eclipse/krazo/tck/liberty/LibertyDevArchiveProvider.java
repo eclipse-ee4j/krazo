@@ -38,7 +38,7 @@ public class LibertyDevArchiveProvider extends AbstractArchiveProvider {
                                 .as(JavaArchive.class)
                 )
                 .addAsLibraries(
-                        ShrinkWrap.create(ExplodedImporter.class, "krazo-cxf.jar")
+                        ShrinkWrap.create(ExplodedImporter.class, "krazo-resteasy.jar")
                                 .importDirectory("../cxf/target/classes")
                                 .as(JavaArchive.class)
                 );
