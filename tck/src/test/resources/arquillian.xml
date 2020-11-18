@@ -61,7 +61,7 @@
 
             <!-- Removes working directory -->
             <property name="cleanOnStartUp">true</property>
-            
+
         </configuration>
     </container>
 
@@ -73,5 +73,5 @@
             <property name="wlpHome">${liberty.home}</property>
         </configuration>
     </container>
-    
+
 </arquillian>
