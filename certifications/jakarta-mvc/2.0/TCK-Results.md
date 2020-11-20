@@ -7,18 +7,27 @@ following is a summary of the TCK results for releases of Jakarta MVC.
 
 # Jakarta MVC 2.0 Certification Summary
 
-- Product Name, Version and download URL (if applicable): <br/>
+- Product Name, Version and download URL (if applicable): 
+
   [Eclipse Krazo 2.0.0](https://eclipse-ee4j.github.io/krazo/downloads/2.0.0.html)
-- Specification Name, Version and download URL: <br/>
+
+- Specification Name, Version and download URL: 
+
    [Jakarta MVC 2.0](https://jakarta.ee/specifications/mvc/2.0)
-- TCK Version, digital SHA-256 fingerprint and download URL: <br/>
+
+- TCK Version, digital SHA-256 fingerprint and download URL: 
+
   [Jakarta MVC TCK 2.0.0](https://download.eclipse.org/jakartaee/mvc/2.0/jakarta-mvc-tck-2.0.0.zip),
   SHA-256: `27a09b18169e46571898375d2eb1d05000301828c5d16dfc5d56e882690d55ed`
 
-- Public URL of TCK Results Summary: <br/>
+- Public URL of TCK Results Summary: 
+
   [TCK results summary](TCK-Results.html)
-- Any Additional Specification Certification Requirements:<br/>
+
+- Any Additional Specification Certification Requirements:
+
   None
+
 - Java runtime used to run the implementation:
 
   - Testrun 1: OpenJDK Runtime Environment (AdoptOpenJDK)(build 1.8.0_265-b01)
@@ -1671,23 +1680,6 @@ function toggleDisplay(elementId) {
         <hr/>
       </div>
     </div>
-  </body>
-</html>
-
-## Test results Testrun 2 (WilfFly 22):
-
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="generator" content="Apache Maven Doxia Site Renderer 1.9.2" />
-    <title>Surefire Report</title>
-    <link rel="stylesheet" href="./css/maven-base.css" />
-    <link rel="stylesheet" href="./css/maven-theme.css" />
-    <link rel="stylesheet" href="./css/site.css" />
-    <link rel="stylesheet" href="./css/print.css" media="print" />
-  </head>
-  <body class="composite">
     <div id="banner">
       <div class="clear">
         <hr/>
