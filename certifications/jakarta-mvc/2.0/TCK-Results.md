@@ -17,8 +17,9 @@ following is a summary of the TCK results for releases of Jakarta MVC.
 
 - TCK Version, digital SHA-256 fingerprint and download URL: 
 
-  [Jakarta MVC TCK 2.0.0](https://download.eclipse.org/jakartaee/mvc/2.0/jakarta-mvc-tck-2.0.0.zip),
-  SHA-256: `27a09b18169e46571898375d2eb1d05000301828c5d16dfc5d56e882690d55ed`
+  - [Jakarta MVC TCK 2.0.0](https://download.eclipse.org/jakartaee/mvc/2.0/jakarta-mvc-tck-2.0.0.zip)
+  - [Jakarta MVC TCK 2.0.0 (staged)](https://download.eclipse.org/ee4j/mvc/staged/2.0/jakarta-mvc-tck-2.0.0.zip)
+  - SHA-256: `27a09b18169e46571898375d2eb1d05000301828c5d16dfc5d56e882690d55ed`
 
 - Public URL of TCK Results Summary: 
 
