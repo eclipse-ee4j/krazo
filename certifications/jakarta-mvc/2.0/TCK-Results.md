@@ -36,8 +36,8 @@ following is a summary of the TCK results for releases of Jakarta MVC.
 - Summary of the information for the certification environment, operating system, cloud, ...:
 
   - 5.8.0-29-generic #31-Ubuntu x86_64 GNU/Linux
-  - Testrun 1: Eclipse GlassFish 6.0.0-RC2 (Testrun 1)
-  - Testrun 2: WildFly 22.0.0.Alpha1 (Testrun 2)
+  - Testrun 1: Eclipse GlassFish 6.0.0-RC2
+  - Testrun 2: WildFly 22.0.0.Alpha1
 
 ## Test results 
 
