@@ -39,7 +39,10 @@ following is a summary of the TCK results for releases of Jakarta MVC.
   - Testrun 1: Eclipse GlassFish 6.0.0-RC2 (Testrun 1)
   - Testrun 2: WildFly 22.0.0.Alpha1 (Testrun 2)
 
-## Test results Testrun 1 (GlassFish 6):
+## Test results 
+
+- [Testrun 1 (GlassFish 6)](#Summary1)
+- [Testrun 2 (WildfFly 22)](#Summary2)
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
@@ -70,9 +73,6 @@ following is a summary of the TCK results for releases of Jakarta MVC.
     </div>
     <div id="leftColumn">
       <div id="navcolumn">
-      <a href="http://maven.apache.org/" title="Built by Maven" class="poweredBy">
-        <img class="poweredBy" alt="Built by Maven" src="./images/logos/maven-feather.png" />
-      </a>
       </div>
     </div>
     <div id="bodyColumn">
@@ -1697,9 +1697,6 @@ function toggleDisplay(elementId) {
     </div>
     <div id="leftColumn">
       <div id="navcolumn">
-      <a href="http://maven.apache.org/" title="Built by Maven" class="poweredBy">
-        <img class="poweredBy" alt="Built by Maven" src="./images/logos/maven-feather.png" />
-      </a>
       </div>
     </div>
     <div id="bodyColumn">
