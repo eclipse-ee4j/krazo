@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-    Copyright (c) 2018, 2019 Eclipse Krazo committers and contributors
+    Copyright (c) 2018, 2021 Eclipse Krazo committers and contributors
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -133,6 +133,41 @@
                                 <arquillian.launch>glassfish</arquillian.launch>
                                 <jakarta.mvc.tck.api.BaseArchiveProvider>
                                     org.eclipse.krazo.tck.glassfish.GlassfishArchiveProvider
+                                </jakarta.mvc.tck.api.BaseArchiveProvider>
+                            </systemPropertyVariables>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+            <dependencies>
+                <dependency>
+                    <groupId>org.jboss.arquillian.container</groupId>
+                    <artifactId>arquillian-glassfish-remote-3.1</artifactId>
+                    <version>1.0.0.Final</version>
+                    <scope>test</scope>
+                </dependency>
+            </dependencies>
+        </profile>
+
+        <!-- Run TCK against Glassfish 6 with Krazo installed as a Glassfish module -->
+        <profile>
+            <id>tck-glassfish-module</id>
+            <activation>
+                <property>
+                    <name>tck-env</name>
+                    <value>glassfish-module</value>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <configuration>
+                            <dependenciesToScan>jakarta.mvc.tck:mvc-tck-tests</dependenciesToScan>
+                            <systemPropertyVariables>
+                                <arquillian.launch>glassfish</arquillian.launch>
+                                <jakarta.mvc.tck.api.BaseArchiveProvider>
+                                    org.eclipse.krazo.tck.glassfish.GlassfishModuleArchiveProvider
                                 </jakarta.mvc.tck.api.BaseArchiveProvider>
                             </systemPropertyVariables>
                         </configuration>
