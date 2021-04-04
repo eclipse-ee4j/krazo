@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, 2019 Eclipse Krazo committers and contributors
+ * Copyright (c) 2018, 2021 Eclipse Krazo committers and contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -89,27 +89,33 @@ public class JaxRsContextProducer {
         return Objects.requireNonNull(resourceInfo, "Cannot produce ResourceInfo");
     }
 
-    void setConfiguration(Configuration configuration) {
+    // using 'package private' here seems to break the CDI scope for some reason
+    protected void setConfiguration(Configuration configuration) {
         this.configuration = Objects.requireNonNull(configuration, "Configuration must not be null");
     }
 
-    void setRequest(HttpServletRequest request) {
+    // using 'package private' here seems to break the CDI scope for some reason
+    protected void setRequest(HttpServletRequest request) {
         this.request = Objects.requireNonNull(request, "Request must not be null");
     }
 
-    void setResponse(HttpServletResponse response) {
+    // using 'package private' here seems to break the CDI scope for some reason
+    protected void setResponse(HttpServletResponse response) {
         this.response = Objects.requireNonNull(response, "Response must not be null");
     }
 
-    void setApplication(Application application) {
+    // using 'package private' here seems to break the CDI scope for some reason
+    protected void setApplication(Application application) {
         this.application = Objects.requireNonNull(application, "Application must not be null");
     }
 
-    void setUriInfo(UriInfo uriInfo) {
+    // using 'package private' here seems to break the CDI scope for some reason
+    protected void setUriInfo(UriInfo uriInfo) {
         this.uriInfo = Objects.requireNonNull(uriInfo, "UriInfo must not be null");
     }
 
-    void setResourceInfo(ResourceInfo resourceInfo) {
+    // using 'package private' here seems to break the CDI scope for some reason
+    protected void setResourceInfo(ResourceInfo resourceInfo) {
         this.resourceInfo = Objects.requireNonNull(resourceInfo, "ResourceInfo must not be null");
     }
 

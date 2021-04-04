@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, 2019 Eclipse Krazo committers and contributors
+ * Copyright (c) 2018, 2021 Eclipse Krazo committers and contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -80,7 +80,7 @@ public final class Initializer {
         Set<Class<?>> controllersFound = servletContext != null
                 ? (Set<Class<?>>) servletContext.getAttribute(KrazoContainerInitializer.CONTROLLER_CLASSES)
                 : null;
-        boolean enable = controllersFound == null || !controllersFound.isEmpty();
+        boolean enable = controllersFound != null && !controllersFound.isEmpty();
 
         log.log(Level.FINE, "Is Eclipse Krazo application detected: {0}", enable);
         return enable;
