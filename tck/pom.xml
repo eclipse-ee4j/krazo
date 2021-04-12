@@ -103,12 +103,6 @@
                 <artifactId>krazo-resteasy</artifactId>
                 <version>${project.version}</version>
             </dependency>
-            <dependency>
-                <groupId>org.eclipse.krazo</groupId>
-                <artifactId>krazo-cxf</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-
         </dependencies>
     </dependencyManagement>
 
@@ -266,53 +260,53 @@
         </profile>
 
         <!-- Run TCK against Open Liberty -->
-        <profile>
-            <id>tck-liberty</id>
-            <activation>
-                <property>
-                    <name>tck-env</name>
-                    <value>liberty</value>
-                </property>
-            </activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <artifactId>maven-surefire-plugin</artifactId>
-                        <configuration>
-                            <dependenciesToScan>jakarta.mvc.tck:mvc-tck-tests</dependenciesToScan>
-                            <systemPropertyVariables>
-                                <arquillian.launch>liberty</arquillian.launch>
-                                <jakarta.mvc.tck.api.BaseArchiveProvider>
-                                    org.eclipse.krazo.tck.liberty.LibertyArchiveProvider
-                                </jakarta.mvc.tck.api.BaseArchiveProvider>
-                            </systemPropertyVariables>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-            <dependencies>
-                <dependency>
-                    <groupId>io.openliberty.arquillian</groupId>
-                    <artifactId>arquillian-liberty-managed-jakarta</artifactId>
-                    <version>2.0.0-M1</version>
-                    <scope>test</scope>
-                </dependency>
-            </dependencies>
+<!--         <profile> -->
+<!--             <id>tck-liberty</id> -->
+<!--             <activation> -->
+<!--                 <property> -->
+<!--                     <name>tck-env</name> -->
+<!--                     <value>liberty</value> -->
+<!--                 </property> -->
+<!--             </activation> -->
+<!--             <build> -->
+<!--                 <plugins> -->
+<!--                     <plugin> -->
+<!--                         <artifactId>maven-surefire-plugin</artifactId> -->
+<!--                         <configuration> -->
+<!--                             <dependenciesToScan>jakarta.mvc.tck:mvc-tck-tests</dependenciesToScan> -->
+<!--                             <systemPropertyVariables> -->
+<!--                                 <arquillian.launch>liberty</arquillian.launch> -->
+<!--                                 <jakarta.mvc.tck.api.BaseArchiveProvider> -->
+<!--                                     org.eclipse.krazo.tck.liberty.LibertyArchiveProvider -->
+<!--                                 </jakarta.mvc.tck.api.BaseArchiveProvider> -->
+<!--                             </systemPropertyVariables> -->
+<!--                         </configuration> -->
+<!--                     </plugin> -->
+<!--                 </plugins> -->
+<!--             </build> -->
+<!--             <dependencies> -->
+<!--                 <dependency> -->
+<!--                     <groupId>io.openliberty.arquillian</groupId> -->
+<!--                     <artifactId>arquillian-liberty-managed-jakarta</artifactId> -->
+<!--                     <version>2.0.0-M1</version> -->
+<!--                     <scope>test</scope> -->
+<!--                 </dependency> -->
+<!--             </dependencies> -->
 
-            <repositories>
-                <repository>
-                    <id>sonatype-oss-snapshots</id>
-                    <name>Sonatype OSS Nexus Snapshots</name>
-                    <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
-                    <releases>
-                        <enabled>false</enabled>
-                    </releases>
-                    <snapshots>
-                        <enabled>true</enabled>
-                    </snapshots>
-                </repository>
-            </repositories>
-        </profile>
+<!--             <repositories> -->
+<!--                 <repository> -->
+<!--                     <id>sonatype-oss-snapshots</id> -->
+<!--                     <name>Sonatype OSS Nexus Snapshots</name> -->
+<!--                     <url>https://oss.sonatype.org/content/repositories/snapshots/</url> -->
+<!--                     <releases> -->
+<!--                         <enabled>false</enabled> -->
+<!--                     </releases> -->
+<!--                     <snapshots> -->
+<!--                         <enabled>true</enabled> -->
+<!--                     </snapshots> -->
+<!--                 </repository> -->
+<!--             </repositories> -->
+<!--         </profile> -->
 
     </profiles>
 

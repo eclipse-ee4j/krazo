@@ -30,7 +30,7 @@ public class LibertyArchiveProvider extends AbstractArchiveProvider {
     public WebArchive getBaseArchive() {
         return ShrinkWrap.create(WebArchive.class)
                 .addAsLibraries(resolveMvcSpecJar())
-                .addAsLibraries(resolveKrazoCxf());
+                .addAsLibraries(resolveKrazoRestEasy());
     }
 
 }
