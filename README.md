@@ -3,7 +3,7 @@
 # Eclipse Krazo
 
 Eclipse Krazo is an implementation of action-based MVC specified by Jakarta MVC 2.0. It builds on top of Jakarta RESTful Webservices 
-and currently contains support for RESTEasy, Jersey and CXF with a well-defined SPI for other implementations.
+and currently contains support for RESTEasy and Jersey with a well-defined SPI for other implementations.
 
 ## Running the testsuite
 
@@ -12,8 +12,6 @@ The following sections describe how you test Eclipse Krazo against them. At the 
 
 - Glassfish 8
 - WildFly 22.x.x
-- TomEE 10.x
-- OpenLiberty 20.0.0.12
 
 ### Preconditions
 - JDK 11
@@ -32,26 +30,6 @@ To run the Krazo testsuite with WildFly, you need to follow these steps:
 1. Download WildFly from the WildFly [download page](https://wildfly.org/downloads/) and unzip it somewhere you'll find it again.
 2. Start WildFly with `sh standalone.sh --debug`. This enables you to remote-debug the Arquillian tests.
 3. Go into the `testsuite` package of Eclipse Krazo and execute `mvn clean integration-test -Ptestsuite-wildfly`
-
-### TomEE
-To run the Krazo testsuite with TomEE, you need to follow these steps:
-1. Download TomEE from the TomEE [download page](https://tomee.apache.org/download-ng.html) and unzip it somewhere you'll find it again.
-2. Overwrite or enable the following settings in `${TOMEE_HOME}/conf/system.properties` to get Arquillian to run:
-```
-tomee.remote.support=true
-tomee.serialization.class.blacklist=-
-openejb.system.apps = true
-```
-3. Start TomEE with `sh catalina.sh jpda start`. This enables you to remote-debug the Arquillian tests.
-4. Go into the `testsuite` package of Eclipse Krazo and execute `mvn clean integration-test -Ptestsuite-tomee`
-
-### OpenLiberty
-To run the Krazo testsuite with OpenLiberty, you need to follow these steps. Please note that this process has been tested with 20.x only.
-
-1. Download OpenLiberty from the [official download page](https://openliberty.io/downloads/) and unzip it.
-2. Replace the file `wlp/templates/servers/defaultServer/server.xml` with `.travis/wlp-server-template.xml` from the Eclipse Krazo repository.
-3. Go into the `testsuite` package of Eclipse Krazo and execute `mvn clean integration-test -Ptestsuite-glassfish -Dliberty.home=c:/somewhere/wlp/`.
-   Please make sure to replace `c:/somewhere/wlp/` with the absolute path to the unpacked OpenLiberty distribution.
 
 ### Troubleshooting
 

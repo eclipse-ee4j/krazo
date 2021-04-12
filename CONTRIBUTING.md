@@ -5,7 +5,7 @@ Thanks for your interest in this project.
 ## Project description
 
 Eclipse Krazo is an implementation of action-based MVC specifiec by MVC 1.0 (JSR-371). 
-It builds on top of JAX-RS and currently contains support for RESTEasy, Jersey and CXF 
+It builds on top of JAX-RS and currently contains support for RESTEasy and Jersey 
 with a well-defined SPI for other implementations.
 
 ## Developer resources

@@ -64,21 +64,39 @@ mvn archetype:generate \
 ....
 
 ====== TomEE / OpenLiberty (CXF)
+Krazo won't support CXF anymore. As OpenLiberty is going to switch to RESTEasy until it supports Jakarta REST Web Services 3.0, this change is only relevant for TomEE in general and older versions of OpenLiberty.
 
-[source, subs="attributes"]
-....
-mvn archetype:generate \
--DarchetypeGroupId=org.eclipse.krazo \
--DarchetypeArtifactId=krazo-jakartaee8-archetype \
--DarchetypeVersion={krazo-version} \
--DgroupId=YOUR GROUP ID \
--DartifactId=YOUR ARTIFACT ID \
--DkrazoImpl=cxf
-....
+To use Krazo on those servers anyway, you can add e.g. RESTEasy as a compile time dependency to your artifact:
 
-===== Manual setup
-If you can't or just don't want to use the archetype, you can set up Krazo easily by yourself. Please follow the guides below for
-your server. The dependencies you need to add to your `pom.xml` file depend on which application server your are using.
+[source,xml]
+----
+<dependency>
+    <groupId>jakarta.mvc</groupId>
+    <artifactId>jakarta.mvc-api</artifactId>
+    <version>{{versions.spec.latest}}</version>
+</dependency>
+<dependency>
+    <groupId>org.eclipse.krazo</groupId>
+    <artifactId>krazo-resteasy</artifactId>
+    <version>{{versions.krazo.latest}}</version>
+</dependency>
+<dependency>
+    <groupId>org.jboss.resteasy</groupId>
+    <artifactId>resteasy-cdi</artifactId>
+    <version>3.6.1.Final</version>
+</dependency>
+<dependency>
+    <groupId>org.jboss.resteasy</groupId>
+    <artifactId>resteasy-servlet-initializer</artifactId>
+    <version>3.6.1.Final</version>
+</dependency>
+<dependency>
+    <groupId>org.jboss.resteasy</groupId>
+    <artifactId>resteasy-validator-provider-11</artifactId>
+    <version>3.6.1.Final</version>
+</dependency>
+----
+
 
 ====== Glassfish/Payara
 
@@ -119,28 +137,7 @@ Wildfly is using RESTEasy for JAX-RS. So you need the Eclipse Krazo RESTEasy int
 
 ====== Apache TomEE
 
-Apache TomEE uses CXF as the JAX-RS implementation. Unfortunately there are some known bugs in CXF
-which are causing trouble for Eclipse Krazo. The latest CXF release should fix these issues, but
-Apache TomEE currently ships with an older CXF release.
-
-If you want to give Eclipse Krazo on Apache TomEE a try, add the following dependencies to your `pom.xml`:
-
-[source,xml]
-----
-<dependency>
-    <groupId>jakarta.mvc</groupId>
-    <artifactId>jakarta.mvc-api</artifactId>
-    <version>{{versions.spec.latest}}</version>
-</dependency>
-<dependency>
-    <groupId>org.eclipse.krazo</groupId>
-    <artifactId>krazo-core</artifactId>
-    <version>{{versions.krazo.latest}}</version>
-</dependency>
-----
-
-If using CXF with Eclipse Krazo is causing trouble, you can also manually add RESTEasy to your application and
-use this instead of CXF. To do so, use the following dependencies instead.
+To use Krazo on TomEE, you can add RESTEasy as a compile time dependency, as CXF isn't supported anymore by Krazo.
 
 [source,xml]
 ----
@@ -340,29 +337,6 @@ with Eclipse Krazo, you have to consider following configurations.
 ===== RESTEasy and Jersey
 
 You don't need additional configuration, as Krazo is auto-loaded by implementation-specific SPIs.
-
-===== CXF
-
-As CXF doesn't provide any SPI to enforce the initialization of Eclipse Krazo, you need to configure all necessary
-providers manually in `Application#getClasses`. Please have a look into the snippet below, which shows an example
-implementation of `Application#getClasses`.
-
-....
-public class MyApplication extends Application {
-
-    @Override
-    public Set<Class<?>> getClasses() {
-        final Set<Class<?>> classes = new HashSet<>();
-
-        ...
-
-        // Add Krazo features
-        classes.addAll(org.eclipse.krazo.bootstrap.DefaultConfigProvider.PROVIDERS);
-
-        return classes;
-    }
-}
-....
 
 === Creating you first controller
 
