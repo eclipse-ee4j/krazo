@@ -28,7 +28,6 @@ import static org.eclipse.krazo.util.AnnotationUtils.getAnnotation;
 import static org.eclipse.krazo.util.PathUtils.noPrefix;
 import static org.eclipse.krazo.util.PathUtils.noStartingSlash;
 
-import java.io.IOException;
 import java.lang.reflect.Method;
 import java.net.URI;
 import java.util.Arrays;
@@ -36,6 +35,11 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
+
+import org.eclipse.krazo.KrazoConfig;
+import org.eclipse.krazo.engine.Viewable;
+import org.eclipse.krazo.event.ControllerRedirectEventImpl;
+import org.eclipse.krazo.lifecycle.RequestLifecycle;
 
 import jakarta.annotation.Priority;
 import jakarta.enterprise.event.Event;
@@ -59,11 +63,6 @@ import jakarta.ws.rs.core.Request;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
 import jakarta.ws.rs.core.Variant;
-
-import org.eclipse.krazo.KrazoConfig;
-import org.eclipse.krazo.engine.Viewable;
-import org.eclipse.krazo.event.ControllerRedirectEventImpl;
-import org.eclipse.krazo.lifecycle.RequestLifecycle;
 
 /**
  * <p>A JAX-RS response filter that fires a {@link jakarta.mvc.event.AfterControllerEvent}
@@ -155,7 +154,6 @@ public class ViewResponseFilter implements ContainerResponseFilter {
                 // If the entity is null the status will be set to 204 by Jersey. For void methods we need to
                 // set the status to 200 unless no other status was set by e.g. throwing an Exception.
 
-                // Don't use equals() on the result of getStatusInfo(), because it doesn't work on CXF
                 if (responseContext.getStatusInfo().getStatusCode() == Response.Status.NO_CONTENT.getStatusCode()) {
                     responseContext.setStatusInfo(Response.Status.OK);
                 }

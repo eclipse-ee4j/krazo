@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, 2019 Eclipse Krazo committers and contributors
+ * Copyright (c) 2018, 2021 Eclipse Krazo committers and contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +17,10 @@
  */
 package org.eclipse.krazo.bootstrap;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
 import org.eclipse.krazo.binding.convert.MvcConverterProvider;
 import org.eclipse.krazo.core.ViewResponseFilter;
 import org.eclipse.krazo.core.ViewableWriter;
@@ -26,13 +30,8 @@ import org.eclipse.krazo.jaxrs.PreMatchingRequestFilter;
 import org.eclipse.krazo.security.CsrfExceptionMapper;
 import org.eclipse.krazo.security.CsrfProtectFilter;
 import org.eclipse.krazo.security.CsrfValidateFilter;
-import org.eclipse.krazo.util.CdiUtils;
 
 import jakarta.ws.rs.core.FeatureContext;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 /**
  * Implementation of ConfigProvider which registers all providers of the core module.
@@ -61,30 +60,7 @@ public class DefaultConfigProvider implements ConfigProvider {
     }
 
     private void register(FeatureContext context, Class<?> providerClass) {
-
-        boolean isCxf = context.getClass().getName().startsWith("org.apache.cxf");
-
-        /*
-         * With CXF there is no CDI injection if JAX-RS providers are registered via
-         * context.register(Class). So we try to lookup provider instances from CDI
-         * and register them instead.
-         * See: https://issues.apache.org/jira/browse/CXF-7501
-         */
-        if (isCxf) {
-            List<?> providerInstances = CdiUtils.getApplicationBeans(providerClass);
-            if (!providerInstances.isEmpty()) {
-                context.register(providerInstances.get(0));
-            } else {
-                context.register(providerClass);
-            }
-        }
-
-        // will work for all other containers
-        else {
-            context.register(providerClass);
-        }
-
-
+        context.register(providerClass);
     }
 
 }

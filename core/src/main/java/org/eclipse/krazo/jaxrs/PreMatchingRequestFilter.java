@@ -56,15 +56,11 @@ public class PreMatchingRequestFilter implements ContainerRequestFilter {
     @Context
     private UriInfo uriInfo;
 
+    @Context
+    private JaxRsContextProducer contextProducer;
+
     @Override
     public void filter(ContainerRequestContext requestContext) {
-
-        /*
-         * Please note that we CANNOT inject JaxRsContextProducer here, because this will
-         * fail on TomEE/CXF/OWB because processing @Context fails for some reason.
-         */
-        JaxRsContextProducer contextProducer = CdiUtils.getApplicationBean(JaxRsContextProducer.class)
-                .orElseThrow(() -> new IllegalStateException("Cannot find CDI managed JaxRsContextProducer"));
 
         // store JAX-RS context objects so we can produce them via CDI
         contextProducer.setConfiguration(configuration);
