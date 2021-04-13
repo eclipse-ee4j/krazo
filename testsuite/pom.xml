@@ -336,41 +336,41 @@
             </build>
         </profile>
 
-<!--         <profile> -->
-<!--             <id>testsuite-liberty</id> -->
+        <profile>
+            <id>testsuite-liberty</id>
 
-<!--             <properties> -->
-<!--                 <skipITs>false</skipITs> -->
-<!--             </properties> -->
+            <properties>
+                <skipITs>false</skipITs>
+            </properties>
 
-<!--             <dependencies> -->
-<!--                 <dependency> -->
-<!--                     <groupId>io.openliberty.arquillian</groupId> -->
-<!--                     <artifactId>arquillian-liberty-managed</artifactId> -->
-<!--                     <version>1.0.6</version> -->
-<!--                 </dependency> -->
-<!--                 <dependency> -->
-<!--                     <groupId>org.eclipse.krazo</groupId> -->
-<!--                     <artifactId>krazo-cxf</artifactId> -->
-<!--                     <version>${project.version}</version> -->
-<!--                     <scope>runtime</scope> -->
-<!--                 </dependency> -->
-<!--             </dependencies> -->
+            <dependencies>
+                <dependency>
+                    <groupId>io.openliberty.arquillian</groupId>
+                    <artifactId>arquillian-liberty-managed</artifactId>
+                    <version>1.0.6</version>
+                </dependency>
+                <dependency>
+                    <groupId>org.eclipse.krazo</groupId>
+                    <artifactId>krazo-resteasy</artifactId>
+                    <version>${project.version}</version>
+                    <scope>runtime</scope>
+                </dependency>
+            </dependencies>
 
-<!--             <build> -->
-<!--                 <plugins> -->
-<!--                     <plugin> -->
-<!--                         <artifactId>maven-failsafe-plugin</artifactId> -->
-<!--                         <configuration> -->
-<!--                             <skipITs>false</skipITs> -->
-<!--                             <systemProperties> -->
-<!--                                 <arquillian.launch>liberty</arquillian.launch> -->
-<!--                                 <testsuite.profile>testsuite-liberty</testsuite.profile> -->
-<!--                             </systemProperties> -->
-<!--                         </configuration> -->
-<!--                     </plugin> -->
-<!--                 </plugins> -->
-<!--             </build> -->
-<!--         </profile> -->
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-failsafe-plugin</artifactId>
+                        <configuration>
+                            <skipITs>false</skipITs>
+                            <systemProperties>
+                                <arquillian.launch>liberty</arquillian.launch>
+                                <testsuite.profile>testsuite-liberty</testsuite.profile>
+                            </systemProperties>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
     </profiles>
 </project>
