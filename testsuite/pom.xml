@@ -335,43 +335,6 @@
                 </plugins>
             </build>
         </profile>
-        <profile>
-            <id>testsuite-tomee</id>
-
-            <properties>
-                <skipITs>false</skipITs>
-            </properties>
-
-            <dependencies>
-                <dependency>
-                    <groupId>org.apache.tomee</groupId>
-                    <artifactId>arquillian-tomee-remote</artifactId>
-                    <version>8.0.4</version>
-                    <scope>test</scope>
-                </dependency>
-                <dependency>
-                    <groupId>org.eclipse.krazo</groupId>
-                    <artifactId>krazo-cxf</artifactId>
-                    <version>${project.version}</version>
-                    <scope>runtime</scope>
-                </dependency>
-            </dependencies>
-
-            <build>
-                <plugins>
-                    <plugin>
-                        <artifactId>maven-failsafe-plugin</artifactId>
-                        <configuration>
-                            <skipITs>false</skipITs>
-                            <systemProperties>
-                                <arquillian.launch>tomee</arquillian.launch>
-                                <testsuite.profile>testsuite-tomee</testsuite.profile>
-                            </systemProperties>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
 
         <profile>
             <id>testsuite-liberty</id>
@@ -388,7 +351,7 @@
                 </dependency>
                 <dependency>
                     <groupId>org.eclipse.krazo</groupId>
-                    <artifactId>krazo-cxf</artifactId>
+                    <artifactId>krazo-resteasy</artifactId>
                     <version>${project.version}</version>
                     <scope>runtime</scope>
                 </dependency>

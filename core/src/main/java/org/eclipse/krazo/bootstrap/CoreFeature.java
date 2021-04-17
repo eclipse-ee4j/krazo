@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, 2019 Eclipse Krazo committers and contributors
+ * Copyright (c) 2018, 2021 Eclipse Krazo committers and contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -46,12 +46,6 @@ public class CoreFeature implements Feature {
 
         // RESTEasy seems to ignore @ConstrainedTo in some cases
         if (context.getConfiguration().getRuntimeType() == RuntimeType.SERVER) {
-
-            // https://issues.apache.org/jira/browse/CXF-7501
-            // https://issues.apache.org/jira/browse/TOMEE-2122
-            if (servletContext == null) {
-                log.warning("The ServletContext wasn't injected into the JAX-RS Feature class");
-            }
 
             Initializer.initialize(context, servletContext);
             return true;

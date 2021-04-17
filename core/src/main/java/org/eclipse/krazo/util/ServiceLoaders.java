@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, 2019 Eclipse Krazo committers and contributors
+ * Copyright (c) 2018, 2021 Eclipse Krazo committers and contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,14 +17,13 @@
  */
 package org.eclipse.krazo.util;
 
-import org.eclipse.krazo.bootstrap.ConfigProvider;
-
-import jakarta.annotation.Priority;
 import java.util.Comparator;
 import java.util.List;
 import java.util.ServiceLoader;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
+
+import jakarta.annotation.Priority;
 
 /**
  * Utility code for the {@link ServiceLoader} class.
@@ -41,15 +40,6 @@ public class ServiceLoaders {
 
         // classloader to use for ServiceLoader lookups
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-
-        /*
-         * Special workaround for TomEE . The context classloader is an instance of CxfContainerClassLoader
-         * and NOT the TomEEWebappClassLoader, which seems to break when redeploying apps into a running
-         * container for some reason.
-         */
-        if (classLoader.getClass().getName().contains("CxfContainerClassLoader")) {
-            classLoader = ConfigProvider.class.getClassLoader();
-        }
 
         // return the SPI implementations as a list
         return StreamSupport.stream(ServiceLoader.load(type, classLoader).spliterator(), false)
@@ -76,6 +66,4 @@ public class ServiceLoaders {
             }
         }
     }
-
-
 }

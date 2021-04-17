@@ -56,7 +56,6 @@
         <module>core</module>
         <module>jersey</module>
         <module>resteasy</module>
-        <module>cxf</module>
         <module>tck</module>
         <module>ext</module>
         <module>examples</module>

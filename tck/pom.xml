@@ -103,12 +103,6 @@
                 <artifactId>krazo-resteasy</artifactId>
                 <version>${project.version}</version>
             </dependency>
-            <dependency>
-                <groupId>org.eclipse.krazo</groupId>
-                <artifactId>krazo-cxf</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-
         </dependencies>
     </dependencyManagement>
 
@@ -219,53 +213,7 @@
             </dependencies>
         </profile>
 
-        <!-- Run TCK against TomEE -->
-        <profile>
-            <id>tck-tomee</id>
-            <activation>
-                <property>
-                    <name>tck-env</name>
-                    <value>tomee</value>
-                </property>
-            </activation>
-            <properties>
-                <tomee.version>9.0.0-M2</tomee.version>
-                <tomee.classifier>webprofile</tomee.classifier>
-            </properties>
-            <build>
-                <plugins>
-                    <plugin>
-                        <artifactId>maven-surefire-plugin</artifactId>
-                        <configuration>
-                            <dependenciesToScan>jakarta.mvc.tck:mvc-tck-tests</dependenciesToScan>
-                            <systemPropertyVariables>
-                                <tomee.version>${tomee.version}</tomee.version>
-                                <arquillian.launch>tomee</arquillian.launch>
-                                <jakarta.mvc.tck.api.BaseArchiveProvider>
-                                    org.eclipse.krazo.tck.tomee.TomeeArchiveProvider
-                                </jakarta.mvc.tck.api.BaseArchiveProvider>
-                            </systemPropertyVariables>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-            <dependencies>
-                <dependency>
-                    <groupId>org.apache.tomee</groupId>
-                    <artifactId>arquillian-tomee-remote</artifactId>
-                    <version>${tomee.version}</version>
-                </dependency>
-                <dependency>
-                    <groupId>org.apache.tomee</groupId>
-                    <artifactId>apache-tomee</artifactId>
-                    <version>${tomee.version}</version>
-                    <classifier>${tomee.classifier}</classifier>
-                    <type>zip</type>
-                </dependency>
-            </dependencies>
-        </profile>
-
-        <!-- Run TCK against Open Liberty -->
+<!--         Run TCK against Open Liberty -->
         <profile>
             <id>tck-liberty</id>
             <activation>

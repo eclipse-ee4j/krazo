@@ -72,10 +72,6 @@ public abstract class AbstractArchiveProvider implements BaseArchiveProvider {
         return resolveKrazoModule("org.eclipse.krazo", "krazo-resteasy");
     }
 
-    protected File[] resolveKrazoCxf() {
-        return resolveKrazoModule("org.eclipse.krazo", "krazo-cxf");
-    }
-
     protected File[] resolveKrazoCore() {
         return resolveKrazoModule("org.eclipse.krazo", "krazo-core");
     }

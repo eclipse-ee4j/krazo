@@ -91,20 +91,13 @@ elif [[ ${1} == tck-wildfly22* ]]; then
   mvn -B -V -Dtck-env=wildfly verify ${BUILD_PROFILE}
   popd
 
-elif [ "${1}" == "tck-tomee" ]; then
-
-  mvn -B -V -DskipTests clean install ${BUILD_PROFILE}
-  pushd tck
-  mvn -B -V -Dtck-env=tomee verify ${BUILD_PROFILE}
-  popd
-
-elif [ "${1}" == "tck-liberty" ]; then
-
-  source .travis/install-liberty.sh
-  mvn -B -V -DskipTests clean install ${BUILD_PROFILE}
-  pushd tck
-  mvn -B -V -Dtck-env=liberty -Dliberty.home=${LIBERTY_HOME} verify ${BUILD_PROFILE}
-  popd
+#elif [ "${1}" == "tck-liberty" ]; then
+#
+#  source .travis/install-liberty.sh
+#  mvn -B -V -DskipTests clean install ${BUILD_PROFILE}
+#  pushd tck
+#  mvn -B -V -Dtck-env=liberty -Dliberty.home=${LIBERTY_HOME} verify ${BUILD_PROFILE}
+#  popd
 
 elif [[ ${1} == testsuite-wildfly ]]; then
 
@@ -120,21 +113,13 @@ elif [[ ${1} == testsuite-payara ]]; then
    echo "Running test suite on Payara"
    mvn -P${TYPE} --projects testsuite clean verify ${BUILD_PROFILE}
 
-elif [[ ${1} == testsuite-tomee ]]; then
-
-   source .travis/docker-tomee.sh
-   echo "Building Krazo..."
-   mvn -B -V -DskipTests clean install ${BUILD_PROFILE}
-   echo "Running test suite on TomEE"
-   mvn -P${TYPE} --projects testsuite clean verify ${BUILD_PROFILE}
-
-elif [[ ${1} == testsuite-liberty ]]; then
-
-   source .travis/install-liberty.sh && mvn -P${TYPE} -Dliberty.home=${LIBERTY_HOME} --projects testsuite clean verify ${BUILD_PROFILE}
-   echo "Building Krazo..."
-   mvn -B -V -DskipTests clean install ${BUILD_PROFILE}
-   echo "Running test suite on Liberty"
-   mvn -P${TYPE} -Dliberty.home=${LIBERTY_HOME} --projects testsuite clean verify ${BUILD_PROFILE}
+# elif [[ ${1} == testsuite-liberty ]]; then
+#
+#   source .travis/install-liberty.sh && mvn -P${TYPE} -Dliberty.home=${LIBERTY_HOME} --projects testsuite clean verify ${BUILD_PROFILE}
+#   echo "Building Krazo..."
+#   mvn -B -V -DskipTests clean install ${BUILD_PROFILE}
+#   echo "Running test suite on Liberty"
+#   mvn -P${TYPE} -Dliberty.home=${LIBERTY_HOME} --projects testsuite clean verify ${BUILD_PROFILE}
 
 elif [[ ${1} == testsuite-glassfish ]]; then
 

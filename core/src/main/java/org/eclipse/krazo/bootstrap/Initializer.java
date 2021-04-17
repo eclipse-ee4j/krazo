@@ -17,6 +17,11 @@
  */
 package org.eclipse.krazo.bootstrap;
 
+import java.util.Objects;
+import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import org.eclipse.krazo.core.ViewResponseFilter;
 import org.eclipse.krazo.servlet.KrazoContainerInitializer;
 import org.eclipse.krazo.util.ServiceLoaders;
@@ -24,10 +29,6 @@ import org.eclipse.krazo.util.ServiceLoaders;
 import jakarta.servlet.ServletContext;
 import jakarta.ws.rs.core.Configuration;
 import jakarta.ws.rs.core.FeatureContext;
-import java.util.Objects;
-import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Main class for triggering initialization of Eclipse Krazo
@@ -71,9 +72,6 @@ public final class Initializer {
         return config.isRegistered(ViewResponseFilter.class);
     }
 
-    /**
-     * Note: ServletContext may be null here, because CXF doesn't inject it correctly
-     */
     private static boolean isMvcApplication(ServletContext servletContext) {
 
         // we fall back to enable Krazo if detection didn't work

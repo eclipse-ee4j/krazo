@@ -36,12 +36,6 @@
             <artifactId>krazo-resteasy</artifactId>
             <version>\${krazo.version}</version>
         </dependency>
-        #elseif (${krazoImpl} == 'cxf')
-        <dependency>
-            <groupId>org.eclipse.krazo</groupId>
-            <artifactId>krazo-cxf</artifactId>
-            <version>\${krazo.version}</version>
-        </dependency>
         #else
         <dependency>
             <groupId>org.eclipse.krazo</groupId>

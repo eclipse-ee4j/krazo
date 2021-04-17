@@ -17,8 +17,6 @@
  */
 package org.eclipse.krazo.jaxrs;
 
-import org.eclipse.krazo.util.CdiUtils;
-
 import jakarta.annotation.Priority;
 import jakarta.mvc.Controller;
 import jakarta.servlet.http.HttpServletRequest;
@@ -30,7 +28,6 @@ import jakarta.ws.rs.core.Application;
 import jakarta.ws.rs.core.Configuration;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.UriInfo;
-import java.io.IOException;
 
 /**
  * Post-Matching ContainerRequestFilter
@@ -59,15 +56,11 @@ public class PostMatchingRequestFilter implements ContainerRequestFilter {
     @Context
     private ResourceInfo resourceInfo;
 
+    @Context
+    private JaxRsContextProducer contextProducer;
+
     @Override
     public void filter(ContainerRequestContext requestContext) {
-
-        /*
-         * Please note that we CANNOT inject JaxRsContextProducer here, because this will
-         * fail on TomEE/CXF/OWB because processing @Context fails for some reason.
-         */
-        JaxRsContextProducer contextProducer = CdiUtils.getApplicationBean(JaxRsContextProducer.class)
-                .orElseThrow(() -> new IllegalStateException("Cannot find CDI managed JaxRsContextProducer"));
 
         // store JAX-RS context objects so we can produce them via CDI
         contextProducer.setConfiguration(configuration);
