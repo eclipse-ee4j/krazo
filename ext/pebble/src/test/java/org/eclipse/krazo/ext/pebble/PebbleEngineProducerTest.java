@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2014-2015 Oracle and/or its affiliates. All rights reserved.
- * Copyright (c) 2018, 2019 Eclipse Krazo committers and contributors
+ * Copyright (c) 2018-2021 Eclipse Krazo committers and contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@ package org.eclipse.krazo.ext.pebble;
 
 import com.mitchellbosecke.pebble.PebbleEngine;
 import com.mitchellbosecke.pebble.extension.escaper.EscapeFilter;
-import com.mitchellbosecke.pebble.loader.ServletLoader;
+import com.mitchellbosecke.pebble.loader.Servlet5Loader;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -48,7 +48,7 @@ public class PebbleEngineProducerTest {
 
     @Test
     public void shouldUseServletContextLoader() {
-        assertTrue(pebbleEngineProducer.pebbleEngine().getLoader() instanceof ServletLoader);
+        assertTrue(pebbleEngineProducer.pebbleEngine().getLoader() instanceof Servlet5Loader);
     }
 
     @Test
