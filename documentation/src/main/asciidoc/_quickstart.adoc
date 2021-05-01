@@ -33,6 +33,7 @@ The easiest way getting started with Eclipse Krazo is to generate a Jakarta EE p
 archetype. This archetype generates a simple project including the Jakarta EE Web Profile and the selected,
 server-specific Krazo implementation.
 
+This archetype will use Jakarta EE 8 until version 1.1.0 of Krazo and Jakarta EE 9 since version 2.0.0.
 
 ===== How to use the archetype
 
@@ -40,20 +41,36 @@ The usage of the archetype is really easy. Depending on your application server,
 
 ====== Glassfish / Payara (Jersey)
 
+For Java EE 8 / Jakarta EE 8:
+
 [source, subs="attributes"]
-....
+----
 mvn archetype:generate \
 -DarchetypeGroupId=org.eclipse.krazo \
 -DarchetypeArtifactId=krazo-jakartaee8-archetype \
 -DarchetypeVersion={krazo-version}  \
 -DgroupId=YOUR GROUP ID\
 -DartifactId=YOUR ARTIFACT ID
-....
+----
 
-====== Wildfly (RESTEasy)
+For Jakarta EE 9:
 
 [source, subs="attributes"]
-....
+----
+mvn archetype:generate \
+-DarchetypeGroupId=org.eclipse.krazo \
+-DarchetypeArtifactId=krazo-jakartaee9-archetype \
+-DarchetypeVersion={krazo-version}  \
+-DgroupId=YOUR GROUP ID\
+-DartifactId=YOUR ARTIFACT ID
+----
+
+====== Wildfly (RESTEasy) / OpenLiberty 21.* and newer
+
+For Java EE 8 / Jakarta EE 8:
+
+[source, subs="attributes"]
+----
 mvn archetype:generate \
 -DarchetypeGroupId=org.eclipse.krazo \
 -DarchetypeArtifactId=krazo-jakartaee8-archetype \
@@ -61,7 +78,20 @@ mvn archetype:generate \
 -DgroupId=YOUR GROUP ID \
 -DartifactId=YOUR ARTIFACT ID \
 -DkrazoImpl=resteasy
-....
+----
+
+For Jakarta EE 9:
+
+[source, subs="attributes"]
+----
+mvn archetype:generate \
+-DarchetypeGroupId=org.eclipse.krazo \
+-DarchetypeArtifactId=krazo-jakartaee9-archetype \
+-DarchetypeVersion={krazo-version} \
+-DgroupId=YOUR GROUP ID \
+-DartifactId=YOUR ARTIFACT ID \
+-DkrazoImpl=resteasy
+----
 
 ====== TomEE / OpenLiberty (CXF)
 Krazo won't support CXF anymore. As OpenLiberty is going to switch to RESTEasy until it supports Jakarta REST Web Services 3.0, this change is only relevant for TomEE in general and older versions of OpenLiberty.
@@ -117,7 +147,7 @@ application:
 </dependency>
 ----
 
-====== Wildfly and JBoss EAP
+====== Wildfly, JBoss EAP and OpenLiberty 21.*
 
 Wildfly is using RESTEasy for JAX-RS. So you need the Eclipse Krazo RESTEasy integration module:
 
@@ -134,6 +164,8 @@ Wildfly is using RESTEasy for JAX-RS. So you need the Eclipse Krazo RESTEasy int
     <version>{{versions.krazo.latest}}</version>
 </dependency>
 ----
+
+In the future, OpenLiberty will use RESTEasy also, so it will have the same setup.
 
 ====== Apache TomEE
 
