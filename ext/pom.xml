@@ -47,8 +47,7 @@
         <!-- remove until jakarta is supported by thymeleaf -->
 <!--        <module>thymeleaf</module>-->
         <module>velocity</module>
-        <!-- remove until jakarta servlet is supported by pebble -->
-<!--        <module>pebble</module>-->
+        <module>pebble</module>
     </modules>
 
     <dependencies>

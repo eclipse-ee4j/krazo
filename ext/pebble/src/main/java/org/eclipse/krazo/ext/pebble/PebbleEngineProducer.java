@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2014-2015 Oracle and/or its affiliates. All rights reserved.
- * Copyright (c) 2018, 2019 Eclipse Krazo committers and contributors
+ * Copyright (c) 2018-2021 Eclipse Krazo committers and contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@ package org.eclipse.krazo.ext.pebble;
 import com.mitchellbosecke.pebble.PebbleEngine;
 import com.mitchellbosecke.pebble.extension.Extension;
 import com.mitchellbosecke.pebble.extension.escaper.EscapingStrategy;
-import com.mitchellbosecke.pebble.loader.ServletLoader;
+import com.mitchellbosecke.pebble.loader.Servlet5Loader;
 import java.lang.reflect.InvocationTargetException;
 import org.eclipse.krazo.engine.ViewEngineConfig;
 
@@ -118,7 +118,7 @@ public class PebbleEngineProducer {
                 }
             });
 
-        engine.loader(new ServletLoader(servletContext));
+        engine.loader(new Servlet5Loader(servletContext));
 
         return engine.build();
     }
