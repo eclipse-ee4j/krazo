@@ -117,50 +117,39 @@
             <groupId>jakarta.mvc</groupId>
             <artifactId>jakarta.mvc-api</artifactId>
             <version>${spec.version}</version>
-            <scope>compile</scope>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>jakarta.ws.rs</groupId>
             <artifactId>jakarta.ws.rs-api</artifactId>
             <version>3.0.0</version>
-<!--            <type>bundle</type>-->
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>jakarta.servlet</groupId>
             <artifactId>jakarta.servlet-api</artifactId>
             <version>5.0.0</version>
-<!--            <scope>provided</scope>-->
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>jakarta.enterprise</groupId>
             <artifactId>jakarta.enterprise.cdi-api</artifactId>
             <version>3.0.0</version>
-<!--            <scope>provided</scope>-->
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>jakarta.validation</groupId>
             <artifactId>jakarta.validation-api</artifactId>
             <version>3.0.0</version>
-<!--            <scope>provided</scope>-->
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>jakarta.annotation</groupId>
             <artifactId>jakarta.annotation-api</artifactId>
             <version>2.0.0</version>
-<!--            <scope>provided</scope>-->
+            <scope>provided</scope>
         </dependency>
 
-        <!-- TODO remove -->
-<!--        <dependency>-->
-<!--            <groupId>jakarta.el</groupId>-->
-<!--            <artifactId>jakarta.el-api</artifactId>-->
-<!--            <version>4.0.0-RC2</version>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>jakarta.interceptor</groupId>-->
-<!--            <artifactId>jakarta.interceptor-api</artifactId>-->
-<!--            <version>2.0.0-RC2</version>-->
-<!--        </dependency>-->
         <!-- Test scope -->
         <dependency>
             <groupId>org.glassfish.jersey.core</groupId>
