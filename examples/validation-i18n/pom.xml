@@ -2,7 +2,7 @@
 <!--
 
     Copyright (c) 2014-2015 Oracle and/or its affiliates. All rights reserved.
-    Copyright (c) 2018, 2019 Eclipse Krazo committers and contributors
+    Copyright (c) 2018, 2021 Eclipse Krazo committers and contributors
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -47,7 +47,6 @@
         <dependency>
             <groupId>jakarta.servlet.jsp.jstl</groupId>
             <artifactId>jakarta.servlet.jsp.jstl-api</artifactId>
-            <version>1.2.7</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>

@@ -57,7 +57,6 @@
         <dependency>
             <groupId>jakarta.platform</groupId>
             <artifactId>jakarta.jakartaee-api</artifactId>
-            <version>9.0.0</version>
             <scope>provided</scope>
         </dependency>
 
@@ -86,7 +85,6 @@
             <dependency>
                 <groupId>jakarta.mvc</groupId>
                 <artifactId>jakarta.mvc-api</artifactId>
-                <version>${spec.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.eclipse.krazo</groupId>
