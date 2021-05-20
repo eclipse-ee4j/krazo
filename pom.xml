@@ -1,7 +1,7 @@
 <!--
 
     Copyright (c) 2014-2015 Oracle and/or its affiliates. All rights reserved.
-    Copyright (c) 2018, 2019 Eclipse Krazo committers and contributors
+    Copyright (c) 2018, 2021 Eclipse Krazo committers and contributors
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -48,7 +48,6 @@
 
         <spec.version>2.0.0</spec.version>
         <jersey.version>3.0.0</jersey.version>
-        <jakartaee.version>9.0.0</jakartaee.version>
 
     </properties>
 
@@ -233,6 +232,56 @@
 
         </plugins>
     </build>
+
+    <dependencyManagement>
+        <dependencies>
+
+            <!-- Jakarta MVC API -->
+            <dependency>
+                <groupId>jakarta.mvc</groupId>
+                <artifactId>jakarta.mvc-api</artifactId>
+                <version>${spec.version}</version>
+            </dependency>
+
+            <!-- Other Jakarta specifications -->
+            <dependency>
+                <groupId>jakarta.platform</groupId>
+                <artifactId>jakarta.jakartaee-api</artifactId>
+                <version>9.0.0</version>
+            </dependency>
+            <dependency>
+                <groupId>jakarta.ws.rs</groupId>
+                <artifactId>jakarta.ws.rs-api</artifactId>
+                <version>3.0.0</version>
+            </dependency>
+            <dependency>
+                <groupId>jakarta.servlet</groupId>
+                <artifactId>jakarta.servlet-api</artifactId>
+                <version>5.0.0</version>
+            </dependency>
+            <dependency>
+                <groupId>jakarta.enterprise</groupId>
+                <artifactId>jakarta.enterprise.cdi-api</artifactId>
+                <version>3.0.0</version>
+            </dependency>
+            <dependency>
+                <groupId>jakarta.validation</groupId>
+                <artifactId>jakarta.validation-api</artifactId>
+                <version>3.0.0</version>
+            </dependency>
+            <dependency>
+                <groupId>jakarta.annotation</groupId>
+                <artifactId>jakarta.annotation-api</artifactId>
+                <version>2.0.0</version>
+            </dependency>
+            <dependency>
+                <groupId>jakarta.servlet.jsp.jstl</groupId>
+                <artifactId>jakarta.servlet.jsp.jstl-api</artifactId>
+                <version>2.0.0</version>
+            </dependency>
+
+        </dependencies>
+    </dependencyManagement>
 
     <profiles>
         <profile>
