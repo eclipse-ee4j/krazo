@@ -83,10 +83,6 @@
 
             <!-- Used by archive provider to lookup versions -->
             <dependency>
-                <groupId>jakarta.mvc</groupId>
-                <artifactId>jakarta.mvc-api</artifactId>
-            </dependency>
-            <dependency>
                 <groupId>org.eclipse.krazo</groupId>
                 <artifactId>krazo-core</artifactId>
                 <version>${project.version}</version>
