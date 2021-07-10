@@ -25,6 +25,8 @@
 
     <name>krazo</name>
 
+    <distributable/>
+
     <!-- Make sure CDI and JAX-RS initialize first -->
     <ordering>
         <after>
