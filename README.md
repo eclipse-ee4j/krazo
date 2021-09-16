@@ -1,5 +1,3 @@
-[![Build Status](https://travis-ci.org/eclipse-ee4j/krazo.svg?branch=master)](https://travis-ci.org/eclipse-ee4j/krazo)
-
 # Eclipse Krazo
 
 Eclipse Krazo is an implementation of action-based MVC specified by Jakarta MVC 2.0. It builds on top of Jakarta RESTful Webservices 
