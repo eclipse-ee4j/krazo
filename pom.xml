@@ -144,15 +144,6 @@
                 </plugin>
 
                 <plugin>
-                    <groupId>org.commonjava.maven.plugins</groupId>
-                    <artifactId>directory-maven-plugin</artifactId>
-                    <version>0.1</version>
-                    <configuration>
-                        <property>rootDir</property>
-                    </configuration>
-                </plugin>
-
-                <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>findbugs-maven-plugin</artifactId>
                     <version>3.0.3</version>
@@ -211,26 +202,6 @@
 
             </plugins>
         </pluginManagement>
-
-        <plugins>
-
-            <!-- Plugins to determine the project root directory -->
-            <plugin>
-                <groupId>org.commonjava.maven.plugins</groupId>
-                <artifactId>directory-maven-plugin</artifactId>
-                <version>0.1</version>
-                <executions>
-                    <execution>
-                        <id>highest-basedir</id>
-                        <phase>initialize</phase>
-                        <goals>
-                            <goal>highest-basedir</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-
-        </plugins>
     </build>
 
     <dependencyManagement>
