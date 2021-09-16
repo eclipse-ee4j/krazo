@@ -1,3 +1,5 @@
+[![Java CI with Maven](https://github.com/eclipse-ee4j/krazo/actions/workflows/main.yml/badge.svg)](https://github.com/eclipse-ee4j/krazo/actions/workflows/main.yml)
+
 # Eclipse Krazo
 
 Eclipse Krazo is an implementation of action-based MVC specified by Jakarta MVC 2.0. It builds on top of Jakarta RESTful Webservices 
