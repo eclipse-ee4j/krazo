@@ -113,6 +113,11 @@
                 <artifactId>krazo-stringtemplate</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.eclipse.krazo.ext</groupId>
+                <artifactId>krazo-jinja2</artifactId>
+                <version>${project.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
