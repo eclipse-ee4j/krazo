@@ -258,6 +258,10 @@
                             <excludedGroups>
                                 org.eclipse.krazo.test.helper.annotation.IgnoreOnWildfly
                             </excludedGroups>
+                            <argLine>
+                                --add-opens=java.base/java.security=ALL-UNNAMED
+                                --add-opens=java.base/java.io=ALL-UNNAMED
+                            </argLine>
                         </configuration>
                     </plugin>
                 </plugins>
