@@ -10,9 +10,9 @@ and currently contains support for RESTEasy and Jersey with a well-defined SPI f
 Eclipse Krazo has configurations to run the testsuite against a bunch of application servers like WildFly, Payara, Glassfish or Liberty.
 The following sections describe how you test Eclipse Krazo against them. At the moment, we test against following servers:
 
-- Glassfish 8
-- WildFly 22.x.x
-- OpenLiberty 21.*
+- Glassfish 6.2.2
+- WildFly 25.x.x
+- OpenLiberty 21.* Beta
 
 ### Preconditions
 - JDK 11
