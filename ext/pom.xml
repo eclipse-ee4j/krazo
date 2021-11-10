@@ -41,7 +41,6 @@
         <module>jade</module>
         <!-- remove until jakarta servlet is supported by jetbrick -->
 <!--        <module>jetbrick</module>-->
-        <module>jsr223</module>
         <module>mustache</module>
         <module>stringtemplate</module>
         <!-- remove until jakarta is supported by thymeleaf -->
