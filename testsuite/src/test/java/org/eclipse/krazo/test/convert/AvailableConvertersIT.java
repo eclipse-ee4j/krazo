@@ -1,83 +1,104 @@
 package org.eclipse.krazo.test.convert;
 
-import org.eclipse.krazo.binding.convert.ConverterRegistry;
-import org.eclipse.krazo.binding.convert.MvcConverter;
+import static org.junit.Assert.assertTrue;
+
+import java.net.URL;
+import java.nio.file.Paths;
+
+import com.gargoylesoftware.htmlunit.WebClient;
+import com.gargoylesoftware.htmlunit.html.HtmlPage;
+
 import org.eclipse.krazo.test.util.WebArchiveBuilder;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
+import org.jboss.arquillian.test.api.ArquillianResource;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import jakarta.inject.Inject;
-import java.lang.annotation.Annotation;
-import java.math.BigDecimal;
-import java.math.BigInteger;
-
-import static org.junit.Assert.assertNotNull;
 
 @RunWith(Arquillian.class)
 public class AvailableConvertersIT {
 
-    private static final Annotation[] EMPTY_ANNOTATIONS = new Annotation[]{};
+    private static final String RESOURCES = "src/main/resources/convert/available";
+    private static final String HTTP_RESOURCE = "resources/available-converter";
 
-    @Deployment(name = "available-converters")
+    @Deployment(testable = false, name = "available-converter")
     public static WebArchive createDeployment() {
         return new WebArchiveBuilder()
+            .addPackage("org.eclipse.krazo.test.convert.available")
+            .addView(Paths.get(RESOURCES)
+                         .resolve("views/index.jsp")
+                         .toFile(), "index.jsp")
             .addBeansXml()
             .build();
     }
 
-    @Inject
-    private ConverterRegistry converterRegistry;
+    @ArquillianResource
+    private URL baseURL;
 
-    @Test
-    public void shortConverterRegistered() {
-        final MvcConverter<Short> converter = converterRegistry.lookup(Short.class, EMPTY_ANNOTATIONS);
+    private WebClient webClient;
 
-        assertNotNull(formatErrorMessage(Short.class), converter);
+    @Before
+    public void setUp() {
+        webClient = new WebClient();
+        webClient.getOptions().setThrowExceptionOnFailingStatusCode(false);
+        webClient.getOptions().setRedirectEnabled(true);
+    }
+
+    @After
+    public void tearDown() {
+        webClient.close();
     }
 
     @Test
-    public void longConverterRegistered() {
-        final MvcConverter<Long> converter = converterRegistry.lookup(Long.class, EMPTY_ANNOTATIONS);
+    public void shortConverterRegistered() throws Exception {
+        final HtmlPage page = webClient.getPage(baseURL + HTTP_RESOURCE);
 
-        assertNotNull(formatErrorMessage(Long.class), converter);
+        assertTrue(formatErrorMessage(Short.class), Boolean.valueOf(page.getElementById("short").getTextContent()));
     }
 
     @Test
-    public void integerConverterRegistered() {
-        final MvcConverter<Integer> converter = converterRegistry.lookup(Integer.class, EMPTY_ANNOTATIONS);
+    public void longConverterRegistered() throws Exception {
+        final HtmlPage page = webClient.getPage(baseURL + HTTP_RESOURCE);
 
-        assertNotNull(formatErrorMessage(Integer.class), converter);
+        assertTrue(formatErrorMessage(Short.class), Boolean.valueOf(page.getElementById("long").getTextContent()));
     }
 
     @Test
-    public void floatConverterRegistered() {
-        final MvcConverter<Float> converter = converterRegistry.lookup(Float.class, EMPTY_ANNOTATIONS);
+    public void integerConverterRegistered() throws Exception {
+        final HtmlPage page = webClient.getPage(baseURL + HTTP_RESOURCE);
 
-        assertNotNull(formatErrorMessage(Float.class), converter);
+        assertTrue(formatErrorMessage(Short.class), Boolean.valueOf(page.getElementById("integer").getTextContent()));
     }
 
     @Test
-    public void doubleConverterRegistered() {
-        final MvcConverter<Double> converter = converterRegistry.lookup(Double.class, EMPTY_ANNOTATIONS);
+    public void floatConverterRegistered() throws Exception {
+        final HtmlPage page = webClient.getPage(baseURL + HTTP_RESOURCE);
 
-        assertNotNull(formatErrorMessage(Double.class), converter);
+        assertTrue(formatErrorMessage(Short.class), Boolean.valueOf(page.getElementById("float").getTextContent()));
     }
 
     @Test
-    public void bigIntegerConverterRegistered() {
-        final MvcConverter<BigInteger> converter = converterRegistry.lookup(BigInteger.class, EMPTY_ANNOTATIONS);
+    public void doubleConverterRegistered() throws Exception {
+        final HtmlPage page = webClient.getPage(baseURL + HTTP_RESOURCE);
 
-        assertNotNull(formatErrorMessage(BigInteger.class), converter);
+        assertTrue(formatErrorMessage(Short.class), Boolean.valueOf(page.getElementById("double").getTextContent()));
     }
 
     @Test
-    public void bigDecimalConverterRegistered() {
-        final MvcConverter<BigDecimal> converter = converterRegistry.lookup(BigDecimal.class, EMPTY_ANNOTATIONS);
+    public void bigIntegerConverterRegistered() throws Exception {
+        final HtmlPage page = webClient.getPage(baseURL + HTTP_RESOURCE);
 
-        assertNotNull(formatErrorMessage(BigDecimal.class), converter);
+        assertTrue(formatErrorMessage(Short.class), Boolean.valueOf(page.getElementById("biginteger").getTextContent()));
+    }
+
+    @Test
+    public void bigDecimalConverterRegistered() throws Exception {
+        final HtmlPage page = webClient.getPage(baseURL + HTTP_RESOURCE);
+
+        assertTrue(formatErrorMessage(Short.class), Boolean.valueOf(page.getElementById("bigdecimal").getTextContent()));
     }
 
     private static String formatErrorMessage(final Class<?> clazz) {
