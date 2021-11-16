@@ -26,13 +26,13 @@ public class AvailableConverterController{
 
     @GET
     public String doGetIndex() {
-        models.put("short", containsMvcConverterForType(Short.class));
-        models.put("long", containsMvcConverterForType(Long.class));
-        models.put("integer", containsMvcConverterForType(Integer.class));
-        models.put("float", containsMvcConverterForType(Float.class));
-        models.put("double", containsMvcConverterForType(Double.class));
-        models.put("biginteger", containsMvcConverterForType(BigInteger.class));
-        models.put("bigdecimal", containsMvcConverterForType(BigDecimal.class));
+        models.put("short_conv", containsMvcConverterForType(Short.class));
+        models.put("long_conv", containsMvcConverterForType(Long.class));
+        models.put("integer_conv", containsMvcConverterForType(Integer.class));
+        models.put("float_conv", containsMvcConverterForType(Float.class));
+        models.put("double_conv", containsMvcConverterForType(Double.class));
+        models.put("biginteger_conv", containsMvcConverterForType(BigInteger.class));
+        models.put("bigdecimal_conv", containsMvcConverterForType(BigDecimal.class));
 
         return "index.jsp";
     }

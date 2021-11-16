@@ -56,49 +56,49 @@ public class AvailableConvertersIT {
     public void shortConverterRegistered() throws Exception {
         final HtmlPage page = webClient.getPage(baseURL + HTTP_RESOURCE);
 
-        assertTrue(formatErrorMessage(Short.class), Boolean.valueOf(page.getElementById("short").getTextContent()));
+        assertTrue(formatErrorMessage(Short.class), Boolean.valueOf(page.getElementById("short_conv").getTextContent()));
     }
 
     @Test
     public void longConverterRegistered() throws Exception {
         final HtmlPage page = webClient.getPage(baseURL + HTTP_RESOURCE);
 
-        assertTrue(formatErrorMessage(Short.class), Boolean.valueOf(page.getElementById("long").getTextContent()));
+        assertTrue(formatErrorMessage(Short.class), Boolean.valueOf(page.getElementById("long_conv").getTextContent()));
     }
 
     @Test
     public void integerConverterRegistered() throws Exception {
         final HtmlPage page = webClient.getPage(baseURL + HTTP_RESOURCE);
 
-        assertTrue(formatErrorMessage(Short.class), Boolean.valueOf(page.getElementById("integer").getTextContent()));
+        assertTrue(formatErrorMessage(Short.class), Boolean.valueOf(page.getElementById("integer_conv").getTextContent()));
     }
 
     @Test
     public void floatConverterRegistered() throws Exception {
         final HtmlPage page = webClient.getPage(baseURL + HTTP_RESOURCE);
 
-        assertTrue(formatErrorMessage(Short.class), Boolean.valueOf(page.getElementById("float").getTextContent()));
+        assertTrue(formatErrorMessage(Short.class), Boolean.valueOf(page.getElementById("float_conv").getTextContent()));
     }
 
     @Test
     public void doubleConverterRegistered() throws Exception {
         final HtmlPage page = webClient.getPage(baseURL + HTTP_RESOURCE);
 
-        assertTrue(formatErrorMessage(Short.class), Boolean.valueOf(page.getElementById("double").getTextContent()));
+        assertTrue(formatErrorMessage(Short.class), Boolean.valueOf(page.getElementById("double_conv").getTextContent()));
     }
 
     @Test
     public void bigIntegerConverterRegistered() throws Exception {
         final HtmlPage page = webClient.getPage(baseURL + HTTP_RESOURCE);
 
-        assertTrue(formatErrorMessage(Short.class), Boolean.valueOf(page.getElementById("biginteger").getTextContent()));
+        assertTrue(formatErrorMessage(Short.class), Boolean.valueOf(page.getElementById("biginteger_conv").getTextContent()));
     }
 
     @Test
     public void bigDecimalConverterRegistered() throws Exception {
         final HtmlPage page = webClient.getPage(baseURL + HTTP_RESOURCE);
 
-        assertTrue(formatErrorMessage(Short.class), Boolean.valueOf(page.getElementById("bigdecimal").getTextContent()));
+        assertTrue(formatErrorMessage(Short.class), Boolean.valueOf(page.getElementById("bigdecimal_conv").getTextContent()));
     }
 
     private static String formatErrorMessage(final Class<?> clazz) {
