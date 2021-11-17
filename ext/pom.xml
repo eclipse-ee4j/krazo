@@ -47,6 +47,7 @@
 <!--        <module>thymeleaf</module>-->
         <module>velocity</module>
         <module>pebble</module>
+        <module>jinja2</module>
     </modules>
 
     <dependencies>
