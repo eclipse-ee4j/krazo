@@ -50,29 +50,29 @@ public class DefaultExtensionIT {
     @Test
     public void testString() throws Exception {
         HtmlPage page = webClient.getPage(webUrl + "resources/def-ext/string");
-        assertEquals("/test-def-ext/resources", page.getElementById("basePath").asText());
-        assertEquals("jsp", page.getElementById("defaultExtension").asText());
+        assertEquals("/test-def-ext/resources", page.getElementById("basePath").asNormalizedText());
+        assertEquals("jsp", page.getElementById("defaultExtension").asNormalizedText());
     }
 
     @Test
     public void testViewable() throws Exception {
         HtmlPage page = webClient.getPage(webUrl + "resources/def-ext/viewable");
-        assertEquals("/test-def-ext/resources", page.getElementById("basePath").asText());
-        assertEquals("jsp", page.getElementById("defaultExtension").asText());
+        assertEquals("/test-def-ext/resources", page.getElementById("basePath").asNormalizedText());
+        assertEquals("jsp", page.getElementById("defaultExtension").asNormalizedText());
     }
 
     @Test
     public void testResponse() throws Exception {
         HtmlPage page = webClient.getPage(webUrl + "resources/def-ext/response");
-        assertEquals("/test-def-ext/resources", page.getElementById("basePath").asText());
-        assertEquals("jsp", page.getElementById("defaultExtension").asText());
+        assertEquals("/test-def-ext/resources", page.getElementById("basePath").asNormalizedText());
+        assertEquals("jsp", page.getElementById("defaultExtension").asNormalizedText());
     }
 
     @Test
     public void testVoid() throws Exception {
         HtmlPage page = webClient.getPage(webUrl + "resources/def-ext/void");
-        assertEquals("/test-def-ext/resources", page.getElementById("basePath").asText());
-        assertEquals("jsp", page.getElementById("defaultExtension").asText());
+        assertEquals("/test-def-ext/resources", page.getElementById("basePath").asNormalizedText());
+        assertEquals("jsp", page.getElementById("defaultExtension").asNormalizedText());
     }
 }
 

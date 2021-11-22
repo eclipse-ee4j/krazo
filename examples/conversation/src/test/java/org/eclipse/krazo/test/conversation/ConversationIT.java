@@ -27,8 +27,7 @@ import org.junit.Test;
 
 import java.util.Iterator;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class ConversationIT {
 
@@ -53,17 +52,17 @@ public class ConversationIT {
 
         page = webClient.getPage(webUrl + "resources/converse/start");
         it = page.getDocumentElement().getElementsByTagName("p").iterator();
-        final String secret = it.next().asText();
+        final String secret = it.next().asNormalizedText();
         System.out.println(secret);
 
         page = webClient.getPage(webUrl + "resources/converse/" +
             page.getDocumentElement().getElementsByTagName("a")
                 .iterator().next().getAttribute("href"));
         it = page.getDocumentElement().getElementsByTagName("p").iterator();
-        assertTrue(secret.equals(it.next().asText()));
+        assertEquals(secret, it.next().asNormalizedText());
 
         page = webClient.getPage(webUrl + "resources/converse/stop");
         it = page.getDocumentElement().getElementsByTagName("p").iterator();
-        assertFalse(secret.equals(it.next().asText()));
+        assertNotEquals(secret, it.next().asNormalizedText());
     }
 }

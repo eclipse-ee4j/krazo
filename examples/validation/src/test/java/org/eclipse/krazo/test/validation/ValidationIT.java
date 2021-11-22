@@ -28,8 +28,7 @@ import org.junit.Test;
 
 import java.util.Iterator;
 
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 public class ValidationIT {
 
@@ -58,8 +57,8 @@ public class ValidationIT {
         age.setValueAttribute("21");
         final HtmlPage page2 = button.click();
         final Iterator<HtmlElement> it = page2.getDocumentElement().getElementsByTagName("p").iterator();
-        assertTrue(it.next().asText().contains("john"));
-        assertTrue(it.next().asText().contains("21"));
+        assertTrue(it.next().asNormalizedText().contains("john"));
+        assertTrue(it.next().asNormalizedText().contains("21"));
     }
 
     @Test
@@ -75,7 +74,7 @@ public class ValidationIT {
             button.click();
             fail("Validation error expected in form submission");
         } catch (FailingHttpStatusCodeException e) {
-            assertTrue(e.getStatusCode() == 400);
+            assertEquals(400, e.getStatusCode());
             assertTrue(e.getResponse().getContentAsString().contains("<h1>Form Error</h1>"));
             assertTrue(e.getResponse().getContentAsString().contains("<p>Param: age</p>"));
         }
@@ -92,8 +91,8 @@ public class ValidationIT {
         age.setValueAttribute("21");
         final HtmlPage page2 = button.click();
         final Iterator<HtmlElement> it = page2.getDocumentElement().getElementsByTagName("p").iterator();
-        assertTrue(it.next().asText().contains("john"));
-        assertTrue(it.next().asText().contains("21"));
+        assertTrue(it.next().asNormalizedText().contains("john"));
+        assertTrue(it.next().asNormalizedText().contains("21"));
     }
 
     @Test
@@ -109,7 +108,7 @@ public class ValidationIT {
             button.click();
             fail("Validation error expected in form submission");
         } catch (FailingHttpStatusCodeException e) {
-            assertTrue(e.getStatusCode() == 400);
+            assertEquals(400, e.getStatusCode());
             assertTrue(e.getResponse().getContentAsString().contains("<h1>Form Error</h1>"));
             assertTrue(e.getResponse().getContentAsString().contains("<p>Param: age</p>"));
         }
@@ -120,7 +119,7 @@ public class ValidationIT {
     public void testBindingErrorFail() throws Exception {
         final HtmlPage page = webClient.getPage(webUrl + "resources/form?n=j");
         final Iterator<HtmlElement> it = page.getDocumentElement().getElementsByTagName("p").iterator();
-        assertTrue(it.next().asText().contains("Param: n"));
-        assertTrue(it.next().asText().contains("Message: java.lang.NumberFormatException: For input string: \"j\""));
+        assertTrue(it.next().asNormalizedText().contains("Param: n"));
+        assertTrue(it.next().asNormalizedText().contains("Message: java.lang.NumberFormatException: For input string: \"j\""));
     }
 }

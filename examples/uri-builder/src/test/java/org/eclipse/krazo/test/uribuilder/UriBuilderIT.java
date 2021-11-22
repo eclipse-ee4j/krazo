@@ -24,8 +24,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertEquals;
 
 /**
  * @author Florian Hirsch
@@ -49,18 +48,18 @@ public class UriBuilderIT {
     @Test
     public void test() throws Exception {
         HtmlPage page = webClient.getPage(webUrl + "resources/uri-builder");
-        assertThat(page.getElementById("uri-ref").asText(),
-            equalTo("/uri-builder/resources/uri-builder"));
-        assertThat(page.getElementById("method-ref").asText(),
-            equalTo("/uri-builder/resources/uri-builder"));
-        assertThat(page.getElementById("path-params").asText(),
-            equalTo("/uri-builder/resources/parameters/path/baz/4711"));
-        assertThat(page.getElementById("query-params").asText(),
-            equalTo("/uri-builder/resources/parameters/query?q1=foo&q2=42"));
-        assertThat(page.getElementById("matrix-params").asText(),
-            equalTo("/uri-builder/resources/parameters/matrix;m1=foo;m2=42"));
-        assertThat(page.getElementById("bean-params").asText(),
-            equalTo("/uri-builder/resources/parameters/bean/foo;m=42?q=bar"));
+        assertEquals("/uri-builder/resources/uri-builder",
+            page.getElementById("uri-ref").asNormalizedText());
+        assertEquals("/uri-builder/resources/uri-builder",
+            page.getElementById("method-ref").asNormalizedText());
+        assertEquals("/uri-builder/resources/parameters/path/baz/4711",
+            page.getElementById("path-params").asNormalizedText());
+        assertEquals("/uri-builder/resources/parameters/query?q1=foo&q2=42",
+            page.getElementById("query-params").asNormalizedText());
+        assertEquals("/uri-builder/resources/parameters/matrix;m1=foo;m2=42",
+            page.getElementById("matrix-params").asNormalizedText());
+        assertEquals("/uri-builder/resources/parameters/bean/foo;m=42?q=bar",
+            page.getElementById("bean-params").asNormalizedText());
     }
 
 }
