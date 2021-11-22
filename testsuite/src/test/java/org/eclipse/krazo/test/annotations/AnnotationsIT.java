@@ -75,21 +75,21 @@ public class AnnotationsIT {
     public void testNoView() throws Exception {
         final HtmlPage page = webClient.getPage(baseURL + "resources/annotations/no_view");
         final Iterator<HtmlElement> it = page.getDocumentElement().getElementsByTagName("h1").iterator();
-        assertTrue(it.next().asText().contains("Success"));
+        assertTrue(it.next().asNormalizedText().contains("Success"));
     }
 
     @Test
     public void testWithView() throws Exception {
         final HtmlPage page = webClient.getPage(baseURL + "resources/annotations/view");
         final Iterator<HtmlElement> it = page.getDocumentElement().getElementsByTagName("h1").iterator();
-        assertTrue(it.next().asText().contains("Success"));
+        assertTrue(it.next().asNormalizedText().contains("Success"));
     }
 
     @Test
     public void testWithViewInterface() throws Exception {
         final HtmlPage page = webClient.getPage(baseURL + "resources/annotations/view_interface");
         final Iterator<HtmlElement> it = page.getDocumentElement().getElementsByTagName("h1").iterator();
-        assertTrue(it.next().asText().contains("Success"));
+        assertTrue(it.next().asNormalizedText().contains("Success"));
     }
 
     @Test

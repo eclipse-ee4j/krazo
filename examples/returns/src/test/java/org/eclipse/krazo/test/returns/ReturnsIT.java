@@ -58,28 +58,28 @@ public class ReturnsIT {
     public void testString() throws Exception {
         final HtmlPage page = webClient.getPage(webUrl + "resources/string");
         final Iterator<HtmlElement> it = page.getDocumentElement().getElementsByTagName("h1").iterator();
-        assertTrue(it.next().asText().contains("Hello World"));
+        assertTrue(it.next().asNormalizedText().contains("Hello World"));
     }
 
     @Test
     public void testViewable() throws Exception {
         final HtmlPage page = webClient.getPage(webUrl + "resources/viewable");
         final Iterator<HtmlElement> it = page.getDocumentElement().getElementsByTagName("h1").iterator();
-        assertTrue(it.next().asText().contains("Hello World"));
+        assertTrue(it.next().asNormalizedText().contains("Hello World"));
     }
 
     @Test
     public void testResponse() throws Exception {
         final HtmlPage page = webClient.getPage(webUrl + "resources/response");
         final Iterator<HtmlElement> it = page.getDocumentElement().getElementsByTagName("h1").iterator();
-        assertTrue(it.next().asText().contains("Hello World"));
+        assertTrue(it.next().asNormalizedText().contains("Hello World"));
     }
 
     @Test
     public void testMyViewable() throws Exception {
         final HtmlPage page = webClient.getPage(webUrl + "resources/myviewable");
         final Iterator<HtmlElement> it = page.getDocumentElement().getElementsByTagName("h1").iterator();
-        assertTrue(it.next().asText().contains("Hello World"));
+        assertTrue(it.next().asNormalizedText().contains("Hello World"));
     }
 
     @Test
@@ -97,13 +97,13 @@ public class ReturnsIT {
     public void testResponseViewable() throws Exception {
         final HtmlPage page = webClient.getPage(webUrl + "resources/response/viewable");
         final Iterator<HtmlElement> it = page.getDocumentElement().getElementsByTagName("h1").iterator();
-        assertTrue(it.next().asText().contains("Hello World"));
+        assertTrue(it.next().asNormalizedText().contains("Hello World"));
     }
 
     @Test
     public void testResponseMyViewable() throws Exception {
         final HtmlPage page = webClient.getPage(webUrl + "resources/response/myviewable");
         final Iterator<HtmlElement> it = page.getDocumentElement().getElementsByTagName("h1").iterator();
-        assertTrue(it.next().asText().contains("Hello World"));
+        assertTrue(it.next().asNormalizedText().contains("Hello World"));
     }
 }

@@ -49,35 +49,35 @@ public class ApplicationPathIT {
     public void testView1() throws Exception {
         final HtmlPage page = webClient.getPage(webUrl + "book/view1/1");
         final Iterator<HtmlElement> it = page.getDocumentElement().getElementsByTagName("p").iterator();
-        assertTrue(it.next().asText().contains("Some title"));
-        assertTrue(it.next().asText().contains("Some author"));
-        assertTrue(it.next().asText().contains("Some ISBN"));
+        assertTrue(it.next().asNormalizedText().contains("Some title"));
+        assertTrue(it.next().asNormalizedText().contains("Some author"));
+        assertTrue(it.next().asNormalizedText().contains("Some ISBN"));
     }
 
     @Test
     public void testView2() throws Exception {
         final HtmlPage page = webClient.getPage(webUrl + "book/view2/1");
         final Iterator<HtmlElement> it = page.getDocumentElement().getElementsByTagName("p").iterator();
-        assertTrue(it.next().asText().contains("Some title"));
-        assertTrue(it.next().asText().contains("Some author"));
-        assertTrue(it.next().asText().contains("Some ISBN"));
+        assertTrue(it.next().asNormalizedText().contains("Some title"));
+        assertTrue(it.next().asNormalizedText().contains("Some author"));
+        assertTrue(it.next().asNormalizedText().contains("Some ISBN"));
     }
 
     @Test
     public void testView3() throws Exception {
         final HtmlPage page = webClient.getPage(webUrl + "book/view3/1");
         final Iterator<HtmlElement> it = page.getDocumentElement().getElementsByTagName("p").iterator();
-        assertTrue(it.next().asText().contains("Some title"));
-        assertTrue(it.next().asText().contains("Some author"));
-        assertTrue(it.next().asText().contains("Some ISBN"));
+        assertTrue(it.next().asNormalizedText().contains("Some title"));
+        assertTrue(it.next().asNormalizedText().contains("Some author"));
+        assertTrue(it.next().asNormalizedText().contains("Some ISBN"));
     }
 
     @Test
     public void testView4() throws Exception {
         final HtmlPage page = webClient.getPage(webUrl + "book/view4/1");
         final Iterator<HtmlElement> it = page.getDocumentElement().getElementsByTagName("p").iterator();
-        assertTrue(it.next().asText().contains("Some title"));
-        assertTrue(it.next().asText().contains("Some author"));
-        assertTrue(it.next().asText().contains("Some ISBN"));
+        assertTrue(it.next().asNormalizedText().contains("Some title"));
+        assertTrue(it.next().asNormalizedText().contains("Some author"));
+        assertTrue(it.next().asNormalizedText().contains("Some ISBN"));
     }
 }

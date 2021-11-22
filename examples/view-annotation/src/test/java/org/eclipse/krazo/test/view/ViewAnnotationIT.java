@@ -27,10 +27,7 @@ import org.junit.Test;
 
 import java.util.Iterator;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class ViewAnnotationIT {
 
@@ -54,81 +51,81 @@ public class ViewAnnotationIT {
     @Test
     public void testVoid() throws Exception {
         final HtmlPage page = webClient.getPage(webUrl + "resources/void");
-        assertThat(page.getWebResponse().getStatusCode(), is(200));
+        assertEquals(200, page.getWebResponse().getStatusCode());
         final Iterator<HtmlElement> it = page.getDocumentElement().getElementsByTagName("h1").iterator();
-        assertTrue(it.next().asText().contains("Hello World"));
+        assertTrue(it.next().asNormalizedText().contains("Hello World"));
     }
 
     @Test
     public void testString() throws Exception {
         final HtmlPage page = webClient.getPage(webUrl + "resources/string");
-        assertThat(page.getWebResponse().getStatusCode(), is(200));
+        assertEquals(200, page.getWebResponse().getStatusCode());
         final Iterator<HtmlElement> it = page.getDocumentElement().getElementsByTagName("h1").iterator();
-        assertTrue(it.next().asText().contains("Bye World"));
+        assertTrue(it.next().asNormalizedText().contains("Bye World"));
     }
 
     @Test
     public void testNull() throws Exception {
         final HtmlPage page = webClient.getPage(webUrl + "resources/null");
-        assertThat(page.getWebResponse().getStatusCode(), is(200));
+        assertEquals(200, page.getWebResponse().getStatusCode());
         final Iterator<HtmlElement> it = page.getDocumentElement().getElementsByTagName("h1").iterator();
-        assertTrue(it.next().asText().contains("Hello World"));
+        assertTrue(it.next().asNormalizedText().contains("Hello World"));
     }
 
     @Test
     public void testVoidClass() throws Exception {
         final HtmlPage page = webClient.getPage(webUrl + "resources/class/void");
-        assertThat(page.getWebResponse().getStatusCode(), is(200));
+        assertEquals(200, page.getWebResponse().getStatusCode());
         final Iterator<HtmlElement> it = page.getDocumentElement().getElementsByTagName("h1").iterator();
-        assertTrue(it.next().asText().contains("Hello World"));
+        assertTrue(it.next().asNormalizedText().contains("Hello World"));
     }
 
     @Test
     public void testStringClass() throws Exception {
         final HtmlPage page = webClient.getPage(webUrl + "resources/class/string");
-        assertThat(page.getWebResponse().getStatusCode(), is(200));
+        assertEquals(200, page.getWebResponse().getStatusCode());
         final Iterator<HtmlElement> it = page.getDocumentElement().getElementsByTagName("h1").iterator();
-        assertTrue(it.next().asText().contains("Bye World"));
+        assertTrue(it.next().asNormalizedText().contains("Bye World"));
     }
 
     @Test
     public void testNullClass() throws Exception {
         final HtmlPage page = webClient.getPage(webUrl + "resources/class/null");
-        assertThat(page.getWebResponse().getStatusCode(), is(200));
+        assertEquals(200, page.getWebResponse().getStatusCode());
         final Iterator<HtmlElement> it = page.getDocumentElement().getElementsByTagName("h1").iterator();
-        assertTrue(it.next().asText().contains("Hello World"));
+        assertTrue(it.next().asNormalizedText().contains("Hello World"));
     }
 
     @Test
     public void testVoidForbiddenException() throws Exception {
         final HtmlPage page = webClient.getPage(webUrl + "resources/void/forbidden");
-        assertThat(page.getWebResponse().getStatusCode(), is(403));
+        assertEquals(403, page.getWebResponse().getStatusCode());
         final Iterator<HtmlElement> it = page.getDocumentElement().getElementsByTagName("h1").iterator();
-        assertFalse(it.next().asText().contains("Hello World"));
+        assertFalse(it.next().asNormalizedText().contains("Hello World"));
     }
 
     @Test
     public void testVoidIllegalArgumentException() throws Exception {
         final HtmlPage page = webClient.getPage(webUrl + "resources/void/illegal-argument");
-        assertThat(page.getWebResponse().getStatusCode(), is(500));
+        assertEquals(500, page.getWebResponse().getStatusCode());
         final Iterator<HtmlElement> it = page.getDocumentElement().getElementsByTagName("h1").iterator();
-        assertTrue(it.next().asText().contains("Hello Error"));
+        assertTrue(it.next().asNormalizedText().contains("Hello Error"));
     }
 
     @Test
     public void testStringForbiddenException() throws Exception {
         final HtmlPage page = webClient.getPage(webUrl + "resources/string/forbidden");
-        assertThat(page.getWebResponse().getStatusCode(), is(403));
+        assertEquals(403, page.getWebResponse().getStatusCode());
         final Iterator<HtmlElement> it = page.getDocumentElement().getElementsByTagName("h1").iterator();
-        assertFalse(it.next().asText().contains("Hello World"));
+        assertFalse(it.next().asNormalizedText().contains("Hello World"));
     }
 
     @Test
     public void testStringIllegalArgumentException() throws Exception {
         final HtmlPage page = webClient.getPage(webUrl + "resources/string/illegal-argument");
-        assertThat(page.getWebResponse().getStatusCode(), is(500));
+        assertEquals(500, page.getWebResponse().getStatusCode());
         final Iterator<HtmlElement> it = page.getDocumentElement().getElementsByTagName("h1").iterator();
-        assertTrue(it.next().asText().contains("Hello Error"));
+        assertTrue(it.next().asNormalizedText().contains("Hello Error"));
     }
 
 }

@@ -81,15 +81,15 @@ public class CsrfIT {
 
         // Check hidden input field
         HtmlElement input = form.getElementsByTagName("input").get(1);
-        assertTrue(input.getAttribute("type").equals("hidden"));
-        assertTrue(input.getAttribute("name").equals(CSRF_PARAM));
+        assertEquals("hidden", input.getAttribute("type"));
+        assertEquals(CSRF_PARAM, input.getAttribute("name"));
         assertTrue(input.hasAttribute("value"));        // token
 
         // Submit form
         HtmlSubmitInput button = (HtmlSubmitInput) form.getElementsByTagName("input").get(0);
         HtmlPage page2 = button.click();
         Iterator<HtmlElement> it = page2.getDocumentElement().getElementsByTagName("h1").iterator();
-        assertTrue(it.next().asText().contains("CSRF Protection OK"));
+        assertTrue(it.next().asNormalizedText().contains("CSRF Protection OK"));
     }
 
     /**

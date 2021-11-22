@@ -53,7 +53,7 @@ public class ProducesIT {
     @Test
     public void testNoProducesEmptyAccept1() throws Exception {
         final WebResponse wr = webClient.loadWebResponse(
-                new WebRequest(new URL(webUrl + "resources/no_produces1"), ""));
+                new WebRequest(new URL(webUrl + "resources/no_produces1")));
         assertEquals(Response.Status.OK.getStatusCode(), wr.getStatusCode());
         assertEquals(MediaType.TEXT_HTML, wr.getContentType());     // default
     }
@@ -61,7 +61,7 @@ public class ProducesIT {
     @Test
     public void testNoProducesEmptyAccept2() throws Exception {
         final WebResponse wr = webClient.loadWebResponse(
-                new WebRequest(new URL(webUrl + "resources/no_produces2"), ""));
+                new WebRequest(new URL(webUrl + "resources/no_produces2")));
         assertEquals(Response.Status.OK.getStatusCode(), wr.getStatusCode());
         assertEquals(MediaType.TEXT_HTML, wr.getContentType());     // default
     }
@@ -69,7 +69,7 @@ public class ProducesIT {
     @Test
     public void testNoProduces1() throws Exception {
         final WebResponse wr = webClient.loadWebResponse(
-                new WebRequest(new URL(webUrl + "resources/no_produces1"), ACCEPT_HEADER));
+                new WebRequest(new URL(webUrl + "resources/no_produces1"), ACCEPT_HEADER, null));
         assertEquals(Response.Status.OK.getStatusCode(), wr.getStatusCode());
         assertEquals(MediaType.TEXT_HTML, wr.getContentType());
     }
@@ -77,7 +77,7 @@ public class ProducesIT {
     @Test
     public void testNoProduces2() throws Exception {
         final WebResponse wr = webClient.loadWebResponse(
-                new WebRequest(new URL(webUrl + "resources/no_produces2"), ACCEPT_HEADER));
+                new WebRequest(new URL(webUrl + "resources/no_produces2"), ACCEPT_HEADER, null));
         assertEquals(Response.Status.OK.getStatusCode(), wr.getStatusCode());
         assertEquals(MediaType.TEXT_HTML, wr.getContentType());
     }
@@ -85,7 +85,7 @@ public class ProducesIT {
     @Test
     public void testMultipleProduces1() throws Exception {
         final WebResponse wr = webClient.loadWebResponse(
-                new WebRequest(new URL(webUrl + "resources/multiple_produces2"), ACCEPT_HEADER));
+                new WebRequest(new URL(webUrl + "resources/multiple_produces2"), ACCEPT_HEADER, null));
         assertEquals(Response.Status.OK.getStatusCode(), wr.getStatusCode());
         assertEquals(MediaType.APPLICATION_XHTML_XML, wr.getContentType());
     }
@@ -93,7 +93,7 @@ public class ProducesIT {
     @Test
     public void testMultipleProduces2() throws Exception {
         final WebResponse wr = webClient.loadWebResponse(
-                new WebRequest(new URL(webUrl + "resources/multiple_produces2"), ACCEPT_HEADER));
+                new WebRequest(new URL(webUrl + "resources/multiple_produces2"), ACCEPT_HEADER, null));
         assertEquals(Response.Status.OK.getStatusCode(), wr.getStatusCode());
         assertEquals(MediaType.APPLICATION_XHTML_XML, wr.getContentType());
     }
@@ -101,7 +101,7 @@ public class ProducesIT {
     @Test
     public void otherProduces1() throws Exception {
         final WebResponse wr = webClient.loadWebResponse(
-                new WebRequest(new URL(webUrl + "resources/other_produces1"), ACCEPT_HEADER));
+                new WebRequest(new URL(webUrl + "resources/other_produces1"), ACCEPT_HEADER, null));
         assertEquals(Response.Status.OK.getStatusCode(), wr.getStatusCode());
         assertEquals(MediaType.APPLICATION_XHTML_XML, wr.getContentType());
     }
@@ -109,14 +109,14 @@ public class ProducesIT {
     @Test
     public void otherProduces2() throws Exception {
         final WebResponse wr = webClient.loadWebResponse(
-                new WebRequest(new URL(webUrl + "resources/other_produces2"), ACCEPT_HEADER));
+                new WebRequest(new URL(webUrl + "resources/other_produces2"), ACCEPT_HEADER, null));
         assertEquals(Response.Status.OK.getStatusCode(), wr.getStatusCode());
         assertEquals(MediaType.APPLICATION_XHTML_XML, wr.getContentType());
     }
 
     @Test
     public void language1() throws Exception {
-        final WebRequest wrq = new WebRequest(new URL(webUrl + "resources/language1"), ACCEPT_HEADER);
+        final WebRequest wrq = new WebRequest(new URL(webUrl + "resources/language1"), ACCEPT_HEADER, null);
         wrq.setAdditionalHeader("Accept-Language", ACCEPT_LANGUAGE);
         final WebResponse wr = webClient.loadWebResponse(wrq);
         assertEquals(Response.Status.OK.getStatusCode(), wr.getStatusCode());
@@ -126,7 +126,7 @@ public class ProducesIT {
 
     @Test
     public void language2() throws Exception {
-        final WebRequest wrq = new WebRequest(new URL(webUrl + "resources/language2"), ACCEPT_HEADER);
+        final WebRequest wrq = new WebRequest(new URL(webUrl + "resources/language2"), ACCEPT_HEADER, null);
         wrq.setAdditionalHeader("Accept-Language", ACCEPT_LANGUAGE);
         final WebResponse wr = webClient.loadWebResponse(wrq);
         assertEquals(Response.Status.OK.getStatusCode(), wr.getStatusCode());
@@ -136,7 +136,7 @@ public class ProducesIT {
 
     @Test
     public void locale1() throws Exception {
-        final WebRequest wrq = new WebRequest(new URL(webUrl + "resources/locale1"), ACCEPT_HEADER);
+        final WebRequest wrq = new WebRequest(new URL(webUrl + "resources/locale1"), ACCEPT_HEADER, null);
         wrq.setAdditionalHeader("Accept-Language", ACCEPT_LANGUAGE);
         final WebResponse wr = webClient.loadWebResponse(wrq);
         assertEquals(Response.Status.OK.getStatusCode(), wr.getStatusCode());
@@ -146,7 +146,7 @@ public class ProducesIT {
 
     @Test
     public void locale2() throws Exception {
-        final WebRequest wrq = new WebRequest(new URL(webUrl + "resources/locale2"), ACCEPT_HEADER);
+        final WebRequest wrq = new WebRequest(new URL(webUrl + "resources/locale2"), ACCEPT_HEADER, null);
         wrq.setAdditionalHeader("Accept-Language", ACCEPT_LANGUAGE);
         final WebResponse wr = webClient.loadWebResponse(wrq);
         assertEquals(Response.Status.OK.getStatusCode(), wr.getStatusCode());

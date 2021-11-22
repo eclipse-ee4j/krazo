@@ -35,9 +35,7 @@ import java.net.URL;
 import java.nio.file.Paths;
 import java.util.Optional;
 
-import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 
 /**
@@ -123,7 +121,7 @@ public class EncodingIT {
         // Don't trust helper methods. Compare the real header values.
         Optional<NameValuePair> contentTypeHeader = page.getWebResponse().getResponseHeaders().stream()
             .filter(header -> "Content-Type".equals(header.getName())).findFirst();
-        if (!contentTypeHeader.isPresent()) {
+        if (contentTypeHeader.isEmpty()) {
             fail("No Content-Type header found");
         }
         assertEquals(
@@ -133,8 +131,8 @@ public class EncodingIT {
     }
 
     private void checkUmlauts(HtmlPage page) {
-        String umlauts = page.getElementById("umlauts").asText();
-        assertThat(umlauts, is("äöü"));
+        String umlauts = page.getElementById("umlauts").asNormalizedText();
+        assertEquals("äöü", umlauts);
     }
 
 }

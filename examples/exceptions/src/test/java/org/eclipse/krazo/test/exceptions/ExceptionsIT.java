@@ -23,7 +23,6 @@ import com.gargoylesoftware.htmlunit.html.HtmlElement;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.Iterator;
@@ -59,35 +58,35 @@ public class ExceptionsIT {
     public void testNotFound() throws Exception {
         final HtmlPage page = webClient.getPage(webUrl + "resources/exceptions/not_found");
         final Iterator<HtmlElement> it = page.getDocumentElement().getElementsByTagName("h1").iterator();
-        assertFalse(it.next().asText().contains("Hello World"));
+        assertFalse(it.next().asNormalizedText().contains("Hello World"));
     }
 
     @Test
     public void testNotFoundNoView() throws Exception {
         final HtmlPage page = webClient.getPage(webUrl + "resources/exceptions/not_found_no_view");
         final Iterator<HtmlElement> it = page.getDocumentElement().getElementsByTagName("h1").iterator();
-        assertFalse(it.next().asText().contains("Hello World"));
+        assertFalse(it.next().asNormalizedText().contains("Hello World"));
     }
 
     @Test
     public void testInternalError() throws Exception {
         final HtmlPage page = webClient.getPage(webUrl + "resources/exceptions/internal_error");
         final Iterator<HtmlElement> it = page.getDocumentElement().getElementsByTagName("h1").iterator();
-        assertTrue(it.next().asText().contains("Hello World"));
+        assertTrue(it.next().asNormalizedText().contains("Hello World"));
     }
 
     @Test
     public void testInternalErrorNoView() throws Exception {
         final HtmlPage page = webClient.getPage(webUrl + "resources/exceptions/internal_error_no_view");
         final Iterator<HtmlElement> it = page.getDocumentElement().getElementsByTagName("h1").iterator();
-        assertFalse(it.next().asText().contains("Hello World"));
+        assertFalse(it.next().asNormalizedText().contains("Hello World"));
     }
 
     @Test
     public void testInternalErrorMapped() throws Exception {
         final HtmlPage page = webClient.getPage(webUrl + "resources/exceptions/internal_error_mapped");
         final Iterator<HtmlElement> it = page.getDocumentElement().getElementsByTagName("h1").iterator();
-        assertTrue(it.next().asText().contains("Hello World"));
+        assertTrue(it.next().asNormalizedText().contains("Hello World"));
     }
 }
 
