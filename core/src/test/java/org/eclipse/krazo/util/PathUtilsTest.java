@@ -20,10 +20,7 @@ package org.eclipse.krazo.util;
 
 import org.junit.Test;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /**
  * The JUnit tests for the PathUtils class.
@@ -32,13 +29,15 @@ import static org.junit.Assert.assertTrue;
  */
 public class PathUtilsTest {
 
+    private static final String EMPTY_STRING = "";
+
 	@Test
 	public void noStartingSlash() {
-		assertThat(PathUtils.noStartingSlash("foo"), is("foo"));
-		assertThat(PathUtils.noStartingSlash("/foo"), is("foo"));
-		assertThat(PathUtils.noStartingSlash("/foo/"), is("foo/"));
-		assertThat(PathUtils.noStartingSlash("/"), is(""));
-		assertThat(PathUtils.noStartingSlash(""), is(""));
+        assertEquals("foo", PathUtils.noStartingSlash("foo"));
+        assertEquals("foo", PathUtils.noStartingSlash("/foo"));
+        assertEquals("foo/", PathUtils.noStartingSlash("/foo/"));
+        assertEquals(EMPTY_STRING, PathUtils.noStartingSlash("/"));
+        assertEquals(EMPTY_STRING, PathUtils.noStartingSlash(""));
 	}
 
 	@Test
@@ -51,44 +50,44 @@ public class PathUtilsTest {
 
 	@Test
 	public void noPrefix() {
-		assertThat(PathUtils.noPrefix("redirect:foo", "redirect:"), is("foo"));
-		assertThat(PathUtils.noPrefix("foo:bar", "bar"), is("foo:bar"));
-		assertThat(PathUtils.noPrefix("", ""), is(""));
+        assertEquals("foo", PathUtils.noPrefix("redirect:foo", "redirect:"));
+        assertEquals("foo:bar", PathUtils.noPrefix("foo:bar", "bar"));
+        assertEquals(EMPTY_STRING, PathUtils.noPrefix(EMPTY_STRING, EMPTY_STRING));
 	}
 
 	@Test
 	public void ensureStartingSlash() {
-		assertThat(PathUtils.ensureStartingSlash("foo"), is("/foo"));
-		assertThat(PathUtils.ensureStartingSlash("/foo"), is("/foo"));
-		assertThat(PathUtils.ensureStartingSlash("/foo/"), is("/foo/"));
-		assertThat(PathUtils.ensureStartingSlash("/"), is("/"));
-		assertThat(PathUtils.ensureStartingSlash(""), is("/"));
+		assertEquals("/foo", PathUtils.ensureStartingSlash("foo"));
+		assertEquals("/foo", PathUtils.ensureStartingSlash("/foo"));
+		assertEquals("/foo/", PathUtils.ensureStartingSlash("/foo/"));
+		assertEquals("/", PathUtils.ensureStartingSlash("/"));
+		assertEquals("/", PathUtils.ensureStartingSlash(""));
 	}
 
 	@Test
 	public void ensureEndingSlash() {
-		assertThat(PathUtils.ensureEndingSlash("foo"), is("foo/"));
-		assertThat(PathUtils.ensureEndingSlash("/foo"), is("/foo/"));
-		assertThat(PathUtils.ensureEndingSlash("/foo/"), is("/foo/"));
-		assertThat(PathUtils.ensureStartingSlash("/"), is("/"));
-		assertThat(PathUtils.ensureStartingSlash(""), is("/"));
+		assertEquals("foo/", PathUtils.ensureEndingSlash("foo"));
+		assertEquals("/foo/", PathUtils.ensureEndingSlash("/foo"));
+		assertEquals("/foo/", PathUtils.ensureEndingSlash("/foo/"));
+		assertEquals("/", PathUtils.ensureStartingSlash("/"));
+		assertEquals("/", PathUtils.ensureStartingSlash(EMPTY_STRING));
 	}
 
 	@Test
 	public void ensureNotEndingSlash() {
-		assertThat(PathUtils.ensureNotEndingSlash("foo/"), is("foo"));
-		assertThat(PathUtils.ensureNotEndingSlash("/foo/"), is("/foo"));
-		assertThat(PathUtils.ensureNotEndingSlash("/"), is(""));
-		assertThat(PathUtils.ensureNotEndingSlash(""), is(""));
+		assertEquals("foo", PathUtils.ensureNotEndingSlash("foo/"));
+		assertEquals("/foo", PathUtils.ensureNotEndingSlash("/foo/"));
+		assertEquals(EMPTY_STRING, PathUtils.ensureNotEndingSlash("/"));
+		assertEquals(EMPTY_STRING, PathUtils.ensureNotEndingSlash(""));
 	}
 
 	@Test
 	public void normalizePath() {
-		assertThat(PathUtils.normalizePath(""), is(""));
-		assertThat(PathUtils.normalizePath("/*"), is(""));
-		assertThat(PathUtils.ensureStartingSlash("/"), is("/"));
-		assertThat(PathUtils.normalizePath("/foo/bar/"), is("/foo/bar"));
-		assertThat(PathUtils.normalizePath("foo/bar"), is("/foo/bar"));
+		assertEquals(EMPTY_STRING, PathUtils.normalizePath(EMPTY_STRING));
+		assertEquals(EMPTY_STRING, PathUtils.normalizePath("/*"));
+		assertEquals("/", PathUtils.ensureStartingSlash("/"));
+		assertEquals("/foo/bar", PathUtils.normalizePath("/foo/bar/"));
+		assertEquals("/foo/bar", PathUtils.normalizePath("foo/bar"));
 	}
 
 }

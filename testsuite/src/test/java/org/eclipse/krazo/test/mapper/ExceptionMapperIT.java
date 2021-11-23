@@ -27,6 +27,7 @@ import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.asset.StringAsset;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -34,10 +35,8 @@ import org.junit.runner.RunWith;
 import java.io.IOException;
 import java.net.URL;
 
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.startsWith;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(Arquillian.class)
 public class ExceptionMapperIT {
@@ -48,7 +47,7 @@ public class ExceptionMapperIT {
     private WebClient webClient;
 
     @Deployment(testable = false)
-    public static Archive createDeployment() {
+    public static Archive<WebArchive> createDeployment() {
         return new WebArchiveBuilder()
             .addPackage("org.eclipse.krazo.test.mapper")
             .addView(new StringAsset("<h1>${message}</h1>"), "success.jsp")
@@ -70,10 +69,9 @@ public class ExceptionMapperIT {
         Page page = webClient.getPage(baseURL.toString() + "mvc/mappers/success");
         WebResponse webResponse = page.getWebResponse();
 
-        assertThat(webResponse.getStatusCode(), equalTo(200));
-        assertThat(webResponse.getContentType(), startsWith("text/html"));
-        assertThat(webResponse.getContentAsString(),
-            containsString("<h1>Controller was executed without errors!</h1>"));
+        assertEquals(200, webResponse.getStatusCode());
+        assertTrue(webResponse.getContentType().startsWith("text/html"));
+        assertTrue(webResponse.getContentAsString().contains("<h1>Controller was executed without errors!</h1>"));
 
     }
 
@@ -83,10 +81,9 @@ public class ExceptionMapperIT {
         Page page = webClient.getPage(baseURL.toString() + "mvc/mappers/fail-plain-text");
         WebResponse webResponse = page.getWebResponse();
 
-        assertThat(webResponse.getStatusCode(), equalTo(491));
-        assertThat(webResponse.getContentType(), startsWith("text/plain"));
-        assertThat(webResponse.getContentAsString(),
-            equalTo("Exception caught: Error thrown by controller"));
+        assertEquals(491, webResponse.getStatusCode());
+        assertTrue(webResponse.getContentType().startsWith("text/plain"));
+        assertEquals("Exception caught: Error thrown by controller", webResponse.getContentAsString());
 
     }
 
@@ -96,10 +93,9 @@ public class ExceptionMapperIT {
         Page page = webClient.getPage(baseURL.toString() + "mvc/mappers/fail-mvc-view");
         WebResponse webResponse = page.getWebResponse();
 
-        assertThat(webResponse.getStatusCode(), equalTo(492));
-        assertThat(webResponse.getContentType(), startsWith("text/html"));
-        assertThat(webResponse.getContentAsString(),
-            containsString("<h1>Exception caught: Error thrown by controller</h1>"));
+        assertEquals(492, webResponse.getStatusCode());
+        assertTrue(webResponse.getContentType().startsWith("text/html"));
+        assertTrue(webResponse.getContentAsString().contains("<h1>Exception caught: Error thrown by controller</h1>"));
 
     }
 }
