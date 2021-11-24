@@ -68,10 +68,8 @@ public class AnnotationUtilsTest {
     @Test
     public void getAnnotationOnMethod() throws NoSuchMethodException {
         View view = AnnotationUtils.getAnnotation(someController.getClass().getMethod("start"), View.class);
-        assertNotNull(view.value());
         assertEquals("start.jsp", view.value());
         NotNull notNull = AnnotationUtils.getAnnotation(someBean.getClass().getMethod("notNull"), NotNull.class);
-        assertNotNull(notNull.message());
         assertEquals("notNull", notNull.message());
         assertNotNull(AnnotationUtils.getAnnotation(BaseController.class.getMethod("start"), View.class));
         assertNotNull(AnnotationUtils.getAnnotation(InheritedController.class.getMethod("start"), View.class));
