@@ -29,9 +29,7 @@ import java.util.HashSet;
 import static org.easymock.EasyMock.createMock;
 import static org.easymock.EasyMock.expect;
 import static org.easymock.EasyMock.replay;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertEquals;
 
 /**
  * <p>The test for {@link UriTemplateParser}.</p>
@@ -57,51 +55,51 @@ public class UriTemplateParserTest {
     public void shouldInitApplicationUris() {
         HashSet<Class<?>> controllers = new HashSet<>(Arrays.asList(UriBuilderTestControllers.SomeController.class, UriBuilderTestControllers.ParamsController.class));
         ApplicationUris uris = uriTemplateParser.init(controllers);
-        assertThat(uris.list().size(), is(7));
+        assertEquals(7, uris.list().size());
     }
 
     @Test
     public void shouldParseMethods() throws NoSuchMethodException {
-        assertThat(uriTemplateParser.parseMethod(UriBuilderTestControllers.SomeController.class.getMethod("root"), BASE_PATH),
-            equalTo(UriTemplate.fromTemplate("/base-path/some").build()));
-        assertThat(uriTemplateParser.parseMethod(UriBuilderTestControllers.SomeController.class.getMethod("path"), BASE_PATH),
-            equalTo(UriTemplate.fromTemplate("/base-path/some/path").build()));
+        assertEquals(UriTemplate.fromTemplate("/base-path/some").build(),
+            uriTemplateParser.parseMethod(UriBuilderTestControllers.SomeController.class.getMethod("root"), BASE_PATH));
+        assertEquals(UriTemplate.fromTemplate("/base-path/some/path").build(),
+            uriTemplateParser.parseMethod(UriBuilderTestControllers.SomeController.class.getMethod("path"), BASE_PATH));
     }
 
     @Test
     public void shouldParseFromInheritedMethods() throws NoSuchMethodException {
-        assertThat(uriTemplateParser.parseMethod(UriBuilderTestControllers.SomeController.class.getMethod("parent"), BASE_PATH),
-            equalTo(UriTemplate.fromTemplate("/base-path/some/parent").build()));
-        assertThat(uriTemplateParser.parseMethod(UriBuilderTestControllers.ControllerImplementation.class.getMethod("show"), BASE_PATH),
-            equalTo(UriTemplate.fromTemplate("/base-path/implementation/show").build()));
+        assertEquals(UriTemplate.fromTemplate("/base-path/some/parent").build(),
+            uriTemplateParser.parseMethod(UriBuilderTestControllers.SomeController.class.getMethod("parent"), BASE_PATH));
+        assertEquals(UriTemplate.fromTemplate("/base-path/implementation/show").build(),
+            uriTemplateParser.parseMethod(UriBuilderTestControllers.ControllerImplementation.class.getMethod("show"), BASE_PATH));
     }
 
     @Test
     public void shouldParseMethodParams() throws NoSuchMethodException {
-        assertThat(uriTemplateParser.parseMethod(
-            UriBuilderTestControllers.ParamsController.class.getMethod("pathParams", String.class, long.class), BASE_PATH),
-            equalTo(UriTemplate.fromTemplate("/base-path/params/path/{p1}/{p2}").build()));
-        assertThat(uriTemplateParser.parseMethod(
-            UriBuilderTestControllers.ParamsController.class.getMethod("queryParams", String.class, long.class), BASE_PATH),
-            equalTo(UriTemplate.fromTemplate("/base-path/params/query").queryParam("q1").queryParam("q2").build()));
-        assertThat(uriTemplateParser.parseMethod(
-            UriBuilderTestControllers.ParamsController.class.getMethod("matrixParams", String.class, long.class), BASE_PATH),
-            equalTo(UriTemplate.fromTemplate("/base-path/params/matrix").matrixParam("m1").matrixParam("m2").build()));
+        assertEquals(UriTemplate.fromTemplate("/base-path/params/path/{p1}/{p2}").build(),
+            uriTemplateParser.parseMethod(
+            UriBuilderTestControllers.ParamsController.class.getMethod("pathParams", String.class, long.class), BASE_PATH));
+        assertEquals(UriTemplate.fromTemplate("/base-path/params/query").queryParam("q1").queryParam("q2").build(),
+            uriTemplateParser.parseMethod(
+            UriBuilderTestControllers.ParamsController.class.getMethod("queryParams", String.class, long.class), BASE_PATH));
+        assertEquals(UriTemplate.fromTemplate("/base-path/params/matrix").matrixParam("m1").matrixParam("m2").build(),
+            uriTemplateParser.parseMethod(
+            UriBuilderTestControllers.ParamsController.class.getMethod("matrixParams", String.class, long.class), BASE_PATH));
     }
 
     @Test
     public void shouldParseFields() throws NoSuchMethodException {
-        assertThat(uriTemplateParser.parseMethod(UriBuilderTestControllers.FieldsController.class.getMethod("root"), BASE_PATH),
-            equalTo(UriTemplate.fromTemplate("/base-path/fields/{p1}/{p2}/{p3}") //
-                .matrixParam("m1").matrixParam("m2").matrixParam("m3") //
-                .queryParam("q1").queryParam("q2").queryParam("q3").build())); //
+        assertEquals(UriTemplate.fromTemplate("/base-path/fields/{p1}/{p2}/{p3}") //
+            .matrixParam("m1").matrixParam("m2").matrixParam("m3") //
+            .queryParam("q1").queryParam("q2").queryParam("q3").build(),
+            uriTemplateParser.parseMethod(UriBuilderTestControllers.FieldsController.class.getMethod("root"), BASE_PATH));
     }
 
     @Test
     public void shouldParseBeanParams() throws NoSuchMethodException {
-        assertThat(uriTemplateParser.parseMethod(
-            UriBuilderTestControllers.BeanParamController.class.getMethod("bean", UriBuilderTestControllers.BeanParams.class), BASE_PATH),
-            equalTo(UriTemplate.fromTemplate("/base-path/bean/{p}").matrixParam("m").queryParam("q").build()));
+        assertEquals(UriTemplate.fromTemplate("/base-path/bean/{p}").matrixParam("m").queryParam("q").build(),
+            uriTemplateParser.parseMethod(
+            UriBuilderTestControllers.BeanParamController.class.getMethod("bean", UriBuilderTestControllers.BeanParams.class), BASE_PATH));
     }
 
 }

@@ -36,13 +36,13 @@ public abstract class SupportsTest<T> {
 
     protected static final Annotation[] EMPTY_ANNOTATIONS = new Annotation[]{};
 
-    private MvcConverter<T> mvcConverter;
+    private final MvcConverter<T> mvcConverter;
 
     SupportsTest(MvcConverter<T> mvcConverter) {
         this.mvcConverter = mvcConverter;
     }
 
-    @Parameter(0)
+    @Parameter()
     public Class clazz;
     @Parameter(1)
     public Annotation[] annotations;
@@ -50,6 +50,7 @@ public abstract class SupportsTest<T> {
     public boolean isSupported;
 
     @Test
+    @SuppressWarnings("unchecked")
     public void testSupports() {
        if (isSupported) {
            assertTrue(mvcConverter.supports(clazz, annotations));

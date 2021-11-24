@@ -27,8 +27,7 @@ import static org.easymock.EasyMock.eq;
 import static org.easymock.EasyMock.expect;
 import static org.easymock.EasyMock.replay;
 import static org.easymock.EasyMock.verify;
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertEquals;
 
 /**
  * The JUnit tests for the PropertyUtils class.
@@ -43,8 +42,8 @@ public class PropertyUtilsTest {
 		expect(config.getProperty(eq("host"))).andReturn("java.net");
 		expect(config.getProperty(eq("port"))).andReturn(null);
 		replay(config);
-		assertThat(PropertyUtils.getProperty(config, "host", "oracle.com"), is("java.net"));
-		assertThat(PropertyUtils.getProperty(config, "port", 8080), is(8080));
+		assertEquals("java.net", PropertyUtils.getProperty(config, "host", "oracle.com"));
+        assertEquals(8080, (long)PropertyUtils.getProperty(config, "port", 8080));
 		verify(config);
 	}
 

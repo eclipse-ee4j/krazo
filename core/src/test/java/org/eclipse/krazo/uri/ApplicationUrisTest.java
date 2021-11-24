@@ -24,9 +24,7 @@ import org.junit.Test;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertEquals;
 
 /**
  * <p>The test for {@link ApplicationUris}.</p>
@@ -39,7 +37,7 @@ public class ApplicationUrisTest {
 
     private static final String PATH = "/foo";
 
-    private static UriTemplate TEMPLATE = UriTemplate.fromTemplate(PATH).build();
+    private static final UriTemplate TEMPLATE = UriTemplate.fromTemplate(PATH).build();
 
     @Before
     public void onBefore() {
@@ -55,15 +53,15 @@ public class ApplicationUrisTest {
         params.put("c", "e");
         params.put("m", 1);
         params.put("q", 2);
-        assertThat(uris.get("SomeController#root", params).toString(), equalTo("/a/d/e;m=1?q=2"));
+        assertEquals("/a/d/e;m=1?q=2", uris.get("SomeController#root", params).toString());
     }
 
     @Test
     public void shouldRegisterByNameAndRef() throws NoSuchMethodException {
         uris.register(TEMPLATE, UriBuilderTestControllers.UriRefController.class.getMethod("getRoot"));
-        assertThat(uris.get("uri-ref").toString(), equalTo(PATH));
-        assertThat(uris.get("UriRefController#getRoot").toString(), equalTo(PATH));
-        assertThat(uris.list().size(), is(2));
+        assertEquals(PATH, uris.get("uri-ref").toString());
+        assertEquals(PATH, uris.get("UriRefController#getRoot").toString());
+        assertEquals(2, uris.list().size());
     }
 
     @Test

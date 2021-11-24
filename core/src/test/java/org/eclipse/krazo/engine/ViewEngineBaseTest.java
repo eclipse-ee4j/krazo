@@ -23,15 +23,13 @@ import org.junit.Test;
 
 import jakarta.mvc.engine.ViewEngine;
 import jakarta.mvc.engine.ViewEngineContext;
-import jakarta.mvc.engine.ViewEngineException;
 import jakarta.ws.rs.core.Configuration;
 
 import static org.easymock.EasyMock.eq;
 import static org.easymock.EasyMock.expect;
 import static org.easymock.EasyMock.replay;
 import static org.easymock.EasyMock.verify;
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertEquals;
 
 /**
  * The JUnit test for the ViewEngineBase class.
@@ -46,7 +44,7 @@ public class ViewEngineBaseTest {
 			return false;
 		}
 		@Override
-		public void processView(ViewEngineContext context) throws ViewEngineException {
+		public void processView(ViewEngineContext context) {
 
 		}
 	};
@@ -60,8 +58,8 @@ public class ViewEngineBaseTest {
 		expect(ctx.getView()).andReturn("index.jsp");
 		expect(ctx.getView()).andReturn("/somewhere/else/index.jsp");
 		replay(ctx, config);
-		assertThat(viewEngineBase.resolveView(ctx), is("/WEB-INF/views/index.jsp"));
-		assertThat(viewEngineBase.resolveView(ctx), is("/somewhere/else/index.jsp"));
+		assertEquals("/WEB-INF/views/index.jsp", viewEngineBase.resolveView(ctx));
+		assertEquals("/somewhere/else/index.jsp", viewEngineBase.resolveView(ctx));
 		verify(ctx, config);
 	}
 
@@ -73,7 +71,7 @@ public class ViewEngineBaseTest {
 		expect(ctx.getConfiguration()).andReturn(config);
 		expect(ctx.getView()).andReturn("index.jsp");
 		replay(ctx, config);
-		assertThat(viewEngineBase.resolveView(ctx), is("/somewhere/else/index.jsp"));
+		assertEquals("/somewhere/else/index.jsp", viewEngineBase.resolveView(ctx));
 		verify(ctx, config);
 	}
 

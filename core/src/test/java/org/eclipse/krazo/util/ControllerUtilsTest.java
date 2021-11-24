@@ -24,8 +24,8 @@ import jakarta.mvc.Controller;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * The JUnit tests for the {@link ControllerUtils} class.
@@ -36,40 +36,40 @@ public class ControllerUtilsTest {
 
     @Test
     public void shouldIdentifyControllerClasses() {
-        assertThat(ControllerUtils.isController(ClassController.class), is(true));
-        assertThat(ControllerUtils.isController(MethodController.class), is(true));
-        assertThat(ControllerUtils.isController(NoController.class), is(false));
+        assertTrue(ControllerUtils.isController(ClassController.class));
+        assertTrue(ControllerUtils.isController(MethodController.class));
+        assertFalse(ControllerUtils.isController(NoController.class));
     }
 
     @Test
     public void shouldIdentifyControllerMethods() throws NoSuchMethodException {
-        assertThat(ControllerUtils.isControllerMethod(ClassController.class.getMethod("foo")), is(false));
-        assertThat(ControllerUtils.isControllerMethod(ClassController.class.getMethod("bar")), is(true));
-        assertThat(ControllerUtils.isControllerMethod(MethodController.class.getMethod("foo")), is(false));
-        assertThat(ControllerUtils.isControllerMethod(MethodController.class.getMethod("bar")), is(true));
-        assertThat(ControllerUtils.isControllerMethod(NoController.class.getMethod("foo")), is(false));
-        assertThat(ControllerUtils.isControllerMethod(NoController.class.getMethod("bar")), is(false));
+        assertFalse(ControllerUtils.isControllerMethod(ClassController.class.getMethod("foo")));
+        assertTrue(ControllerUtils.isControllerMethod(ClassController.class.getMethod("bar")));
+        assertFalse(ControllerUtils.isControllerMethod(MethodController.class.getMethod("foo")));
+        assertTrue(ControllerUtils.isControllerMethod(MethodController.class.getMethod("bar")));
+        assertFalse(ControllerUtils.isControllerMethod(NoController.class.getMethod("foo")));
+        assertFalse(ControllerUtils.isControllerMethod(NoController.class.getMethod("bar")));
     }
 
     @Test
     public void shouldIdentifyRequestMethods() throws NoSuchMethodException {
-        assertThat(ControllerUtils.isRequestMethod(NoController.class.getMethod("foo")), is(false));
-        assertThat(ControllerUtils.isRequestMethod(NoController.class.getMethod("bar")), is(true));
-        assertThat(ControllerUtils.isRequestMethod(InheritedController.class.getMethod("foo")), is(false));
-        assertThat(ControllerUtils.isRequestMethod(InheritedController.class.getMethod("bar")), is(true));
-        assertThat(ControllerUtils.isRequestMethod(ControllerImpl.class.getMethod("foo")), is(true));
+        assertFalse(ControllerUtils.isRequestMethod(NoController.class.getMethod("foo")));
+        assertTrue(ControllerUtils.isRequestMethod(NoController.class.getMethod("bar")));
+        assertFalse(ControllerUtils.isRequestMethod(InheritedController.class.getMethod("foo")));
+        assertTrue(ControllerUtils.isRequestMethod(InheritedController.class.getMethod("bar")));
+        assertTrue(ControllerUtils.isRequestMethod(ControllerImpl.class.getMethod("foo")));
         // if a subclass or implementation method has any MVC or JAX-RS annotations
-        // then all of the annotations on the superclass or interface method are ignored
-        assertThat(ControllerUtils.isRequestMethod(InheritedController.class.getMethod("baz")), is(false));
-        assertThat(ControllerUtils.isRequestMethod(ControllerImpl.class.getMethod("baz")), is(false));
+        // then all the annotations on the superclass or interface method are ignored
+        assertFalse(ControllerUtils.isRequestMethod(InheritedController.class.getMethod("baz")));
+        assertFalse(ControllerUtils.isRequestMethod(ControllerImpl.class.getMethod("baz")));
     }
 
     @Test
     public void shouldIdentifyDeclaredRequestMethodAnnotations() throws NoSuchMethodException {
-        assertThat(ControllerUtils.hasDeclaredRequestMethodAnnotation(
-            MethodController.class.getMethod("foo")), is(false));
-        assertThat(ControllerUtils.hasDeclaredRequestMethodAnnotation(
-            MethodController.class.getMethod("bar")), is(true));
+        assertFalse(ControllerUtils.hasDeclaredRequestMethodAnnotation(
+            MethodController.class.getMethod("foo")));
+        assertTrue(ControllerUtils.hasDeclaredRequestMethodAnnotation(
+            MethodController.class.getMethod("bar")));
     }
 
     @Controller

@@ -23,9 +23,7 @@ import org.junit.Test;
 import java.lang.reflect.AnnotatedElement;
 import java.util.List;
 
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.*;
 
 /**
  * The JUnit tests for the {@link BeanUtils} class.
@@ -37,9 +35,9 @@ public class BeanUtilsTest {
     @Test
     public void shouldFindFieldsAndAccessors() {
         List<AnnotatedElement> fieldsAndAccessors = BeanUtils.getFieldsAndAccessors(SomeBean.class);
-        assertThat(fieldsAndAccessors.size(), is(3));
+        assertEquals(3, fieldsAndAccessors.size());
         fieldsAndAccessors.forEach(fieldsAndAccessor ->
-            assertThat(fieldsAndAccessor.toString().toLowerCase(), containsString("foo"))
+            assertTrue(fieldsAndAccessor.toString().toLowerCase().contains("foo"))
         );
     }
 
