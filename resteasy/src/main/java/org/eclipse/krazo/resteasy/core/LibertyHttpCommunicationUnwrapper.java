@@ -17,7 +17,9 @@
  */
 package org.eclipse.krazo.resteasy.core;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Objects;
 
 import org.eclipse.krazo.core.HttpCommunicationUnwrapper;
 
@@ -58,10 +60,13 @@ public class LibertyHttpCommunicationUnwrapper implements HttpCommunicationUnwra
       Class<?> requestStateClass = Class.forName("com.ibm.wsspi.webcontainer.WebContainerRequestState", false, obj.getClass().getClassLoader()); //$NON-NLS-1$
       Method getInstance = requestStateClass.getDeclaredMethod("getInstance", boolean.class); //$NON-NLS-1$
       Object requestState = getInstance.invoke(null, false);
+      Objects.requireNonNull(requestState, "Unable to retrieve current WebContainerRequestState instance");
       Method getCurrentThreadsIExtendedRequest = requestStateClass.getDeclaredMethod("getCurrentThreadsIExtendedRequest"); //$NON-NLS-1$
-      return (HttpServletRequest)getCurrentThreadsIExtendedRequest.invoke(requestState);
-    } catch (Throwable e) {
-      throw new RuntimeException(e);
+      HttpServletRequest extendedRequest = (HttpServletRequest)getCurrentThreadsIExtendedRequest.invoke(requestState);
+      Objects.requireNonNull(extendedRequest, "Unable to retrieve current IExtendedRequest from Liberty");
+      return extendedRequest;
+    } catch (ClassNotFoundException | NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+      throw new RuntimeException("Encountered exception when unwrapping Liberty request object", e);
     }
   }
 
