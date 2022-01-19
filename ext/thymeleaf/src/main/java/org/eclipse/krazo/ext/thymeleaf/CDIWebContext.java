@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2014-2015 Oracle and/or its affiliates. All rights reserved.
- * Copyright (c) 2018, 2019 Eclipse Krazo committers and contributors
+ * Copyright (c) 2018, 2022 Eclipse Krazo committers and contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,16 +20,13 @@ package org.eclipse.krazo.ext.thymeleaf;
 
 import org.thymeleaf.context.IWebContext;
 import org.thymeleaf.context.LazyContextVariable;
+import org.thymeleaf.web.IWebExchange;
 
 import jakarta.enterprise.context.spi.CreationalContext;
 import jakarta.enterprise.inject.Any;
 import jakarta.enterprise.inject.spi.Bean;
 import jakarta.enterprise.inject.spi.BeanManager;
 import jakarta.enterprise.util.AnnotationLiteral;
-import jakarta.servlet.ServletContext;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -50,9 +47,7 @@ import java.util.stream.Collectors;
  */
 class CDIWebContext implements IWebContext {
 
-    private final HttpServletRequest request;
-    private final HttpServletResponse response;
-    private final ServletContext context;
+    private final IWebExchange exchange;
     private final Locale locale;
 
     private final BeanManager beanManager;
@@ -63,11 +58,9 @@ class CDIWebContext implements IWebContext {
 
     private final Map<String, Object> variables = new HashMap<>();
 
-    CDIWebContext(BeanManager beanManager, HttpServletRequest request, HttpServletResponse response, ServletContext servletContext, Locale locale) {
+    CDIWebContext(BeanManager beanManager, IWebExchange exchange, Locale locale) {
         this.beanManager = beanManager;
-        this.request = request;
-        this.response = response;
-        this.context = servletContext;
+        this.exchange = exchange;
         this.locale = locale;
         this.cdiNamedBeans = enumerateNamedBeans();
     }
@@ -77,26 +70,6 @@ class CDIWebContext implements IWebContext {
         Set<Bean<?>> beans = beanManager.getBeans(Object.class, new AnnotationLiteral<Any>() {
         });
         return beans.stream().map(Bean::getName).filter(Objects::nonNull).collect(Collectors.toSet());
-    }
-
-    @Override
-    public HttpServletRequest getRequest() {
-        return request;
-    }
-
-    @Override
-    public HttpServletResponse getResponse() {
-        return response;
-    }
-
-    @Override
-    public HttpSession getSession() {
-        return request.getSession(false);
-    }
-
-    @Override
-    public ServletContext getServletContext() {
-        return context;
     }
 
     @Override
@@ -136,8 +109,8 @@ class CDIWebContext implements IWebContext {
         return new LazyContextVariable<Object>() {
             @Override
             protected Object loadValue() {
-                javax.enterprise.inject.spi.Bean<?> bean = beanManager.getBeans(name).iterator().next();
-                CreationalContext ctx = beanManager.createCreationalContext(bean);
+                jakarta.enterprise.inject.spi.Bean<?> bean = beanManager.getBeans(name).iterator().next();
+                CreationalContext<?> ctx = beanManager.createCreationalContext(bean);
                 // push the context a list so they can be disposed after the template has been processed
                 contexts.add(ctx);
                 return beanManager.getReference(bean, bean.getBeanClass(), ctx);
@@ -158,8 +131,13 @@ class CDIWebContext implements IWebContext {
      * MUST be called after the template has been processed
      */
     void close() {
-        for (CreationalContext ctx : contexts) {
+        for (CreationalContext<?> ctx : contexts) {
             ctx.release();
         }
+    }
+
+    @Override
+    public IWebExchange getExchange() {
+        return this.exchange;
     }
 }

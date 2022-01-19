@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2014-2015 Oracle and/or its affiliates. All rights reserved.
- * Copyright (c) 2018, 2019 Eclipse Krazo committers and contributors
+ * Copyright (c) 2018, 2022 Eclipse Krazo committers and contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,12 +20,12 @@ package org.eclipse.krazo.ext.thymeleaf;
 
 import org.eclipse.krazo.engine.ViewEngineConfig;
 import org.thymeleaf.TemplateEngine;
-import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
+import org.thymeleaf.templateresolver.WebApplicationTemplateResolver;
+import org.thymeleaf.web.servlet.IServletWebApplication;
 import org.thymeleaf.templateresolver.ITemplateResolver;
 
 import jakarta.enterprise.inject.Produces;
 import jakarta.inject.Inject;
-import jakarta.servlet.ServletContext;
 
 /**
  * Producer for the TemplateEngine used by ThymeleafViewEngine.
@@ -36,13 +36,14 @@ import jakarta.servlet.ServletContext;
 public class DefaultTemplateEngineProducer {
 
     @Inject
-    private ServletContext servletContext;
+    private JakartaServletWebApplicationWrapper applicationWrapper;
 
     @Produces
     @ViewEngineConfig
     public TemplateEngine getTemplateEngine() {
 
-        ITemplateResolver resolver = new ServletContextTemplateResolver(this.servletContext);
+        IServletWebApplication servletApplication = applicationWrapper.get();
+        ITemplateResolver resolver = new WebApplicationTemplateResolver(servletApplication);
 
         TemplateEngine engine = new TemplateEngine();
         engine.setTemplateResolver(resolver);
