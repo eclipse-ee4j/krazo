@@ -48,7 +48,7 @@ public class BigDecimalConverterTest {
                 new Object[]{"-2", BigDecimal.valueOf(-2), false},
                 new Object[]{"3E2", new BigDecimal("300"), false},
                 new Object[]{"", null, false},
-                new Object[]{"NaN", null, true},
+                new Object[]{"NaN", null, false},
                 new Object[]{"asd", null, true},
                 new Object[]{null, null, false}
             );
