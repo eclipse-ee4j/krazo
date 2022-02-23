@@ -2,7 +2,7 @@
 <!--
 
     Copyright (c) 2014-2015 Oracle and/or its affiliates. All rights reserved.
-    Copyright (c) 2018, 2021 Eclipse Krazo committers and contributors
+    Copyright (c) 2018, 2022 Eclipse Krazo committers and contributors
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -43,8 +43,7 @@
 <!--        <module>jetbrick</module>-->
         <module>mustache</module>
         <module>stringtemplate</module>
-        <!-- remove until jakarta is supported by thymeleaf -->
-<!--        <module>thymeleaf</module>-->
+        <module>thymeleaf</module>
         <module>velocity</module>
         <module>pebble</module>
         <module>jinja2</module>

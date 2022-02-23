@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2014-2015 Oracle and/or its affiliates. All rights reserved.
- * Copyright (c) 2018, 2019 Eclipse Krazo committers and contributors
+ * Copyright (c) 2018, 2022 Eclipse Krazo committers and contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,6 +21,8 @@ package org.eclipse.krazo.ext.thymeleaf;
 import org.eclipse.krazo.engine.ViewEngineBase;
 import org.eclipse.krazo.engine.ViewEngineConfig;
 import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.web.IWebExchange;
+import org.thymeleaf.web.servlet.JakartaServletWebApplication;
 
 import jakarta.annotation.Priority;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -29,7 +31,6 @@ import jakarta.inject.Inject;
 import jakarta.mvc.engine.ViewEngine;
 import jakarta.mvc.engine.ViewEngineContext;
 import jakarta.mvc.engine.ViewEngineException;
-import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -47,7 +48,7 @@ import java.util.Map;
 public class ThymeleafViewEngine extends ViewEngineBase {
 
     @Inject
-    private ServletContext servletContext;
+    private JakartaServletWebApplicationWrapper applicationWrapper;
 
     @Inject
     private BeanManager beanManager;
@@ -67,7 +68,10 @@ public class ThymeleafViewEngine extends ViewEngineBase {
             HttpServletRequest request = context.getRequest(HttpServletRequest.class);
             HttpServletResponse response = context.getResponse(HttpServletResponse.class);
 
-            CDIWebContext ctx = new CDIWebContext(beanManager, request, response, servletContext, context.getLocale());
+            JakartaServletWebApplication servletApplication = applicationWrapper.get();
+            IWebExchange exchange = servletApplication.buildExchange(request, response);
+
+            CDIWebContext ctx = new CDIWebContext(beanManager, exchange, context.getLocale());
 
             Map<String, Object> model = new HashMap<>(context.getModels().asMap());
             model.put("request", request);

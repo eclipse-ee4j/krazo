@@ -42,7 +42,6 @@ import static org.junit.Assert.assertTrue;
  * @author Gregor Tudan
  */
 @RunWith(Arquillian.class)
-@Ignore // Disabled, because jakarta.* package namespace not supported yet
 public class ThymeleafIT {
 
     private static final String WEB_INF_SRC = "src/main/resources/thymeleaf/";
