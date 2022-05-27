@@ -33,7 +33,7 @@
 
     <properties>
 
-        <tck.version>2.0.0</tck.version>
+        <tck.version>2.1.0-SNAPSHOT</tck.version>
         <!-- We don't deploy this module, because the TCK isn't in Maven Central yet -->
         <maven.deploy.skip>true</maven.deploy.skip>
 
@@ -193,6 +193,10 @@
                                     org.eclipse.krazo.tck.wildfly.WildflyArchiveProvider
                                 </jakarta.mvc.tck.api.BaseArchiveProvider>
                             </systemPropertyVariables>
+                            <argLine>
+                                --add-opens=java.base/java.security=ALL-UNNAMED
+                                --add-opens=java.base/java.io=ALL-UNNAMED
+                            </argLine>
                         </configuration>
                     </plugin>
                 </plugins>
