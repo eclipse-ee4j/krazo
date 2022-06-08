@@ -148,7 +148,7 @@ public class CsrfValidateFilter implements ContainerRequestFilter {
      * Check if the controller wants to perform a write access. This means, in HTTP verbs, it wants
      * to perform a {@link POST}, {@link PUT}, {@link PATCH} or {@link DELETE} annotated method.
      *
-     * Because the {@link org.eclipse.krazo.forms.HiddenMethodFilter} enables us to use this methods in forms, we
+     * Because the {@link org.eclipse.krazo.forms.FormMethodOverwriteFilter} enables us to use this methods in forms, we
      * need to validate a Csrf token for them too, because the HTTP POST method is overwritten before this filter is entered.
      *
      * @param controller the controller method to check for write access

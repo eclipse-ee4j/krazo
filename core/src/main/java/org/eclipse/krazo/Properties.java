@@ -18,8 +18,6 @@
  */
 package org.eclipse.krazo;
 
-import org.eclipse.krazo.forms.HiddenMethodFilter;
-
 /**
  * Interface Properties. Application-level properties used to configure Krazo.
  *
@@ -28,15 +26,14 @@ import org.eclipse.krazo.forms.HiddenMethodFilter;
 public interface Properties {
 
     /**
-     * Boolean property that when set to {@code true} indicates Krazo to
-     * use cookies instead of the default URL re-write mechanism to implement
-     * redirect scope.
+     * Boolean property that when set to {@code true} indicates Krazo to use cookies instead of the default URL re-write
+     * mechanism to implement redirect scope.
      */
     String REDIRECT_SCOPE_COOKIES = "org.eclipse.krazo.redirectScopeCookies";
 
     /**
-     * String property that determines the name of the request attribute/parameter
-     * to be used in {@link org.eclipse.krazo.cdi.RedirectScopeManager}
+     * String property that determines the name of the request attribute/parameter to be used in
+     * {@link org.eclipse.krazo.cdi.RedirectScopeManager}
      */
     String REDIRECT_SCOPE_QUERY_PARAM_NAME = "org.eclipse.krazo.redirectScopeQueryParamName";
 
@@ -47,8 +44,7 @@ public interface Properties {
     String REDIRECT_SCOPE_COOKIE_NAME = "org.eclipse.krazo.redirectScopeCookieName";
 
     /**
-     * The implementation of {@link org.eclipse.krazo.security.CsrfTokenStrategy}
-     * to use for storing tokens.
+     * The implementation of {@link org.eclipse.krazo.security.CsrfTokenStrategy} to use for storing tokens.
      */
     String CSRF_TOKEN_STRATEGY = "org.eclipse.krazo.csrfTokenStrategy";
 
@@ -56,9 +52,4 @@ public interface Properties {
      * Property for defining default file extension for usage in views
      */
     String DEFAULT_VIEW_FILE_EXTENSION = "org.eclipse.krazo.defaultViewFileExtension";
-    
-    /**
-     * Boolean property which enables the {@link HiddenMethodFilter} when set to <code>true</code>.
-     */
-    String HIDDEN_METHOD_FILTER_ACTIVE = "org.eclipse.krazo.hiddenMethodFilterActive";
 }

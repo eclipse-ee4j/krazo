@@ -17,12 +17,17 @@
  */
 package org.eclipse.krazo.forms;
 
+import java.io.IOException;
+import java.util.Collections;
+import java.util.List;
+
 import org.eclipse.krazo.KrazoConfig;
 import org.eclipse.krazo.security.FormEntityProvider;
 import org.eclipse.krazo.util.ServiceLoaders;
 
 import jakarta.annotation.Priority;
 import jakarta.inject.Inject;
+import jakarta.mvc.form.FormMethodOverwriter.Options;
 import jakarta.ws.rs.Priorities;
 import jakarta.ws.rs.container.ContainerRequestContext;
 import jakarta.ws.rs.container.ContainerRequestFilter;
@@ -30,19 +35,16 @@ import jakarta.ws.rs.container.PreMatching;
 import jakarta.ws.rs.core.Form;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.ext.Provider;
-import java.io.IOException;
-import java.util.Collections;
-import java.util.List;
 
 /**
  * <p>
- * Filter to replace the method of HTML forms with some that is not covered by the HTML
- * specification (which may be PUT, PATCH or DELETE).
+ * Filter to replace the method of HTML forms with some that is not covered by the HTML specification (which may be PUT,
+ * PATCH or DELETE).
  * </p>
  *
  * <p>
- * To replace the form's method, you need to add an hidden input field named <i>_method</i> to your
- * form and provide the alternative method as value (as shown in the example below).
+ * To replace the form's method, you need to add an hidden input field named <i>_method</i> to your form and provide the
+ * alternative method as value (as shown in the example below).
  * </p>
  *
  * <p>
@@ -63,25 +65,23 @@ import java.util.List;
 @Provider
 @PreMatching
 @Priority(Priorities.HEADER_DECORATOR)
-public class HiddenMethodFilter implements ContainerRequestFilter {
-
-    private static final String HIDDEN_METHOD_NAME = "_method";
+public class FormMethodOverwriteFilter implements ContainerRequestFilter {
 
     private final FormEntityProvider formEntityProvider;
 
     @Inject
     private KrazoConfig krazoConfig;
 
-    public HiddenMethodFilter() {
+    public FormMethodOverwriteFilter() {
         formEntityProvider = ServiceLoaders.list(FormEntityProvider.class).get(0);
     }
 
     @Override
-    public void filter(ContainerRequestContext requestContext) throws IOException {
+    public void filter(final ContainerRequestContext requestContext) throws IOException {
 
-        if (krazoConfig.isHiddenMethodFilterActive() && isFormData(requestContext)) {
-            final Form form = formEntityProvider.getForm(requestContext);
-            final String hiddenMethod = getHiddenMethod(form);
+        if (isFormMethodOverwriteEnabled() && isFormData(requestContext)) {
+            final var form = formEntityProvider.getForm(requestContext);
+            final var hiddenMethod = getHiddenMethod(form);
 
             if (hiddenMethod != null && !hiddenMethod.isEmpty()) {
                 requestContext.setMethod(hiddenMethod);
@@ -89,15 +89,19 @@ public class HiddenMethodFilter implements ContainerRequestFilter {
         }
     }
 
-    private boolean isFormData(ContainerRequestContext requestContext) {
-        return MediaType.APPLICATION_FORM_URLENCODED_TYPE
-            .isCompatible(requestContext.getMediaType());
+    private boolean isFormMethodOverwriteEnabled() {
+        return krazoConfig.getFormMethodOverwriteOption() == Options.ENABLED;
+    }
+
+    private boolean isFormData(final ContainerRequestContext requestContext) {
+        return requestContext.getMethod().equals("POST") && MediaType.APPLICATION_FORM_URLENCODED_TYPE
+                .isCompatible(requestContext.getMediaType());
     }
 
     private String getHiddenMethod(final Form form) {
         String hiddenMethod = null;
-        final List<String> hiddenFieldValues = form.asMap().getOrDefault(HIDDEN_METHOD_NAME, Collections
-            .emptyList());
+        final List<String> hiddenFieldValues = form.asMap().getOrDefault(krazoConfig.getFormMethodOverwriteField(), Collections
+                .emptyList());
 
         if (!hiddenFieldValues.isEmpty()) {
             hiddenMethod = hiddenFieldValues.get(0);

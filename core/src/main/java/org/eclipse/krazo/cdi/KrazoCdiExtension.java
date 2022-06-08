@@ -31,7 +31,7 @@ import org.eclipse.krazo.engine.FaceletsViewEngine;
 import org.eclipse.krazo.engine.JspViewEngine;
 import org.eclipse.krazo.engine.ViewEngineFinder;
 import org.eclipse.krazo.event.*;
-import org.eclipse.krazo.forms.HiddenMethodFilter;
+import org.eclipse.krazo.forms.FormMethodOverwriteFilter;
 import org.eclipse.krazo.jaxrs.JaxRsContextProducer;
 import org.eclipse.krazo.lifecycle.EventDispatcher;
 import org.eclipse.krazo.lifecycle.RequestLifecycle;
@@ -148,7 +148,7 @@ public class KrazoCdiExtension implements Extension {
                 UriTemplateParser.class,
 
                 // forms
-                HiddenMethodFilter.class
+                FormMethodOverwriteFilter.class
         );
     }
 

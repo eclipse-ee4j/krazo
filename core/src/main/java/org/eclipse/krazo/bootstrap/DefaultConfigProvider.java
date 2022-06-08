@@ -24,7 +24,7 @@ import java.util.Set;
 import org.eclipse.krazo.binding.convert.MvcConverterProvider;
 import org.eclipse.krazo.core.ViewResponseFilter;
 import org.eclipse.krazo.core.ViewableWriter;
-import org.eclipse.krazo.forms.HiddenMethodFilter;
+import org.eclipse.krazo.forms.FormMethodOverwriteFilter;
 import org.eclipse.krazo.jaxrs.PostMatchingRequestFilter;
 import org.eclipse.krazo.jaxrs.PreMatchingRequestFilter;
 import org.eclipse.krazo.security.CsrfExceptionMapper;
@@ -50,7 +50,7 @@ public class DefaultConfigProvider implements ConfigProvider {
             PreMatchingRequestFilter.class,
             PostMatchingRequestFilter.class,
             MvcConverterProvider.class,
-            HiddenMethodFilter.class
+            FormMethodOverwriteFilter.class
         )
     );
 

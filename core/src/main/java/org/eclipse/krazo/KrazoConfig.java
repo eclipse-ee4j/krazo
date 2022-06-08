@@ -24,6 +24,7 @@ import org.eclipse.krazo.security.CsrfTokenStrategy;
 import org.eclipse.krazo.security.SessionCsrfTokenStrategy;
 
 import jakarta.inject.Inject;
+import jakarta.mvc.form.FormMethodOverwriter;
 import jakarta.mvc.security.Csrf;
 import jakarta.ws.rs.core.Configuration;
 
@@ -102,12 +103,21 @@ public class KrazoConfig {
         return RedirectScopeManager.DEFAULT_QUERY_PARAM_NAME;
     }
 
-    public boolean isHiddenMethodFilterActive() {
-        final Object value = config.getProperty(Properties.HIDDEN_METHOD_FILTER_ACTIVE);
-        if (value instanceof Boolean) {
-            return (boolean) value;
+    public FormMethodOverwriter.Options getFormMethodOverwriteOption() {
+        final Object value = config.getProperty(FormMethodOverwriter.FORM_METHOD_OVERWRITE);
+        if (value instanceof FormMethodOverwriter.Options) {
+            return (FormMethodOverwriter.Options) value;
         }
 
-        return false;
+        return FormMethodOverwriter.Options.ENABLED;
+    }
+
+    public String getFormMethodOverwriteField() {
+        final Object value = config.getProperty(FormMethodOverwriter.HIDDEN_FIELD_NAME);
+        if (value instanceof String) {
+            return String.valueOf(value);
+        }
+
+        return FormMethodOverwriter.DEFAULT_HIDDEN_FIELD_NAME;
     }
 }
