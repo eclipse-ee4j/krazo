@@ -1,6 +1,6 @@
 ////
 
-    Copyright (c) 2019 Eclipse Krazo committers and contributors
+    Copyright (c) 2019-2022 Eclipse Krazo committers and contributors
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -22,15 +22,16 @@
 
 This section describes features which are built for advanced use-cases.
 
-=== Change HTTP method for Form submissions
+=== Overwrite HTTP method in form submissions
 
 There are architectural approaches which use the power of HTTP verbs for processing views.
+
 For example, the update of a resource can be performed by a `PUT` or `PATCH` request.
-Unfortunately, the HTML specification doesn't support `PUT`, `PATCH` or `DELETE`
-as valid methods for forms.
-To bypass the lack of this possibility, Krazo provides the link:https://github.com/eclipse-ee4j/krazo/blob/master/core/src/main/java/org/eclipse/krazo/forms/HiddenMethodFilter.java[`org.eclipse.krazo.forms.HiddenMethodFilter`].
-This filter enables users to override the `POST` method for form actions by setting an hidden input field, so they can target resources mapped to the supported HTTP vers `PUT`, `PATCH` or `DELETE`.
-When a form uses the `GET` method, this filter is not applied.
+Unfortunately, the HTML specification doesn't support `PUT`, `PATCH` or `DELETE` as valid methods for forms.
+To bypass the lack of this possibility, Krazo provides the link:https://github.com/eclipse-ee4j/krazo/blob/master/core/src/main/java/org/eclipse/krazo/forms/FormMethodOverwriteFilter.java[`org.eclipse.krazo.forms.FormMethodOverwriteFilter`], whose functionality got specified in Jakarta MVC 2.1.
+This filter enables users to override the `POST` method for form actions by setting an hidden input field, so they can target resources mapped to the supported HTTP verbs `PUT`, `PATCH` or `DELETE`.
+
+The form method overwrite is enabled per default, which means overwriting a form's method is supported out of the box.
 
 The following example shows the code of a form, which performs some `DELETE` request on a resource:
 
@@ -43,3 +44,11 @@ The following example shows the code of a form, which performs some `DELETE` req
   <input type="submit" name="submit" value="Submit"/>
 </form>
 ----
+
+==== Migrating from legacy `org.eclipse.krazo.forms.HiddenMethodFilter` to `org.eclipse.krazo.forms.FormMethodOverwriteFilter`
+
+The migration from the legacy `org.eclipse.krazo.forms.HiddenMethodFilter` is simple. 
+
+If the form method overwrite was activated by setting `Properties.HIDDEN_METHOD_FILTER_ACTIVE` to `true`, nothing but removing this line has to be done. The form method overwrite functionality is enabled per default since Jakarta MVC 2.1.
+
+If the form method overwrite has to be disabled to achieve the legacy default behavior, the property `jakarta.mvc.form.FormMethodOverwrite` has to be set to `jakarta.mvc.form.FormMethodOverwriter.Options#DISABLED` inside the Jakarta REST application.
