@@ -44,6 +44,9 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <maven.compiler.release>11</maven.compiler.release>
 
+        <dependencyCheckSkip>true</dependencyCheckSkip>
+        <versionUpdateCheckSkip>true</versionUpdateCheckSkip>
+
         <spec.version>2.1.0.M1</spec.version>
         <jersey.version>3.0.3</jersey.version>
         <arquillian-bom.version>1.6.0.Final</arquillian-bom.version>
@@ -181,6 +184,7 @@
                     <artifactId>dependency-check-maven</artifactId>
                     <version>6.0.1</version>
                     <configuration>
+                        <skip>${dependencyCheckSkip}</skip>
                         <!-- Some dependencies ship dlls for native bindings.
                         This avoids warnings about dotnet not being installed -->
                         <assemblyAnalyzerEnabled>false</assemblyAnalyzerEnabled>
@@ -203,6 +207,9 @@
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>versions-maven-plugin</artifactId>
                     <version>2.8.1</version>
+                    <configuration>
+                        <skip>${versionUpdateCheckSkip}</skip>
+                    </configuration>
                 </plugin>
 
             </plugins>
