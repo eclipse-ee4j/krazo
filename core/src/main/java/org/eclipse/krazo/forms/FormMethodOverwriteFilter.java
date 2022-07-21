@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
+import jakarta.enterprise.context.RequestScoped;
 import org.eclipse.krazo.KrazoConfig;
 import org.eclipse.krazo.security.FormEntityProvider;
 import org.eclipse.krazo.util.ServiceLoaders;
@@ -65,6 +66,7 @@ import jakarta.ws.rs.ext.Provider;
 @Provider
 @PreMatching
 @Priority(Priorities.HEADER_DECORATOR)
+@RequestScoped
 public class FormMethodOverwriteFilter implements ContainerRequestFilter {
 
     private final FormEntityProvider formEntityProvider;
