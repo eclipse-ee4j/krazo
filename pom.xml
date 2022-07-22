@@ -86,6 +86,7 @@
         <asciidoctor-maven-plugin.version>2.0.0-RC.1</asciidoctor-maven-plugin.version>
         <maven-failsafe-plugin.version>2.18.1</maven-failsafe-plugin.version>
         <maven-resources-plugin.version>3.1.0</maven-resources-plugin.version>
+        <license-tool-plugin.version>0.0.1-SNAPSHOT</license-tool-plugin.version>
     </properties>
 
     <modules>
@@ -136,6 +137,16 @@
         <system>GitHub</system>
         <url>https://github.com/eclipse-ee4j/krazo/issues</url>
     </issueManagement>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>dash-licenses-snapshots</id>
+            <url>https://repo.eclipse.org/content/repositories/dash-licenses-snapshots/</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
 
     <build>
         <pluginManagement>
@@ -298,6 +309,23 @@
                         <phase>verify</phase>
                         <goals>
                             <goal>display-dependency-updates</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.eclipse.dash</groupId>
+                <artifactId>license-tool-plugin</artifactId>
+                <version>${license-tool-plugin.version}</version>
+                <configuration>
+                    <dash.skip>true</dash.skip>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>license-check</id>
+                        <goals>
+                            <goal>license-check</goal>
                         </goals>
                     </execution>
                 </executions>
