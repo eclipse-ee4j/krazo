@@ -46,7 +46,7 @@
         <!-- DEPENDENCY PROPERTIES -->
         <spec.version>2.1.0.M1</spec.version>
         <tck.version>2.1.0.M1</tck.version>
-        <jersey.version>3.0.3</jersey.version>
+        <jersey.version>3.1.0-M3</jersey.version>
         <arquillian-bom.version>1.6.0.Final</arquillian-bom.version>
         <shrinkwrap-resolver-bom.version>3.1.4</shrinkwrap-resolver-bom.version>
         <jakartaee-api.version>10.0.0-RC1</jakartaee-api.version>
@@ -55,13 +55,13 @@
         <jakarta.validation-api.version>3.0.2</jakarta.validation-api.version>
         <jakarta.annotation-api.version>2.1.1</jakarta.annotation-api.version>
         <jakarta.servlet.jsp.jstl-api.version>3.0.0</jakarta.servlet.jsp.jstl-api.version>
+        <jakarta.ws.rs-api.version>3.1.0</jakarta.ws.rs-api.version>
         <junit.version>4.13.2</junit.version>
         <slf4j.version>1.7.32</slf4j.version>
         <easymock.version>4.3</easymock.version>
-        <hibernate-validator-cdi.version>7.0.1.Final</hibernate-validator-cdi.version>
-        <resteasy.version>3.15.2.Final</resteasy.version>
-        <resteasy-validator-provider-11.version>3.6.3.Final</resteasy-validator-provider-11.version>
-        <gf.jakarta.el.version>4.0.2</gf.jakarta.el.version>
+        <hibernate-validator-cdi.version>8.0.0.CR1</hibernate-validator-cdi.version>
+        <resteasy.version>6.1.0.Beta2</resteasy.version>
+        <gf.jakarta.el.version>5.0.0-M1</gf.jakarta.el.version>
         <htmlunit.version>2.55.0</htmlunit.version>
         <arquillian-glassfish-remote-3.1.version>1.0.0.Final</arquillian-glassfish-remote-3.1.version>
         <wildfly-arquillian-container-remote.version>2.1.1.Final</wildfly-arquillian-container-remote.version>
@@ -340,7 +340,7 @@
             <dependency>
                 <groupId>jakarta.ws.rs</groupId>
                 <artifactId>jakarta.ws.rs-api</artifactId>
-                <version>3.1.0</version>
+                <version>${jakarta.ws.rs-api.version}</version>
                 <scope>provided</scope>
             </dependency>
 
@@ -396,18 +396,17 @@
             <!-- RESTEasy -->
             <dependency>
                 <groupId>org.jboss.resteasy</groupId>
-                <artifactId>resteasy-jaxrs</artifactId>
+                <artifactId>resteasy-core</artifactId>
                 <version>${resteasy.version}</version>
                 <scope>provided</scope>
             </dependency>
 
             <dependency>
                 <groupId>org.jboss.resteasy</groupId>
-                <artifactId>resteasy-validator-provider-11</artifactId>
-                <version>${resteasy-validator-provider-11.version}</version>
+                <artifactId>resteasy-validator-provider</artifactId>
+                <version>${resteasy.version}</version>
                 <scope>provided</scope>
             </dependency>
-
 
             <!-- TEST SCOPED -->
             <dependency>
