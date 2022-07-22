@@ -55,7 +55,7 @@ public class WebArchiveBuilder {
     }
 
     public WebArchiveBuilder addBeansXml() {
-        archive.addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
+        archive.addAsWebInfResource("beans.xml");
         return this;
     }
 

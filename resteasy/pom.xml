@@ -31,13 +31,8 @@
     <artifactId>krazo-resteasy</artifactId>
     <name>Eclipse Krazo RESTEasy</name>
 
-    <properties>
-        <resteasy.version>3.15.2.Final</resteasy.version>
-    </properties>
-
     <build>
         <plugins>
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
@@ -84,16 +79,19 @@
             <artifactId>jakarta.mvc-api</artifactId>
             <scope>provided</scope>
         </dependency>
+
         <dependency>
             <groupId>jakarta.ws.rs</groupId>
             <artifactId>jakarta.ws.rs-api</artifactId>
             <scope>provided</scope>
         </dependency>
+
         <dependency>
             <groupId>jakarta.servlet</groupId>
             <artifactId>jakarta.servlet-api</artifactId>
             <scope>provided</scope>
         </dependency>
+
         <dependency>
             <groupId>jakarta.annotation</groupId>
             <artifactId>jakarta.annotation-api</artifactId>
@@ -110,17 +108,13 @@
         <!-- RESTEasy -->
         <dependency>
             <groupId>org.jboss.resteasy</groupId>
-            <artifactId>resteasy-jaxrs</artifactId>
-            <version>${resteasy.version}</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.resteasy</groupId>
-            <artifactId>resteasy-validator-provider-11</artifactId>
-            <version>3.6.3.Final</version>
-            <scope>provided</scope>
+            <artifactId>resteasy-core</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>org.jboss.resteasy</groupId>
+            <artifactId>resteasy-validator-provider</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

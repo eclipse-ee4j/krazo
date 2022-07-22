@@ -43,3 +43,9 @@ Go into the testsuite package of Eclipse Krazo and execute `mvn clean integratio
 
 #### Tests are failing locally but not in Jenkins
 In this case, ensure that your local SNAPSHOTS are the newest version of Krazo. Most of time, this solves the problem.
+
+### Developer resources
+
+### license-tool-plugin for checking dependencies
+
+To check if a dependency requires a CQ, the command `mvn org.eclipse.dash:license-tool-plugin:license-check -Dskip.dash=false` can be executed. This creates a summary file in `target/dash/summary`.
