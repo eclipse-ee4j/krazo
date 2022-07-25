@@ -100,7 +100,7 @@ public class ViewResponseFilter implements ContainerResponseFilter {
     @Context
     private ResourceInfo resourceInfo;
 
-    @Context
+    @Inject
     private HttpServletRequest request;
 
     @Inject

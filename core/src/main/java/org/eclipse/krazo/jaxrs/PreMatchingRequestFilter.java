@@ -17,6 +17,7 @@
  */
 package org.eclipse.krazo.jaxrs;
 
+import jakarta.inject.Inject;
 import org.eclipse.krazo.lifecycle.RequestLifecycle;
 import org.eclipse.krazo.util.CdiUtils;
 
@@ -43,7 +44,7 @@ public class PreMatchingRequestFilter implements ContainerRequestFilter {
     @Context
     private Configuration configuration;
 
-    @Context
+    @Inject
     private HttpServletRequest request;
 
     @Context

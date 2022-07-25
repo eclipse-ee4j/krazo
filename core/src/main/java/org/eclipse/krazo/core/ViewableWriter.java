@@ -74,7 +74,7 @@ public class ViewableWriter implements MessageBodyWriter<Viewable> {
     @Inject
     private Instance<Models> modelsInstance;
 
-    @Context
+    @Inject
     private HttpServletRequest injectedRequest;
 
     @Context
