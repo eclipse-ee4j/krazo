@@ -45,7 +45,7 @@
 
         <!-- DEPENDENCY PROPERTIES -->
         <spec.version>2.1.0.RC1</spec.version>
-        <tck.version>2.1.0.RC1</tck.version>
+        <tck.version>2.1.0.RC2</tck.version>
 
         <jersey.version>3.1.0-M3</jersey.version>
         <arquillian-bom.version>1.6.0.Final</arquillian-bom.version>
