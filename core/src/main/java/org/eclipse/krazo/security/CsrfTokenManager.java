@@ -42,7 +42,6 @@ public class CsrfTokenManager {
     private CsrfTokenStrategy tokenStrategy;
 
     @Inject
-    @JaxRsContext
     private HttpServletRequest request;
 
     @Inject

@@ -17,6 +17,7 @@
  */
 package org.eclipse.krazo.jaxrs;
 
+import jakarta.inject.Inject;
 import org.eclipse.krazo.util.CdiUtils;
 
 import jakarta.annotation.Priority;
@@ -43,7 +44,7 @@ public class PostMatchingRequestFilter implements ContainerRequestFilter {
     @Context
     private Configuration configuration;
 
-    @Context
+    @Inject
     private HttpServletRequest request;
 
     @Context

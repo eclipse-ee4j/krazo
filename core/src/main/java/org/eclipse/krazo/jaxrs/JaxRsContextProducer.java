@@ -57,13 +57,6 @@ public class JaxRsContextProducer {
     @Produces
     @JaxRsContext
     @RequestScoped
-    public HttpServletRequest produceHttpServletRequest() {
-        return Objects.requireNonNull(request, "Cannot produce HttpServletRequest");
-    }
-
-    @Produces
-    @JaxRsContext
-    @RequestScoped
     public HttpServletResponse produceHttpServletResponse() {
         return Objects.requireNonNull(response, "Cannot produce HttpServletResponse");
     }
