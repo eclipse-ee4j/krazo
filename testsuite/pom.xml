@@ -26,7 +26,7 @@
     <parent>
         <groupId>org.eclipse.krazo</groupId>
         <artifactId>krazo-parent</artifactId>
-        <version>3.0.0-SNAPSHOT</version>
+        <version>3.0.0.RC1</version>
     </parent>
 
     <artifactId>krazo-testsuite</artifactId>
