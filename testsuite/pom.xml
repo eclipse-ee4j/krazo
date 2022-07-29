@@ -422,9 +422,9 @@
                             <skip>${skipTests}</skip>
                             <serverName>defaultServer</serverName>
                             <assemblyArtifact>
-                                <groupId>io.openliberty</groupId>
-                                <artifactId>openliberty-jakartaee9</artifactId>
-                                <version>22.0.0.7</version>
+                                <groupId>io.openliberty.beta</groupId>
+                                <artifactId>openliberty-runtime</artifactId>
+                                <version>22.0.0.8-beta</version>
                                 <type>zip</type>
                             </assemblyArtifact>
                         </configuration>
