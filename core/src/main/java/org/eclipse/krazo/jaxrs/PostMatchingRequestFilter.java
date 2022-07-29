@@ -44,9 +44,6 @@ public class PostMatchingRequestFilter implements ContainerRequestFilter {
     @Context
     private Configuration configuration;
 
-    @Inject
-    private HttpServletRequest request;
-
     @Context
     private HttpServletResponse response;
 
@@ -66,7 +63,6 @@ public class PostMatchingRequestFilter implements ContainerRequestFilter {
 
         // store JAX-RS context objects so we can produce them via CDI
         contextProducer.setConfiguration(configuration);
-        contextProducer.setRequest(request);
         contextProducer.setResponse(response);
         contextProducer.setApplication(application);
         contextProducer.setUriInfo(uriInfo);

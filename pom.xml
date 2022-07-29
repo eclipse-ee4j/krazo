@@ -45,10 +45,10 @@
 
         <!-- DEPENDENCY PROPERTIES -->
         <spec.version>2.1.0.RC1</spec.version>
-        <tck.version>2.1.0.RC2</tck.version>
+        <tck.version>2.1.0.RC3</tck.version>
 
         <jersey.version>3.1.0-M3</jersey.version>
-        <arquillian-bom.version>1.6.0.Final</arquillian-bom.version>
+        <arquillian-bom.version>1.7.0.Alpha10</arquillian-bom.version>
         <shrinkwrap-resolver-bom.version>3.1.4</shrinkwrap-resolver-bom.version>
         <jakartaee-api.version>10.0.0-RC1</jakartaee-api.version>
         <jakarta.servlet-api.version>6.0.0</jakarta.servlet-api.version>
@@ -63,9 +63,9 @@
         <hibernate-validator-cdi.version>8.0.0.CR1</hibernate-validator-cdi.version>
         <resteasy.version>6.1.0.Beta2</resteasy.version>
         <gf.jakarta.el.version>5.0.0-M1</gf.jakarta.el.version>
-        <htmlunit.version>2.55.0</htmlunit.version>
+        <htmlunit.version>2.63.0</htmlunit.version>
         <arquillian-glassfish-remote-3.1.version>1.0.0.Final</arquillian-glassfish-remote-3.1.version>
-        <wildfly-arquillian-container-remote.version>2.1.1.Final</wildfly-arquillian-container-remote.version>
+        <wildfly-arquillian-container.version>5.0.0.Alpha3</wildfly-arquillian-container.version>
         <arquillian-liberty-managed-jakarta.version>2.0.0-M1</arquillian-liberty-managed-jakarta.version>
 
         <!-- PLUGIN PROPERTIES -->
@@ -87,6 +87,7 @@
         <asciidoctor-maven-plugin.version>2.0.0-RC.1</asciidoctor-maven-plugin.version>
         <maven-failsafe-plugin.version>2.18.1</maven-failsafe-plugin.version>
         <maven-resources-plugin.version>3.1.0</maven-resources-plugin.version>
+        <maven-dependency-plugin.version>3.3.0</maven-dependency-plugin.version>
         <license-tool-plugin.version>0.0.1-SNAPSHOT</license-tool-plugin.version>
     </properties>
 
@@ -490,7 +491,14 @@
             <dependency>
                 <groupId>org.wildfly.arquillian</groupId>
                 <artifactId>wildfly-arquillian-container-remote</artifactId>
-                <version>${wildfly-arquillian-container-remote.version}</version>
+                <version>${wildfly-arquillian-container.version}</version>
+                <scope>test</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.wildfly.arquillian</groupId>
+                <artifactId>wildfly-arquillian-container-managed</artifactId>
+                <version>${wildfly-arquillian-container.version}</version>
                 <scope>test</scope>
             </dependency>
 

@@ -29,15 +29,23 @@
         <property name="browser">htmlunit</property>
     </extension>
 
-    <container qualifier="glassfish">
+    <container qualifier="glassfish" default="true">
         <configuration>
             <property name="adminHost">localhost</property>
             <property name="adminPort">4848</property>
         </configuration>
     </container>
 
-    <container qualifier="wildfly" default="true">
+    <container qualifier="wildfly">
         <configuration>
+            <property name="username">admin</property>
+            <property name="password">wildfly</property>
+        </configuration>
+    </container>
+
+    <container qualifier="wildfly-managed">
+        <configuration>
+            <property name="serverConfig">standalone-full.xml</property>
             <property name="username">admin</property>
             <property name="password">wildfly</property>
         </configuration>

@@ -63,7 +63,6 @@ public class PreMatchingRequestFilter implements ContainerRequestFilter {
 
         // store JAX-RS context objects so we can produce them via CDI
         contextProducer.setConfiguration(configuration);
-        contextProducer.setRequest(request);
         contextProducer.setResponse(response);
         contextProducer.setApplication(application);
         contextProducer.setUriInfo(uriInfo);

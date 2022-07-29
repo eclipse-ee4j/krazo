@@ -37,8 +37,6 @@ public class JaxRsContextProducer {
 
     private Configuration configuration;
 
-    private HttpServletRequest request;
-
     private HttpServletResponse response;
 
     private Application application;
@@ -85,11 +83,6 @@ public class JaxRsContextProducer {
     // using 'package private' here seems to break the CDI scope for some reason
     protected void setConfiguration(Configuration configuration) {
         this.configuration = Objects.requireNonNull(configuration, "Configuration must not be null");
-    }
-
-    // using 'package private' here seems to break the CDI scope for some reason
-    protected void setRequest(HttpServletRequest request) {
-        this.request = Objects.requireNonNull(request, "Request must not be null");
     }
 
     // using 'package private' here seems to break the CDI scope for some reason
