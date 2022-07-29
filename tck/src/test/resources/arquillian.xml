@@ -46,6 +46,10 @@
         <!-- Nothing yet -->
     </container>
 
+    <container qualifier="wildfly-managed">
+        <!-- Nothing yet -->
+    </container>
+
     <!--
         https://tomee.apache.org/arquillian-available-adapters.html
     -->

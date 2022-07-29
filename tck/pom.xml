@@ -197,6 +197,74 @@
             </dependencies>
         </profile>
 
+        <profile>
+            <id>tck-wildfly-managed</id>
+            <activation>
+                <property>
+                    <name>tck-env</name>
+                    <value>wildfly-managed</value>
+                </property>
+            </activation>
+            <properties>
+                <wildfly.version>27.0.0.Alpha3</wildfly.version>
+            </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-dependency-plugin</artifactId>
+                        <version>${maven-dependency-plugin.version}</version>
+                        <executions>
+                            <execution>
+                                <id>unpack</id>
+                                <phase>process-test-resources</phase>
+                                <goals>
+                                    <goal>unpack</goal>
+                                </goals>
+                                <configuration>
+                                    <artifactItems>
+                                        <artifactItem>
+                                            <groupId>org.wildfly</groupId>
+                                            <artifactId>wildfly-preview-dist</artifactId>
+                                            <version>${wildfly.version}</version>
+                                            <type>zip</type>
+                                            <overWrite>false</overWrite>
+                                            <outputDirectory>${project.build.directory}</outputDirectory>
+                                        </artifactItem>
+                                    </artifactItems>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <configuration>
+                            <dependenciesToScan>jakarta.mvc.tck:mvc-tck-tests</dependenciesToScan>
+                            <environmentVariables>
+                                <JBOSS_HOME>${project.build.directory}/wildfly-preview-${wildfly.version}</JBOSS_HOME>
+                            </environmentVariables>
+                            <systemPropertyVariables>
+                                <arquillian.launch>wildfly-managed</arquillian.launch>
+                                <jakarta.mvc.tck.api.BaseArchiveProvider>
+                                    org.eclipse.krazo.tck.wildfly.WildflyArchiveProvider
+                                </jakarta.mvc.tck.api.BaseArchiveProvider>
+                            </systemPropertyVariables>
+                            <argLine>
+                                --add-opens=java.base/java.security=ALL-UNNAMED
+                                --add-opens=java.base/java.io=ALL-UNNAMED
+                            </argLine>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+            <dependencies>
+                <dependency>
+                    <groupId>org.wildfly.arquillian</groupId>
+                    <artifactId>wildfly-arquillian-container-managed</artifactId>
+                </dependency>
+            </dependencies>
+        </profile>
+
 <!--         Run TCK against Open Liberty -->
         <profile>
             <id>tck-liberty</id>
