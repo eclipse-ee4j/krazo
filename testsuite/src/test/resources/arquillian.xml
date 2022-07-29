@@ -70,8 +70,10 @@
     <container qualifier="liberty">
         <configuration>
             <property name="wlpHome">${liberty.home}</property>
+            <property name="serverName">defaultServer</property>
+            <property name="httpPort">9080</property>
             <!-- Uncomment for local debugging -->
-            <!-- <property name="javaVmArguments">-Xrunjdwp:transport=dt_socket,address=7777,server=y,suspend=y</property> -->
+             <property name="javaVmArguments">--add-opens=java.base/java.lang=ALL-UNNAMED</property>
         </configuration>
     </container>
 </arquillian>
