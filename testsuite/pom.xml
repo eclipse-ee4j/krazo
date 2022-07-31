@@ -49,14 +49,6 @@
                 <type>pom</type>
             </dependency>
 
-            <dependency>
-                <groupId>org.jboss.shrinkwrap.resolver</groupId>
-                <artifactId>shrinkwrap-resolver-bom</artifactId>
-                <version>${shrinkwrap-resolver-bom.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-
             <!-- Define optional dependencies for the tests below -->
             <!-- EXT -->
             <dependency>
@@ -423,12 +415,41 @@
             <build>
                 <plugins>
                     <plugin>
+                        <groupId>io.openliberty.tools</groupId>
+                        <artifactId>liberty-maven-plugin</artifactId>
+                        <version>3.3.4</version>
+                        <configuration>
+                            <skip>${skipTests}</skip>
+                            <serverName>defaultServer</serverName>
+                            <assemblyArtifact>
+                                <groupId>io.openliberty.beta</groupId>
+                                <artifactId>openliberty-runtime</artifactId>
+                                <version>22.0.0.8-beta</version>
+                                <type>zip</type>
+                            </assemblyArtifact>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>create-server</id>
+                                <phase>pre-integration-test</phase>
+                                <configuration>
+                                    <serverName>defaultServer</serverName>
+                                    <serverXmlFile>src/test/resources/liberty/server.xml</serverXmlFile>
+                                </configuration>
+                                <goals>
+                                    <goal>create</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
                         <artifactId>maven-failsafe-plugin</artifactId>
                         <configuration>
                             <skipITs>false</skipITs>
                             <systemProperties>
                                 <arquillian.launch>liberty</arquillian.launch>
                                 <testsuite.profile>testsuite-liberty</testsuite.profile>
+                                <liberty.home>${project.build.directory}/liberty/wlp</liberty.home>
                             </systemProperties>
                         </configuration>
                     </plugin>
