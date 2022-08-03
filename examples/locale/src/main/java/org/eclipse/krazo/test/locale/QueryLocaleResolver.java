@@ -20,6 +20,7 @@ package org.eclipse.krazo.test.locale;
 
 import jakarta.annotation.Priority;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.interceptor.Interceptor;
 import jakarta.mvc.locale.LocaleResolver;
 import jakarta.mvc.locale.LocaleResolverContext;
 import java.util.List;
@@ -31,7 +32,7 @@ import java.util.Locale;
  * @author Christian Kaltepoth
  */
 @ApplicationScoped
-@Priority(1000)  // = default priority for user provided resolvers
+@Priority(Interceptor.Priority.LIBRARY_BEFORE)  // = default priority for user provided resolvers
 public class QueryLocaleResolver implements LocaleResolver {
 
     @Override

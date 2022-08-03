@@ -17,20 +17,17 @@
  */
 package org.eclipse.krazo.binding.convert;
 
+import jakarta.annotation.Priority;
+import jakarta.inject.Inject;
+import jakarta.interceptor.Interceptor;
+import jakarta.mvc.MvcContext;
+import jakarta.mvc.binding.MvcBinding;
+import jakarta.ws.rs.*;
+import jakarta.ws.rs.ext.ParamConverter;
+import jakarta.ws.rs.ext.ParamConverterProvider;
 import org.eclipse.krazo.binding.BindingErrorImpl;
 import org.eclipse.krazo.binding.BindingResultImpl;
 
-import jakarta.annotation.Priority;
-import jakarta.inject.Inject;
-import jakarta.mvc.MvcContext;
-import jakarta.mvc.binding.MvcBinding;
-import jakarta.ws.rs.CookieParam;
-import jakarta.ws.rs.FormParam;
-import jakarta.ws.rs.MatrixParam;
-import jakarta.ws.rs.PathParam;
-import jakarta.ws.rs.QueryParam;
-import jakarta.ws.rs.ext.ParamConverter;
-import jakarta.ws.rs.ext.ParamConverterProvider;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 import java.util.stream.Stream;
@@ -41,7 +38,7 @@ import java.util.stream.Stream;
  *
  * @author Christian Kaltepoth
  */
-@Priority(0)  // should be preferred over builtin providers
+@Priority(Interceptor.Priority.PLATFORM_BEFORE)  // should be preferred over builtin providers
 public class MvcConverterProvider implements ParamConverterProvider {
 
     @Inject

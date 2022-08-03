@@ -1,5 +1,6 @@
 package org.eclipse.krazo.test.convert.annotations;
 
+import jakarta.interceptor.Interceptor;
 import org.eclipse.krazo.binding.convert.ConverterResult;
 import org.eclipse.krazo.binding.convert.MvcConverter;
 
@@ -9,7 +10,7 @@ import java.util.Arrays;
 import java.util.Locale;
 import java.util.stream.Stream;
 
-@Priority(5)
+@Priority(Interceptor.Priority.PLATFORM_BEFORE + 5)
 public class AnnotationDrivenConverter implements MvcConverter<Double> {
 
     @Override

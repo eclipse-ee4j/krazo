@@ -18,6 +18,7 @@
 package org.eclipse.krazo.jaxrs;
 
 import jakarta.inject.Inject;
+import jakarta.interceptor.Interceptor;
 import org.eclipse.krazo.lifecycle.RequestLifecycle;
 import org.eclipse.krazo.util.CdiUtils;
 
@@ -38,7 +39,7 @@ import jakarta.ws.rs.core.UriInfo;
  * @author Christian Kaltepoth
  */
 @PreMatching
-@Priority(0) // very early
+@Priority(Interceptor.Priority.PLATFORM_BEFORE) // very early
 public class PreMatchingRequestFilter implements ContainerRequestFilter {
 
     @Context

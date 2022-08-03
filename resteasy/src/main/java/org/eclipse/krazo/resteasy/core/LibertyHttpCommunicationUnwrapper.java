@@ -21,6 +21,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Objects;
 
+import jakarta.interceptor.Interceptor;
+import jakarta.ws.rs.ext.InterceptorContext;
 import org.eclipse.krazo.core.HttpCommunicationUnwrapper;
 
 import jakarta.annotation.Priority;
@@ -29,16 +31,16 @@ import jakarta.servlet.http.HttpServletResponse;
 
 /**
  * Looks up the {@code IExtendedRequest} instance when running on Open Liberty.
- * 
+ *
  * <p>The request proxy object provided to Krazo by the RESTEasy implementation on
  * Liberty 21.0.0.12-beta and above does not extend {@code IExtendedRequest}, but
  * Liberty's internal handling requires that the root request passed to a
  * {@code RequestDispatcher} does.</p>
- * 
+ *
  * @author Jesse Gallagher
  * @since 3.0.0
  */
-@Priority(1)
+@Priority(Interceptor.Priority.PLATFORM_BEFORE + 1)
 public class LibertyHttpCommunicationUnwrapper implements HttpCommunicationUnwrapper {
 
   @Override

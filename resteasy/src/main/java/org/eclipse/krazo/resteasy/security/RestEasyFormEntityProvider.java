@@ -18,6 +18,7 @@
 package org.eclipse.krazo.resteasy.security;
 
 
+import jakarta.interceptor.Interceptor;
 import org.eclipse.krazo.security.FormEntityProvider;
 import org.eclipse.krazo.util.CdiUtils;
 
@@ -37,7 +38,7 @@ import java.util.Arrays;
  *
  * @author Gregor Tudan
  */
-@Priority(1000)
+@Priority(Interceptor.Priority.LIBRARY_BEFORE)
 public class RestEasyFormEntityProvider implements FormEntityProvider {
 
     public Form getForm(ContainerRequestContext ctx) {
