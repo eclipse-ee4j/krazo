@@ -96,7 +96,6 @@
         <module>jersey</module>
         <module>resteasy</module>
         <module>tck</module>
-        <module>ext</module>
         <module>examples</module>
         <module>testsuite</module>
         <module>documentation</module>
