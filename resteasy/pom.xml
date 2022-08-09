@@ -98,6 +98,12 @@
             <scope>provided</scope>
         </dependency>
 
+        <dependency>
+            <groupId>jakarta.interceptor</groupId>
+            <artifactId>jakarta.interceptor-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
         <!-- Krazo Core -->
         <dependency>
             <groupId>org.eclipse.krazo</groupId>

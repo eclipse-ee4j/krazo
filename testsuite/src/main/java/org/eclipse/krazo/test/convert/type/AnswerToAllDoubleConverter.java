@@ -1,5 +1,6 @@
 package org.eclipse.krazo.test.convert.type;
 
+import jakarta.interceptor.Interceptor;
 import org.eclipse.krazo.binding.convert.ConverterResult;
 import org.eclipse.krazo.binding.convert.MvcConverter;
 
@@ -7,7 +8,7 @@ import jakarta.annotation.Priority;
 import java.lang.annotation.Annotation;
 import java.util.Locale;
 
-@Priority(5)
+@Priority(Interceptor.Priority.PLATFORM_BEFORE + 5)
 public class AnswerToAllDoubleConverter implements MvcConverter<Double> {
 
     @Override
