@@ -1,3 +1,0 @@
-= AsciiDoc Test
-
-== Hello {user}

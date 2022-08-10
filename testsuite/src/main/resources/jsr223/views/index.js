@@ -1,1 +1,0 @@
-'Hello ' + models.mvc.encoders.html(models['name']);
