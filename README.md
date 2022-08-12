@@ -1,4 +1,4 @@
-![Jenkins](https://img.shields.io/jenkins/build?jobUrl=https%3A%2F%2Fci.eclipse.org%2Fkrazo%2Fjob%2Fmaster-build-only%2F)
+![Jenkins](https://img.shields.io/jenkins/build?jobUrl=https%3A%2F%2Fci.eclipse.org%2Fkrazo%2Fjob%2Fkrazo-ci%2Fjob%2Fmaster%2F)
 
 # Eclipse Krazo
 
