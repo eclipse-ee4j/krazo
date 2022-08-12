@@ -11,15 +11,15 @@ pipeline {
     stage("Compile") {
       steps {
         withMaven() {
-          sh "mvn -Pstaging clean compile"
+          sh "mvn -Pstaging compile"
         }
       }
     }
 
-    stage("Tests") {
+    stage("Unit Tests & install") {
       steps {
         withMaven() {
-          sh "mvn -Pstaging test"
+          sh "mvn -Pstaging install"
         }
       }
     }
