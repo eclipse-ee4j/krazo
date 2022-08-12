@@ -1,6 +1,6 @@
 ////
 
-    Copyright (c) 2019 Eclipse Krazo committers and contributors
+    Copyright (c) 2019-2022 Eclipse Krazo committers and contributors
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -24,16 +24,20 @@ This section describes how to set up Eclipse Krazo.
 === Basic setup
 
 The required steps to set up Eclipse Krazo depends on your environment. The easiest way is to
-use a Java EE 8 / Jakarta EE environment, because in this case the server already provides all the
+use a Jakarta EE environment, because in this case the server already provides all the
 prerequisites.
 
-==== Java EE 8 / Jakarta EE
+==== Jakarta EE
 
 The easiest way getting started with Eclipse Krazo is to generate a Jakarta EE project with our
 archetype. This archetype generates a simple project including the Jakarta EE Web Profile and the selected,
 server-specific Krazo implementation.
 
-This archetype will use Jakarta EE 8 until version 1.1.0 of Krazo and Jakarta EE 9 since version 2.0.0.
+This archetype comes with the following setups:
+
+- Java EE 8 / Jakarta EE 8: MVC 1.0, Krazo 1.1.0
+- Jakarta EE 9: MVC 2.0, Krazo 2.0.x
+- Jakarta EE 10: MVC 2.1, Krazo 3.0.0
 
 ===== How to use the archetype
 
@@ -41,53 +45,24 @@ The usage of the archetype is really easy. Depending on your application server,
 
 ====== Glassfish / Payara (Jersey)
 
-For Java EE 8 / Jakarta EE 8:
-
 [source, subs="attributes"]
 ----
 mvn archetype:generate \
 -DarchetypeGroupId=org.eclipse.krazo \
--DarchetypeArtifactId=krazo-jakartaee8-archetype \
--DarchetypeVersion={krazo-version}  \
+-DarchetypeArtifactId=krazo-jakartaee[8|9|10]-archetype \
+-DarchetypeVersion=[1.1.0 | 2.0.x | 3.0.0]  \
 -DgroupId=YOUR GROUP ID\
 -DartifactId=YOUR ARTIFACT ID
 ----
 
-For Jakarta EE 9:
+====== Wildfly (RESTEasy) / OpenLiberty >= 21.x
 
 [source, subs="attributes"]
 ----
 mvn archetype:generate \
 -DarchetypeGroupId=org.eclipse.krazo \
--DarchetypeArtifactId=krazo-jakartaee9-archetype \
--DarchetypeVersion={krazo-version}  \
--DgroupId=YOUR GROUP ID\
--DartifactId=YOUR ARTIFACT ID
-----
-
-====== Wildfly (RESTEasy) / OpenLiberty 21.* and newer
-
-For Java EE 8 / Jakarta EE 8:
-
-[source, subs="attributes"]
-----
-mvn archetype:generate \
--DarchetypeGroupId=org.eclipse.krazo \
--DarchetypeArtifactId=krazo-jakartaee8-archetype \
--DarchetypeVersion={krazo-version} \
--DgroupId=YOUR GROUP ID \
--DartifactId=YOUR ARTIFACT ID \
--DkrazoImpl=resteasy
-----
-
-For Jakarta EE 9:
-
-[source, subs="attributes"]
-----
-mvn archetype:generate \
--DarchetypeGroupId=org.eclipse.krazo \
--DarchetypeArtifactId=krazo-jakartaee9-archetype \
--DarchetypeVersion={krazo-version} \
+-DarchetypeArtifactId=krazo-jakartaee[8|9|10]-archetype \
+-DarchetypeVersion=[1.1.0 | 2.0.x | 3.0.0] \
 -DgroupId=YOUR GROUP ID \
 -DartifactId=YOUR ARTIFACT ID \
 -DkrazoImpl=resteasy
@@ -96,205 +71,139 @@ mvn archetype:generate \
 ====== TomEE / OpenLiberty (CXF)
 Krazo won't support CXF anymore. As OpenLiberty is going to switch to RESTEasy until it supports Jakarta REST Web Services 3.0, this change is only relevant for TomEE in general and older versions of OpenLiberty.
 
-To use Krazo on those servers anyway, you can add e.g. RESTEasy as a compile time dependency to your artifact:
-
-[source,xml]
-----
-<dependency>
-    <groupId>jakarta.mvc</groupId>
-    <artifactId>jakarta.mvc-api</artifactId>
-    <version>{{versions.spec.latest}}</version>
-</dependency>
-<dependency>
-    <groupId>org.eclipse.krazo</groupId>
-    <artifactId>krazo-resteasy</artifactId>
-    <version>{{versions.krazo.latest}}</version>
-</dependency>
-<dependency>
-    <groupId>org.jboss.resteasy</groupId>
-    <artifactId>resteasy-cdi</artifactId>
-    <version>3.6.1.Final</version>
-</dependency>
-<dependency>
-    <groupId>org.jboss.resteasy</groupId>
-    <artifactId>resteasy-servlet-initializer</artifactId>
-    <version>3.6.1.Final</version>
-</dependency>
-<dependency>
-    <groupId>org.jboss.resteasy</groupId>
-    <artifactId>resteasy-validator-provider-11</artifactId>
-    <version>3.6.1.Final</version>
-</dependency>
-----
-
+To use Krazo on those servers anyway, you can add Jersey or RESTEasy as a compile time dependency to your artifact/
 
 ====== Glassfish/Payara
 
-Glassfish comes with Jersey as its JAX-RS implementation. Please add the following dependencies to your
+Glassfish comes with Jersey as its Jakarta REST implementation. Please add the following dependencies to your
 application:
 
 [source,xml]
 ----
-<dependency>
-    <groupId>jakarta.mvc</groupId>
-    <artifactId>jakarta.mvc-api</artifactId>
-    <version>{{versions.spec.latest}}</version>
-</dependency>
-<dependency>
-    <groupId>org.eclipse.krazo</groupId>
-    <artifactId>krazo-jersey</artifactId>
-    <version>{{versions.krazo.latest}}</version>
-</dependency>
+<dependencies>
+    <dependency>
+        <groupId>jakarta.mvc</groupId>
+        <artifactId>jakarta.mvc-api</artifactId>
+        <version>{{versions.spec.latest}}</version>
+    </dependency>
+
+    <dependency>
+        <groupId>org.eclipse.krazo</groupId>
+        <artifactId>krazo-jersey</artifactId>
+        <version>{{versions.krazo.latest}}</version>
+    </dependency>
+
+    <!-- other dependencies ... -->
+</dependencies>
 ----
 
-====== Wildfly, JBoss EAP and OpenLiberty 21.*
+====== Wildfly, JBoss EAP and OpenLiberty >= 21.x
 
-Wildfly is using RESTEasy for JAX-RS. So you need the Eclipse Krazo RESTEasy integration module:
+Wildfly is using RESTEasy for Jakarta REST. So you need the Eclipse Krazo RESTEasy integration module:
 
 [source,xml]
 ----
-<dependency>
-    <groupId>jakarta.mvc</groupId>
-    <artifactId>jakarta.mvc-api</artifactId>
-    <version>{{versions.spec.latest}}</version>
-</dependency>
-<dependency>
-    <groupId>org.eclipse.krazo</groupId>
-    <artifactId>krazo-resteasy</artifactId>
-    <version>{{versions.krazo.latest}}</version>
-</dependency>
-----
+<dependencies>
+    <dependency>
+        <groupId>jakarta.mvc</groupId>
+        <artifactId>jakarta.mvc-api</artifactId>
+        <version>{{versions.spec.latest}}</version>
+    </dependency>
+    <dependency>
+        <groupId>org.eclipse.krazo</groupId>
+        <artifactId>krazo-resteasy</artifactId>
+        <version>{{versions.krazo.latest}}</version>
+    </dependency>
 
-In the future, OpenLiberty will use RESTEasy also, so it will have the same setup.
-
-====== Apache TomEE
-
-To use Krazo on TomEE, you can add RESTEasy as a compile time dependency, as CXF isn't supported anymore by Krazo.
-
-[source,xml]
-----
-<dependency>
-    <groupId>jakarta.mvc</groupId>
-    <artifactId>jakarta.mvc-api</artifactId>
-    <version>{{versions.spec.latest}}</version>
-</dependency>
-<dependency>
-    <groupId>org.eclipse.krazo</groupId>
-    <artifactId>krazo-resteasy</artifactId>
-    <version>{{versions.krazo.latest}}</version>
-</dependency>
-<dependency>
-    <groupId>org.jboss.resteasy</groupId>
-    <artifactId>resteasy-cdi</artifactId>
-    <version>3.6.1.Final</version>
-</dependency>
-<dependency>
-    <groupId>org.jboss.resteasy</groupId>
-    <artifactId>resteasy-servlet-initializer</artifactId>
-    <version>3.6.1.Final</version>
-</dependency>
-<dependency>
-    <groupId>org.jboss.resteasy</groupId>
-    <artifactId>resteasy-validator-provider-11</artifactId>
-    <version>3.6.1.Final</version>
-</dependency>
+    <!-- other dependencies ... -->
+</dependencies>
 ----
 
 ====== Thorntail
 
-Since version 2.7.0, Thorntail provides a stable fraction for MVC with Krazo. For older versions of Thorntail you can use the JAX-RS fraction and add
-the same dependencies as required for WildFly:
+Since version 2.7.0, Thorntail provides a stable fraction for MVC with Krazo. For older versions of Thorntail you can use the Jakarta REST fraction and add
+the same dependencies as required for WildFly.
 
-[source,xml]
-----
-<dependency>
-    <groupId>io.thorntail</groupId>
-    <artifactId>jaxrs</artifactId>
-</dependency>
-<dependency>
-    <groupId>jakarta.mvc</groupId>
-    <artifactId>jakarta.mvc-api</artifactId>
-    <version>{{versions.spec.latest}}</version>
-</dependency>
-<dependency>
-    <groupId>org.eclipse.krazo</groupId>
-    <artifactId>krazo-resteasy</artifactId>
-    <version>{{versions.krazo.latest}}</version>
-</dependency>
-----
-
-using fraction :
-
-[source,xml]
-----
-<dependency>
-    <groupId>io.thorntail</groupId>
-    <artifactId>mvc</artifactId>
-</dependency>
-----
-
-Please note, that Thorntail link:https://thorntail.io/posts/the-end-of-an-era/[reached end of life] and therefore the MVC fraction will only receive critical bug fixes.
+Please note, that Thorntail link:https://thorntail.io/posts/the-end-of-an-era/[reached end of life] and therefore the MVC fraction won't receive updates anymore.
 
 ==== Servlet Containers
 
 The simplest way to get started with MVC is to deploy your app to a JavaEE 8 application server.
-In this setup the application server will provide JAX-RS, CDI and Bean Validation implementations
+In this setup the application server will provide Jakarta REST, CDI and Bean Validation implementations
 for you. However, there is a large number of users who prefer to run their applications on plain Servlet containers
-like Apache Tomcat and Jetty. In this setup you will have to provide JAX-RS, CDI and Bean Validations
+like Apache Tomcat and Jetty. In this setup you will have to provide Jakarta REST, CDI and Bean Validations
 yourself.
 
-The following steps will show you how to run Eclipse Krazo on Apache Tomcat using Weld, RESTEasy and Hibernate Validator.
+The following steps will show you how to run Eclipse Krazo on Apache Tomcat using Weld, Jersey and Hibernate Validator (used by Jersey Bean Validation).
 
 === Required dependencies
 
-The following `pom.xml` example shows the dependency configuration for your application:
+The following `pom.xml` example shows the dependency configuration for your application. Please use the corresponding versions according to the Jakarta EE platform you target.
 
 [source,xml]
 ----
-<!-- Get the API JARs for Jakarta EE 8 -->
-<dependency>
-    <groupId>jakarta.platform</groupId>
-    <artifactId>jakarta.jakartaee-web-api</artifactId>
-    <version>8.0.0</version>
-</dependency>
+<dependencies>
+    <dependency>
+        <groupId>jakarta.ws.rs</groupId>
+        <artifactId>jakarta.ws.rs-api</artifactId>
+        <scope>compile</scope>
+    </dependency>
 
-<!-- Weld  -->
-<dependency>
-    <groupId>org.jboss.weld.servlet</groupId>
-    <artifactId>weld-servlet-core</artifactId>
-    <version>3.0.5.Final</version>
-</dependency>
+    <dependency>
+        <groupId>org.glassfish.jersey.core</groupId>
+        <artifactId>jersey-server</artifactId>
+    </dependency>
 
-<!-- RESTEasy -->
-<dependency>
-    <groupId>org.jboss.resteasy</groupId>
-    <artifactId>resteasy-cdi</artifactId>
-    <version>3.6.1.Final</version>
-</dependency>
-<dependency>
-    <groupId>org.jboss.resteasy</groupId>
-    <artifactId>resteasy-servlet-initializer</artifactId>
-    <version>3.6.1.Final</version>
-</dependency>
+    <dependency>
+        <groupId>org.glassfish.jersey.core</groupId>
+        <artifactId>jersey-common</artifactId>
+        <scope>compile</scope>
+    </dependency>
 
-<!-- Bean Validation -->
-<dependency>
-    <groupId>org.jboss.resteasy</groupId>
-    <artifactId>resteasy-validator-provider-11</artifactId>
-    <version>3.6.1.Final</version>
-</dependency>
+    <dependency>
+        <groupId>org.glassfish.jersey.containers</groupId>
+        <artifactId>jersey-container-servlet</artifactId>
+    </dependency>
 
-<!-- MVC + Eclipse Krazo for RESTEasy-->
-<dependency>
-    <groupId>jakarta.mvc</groupId>
-    <artifactId>jakarta.mvc-api</artifactId>
-    <version>{{versions.spec.latest}}</version>
-</dependency>
-<dependency>
-    <groupId>org.eclipse.krazo</groupId>
-    <artifactId>krazo-resteasy</artifactId>
-    <version>{{versions.krazo.latest}}</version>
-</dependency>
+    <dependency>
+        <groupId>org.glassfish.jersey.inject</groupId>
+        <artifactId>jersey-hk2</artifactId>
+    </dependency>
+
+    <dependency>
+        <groupId>jakarta.validation</groupId>
+        <artifactId>jakarta.validation-api</artifactId>
+        <scope>compile</scope>
+    </dependency>
+
+    <dependency>
+        <groupId>org.glassfish.jersey.ext</groupId>
+        <artifactId>jersey-bean-validation</artifactId>
+    </dependency>
+
+    <dependency>
+        <groupId>jakarta.enterprise</groupId>
+        <artifactId>jakarta.enterprise.cdi-api</artifactId>
+        <scope>compile</scope>
+    </dependency>
+
+    <dependency>
+        <groupId>org.jboss.weld.servlet</groupId>
+        <artifactId>weld-servlet-core</artifactId>
+        <scope>compile</scope>
+    </dependency>
+
+    <dependency>
+        <groupId>org.glassfish.jersey.ext.cdi</groupId>
+        <artifactId>jersey-cdi1x-servlet</artifactId>
+    </dependency>
+
+    <dependency>
+        <groupId>org.eclipse.krazo</groupId>
+        <artifactId>krazo-jersey</artifactId>
+        <version>${krazo.version}</version>
+    </dependency>
+</dependencies>
 ----
 
 === Configuration files
@@ -306,63 +215,33 @@ Make sure to add an empty `beans.xml` file in your `/src/main/webapp/WEB-INF` fo
 <?xml version="1.0"?>
 <beans xmlns="https://jakarta.ee/xml/ns/jakartaee"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/beans_3_0.xsd"
-       version="3.0" bean-discovery-mode="all">
+       xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/beans_4_0.xsd"
+       version="4.0">
 
 </beans>
 ----
 
-Please also add a file called `context.xml` to `src/main/resources/META-INF`:
+Please note, that the default `bean-discovery-mode` changed to `annotated` in CDI 4.0. In case you want to use the old behavior, set the `bean-discovery-mode` to `all` in the `beans.xml`
 
-[source,xml]
-----
-<?xml version="1.0" encoding="UTF-8"?>
-<Context>
-
-   <Resource name="BeanManager" auth="Container"
-             type="jakarta.enterprise.inject.spi.BeanManager"
-             factory="org.jboss.weld.resources.ManagerObjectFactory"/>
-
-</Context>
-----
-
-This file `context.xml` is essential for the operation of the CDI in Tomcat as described in the
-link:http://docs.jboss.org/weld/reference/latest/en-US/html_single/#tomcat[Weld documentation].
-
-The file to create is called `web.xml` and should be placed in the `src/main/webapp/WEB-INF` directory:
+The next file to create is called `web.xml` and should be placed in the `src/main/webapp/WEB-INF` directory:
 
 [source,xml]
 ----
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns="https://jakarta.ee/xml/ns/jakartaee"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_4_0.xsd"
-         version="4.0" metadata-complete="true">
-
-  <listener>
-    <listener-class>org.jboss.weld.environment.servlet.Listener</listener-class>
-  </listener>
-
-  <resource-env-ref>
-    <resource-env-ref-name>BeanManager</resource-env-ref-name>
-    <resource-env-ref-type>jakarta.enterprise.inject.spi.BeanManager</resource-env-ref-type>
-  </resource-env-ref>
-
-  <!-- http://docs.jboss.org/resteasy/docs/3.6.1.Final/userguide/html_single/index.html#d4e143 -->
-  <context-param>
-    <param-name>resteasy.injector.factory</param-name>
-    <param-value>org.jboss.resteasy.cdi.CdiInjectorFactory</param-value>
-  </context-param>
+         xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_5_0.xsd"
+         version="5.0" metadata-complete="true">
 
 </web-app>
 ----
 
 The attribute `metadata-complete` isn't madantory, but link:https://issues.jboss.org/browse/RESTEASY-2289[helps to prevent Krazo starting twice on RESTEasy]
 
-==== Mixed configuration with Application#getClasses and JAX-RS auto discovery
+==== Mixed configuration with Application#getClasses and Jakarta REST auto discovery
 
-As an alternative to the resource auto-discovery of JAX-RS, someone can use `Application#getClasses` to configure
-endpoints or other providers. Unfortunately, this disables the auto-discovery of JAX-RS completely, which leads to
+As an alternative to the resource auto-discovery of Jakarta REST, someone can use `Application#getClasses` to configure
+endpoints or other providers. Unfortunately, this disables the auto-discovery of Jakarta REST completely, which leads to
 not loaded Krazo classes and errors or misbehavior during runtime. In case you want to use the manual approach together
 with Eclipse Krazo, you have to consider following configurations.
 
@@ -374,7 +253,7 @@ You don't need additional configuration, as Krazo is auto-loaded by implementati
 
 The following steps will show you how to create your first Controller using Eclipse Krazo. It assumes, that you've set up a project like we described before.
 
-The first step is to create an Application class, which serves as root resource for our Controllers. The Application class extends from JAX-RS `Application` and provides
+The first step is to create an Application class, which serves as root resource for our Controllers. The Application class extends from Jakarta REST `Application` and provides
 the base path of our application.
 
 [source,java]
@@ -388,10 +267,9 @@ public class MyApplication extends Application {
 }
 ....
 
-Please note that, according to the MVC specification, it is not recommended to use an empty application path, as this can lead to problems during request handling.
+Please note that, according to the MVC specification, it is not recommended to use an empty application path, as this can lead to problems during request handling when using servlets and MVC resources in parallel or whenyou try to access a stylesheet served by the servlet container via `src/main/webapp`.
 
-After we created the Application class, we need to add our Controller. Therefore you need to add a simple JAX-RS resource and decorate it with the
-`jakarta.mvc.Controller` interface.
+After we created the Application class, we need to add our Controller. Therefore, you need to add a simple Jakarta REST resource and decorate it with the `jakarta.mvc.Controller` annotation.
 
 
 [source,java]

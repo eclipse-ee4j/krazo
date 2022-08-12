@@ -1,4 +1,4 @@
-[![Java CI with Maven](https://github.com/eclipse-ee4j/krazo/actions/workflows/main.yml/badge.svg)](https://github.com/eclipse-ee4j/krazo/actions/workflows/main.yml)
+![Jenkins](https://img.shields.io/jenkins/build?jobUrl=https%3A%2F%2Fci.eclipse.org%2Fkrazo%2Fjob%2Fmaster-build-only%2F)
 
 # Eclipse Krazo
 
