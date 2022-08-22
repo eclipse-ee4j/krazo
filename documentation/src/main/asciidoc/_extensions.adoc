@@ -1,6 +1,6 @@
 ////
 
-    Copyright (c) 2019 Eclipse Krazo committers and contributors
+    Copyright (c) 2019-2022 Eclipse Krazo committers and contributors
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -17,6 +17,105 @@
     SPDX-License-Identifier: Apache-2.0
 
 ////
+[#_writing_extensions]
 == Writing Extensions
 
-TODO: Describe Krazo extension points and SPIs
+This chapter explains, what steps need to be taken to extend Krazo's functionality. This may be additional
+configurations, type converters or whole view engines.
+
+Most of those SPIs (Service Provider Interfaces) are handled by Java's link:https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/ServiceLoader.html[ServiceLoader] mechanism. Please read its documentation before you start to implement Krazo extensions.
+
+=== Add type converters
+
+Eclipse Krazo provides its own implementation of Jakarta RESTs `ParamConverterProvider`, so the `BindingResult` can be filled in case of an incompatible mapping between the request's and target's type.
+You can add custom implementations of `org.eclipse.krazo.binding.convert.MvcConverter` and register them as a service, so it can be picked up by the `org.eclipse.krazo.binding.convert.ConverterRegistry`. Converts can be prioritized by the `@Priority` annotation. The default priority of all embedded `MvcConverter` implementations is `0 (zero)`.
+
+You can find an example for adding a new `MvcConverter` in the link:https://github.com/eclipse-ee4j/krazo/blob/master/testsuite/src/test/java/org/eclipse/krazo/test/convert/ConverterPriorityIT.java[ConverterPriorityIT]. Please note, that the service registration is link:https://github.com/eclipse-ee4j/krazo/blob/ad02db7cc262bd40275045528113ccb42c088b47/testsuite/src/test/java/org/eclipse/krazo/test/convert/ConverterPriorityIT.java#L39[handled by
+Arquillian] in this case.
+
+=== Add features to Jakarta RESTful Web Services
+
+To be usable on top of Jakarta REST, Eclipse Krazo uses a lot of Jakarta REST APIs. One of them is the `FeatureContext` which is used to register providers, filters etc. The core classes of Krazo are registered there too, which is made possible by the `org.eclipse.krazo.bootstrap.ConfigProvider` interface. This interface needs to be implemented in case an extension wants to add additional behavior to Krazo and registered as a service. Then, on application startup, all `ConfigProvider` implementations are fetched by `org.eclipse.krazo.bootstrap.Initializer` and registered in Jakarta REST.
+
+The `ConfigProvider` implementations for link:https://github.com/eclipse-ee4j/krazo/blob/master/jersey/src/main/java/org/eclipse/krazo/jersey/bootstrap/JerseyConfigProvider.java[krazo-jersey] and link:https://github.com/eclipse-ee4j/krazo/blob/master/resteasy/src/main/java/org/eclipse/krazo/resteasy/bootstrap/RestEasyConfigProvider.java[krazo-resteasy] are good example for the usage of this SPI.
+
+=== Unwrap HTTP communication for different servers
+
+As there is more than one implementation of Jakarta REST, there may be different behaviors when it comes to
+request and response handling. Some implementations wrap the original `HttpServletRequest` and / or `HttpServletResponse` which makes it hard to work on the specified API. Eclipse Krazo provides an SPI which
+makes it possible to unwrap such non-standard behavior, namely the `org.eclipse.krazo.core.HttpCommunicationUnwrapper`. This interface can be used to unwrap incoming requests an responses so Krazo can handle them.
+
+One real-world example on how this interface can be used is the link:https://github.com/eclipse-ee4j/krazo/blob/master/resteasy/src/main/java/org/eclipse/krazo/resteasy/core/LibertyHttpCommunicationUnwrapper.java[LibertyHttpCommunicationUnwrapper] used to normalize the request coming from OpenLiberty.
+
+=== Custom behavior for form handling during CSRF validation
+
+To be able to receive the CSRF token from HTML forms, an implementation of the `org.eclipse.krazo.security.FormEntityProvider` is required. At the moment, only the content type `application/x-www-form-urlencoded` is supported. Anyway, sometimes there is different behavior between Jakarta REST implementations or their integration into application servers, so a custom `FormEntityProvider` is required. Those custom implementations need to be registered as service.
+
+To give you an example implementation, you can have a look into link:https://github.com/eclipse-ee4j/krazo/blob/master/resteasy/src/main/java/org/eclipse/krazo/resteasy/security/RestEasyFormEntityProvider.java[org.eclipse.krazo.resteasy.security.RestEasyFormEntityProvider] to see how
+this provider can be used to handle the behavior of RESTEasy forms.
+
+=== Creating your own view engine
+
+The last extension point is more or less one single interface you need to know when you want to add a custom view engine. To have a real-world example the link:https://github.com/eclipse-ee4j/krazo-extensions/tree/main/freemarker/src/main/java/org/eclipse/krazo/ext/freemarker[Krazo Freemarker extension] will be described. This one is chosen because it requires the minimum amount of configuration. More advanced example can be found e. g. in the link:https://github.com/eclipse-ee4j/krazo-extensions/tree/main/thymeleaf[Krazo Thymeleaf extension].
+
+A view engine is in most of the cases just an implementation of the `jakarta.mvc.engine.ViewEngine` interface which
+contains the following two methods:
+
+- `boolean supports(String view)`
+- `void processView(ViewEngineContext context)`
+
+So a view engine requires to return which views are supported, which is done by checking them for specific file suffixes. The link:https://github.com/eclipse-ee4j/krazo-extensions/blob/main/freemarker/src/main/java/org/eclipse/krazo/ext/freemarker/FreemarkerViewEngine.java[FreemarkerViewEngine] for example is triggered, when a view ends on `.ftl`.
+
+[source,java]
+....
+@ApplicationScoped
+@Priority(ViewEngine.PRIORITY_FRAMEWORK)
+public class FreemarkerViewEngine extends ViewEngineBase {
+
+    @Override
+    public boolean supports(String view) {
+        return view.endsWith(".ftl");
+    }
+
+    //...
+}
+....
+
+And in case the view engine is identified as engine-to-use for the current view, it needs to get processed. This is done inside the `processView` method:
+
+[source,java]
+....
+@ApplicationScoped
+@Priority(ViewEngine.PRIORITY_FRAMEWORK)
+public class FreemarkerViewEngine extends ViewEngineBase {
+
+    @Inject
+    @ViewEngineConfig
+    private Configuration configuration;
+
+	//...
+
+    @Override
+    public void processView(ViewEngineContext context) throws ViewEngineException {
+
+        Charset charset = resolveCharsetAndSetContentType(context);
+
+        try (Writer writer = new OutputStreamWriter(context.getOutputStream(), charset)) {
+
+            Template template = configuration.getTemplate(resolveView(context));
+
+            Map<String, Object> model = new HashMap<>(context.getModels().asMap());
+            model.put("request", context.getRequest(HttpServletRequest.class));
+
+            template.process(model, writer);
+
+        } catch (TemplateException | IOException e) {
+            throw new ViewEngineException(e);
+        }
+    }
+}
+....
+
+As you can see, there's no magic inside. The charset of the view is resolved, which is done by the abstract `ViewEngineBase` class that implements the `ViewEngine` interface and the template loaded via the `Configuration` class. The `Configuration` class is a FreeMarker API that is produced in the bean link:https://github.com/eclipse-ee4j/krazo-extensions/blob/main/freemarker/src/main/java/org/eclipse/krazo/ext/freemarker/DefaultConfigurationProducer.java[DefaultConfigurationProducer] and injected by CDI. Afterwards, the model is migrated into the type FreeMarker expects as its model and the template gets processed.
+
+Concluding this topic, as you can see creating an own Krazo view engine is not hard from Krazo's point of view and the `ViewEngine` interface provides everything you need to get started.

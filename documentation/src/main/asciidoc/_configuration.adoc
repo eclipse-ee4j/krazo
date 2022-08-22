@@ -1,6 +1,6 @@
 ////
 
-    Copyright (c) 2019 Eclipse Krazo committers and contributors
+    Copyright (c) 2019-2022 Eclipse Krazo committers and contributors
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -20,8 +20,8 @@
 
 == Configuration
 
-This section describes how you can configure your MVC application by overwriting properties inside the JAX-RS Application class.
-For example, you can overwrite a exemplary property `foo` inside the Application like this:
+This section describes how you can configure your MVC application by overwriting properties inside the Jakarta REST Application class.
+For example, you can overwrite an exemplary property `foo` inside the Application like this:
 
 [source,java]
 ....
@@ -42,20 +42,23 @@ public class MyApplication extends Application {
 
 For the usage of CSRF, the MVC API and Krazo provide different properties to customize its behavior.
 
-==== jakarta.mvc.security.CsrfProtection
+==== Csrf.CSRF_PROTECTION (jakarta.mvc.security.CsrfProtection)
 
 By default, the CSRF protection for MVC resources is set to `Csrf.CsrfOptions#EXPLICIT`, which means, that you're required to set the `@CsrfProtected` annotation over a Controller method annotated with `@POST`, `@PUT`, `@PATCH` or `@DELETE`.
 In case you want to use CSRF protection in all methods annotated with one of these HTTP verbs, you can set the property `jakarta.mvc.security.CsrfProtection` to `CsrfOptions#IMPLICIT`.
 
 [source,java]
 ....
+import jakarta.mvc.security.Csrf;
+import jakarta.mvc.security.Csrf.CsrfOptions;
+
 public class MyApplication extends Application {
 
     @Override
     public Map<String, Object> getProperties() {
         final Map<String, Object> props = new HashSet<>();
 
-        props.put("jakarta.mvc.security.CsrfProtection", CsrfOptions.IMPLICIT);
+        props.put(Csrf.CSRF_PROTECTION, CsrfOptions.IMPLICIT);
 
         return props;
     }
@@ -66,29 +69,32 @@ Although, you might want to disable CSRF protection completely for you applicati
 Therefore exists the `CsrfOptions#OFF` value, which can be set like the
 `CsrfOptions#IMPLICIT` value in the example above.
 
-==== jakarta.mvc.security.CsrfHeaderName
+==== Csrf.CSRF_HEADER_NAME (jakarta.mvc.security.CsrfHeaderName)
 
 Sometimes you may want to set a custom value for the header transporting the CSRF token.
-For this task you can use the property `jakarta.mvc.security.CsrfHeaderName`.
+For this task you can use the property `jakarta.mvc.security.CsrfHeaderName` or its constant `Csrf.CSRF_PROTECTION`.
 Overwriting this property will change the default name of the HTTP header from `X-CSRF-TOKEN` to any valid HTTP header name.
 The property can be changed like this:
 
 [source,java]
 ....
+import jakarta.mvc.security.Csrf;
+import jakarta.mvc.security.Csrf.CsrfOptions;
+
 public class MyApplication extends Application {
 
     @Override
     public Map<String, Object> getProperties() {
         final Map<String, Object> props = new HashSet<>();
 
-        props.put("jakarta.mvc.security.CsrfHeaderName", "X-CUSTOM-CSRF-HEADER");
+        props.put(Csrf.CSRF_HEADER_NAME, "X-CUSTOM-CSRF-HEADER");
 
         return props;
     }
 }
 ....
 
-==== org.eclipse.krazo.csrfTokenStrategy
+==== Properties.CSRF_TOKEN_STRATEGY (org.eclipse.krazo.csrfTokenStrategy)
 
 To generate CSRF tokens, Krazo provides two mechanisms by default: a cookie-based and a session-based algorithm, where the session-based is set as default.
 In case you want to change the strategy or even want to use some custom one, you can change the used strategy with the `org.eclipse.krazo.csrfTokenStrategy` property.
@@ -96,13 +102,16 @@ For example, you can switch to the cookie-based token strategy by using this set
 
 [source,java]
 ....
+import org.eclipse.krazo.Properties;
+import org.eclipse.krazo.security.CsrfTokenStrategy;
+
 public class MyApplication extends Application {
 
     @Override
     public Map<String, Object> getProperties() {
         final Map<String, Object> props = new HashSet<>();
 
-        props.put("org.eclipse.krazo.csrfTokenStrategy", CookieCsrfTokenStrategy.Builder.build());
+        props.put(Properties.CSRF_TOKEN_STRATEGY, CookieCsrfTokenStrategy.Builder.build());
 
         return props;
     }
@@ -117,27 +126,78 @@ Please have a look into the JavaDoc for this.
 Eclipse Krazo provides some configuration properties, where someone can customize the behavior of the view handling.
 These configurations will be described in the following sections.
 
-==== org.eclipse.krazo.redirectScopeCookies
+==== Properties.REDIRECT_SCOPE_COOKIES (org.eclipse.krazo.redirectScopeCookies)
 
-By default, Krazo uses a URL re-write mechanism to store the information about `@RedirectScope`d beans. In case someone doesn't want this behavior, Krazo
-                                                                                also supports a cookie-based strategy for this task. To enable this feature, the property `org.eclipse.krazo.redirectScopeCookies` needs to be overwritten inside the JAX-RS Application class:
+By default, Krazo uses a URL re-write mechanism to store the information about `@RedirectScoped` beans.
+In case someone doesn't want this behavior, Krazo also supports a cookie-based strategy for this task. To enable this feature, the property `org.eclipse.krazo.redirectScopeCookies` needs to be overwritten inside the Jakarta REST Application class:
 
 [source,java]
 ....
+import org.eclipse.krazo.Properties;
+
 public class MyApplication extends Application {
 
     @Override
     public Map<String, Object> getProperties() {
         final Map<String, Object> props = new HashSet<>();
 
-        props.put("org.eclipse.krazo.redirectScopeCookies", true);
+        props.put(Properties.REDIRECT_SCOPE_COOKIES, true);
 
         return props;
     }
 }
 ....
 
-==== org.eclipse.krazo.defaultViewFileExtension
+==== Properties.REDIRECT_SCOPE_COOKIE_NAME (org.eclipse.krazo.redirectScopeCookieName)
+
+When you use the _cookie based_ approach to handle the redirect scope, the default cookie name is `org.eclipse.krazo.redirect.Cookie`. In case this name doesn't match your requirements, there is a property called `org.eclipse.krazo.redirectScopeCookieName` to overwrite it. The example shows how this can be achieved.
+
+[source,java]
+....
+import org.eclipse.krazo.Properties;
+
+public class MyApplication extends Application {
+
+    @Override
+    public Map<String, Object> getProperties() {
+        final Map<String, Object> props = new HashSet<>();
+
+        props.put(Properties.REDIRECT_SCOPE_COOKIE_NAME, "my_redirect_cookie");
+
+        return props;
+    }
+}
+....
+
+This example would let Krazo create a Cookie called `my_redirect_cookie` containing the redirect scope token.
+
+==== Properties.REDIRECT_SCOPE_QUERY_PARAM_NAME (org.eclipse.krazo.redirectScopeQueryParamName)
+
+On the other hand, when you use the _query param_ based approach, which is the default setting, you can
+change the query param's name from `org.eclipse.krazo.redirect.param.ScopeId` to something more concise by using
+the property `org.eclipse.krazo.redirectScopeQueryParamName`. The example shows to how this can be done inside the
+Jakarta REST application.
+
+[source,java]
+....
+import org.eclipse.krazo.Properties;
+
+public class MyApplication extends Application {
+
+    @Override
+    public Map<String, Object> getProperties() {
+        final Map<String, Object> props = new HashSet<>();
+
+        props.put(Properties.REDIRECT_SCOPE_QUERY_PARAM_NAME, "redirect_token");
+
+        return props;
+    }
+}
+....
+
+Now the query param would be something like `/foo?redirect_token=[some UUID]` instead of `/foo?org.eclipse.krazo.redirect.param.ScopeId=[some UUID]`.
+
+==== Properties.DEFAULT_VIEW_FILE_EXTENSION (org.eclipse.krazo.defaultViewFileExtension)
 
 While developing a completely new MVC application, someone normally just uses one template engine for all of its views.
 This means, that every view file ends with the same extension and this leads to less readable code.
@@ -146,13 +206,15 @@ To set this extension as a default for all view files, Krazo provides the proper
 
 [source,java]
 ....
+import org.eclipse.krazo.Properties;
+
 public class MyApplication extends Application {
 
     @Override
     public Map<String, Object> getProperties() {
         final Map<String, Object> props = new HashSet<>();
 
-        props.put("org.eclipse.krazo.defaultViewFileExtension", "jsp");
+        props.put(Properties.DEFAULT_VIEW_FILE_EXTENSION, "jsp");
 
         return props;
     }

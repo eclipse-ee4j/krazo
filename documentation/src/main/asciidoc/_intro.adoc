@@ -1,6 +1,6 @@
 ////
 
-    Copyright (c) 2019 Eclipse Krazo committers and contributors
+    Copyright (c) 2019-2022 Eclipse Krazo committers and contributors
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -19,9 +19,8 @@
 ////
 == Introduction
 
-Eclipse Krazo is an implementation of action-based MVC specified by Jakarta MVC 2.0.
-It builds on top of Jakarta RESTful Webservices (former JAX-RS)  and currently contains support for RESTEasy and Jersey
+Eclipse Krazo is an implementation of action-based MVC specified by Jakarta MVC.
+It builds on top of Jakarta RESTful Web Services (former JAX-RS; abbreviated with Jakarta REST inside this documentation)  and currently contains support for RESTEasy and Jersey
 with a well-defined SPI for other implementations.
 
-This is user guide for Eclipse Krazo {krazo-version}.
-We are trying to keep it up to date as we add new features.
+This is the user guide for Eclipse Krazo {krazo-version}. We are trying to keep it up to date with the current features. Please note, that this guide assumes that the examples are, if not specified otherwise, targeting a Jakarta EE 10 environment.

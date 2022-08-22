@@ -1,6 +1,6 @@
 ////
 
-    Copyright (c) 2019 Eclipse Krazo committers and contributors
+    Copyright (c) 2019-2022 Eclipse Krazo committers and contributors
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -19,4 +19,24 @@
 ////
 == View Engines
 
-TODO: Describe each view engine in a separate subsection.
+Eclipse Krazo contains two view engine implementation out of the box: JSP and JSF. Those are required by the specification and will be shortly be introduced in this chapter.
+
+In case you search for view engines not covered by the specification, please have a look into the link:https://github.com/eclipse-ee4j/krazo-extensions[Krazo Extensions repository,window=_blank]. There you'll find implementations for
+Thymeleaf, Freemarker and many more.
+
+Anyway, if you want to implement your own custom view engine, please refer to the chapter link:_extensions.adoc#_writing_extensions[Writing extensions] covered later in this document.
+
+=== JSP view engine
+
+The MVC specification requires implementations to provide a view engine using JSP as template language. To use this
+view engine you've nothing more to do as adding a JSP ending on `.jsp` or `.jspx` into the configured view directory
+and call it from the controller.
+
+=== JSF view engine
+
+The JSF view engine is, as well as the JSP engine, required to be part of an MVC specification compatible implementation.
+This view engine enables you to use Facelets as template language. To use this language, your server needs to provide a JSF
+implementation and your template needs to end on `.xhtml`.
+
+Please be aware of the fact, that some features known from JSF won't work. This is due to the fact, that JSF and Jakarta MVC follow different architectural approaches. Also this view engine is discussed to be removed, or at least going to
+be optional, in Jakarta MVC 3.0.
