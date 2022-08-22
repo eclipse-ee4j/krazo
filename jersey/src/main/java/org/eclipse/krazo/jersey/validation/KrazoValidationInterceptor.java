@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, 2019 Eclipse Krazo committers and contributors
+ * Copyright (c) 2018, 2022 Eclipse Krazo committers and contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,6 +23,8 @@ import org.eclipse.krazo.util.AnnotationUtils;
 
 import jakarta.mvc.Controller;
 
+import java.lang.reflect.Method;
+
 /**
  * This interceptor prevents Jersey from performing validation for MVC requests. This
  * is required because, we need to make sure that controller is always invoked as we
@@ -41,16 +43,14 @@ public class KrazoValidationInterceptor implements ValidationInterceptor {
     @Override
     public void onValidate(ValidationInterceptorContext context) {
 
-        /*
-         * TODO: Won't work correctly for mixed controller/resource methods.
-         */
-        Class<?> resourceClass = context.getResource().getClass();
-        boolean mvcRequest = AnnotationUtils.hasAnnotationOnClassOrMethod(resourceClass, Controller.class);
+        final Class<?> resourceClass = context.getResource().getClass();
+        final Method handledMethod = context.getInvocable().getDefinitionMethod();
 
-        if (!mvcRequest) {
+        boolean mvcClass = AnnotationUtils.hasAnnotation(resourceClass, Controller.class);
+        boolean mvcMethod = AnnotationUtils.hasAnnotation(handledMethod, Controller.class);
+
+        if (!mvcClass && !mvcMethod) {
             context.proceed();
         }
-
     }
-
 }
