@@ -1,8 +1,8 @@
 package ${package};
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Dummy Test
@@ -10,7 +10,7 @@ import static org.junit.Assert.assertTrue;
 public class AppTest {
 
     @Test
-    public void test() {
+    void test() {
         assertTrue(true);
     }
 }
