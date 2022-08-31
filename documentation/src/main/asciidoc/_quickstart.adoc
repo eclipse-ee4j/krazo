@@ -39,30 +39,57 @@ This archetype comes with the following setups:
 - Jakarta EE 9: MVC 2.0, Krazo 2.0.x
 - Jakarta EE 10: MVC 2.1, Krazo 3.0.0
 
+Please note that since Krazo 3.0.0 the name of the archetype changed. Before this release, all archetypes contained the target Jakarta EE release in their names which led to confusing versioning. Since Krazo 3.0.0 the archetype targets the same Jakarta EE release than Krazo and the corresponding Jakarta MVC API.
+
 ===== How to use the archetype
 
 The usage of the archetype is really easy. Depending on your application server, just run one of these commands in your command line.
 
-====== Glassfish / Payara (Jersey)
+====== Glassfish / Payara (Jersey) (since Krazo 3.0.0)
 
 [source, subs="attributes"]
 ----
 mvn archetype:generate \
 -DarchetypeGroupId=org.eclipse.krazo \
--DarchetypeArtifactId=krazo-jakartaee[8|9|10]-archetype \
--DarchetypeVersion=[1.1.0 | 2.0.x | 3.0.0]  \
+-DarchetypeArtifactId=krazo-jakartaee-archetype \
+-DarchetypeVersion=KRAZO VERSION  \
 -DgroupId=YOUR GROUP ID\
 -DartifactId=YOUR ARTIFACT ID
 ----
 
-====== Wildfly (RESTEasy) / OpenLiberty >= 21.x
+====== Wildfly (RESTEasy) / OpenLiberty >= 21.x (since Krazo 3.0.0)
 
 [source, subs="attributes"]
 ----
 mvn archetype:generate \
 -DarchetypeGroupId=org.eclipse.krazo \
--DarchetypeArtifactId=krazo-jakartaee[8|9|10]-archetype \
--DarchetypeVersion=[1.1.0 | 2.0.x | 3.0.0] \
+-DarchetypeArtifactId=krazo-jakartaee-archetype \
+-DarchetypeVersion=KRAZO VERSION \
+-DgroupId=YOUR GROUP ID \
+-DartifactId=YOUR ARTIFACT ID \
+-DkrazoImpl=resteasy
+----
+
+====== Glassfish / Payara (Jersey) (before Krazo 3.0.0)
+
+[source, subs="attributes"]
+----
+mvn archetype:generate \
+-DarchetypeGroupId=org.eclipse.krazo \
+-DarchetypeArtifactId=krazo-jakartaee[8|9]-archetype \
+-DarchetypeVersion=[1.1.0 | 2.0.x]  \
+-DgroupId=YOUR GROUP ID\
+-DartifactId=YOUR ARTIFACT ID
+----
+
+====== Wildfly (RESTEasy) / OpenLiberty >= 21.x (before Krazo 3.0.0)
+
+[source, subs="attributes"]
+----
+mvn archetype:generate \
+-DarchetypeGroupId=org.eclipse.krazo \
+-DarchetypeArtifactId=krazo-jakartaee[8|9]-archetype \
+-DarchetypeVersion=[1.1.0 | 2.0.x] \
 -DgroupId=YOUR GROUP ID \
 -DartifactId=YOUR ARTIFACT ID \
 -DkrazoImpl=resteasy

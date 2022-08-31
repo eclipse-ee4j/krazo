@@ -10,10 +10,10 @@
     <name>\${artifactId}</name>
 
     <properties>
-        <jakartaee-api.version>9.0.0</jakartaee-api.version>
+        <jakartaee-api.version>${jakartaee-api.version}</jakartaee-api.version>
         <krazo.version>${project.version}</krazo.version>
         <jakarta.mvc-api.version>${spec.version}</jakarta.mvc-api.version>
-        <junit.version>4.12</junit.version>
+        <junit.version>5.9.0</junit.version>
     </properties>
 
     <dependencies>
@@ -45,8 +45,8 @@
         #end
 
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
             <version>\${junit.version}</version>
             <scope>test</scope>
         </dependency>
@@ -55,7 +55,6 @@
     <build>
         <finalName>\${artifactId}</finalName>
         <plugins>
-            #if (${javaRelease} != '1.8' || '1.7' || '1.6')
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -71,24 +70,6 @@
                     <failOnMissingWebXml>false</failOnMissingWebXml>
                 </configuration>
             </plugin>
-            #else
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.0</version>
-                <configuration>
-                    <source>${javaRelease}</source>
-                    <target>${javaRelease}</target>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-war-plugin</artifactId>
-                <configuration>
-                    <failOnMissingWebXml>false</failOnMissingWebXml>
-                </configuration>
-            </plugin>
-            #end
         </plugins>
     </build>
 </project>

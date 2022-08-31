@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <!--
-  ~ Copyright (c) 2020 Eclipse Krazo committers and contributors
+  ~ Copyright (c) 2020, 2022 Eclipse Krazo committers and contributors
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -28,12 +28,12 @@
         <version>3.0.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>krazo-jakartaee9-archetype</artifactId>
+    <artifactId>krazo-jakartaee-archetype</artifactId>
     <packaging>maven-archetype</packaging>
-    <name>Archetype for Jakarta EE 9 with Eclipse Krazo</name>
+    <name>Archetype for Jakarta EE application containing Jakarta MVC and Eclipse Krazo</name>
 
     <description>
-        Archetype for basic Jakarta EE 9 App with the MVC API and Eclipse Krazo
+        Archetype for basic Jakarta EE Application containing Jakarta MVC and Eclipse Krazo
     </description>
 
     <build>

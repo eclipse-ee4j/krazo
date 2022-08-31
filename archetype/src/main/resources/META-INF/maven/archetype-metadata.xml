@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
-  ~ Copyright (c) 2020 Eclipse Krazo committers and contributors
+  ~ Copyright (c) 2020, 2022 Eclipse Krazo committers and contributors
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -41,7 +41,7 @@
             <defaultValue>jersey</defaultValue>
         </requiredProperty>
         <requiredProperty key="javaRelease">
-            <defaultValue>1.8</defaultValue>
+            <defaultValue>11</defaultValue>
         </requiredProperty>
     </requiredProperties>
 </archetype-descriptor>
