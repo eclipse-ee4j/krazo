@@ -111,9 +111,9 @@
                             <dependenciesToScan>jakarta.mvc.tck:mvc-tck-tests</dependenciesToScan>
                             <systemPropertyVariables>
                                 <arquillian.launch>glassfish</arquillian.launch>
-                                <jakarta.mvc.tck.api.BaseArchiveProvider>
+                                <ee.jakarta.tck.mvc.api.BaseArchiveProvider>
                                     org.eclipse.krazo.tck.glassfish.GlassfishArchiveProvider
-                                </jakarta.mvc.tck.api.BaseArchiveProvider>
+                                </ee.jakarta.tck.mvc.api.BaseArchiveProvider>
                             </systemPropertyVariables>
                         </configuration>
                     </plugin>
@@ -144,9 +144,9 @@
                             <dependenciesToScan>jakarta.mvc.tck:mvc-tck-tests</dependenciesToScan>
                             <systemPropertyVariables>
                                 <arquillian.launch>glassfish</arquillian.launch>
-                                <jakarta.mvc.tck.api.BaseArchiveProvider>
+                                <ee.jakarta.tck.mvc.api.BaseArchiveProvider>
                                     org.eclipse.krazo.tck.glassfish.GlassfishModuleArchiveProvider
-                                </jakarta.mvc.tck.api.BaseArchiveProvider>
+                                </ee.jakarta.tck.mvc.api.BaseArchiveProvider>
                             </systemPropertyVariables>
                         </configuration>
                     </plugin>
@@ -177,9 +177,9 @@
                             <dependenciesToScan>jakarta.mvc.tck:mvc-tck-tests</dependenciesToScan>
                             <systemPropertyVariables>
                                 <arquillian.launch>wildfly</arquillian.launch>
-                                <jakarta.mvc.tck.api.BaseArchiveProvider>
+                                <ee.jakarta.tck.mvc.api.BaseArchiveProvider>
                                     org.eclipse.krazo.tck.wildfly.WildflyArchiveProvider
-                                </jakarta.mvc.tck.api.BaseArchiveProvider>
+                                </ee.jakarta.tck.mvc.api.BaseArchiveProvider>
                             </systemPropertyVariables>
                             <argLine>
                                 --add-opens=java.base/java.security=ALL-UNNAMED
@@ -245,9 +245,9 @@
                             </environmentVariables>
                             <systemPropertyVariables>
                                 <arquillian.launch>wildfly-managed</arquillian.launch>
-                                <jakarta.mvc.tck.api.BaseArchiveProvider>
+                                <ee.jakarta.tck.mvc.api.BaseArchiveProvider>
                                     org.eclipse.krazo.tck.wildfly.WildflyArchiveProvider
-                                </jakarta.mvc.tck.api.BaseArchiveProvider>
+                                </ee.jakarta.tck.mvc.api.BaseArchiveProvider>
                             </systemPropertyVariables>
                             <argLine>
                                 --add-opens=java.base/java.security=ALL-UNNAMED
@@ -283,9 +283,9 @@
                             <systemPropertyVariables>
                                 <arquillian.launch>liberty</arquillian.launch>
                                 <liberty.home>${project.build.directory}/liberty/wlp</liberty.home>
-                                <jakarta.mvc.tck.api.BaseArchiveProvider>
+                                <ee.jakarta.tck.mvc.api.BaseArchiveProvider>
                                     org.eclipse.krazo.tck.liberty.LibertyArchiveProvider
-                                </jakarta.mvc.tck.api.BaseArchiveProvider>
+                                </ee.jakarta.tck.mvc.api.BaseArchiveProvider>
                             </systemPropertyVariables>
                         </configuration>
                     </plugin>
