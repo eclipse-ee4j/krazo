@@ -30,8 +30,6 @@ following is a summary of the TCK results for releases of Jakarta MVC.
 ## Test results
 
 <div class="section">
-<h2>Surefire Report<a name="Surefire_Report"></a></h2></div>
-<div class="section">
 <h2>Summary<a name="Summary"></a></h2><a name="Summary"></a>
 <p>[<a href="#Summary">Summary</a>] [<a href="#Package_List">Package List</a>] [<a href="#Test_Cases">Test Cases</a>]</p><br />
 <table border="1" class="bodyTable">
