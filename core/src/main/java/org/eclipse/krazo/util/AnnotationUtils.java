@@ -169,6 +169,20 @@ public final class AnnotationUtils {
     }
 
     /**
+     * Determines if an annotation is present on a method or its declaring class.
+     *
+     * @param method         the {@link Method} to check for a specific annotation
+     * @param annotationType the annotation's type
+     * @param <T>            the type of the annotation
+     * @return <code>true</code> in case the method or its declaring class is annotated with the passed annotationType
+     * @see #hasAnnotation(Class, Class)
+     * @see #hasAnnotation(Method, Class)
+     */
+    public static <T extends Annotation> boolean hasAnnotationOnClassOrMethod(final Method method, Class<T> annotationType) {
+        return hasAnnotation(method.getDeclaringClass(), annotationType) || hasAnnotation(method, annotationType);
+    }
+
+    /**
      * Determines if a method has one or more MVC or JAX-RS annotations on it.
      *
      * @param method method to check for MVC or JAX-RS annotations.
