@@ -18,6 +18,7 @@
  */
 package org.eclipse.krazo.util;
 
+import jakarta.ws.rs.POST;
 import org.junit.Test;
 
 import jakarta.enterprise.context.RequestScoped;
@@ -97,6 +98,13 @@ public class AnnotationUtilsTest {
         assertFalse(AnnotationUtils.hasAnnotation(NoInheritanceController.class.getMethod("start"), Path.class));
     }
 
+    @Test
+    public void hasAnnotationOnClassOrMethodForMethod() throws NoSuchMethodException {
+        assertTrue(AnnotationUtils.hasAnnotationOnClassOrMethod(someController.getClass().getMethod("start"), Controller.class));
+        assertTrue(AnnotationUtils.hasAnnotationOnClassOrMethod(someController.getClass().getMethod("start"), View.class));
+        assertFalse(AnnotationUtils.hasAnnotationOnClassOrMethod(someController.getClass().getMethod("start"), POST.class));
+    }
+
     @Controller
     @Path("start")
     static class SomeController {
@@ -145,6 +153,7 @@ public class AnnotationUtilsTest {
         public void start() {
         }
     }
+
 }
 
 
