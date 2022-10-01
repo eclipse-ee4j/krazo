@@ -48,8 +48,8 @@ class KrazoGeneralValidator implements GeneralValidator {
 
     @Override
     public boolean isMethodValidatable(Method method) {
-
-        boolean mvcControllerMethod = AnnotationUtils.hasAnnotation(method, Controller.class);
+        // method is validatable when either class or method is annotated.
+        boolean mvcControllerMethod = AnnotationUtils.hasAnnotationOnClassOrMethod(method, Controller.class);
 
         return !mvcControllerMethod && delegate.isMethodValidatable(method);
 
