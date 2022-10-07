@@ -10,7 +10,7 @@ following is a summary of the TCK results for releases of Jakarta MVC.
 - Organization Name ("Organization") and, if applicable, URL:
   - [Eclipse Foundation](https://eclipse.org)
 - Product Name, Version and download URL (if applicable):
-  - [Eclipse Krazo 3.0.0](https://eclipse-ee4j.github.io/krazo/downloads/3.0.0.html)
+  - [Eclipse Krazo for Jersey 3.0.0](https://eclipse-ee4j.github.io/krazo/downloads/3.0.0.html)
 - Specification Name, Version and download URL:
   - [Jakarta MVC 2.1](https://jakarta.ee/specifications/mvc/2.1)
 - TCK Version, digital SHA-256 fingerprint and download URL:
