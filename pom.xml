@@ -65,7 +65,7 @@
         <resteasy.version>6.2.1.Final</resteasy.version>
         <gf.jakarta.el.version>5.0.0-M1</gf.jakarta.el.version>
         <htmlunit.version>2.65.1</htmlunit.version>
-        <arquillian-glassfish-remote-3.1.version>1.0.2</arquillian-glassfish-remote-3.1.version>
+        <arquillian-glassfish-remote.version>1.2</arquillian-glassfish-remote.version>
         <wildfly-arquillian-container.version>5.0.0.Alpha5</wildfly-arquillian-container.version>
         <arquillian-liberty-managed-jakarta.version>2.1.0</arquillian-liberty-managed-jakarta.version>
 
@@ -321,7 +321,7 @@
                 <artifactId>license-tool-plugin</artifactId>
                 <version>${license-tool-plugin.version}</version>
                 <configuration>
-                    <dash.skip>true</dash.skip>
+                    <skip>${dependencyCheckSkip}</skip>
                 </configuration>
                 <executions>
                     <execution>
@@ -495,9 +495,9 @@
             </dependency>
 
             <dependency>
-                <groupId>org.jboss.arquillian.container</groupId>
-                <artifactId>arquillian-glassfish-remote-3.1</artifactId>
-                <version>${arquillian-glassfish-remote-3.1.version}</version>
+                <groupId>org.omnifaces.arquillian</groupId>
+                <artifactId>arquillian-glassfish-server-remote</artifactId>
+                <version>${arquillian-glassfish-remote.version}</version>
                 <scope>test</scope>
             </dependency>
 
