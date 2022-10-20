@@ -267,8 +267,8 @@
                     <scope>runtime</scope>
                 </dependency>
                 <dependency>
-                    <groupId>org.jboss.arquillian.container</groupId>
-                    <artifactId>arquillian-glassfish-remote-3.1</artifactId>
+                    <groupId>org.omnifaces.arquillian</groupId>
+                    <artifactId>arquillian-glassfish-server-remote</artifactId>
                     <scope>test</scope>
                 </dependency>
             </dependencies>
