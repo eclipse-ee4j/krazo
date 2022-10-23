@@ -47,7 +47,7 @@
         <maven.compiler.release>8</maven.compiler.release>
 
         <spec.version>2.0.1</spec.version>
-        <jersey.version>3.0.0</jersey.version>
+        <jersey.version>3.0.8</jersey.version>
         <jakartaee.version>9.0.0</jakartaee.version>
 
     </properties>
