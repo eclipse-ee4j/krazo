@@ -69,7 +69,6 @@ public class EncodingIT {
         return new WebArchiveBuilder()
             .addPackage("org.eclipse.krazo.test.encoding")
             .addView(Paths.get(WEB_INF_SRC).resolve("views/iso-8859-15.jsp").toFile(), "iso-8859-15.jsp")
-            .addView(Paths.get(WEB_INF_SRC).resolve("views/iso-8859-15.xhtml").toFile(), "iso-8859-15.xhtml")
             .addWebXml(Paths.get(WEB_INF_SRC).resolve("web.xml").toFile())
             .addBeansXml()
             .build();
@@ -92,27 +91,6 @@ public class EncodingIT {
     @Test
     public void jsp_should_ignore_produces_text_html_with_charset() throws Exception {
         HtmlPage page = webClient.getPage(baseURL + "resources/encoding/jsp/iso-8859-15-text-html-charset-utf-8");
-        checkContentType(page, "text/html; charset=ISO-8859-15");
-        checkUmlauts(page);
-    }
-
-    @Test
-    public void facelets_should_use_content_type_view_attribute() throws Exception {
-        HtmlPage page = webClient.getPage(baseURL + "resources/encoding/facelets/iso-8859-15");
-        checkContentType(page, "text/html; charset=ISO-8859-15");
-        checkUmlauts(page);
-    }
-
-    @Test
-    public void facelets_should_allow_produces_text_html() throws Exception {
-        HtmlPage page = webClient.getPage(baseURL + "resources/encoding/facelets/iso-8859-15-text-html");
-        checkContentType(page, "text/html; charset=ISO-8859-15");
-        checkUmlauts(page);
-    }
-
-    @Test
-    public void facelets_should_ignore_produces_text_html_with_charset() throws Exception {
-        HtmlPage page = webClient.getPage(baseURL + "resources/encoding/facelets/iso-8859-15-text-html-charset-utf-8");
         checkContentType(page, "text/html; charset=ISO-8859-15");
         checkUmlauts(page);
     }
