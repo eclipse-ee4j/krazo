@@ -51,21 +51,8 @@
         </configuration>
     </container>
 
-    <container qualifier="payara">
-        <configuration>
-            <property name="adminHttps">true</property>
-            <property name="adminUser">admin</property>
-            <property name="adminPassword">admin</property>
-        </configuration>
-    </container>
-
-    <container qualifier="tomee">
-        <configuration>
-            <property name="deployerProperties">
-                openejb.deployer.binaries.use=true
-            </property>
-        </configuration>
-    </container>
+    <container qualifier="payara"/>
+    <container qualifier="payara-managed"/>
 
     <container qualifier="liberty">
         <configuration>
