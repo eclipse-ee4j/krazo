@@ -54,13 +54,12 @@
     <container qualifier="payara"/>
     <container qualifier="payara-managed"/>
 
-    <container qualifier="liberty">
+    <container qualifier="liberty-managed">
         <configuration>
             <property name="wlpHome">${liberty.home}</property>
             <property name="serverName">defaultServer</property>
             <property name="httpPort">9080</property>
-            <!-- Uncomment for local debugging -->
-             <property name="javaVmArguments">--add-opens=java.base/java.lang=ALL-UNNAMED</property>
+            <property name="javaVmArguments">--add-opens=java.base/java.lang=ALL-UNNAMED</property>
         </configuration>
     </container>
 </arquillian>

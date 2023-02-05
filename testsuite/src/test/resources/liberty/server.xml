@@ -3,8 +3,9 @@
 
     <!-- Enable features -->
     <featureManager>
-        <feature>jakartaee-9.1</feature>
+        <feature>jakartaee-10.0</feature>
         <feature>localConnector-1.0</feature>
+        <feature>usr:arquillian-support-jakarta-2.1</feature>
     </featureManager>
 
     <!-- To access this server from a remote client add a host attribute
@@ -15,5 +16,5 @@
     <applicationMonitor updateTrigger="mbean" />
 
     <!-- Default SSL configuration enables trust for default certificates from the Java runtime -->
-    <ssl id="defaultSSLConfig" trustDefaultCerts="true" />
+<!--    <ssl id="defaultSSLConfig" trustDefaultCerts="true" />-->
 </server>

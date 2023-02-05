@@ -390,7 +390,7 @@
         </profile>
 
         <profile>
-            <id>testsuite-liberty</id>
+            <id>testsuite-liberty-managed</id>
 
             <properties>
                 <skipITs>false</skipITs>
@@ -421,7 +421,7 @@
                             <assemblyArtifact>
                                 <groupId>io.openliberty.beta</groupId>
                                 <artifactId>openliberty-runtime</artifactId>
-                                <version>22.0.0.8-beta</version>
+                                <version>22.0.0.13-beta</version>
                                 <type>zip</type>
                             </assemblyArtifact>
                         </configuration>
@@ -444,8 +444,8 @@
                         <configuration>
                             <skipITs>false</skipITs>
                             <systemProperties>
-                                <arquillian.launch>liberty</arquillian.launch>
-                                <testsuite.profile>testsuite-liberty</testsuite.profile>
+                                <arquillian.launch>liberty-managed</arquillian.launch>
+                                <testsuite.profile>testsuite-liberty-managed</testsuite.profile>
                                 <liberty.home>${project.build.directory}/liberty/wlp</liberty.home>
                             </systemProperties>
                         </configuration>
