@@ -26,18 +26,15 @@ To run the Krazo testsuite with Eclipse Glassfish, you need to follow these step
 3. Go into the `testsuite` package of Eclipse Krazo and execute `mvn clean integration-test -Ptestsuite-glassfish`
 
 ### WildFly
-To run the Krazo testsuite with WildFly, you need to follow these steps:
+To run the Krazo testsuite with WildFly, you need to run `testsuite-wildfly-managed` or follow these steps:
 
 1. Download WildFly from the WildFly [download page](https://wildfly.org/downloads/) and unzip it somewhere you'll find it again.
 2. Start WildFly with `sh standalone.sh --debug`. This enables you to remote-debug the Arquillian tests.
 3. Go into the `testsuite` package of Eclipse Krazo and execute `mvn clean integration-test -Ptestsuite-wildfly`
 
 ### OpenLiberty
-To run the Krazo testsuite with OpenLiberty, you need to follow these steps. Please note that this process has been tested with 20.x only.
-
-Download OpenLiberty from the official download page and unzip it.
-Replace the file `wlp/templates/servers/defaultServer/server.xml` with `.travis/wlp-server-template.xml` from the Eclipse Krazo repository.
-Go into the testsuite package of Eclipse Krazo and execute `mvn clean integration-test -Ptestsuite-liberty -Dliberty.home=c:/somewhere/wlp/`. Please make sure to replace c:/somewhere/wlp/ with the absolute path to the unpacked OpenLiberty distribution.
+To run the Krazo testsuite with OpenLiberty, you just need to run `mvn verify -P testsuite-liberty-managed`. Maven
+will download and configure an instance of OpenLiberty for you.
 
 ### Troubleshooting
 
