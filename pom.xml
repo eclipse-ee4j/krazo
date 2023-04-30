@@ -1,4 +1,4 @@
-<!--
+    <!--
 
     Copyright (c) 2014-2015 Oracle and/or its affiliates. All rights reserved.
     Copyright (c) 2018, 2021 Eclipse Krazo committers and contributors
@@ -26,7 +26,7 @@
     <groupId>org.eclipse.krazo</groupId>
     <artifactId>krazo-parent</artifactId>
     <packaging>pom</packaging>
-    <version>3.1.0-SNAPSHOT</version>
+    <version>4.0.0-SNAPSHOT</version>
 
     <name>Eclipse Krazo Parent</name>
     <description>Eclipse Krazo Parent</description>
@@ -44,8 +44,8 @@
         <maven.compiler.release>11</maven.compiler.release>
 
         <!-- DEPENDENCY PROPERTIES -->
-        <spec.version>2.1.0</spec.version>
-        <tck.version>2.1.0</tck.version>
+        <spec.version>3.0.0.M1</spec.version>
+        <tck.version>3.0.0.M1</tck.version>
 
         <jersey.version>3.1.0-M8</jersey.version>
         <arquillian-bom.version>1.7.0.Alpha12</arquillian-bom.version>
