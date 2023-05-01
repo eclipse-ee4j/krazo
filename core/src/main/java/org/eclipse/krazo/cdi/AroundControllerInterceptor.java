@@ -17,9 +17,6 @@
  */
 package org.eclipse.krazo.cdi;
 
-import java.io.Serializable;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import jakarta.annotation.Priority;
 import jakarta.inject.Inject;
 import jakarta.interceptor.AroundInvoke;
@@ -27,17 +24,18 @@ import jakarta.interceptor.Interceptor;
 import jakarta.interceptor.InvocationContext;
 import org.eclipse.krazo.lifecycle.RequestLifecycle;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  * @author Christian Kaltepoth
  */
 @Interceptor
 @AroundController
 @Priority(Interceptor.Priority.PLATFORM_AFTER)
-public class AroundControllerInterceptor implements Serializable {
+public class AroundControllerInterceptor {
 
     private static final Logger LOGGER = Logger.getLogger(AroundControllerInterceptor.class.getName());
-
-    private static final long serialVersionUID = -5804986456381504613L;
 
     @Inject
     private RequestLifecycle requestLifecycle;
