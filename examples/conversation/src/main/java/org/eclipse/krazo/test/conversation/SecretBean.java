@@ -36,7 +36,7 @@ public class SecretBean implements Serializable {
     private static final long serialVersionUID = 1234567891234567890L;
 
     @Inject
-    private Conversation conversation;
+    private transient Conversation conversation;
 
     private String secret;
 

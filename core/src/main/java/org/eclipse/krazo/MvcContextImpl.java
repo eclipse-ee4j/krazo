@@ -70,6 +70,9 @@ public class MvcContextImpl implements MvcContext {
     @JaxRsContext
     private UriInfo uriInfo;
 
+    @Inject
+    private KrazoConfig krazoConfig;
+
     private Locale locale;
 
     private String applicationPath;
@@ -98,6 +101,11 @@ public class MvcContextImpl implements MvcContext {
     @Override
     public Csrf getCsrf() {
         return csrf;
+    }
+
+    @Override
+    public String getHiddenMethodFieldName() {
+        return krazoConfig.getFormMethodOverwriteField();
     }
 
     @Override

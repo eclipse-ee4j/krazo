@@ -17,11 +17,6 @@
  */
 package org.eclipse.krazo.binding.validate;
 
-import org.eclipse.krazo.binding.BindingResultImpl;
-import org.eclipse.krazo.binding.ConstraintViolationTranslator;
-import org.eclipse.krazo.binding.ValidationErrorImpl;
-import org.eclipse.krazo.cdi.Internal;
-
 import jakarta.annotation.Priority;
 import jakarta.inject.Inject;
 import jakarta.interceptor.AroundInvoke;
@@ -34,7 +29,11 @@ import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validator;
 import jakarta.validation.ValidatorFactory;
 import jakarta.validation.executable.ExecutableValidator;
-import java.io.Serializable;
+import org.eclipse.krazo.binding.BindingResultImpl;
+import org.eclipse.krazo.binding.ConstraintViolationTranslator;
+import org.eclipse.krazo.binding.ValidationErrorImpl;
+import org.eclipse.krazo.cdi.Internal;
+
 import java.lang.reflect.Method;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -50,9 +49,7 @@ import java.util.logging.Logger;
 @Interceptor
 @ValidationInterceptorBinding
 @Priority(Interceptor.Priority.LIBRARY_BEFORE)
-public class ValidationInterceptor implements Serializable {
-
-    private static final long serialVersionUID = -5804986456381504613L;
+public class ValidationInterceptor {
 
     private static final Logger log = Logger.getLogger(ValidationInterceptor.class.getName());
 

@@ -24,7 +24,7 @@
     <parent>
         <groupId>org.eclipse.krazo.examples</groupId>
         <artifactId>krazo-examples-parent</artifactId>
-        <version>3.1.0-SNAPSHOT</version>
+        <version>4.0.0-SNAPSHOT</version>
     </parent>
     <artifactId>csrf-property</artifactId>
     <packaging>war</packaging>

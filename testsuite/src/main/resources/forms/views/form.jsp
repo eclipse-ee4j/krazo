@@ -6,7 +6,7 @@
 </head>
 <body>
     <form id="form" action="forms" method="post">
-        <input id="hidden-method" name="_method" type="hidden" value="post">
+        <input id="hidden-method" name="${mvc.hiddenMethodFieldName}" type="hidden" value="post">
         <input type="submit" name="submit" value="Click here"/>
     </form>
 </body>
