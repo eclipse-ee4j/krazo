@@ -30,8 +30,8 @@ pipeline {
               sh "wget https://download.eclipse.org/ee4j/glassfish/glassfish-7.0.4.zip"
               sh "unzip glassfish-7.0.4.zip"
 
-              sh "rm glassfish7/bin/modules/jakarta.mvc-api.jar"
-              sh "rm glassfish7/bin/modules/krazo-*.jar"
+              sh "rm glassfish7/glassfish/bin/modules/jakarta.mvc-api.jar"
+              sh "rm glassfish7/glassfish/bin/modules/krazo-*.jar"
 
               sh "glassfish7/bin/asadmin start-domain"
 
