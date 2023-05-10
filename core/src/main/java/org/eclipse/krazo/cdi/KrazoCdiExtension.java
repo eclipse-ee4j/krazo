@@ -27,7 +27,6 @@ import org.eclipse.krazo.binding.convert.ConverterRegistry;
 import org.eclipse.krazo.binding.convert.MvcConverterProvider;
 import org.eclipse.krazo.cdi.types.AnnotatedTypeProcessor;
 import org.eclipse.krazo.core.*;
-import org.eclipse.krazo.engine.FaceletsViewEngine;
 import org.eclipse.krazo.engine.JspViewEngine;
 import org.eclipse.krazo.engine.ViewEngineFinder;
 import org.eclipse.krazo.event.*;
@@ -110,7 +109,6 @@ public class KrazoCdiExtension implements Extension {
                 RequestLifecycle.class,
 
                 // engine
-                FaceletsViewEngine.class,
                 JspViewEngine.class,
                 ViewEngineFinder.class,
 

@@ -49,24 +49,4 @@ public class EncodingController {
     public String jsp_iso_8859_15_text_html_charset_utf_8() {
         return "iso-8859-15.jsp";
     }
-
-    @GET
-    @Path("facelets/iso-8859-15")
-    public String facelets_iso_8859_15() {
-        return "iso-8859-15.xhtml";
-    }
-
-    @GET
-    @Path("facelets/iso-8859-15-text-html")
-    @Produces("text/html")
-    public String facelets_iso_8859_15_text_html() {
-        return "iso-8859-15.xhtml";
-    }
-
-    @GET
-    @Path("facelets/iso-8859-15-text-html-charset-utf-8")
-    @Produces("text/html; charset=utf-8")
-    public String facelets_iso_8859_15_text_html_charset_utf_8() {
-        return "iso-8859-15.xhtml";
-    }
 }
