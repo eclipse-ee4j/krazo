@@ -211,7 +211,10 @@ public class ViewResponseFilter implements ContainerResponseFilter {
         }
 
         String resultView = viewName;
-        if (!viewName.contains(".")) {
+        if (defaultExtension.contains(".")) {
+            resultView += defaultExtension;
+        }
+        else if (!viewName.contains(".")) {
             resultView += "." + defaultExtension;
         }
         return resultView;

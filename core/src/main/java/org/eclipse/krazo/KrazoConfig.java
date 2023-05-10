@@ -18,6 +18,7 @@
  */
 package org.eclipse.krazo;
 
+import jakarta.mvc.engine.ViewEngine;
 import org.eclipse.krazo.cdi.RedirectScopeManager;
 import org.eclipse.krazo.jaxrs.JaxRsContext;
 import org.eclipse.krazo.security.CsrfTokenStrategy;
@@ -69,7 +70,7 @@ public class KrazoConfig {
     }
 
     public String getDefaultViewFileExtension() {
-        Object value = config.getProperty(Properties.DEFAULT_VIEW_FILE_EXTENSION);
+        Object value = config.getProperty(ViewEngine.VIEW_EXTENSION);
         if (value instanceof String) {
             return (String) value;
         }
