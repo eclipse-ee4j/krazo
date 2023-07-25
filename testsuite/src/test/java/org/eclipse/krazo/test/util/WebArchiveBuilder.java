@@ -40,6 +40,11 @@ public class WebArchiveBuilder {
     private final WebArchive archive = ShrinkWrap.create(WebArchive.class);
     private List<MavenDependency> additionalDependencies = new ArrayList<>();
 
+    public WebArchiveBuilder addClasses(Class<?>... classes) {
+        archive.addClasses(classes);
+        return this;
+    }
+
     public WebArchiveBuilder addPackage(String packageName) {
         archive.addPackage(packageName);
         return this;

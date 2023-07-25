@@ -17,24 +17,17 @@
  */
 package org.eclipse.krazo.test.defaultview;
 
-import jakarta.enterprise.context.RequestScoped;
-import jakarta.mvc.Controller;
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.Path;
+import jakarta.mvc.engine.ViewEngine;
+import jakarta.ws.rs.ApplicationPath;
+import jakarta.ws.rs.core.Application;
 
-@Controller
-@RequestScoped
-@Path("default-view")
-public class DefaultViewController {
+import java.util.Map;
 
-    @GET
-    public String index() {
-        return "index";
-    }
+@ApplicationPath("mvc")
+public class DefaultViewWithoutDotApplication extends Application {
 
-    @GET
-    @Path("/with-extension")
-    public String indexWithExtension() {
-        return "index.jsp";
+    @Override
+    public Map<String, Object> getProperties() {
+        return Map.of(ViewEngine.VIEW_EXTENSION, "jsp");
     }
 }

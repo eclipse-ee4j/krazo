@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2014-2015 Oracle and/or its affiliates. All rights reserved.
- * Copyright (c) 2018, 2023 Eclipse Krazo committers and contributors
+ * Copyright (c) 2023 Eclipse Krazo committers and contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,6 +19,8 @@ package org.eclipse.krazo.test;
 
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
+import org.eclipse.krazo.test.defaultview.DefaultViewController;
+import org.eclipse.krazo.test.defaultview.DefaultViewWithDotApplication;
 import org.eclipse.krazo.test.util.WebArchiveBuilder;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
@@ -40,7 +41,7 @@ import static org.junit.Assert.assertEquals;
  * @author Tobias Erdle
  */
 @RunWith(Arquillian.class)
-public class DefaultViewIT {
+public class DefaultViewWithDotIT {
     private static final String WEB_INF_SRC = "src/main/resources/defaultview/";
     @ArquillianResource
     private URL baseURL;
@@ -58,7 +59,7 @@ public class DefaultViewIT {
     @Deployment(testable = false, name = "default-view")
     public static WebArchive createDeployment() {
         return new WebArchiveBuilder()
-            .addPackage("org.eclipse.krazo.test.defaultview")
+            .addClasses(DefaultViewWithDotApplication.class, DefaultViewController.class)
             .addView(Paths.get(WEB_INF_SRC).resolve("views/index.jsp").toFile(), "index.jsp")
             .addBeansXml()
             .build();
@@ -67,6 +68,15 @@ public class DefaultViewIT {
     @Test
     public void test() throws Exception {
         final HtmlPage page = webClient.getPage(baseURL + "mvc/default-view");
+
+        System.out.println(page.asXml());
+
+        assertEquals("Default-View Extension Test", page.getElementById("headline").getTextContent());
+    }
+
+    @Test
+    public void testWithAppliedExtension() throws Exception {
+        final HtmlPage page = webClient.getPage(baseURL + "mvc/default-view/with-extension");
 
         System.out.println(page.asXml());
 
