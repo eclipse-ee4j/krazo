@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2014-2015 Oracle and/or its affiliates. All rights reserved.
- * Copyright (c) 2018, 2019 Eclipse Krazo committers and contributors
+ * Copyright (c) 2018, 2023 Eclipse Krazo committers and contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,29 +18,6 @@
  */
 package org.eclipse.krazo.core;
 
-import static jakarta.ws.rs.core.Response.Status.FOUND;
-import static jakarta.ws.rs.core.Response.Status.INTERNAL_SERVER_ERROR;
-import static jakarta.ws.rs.core.Response.Status.MOVED_PERMANENTLY;
-import static jakarta.ws.rs.core.Response.Status.SEE_OTHER;
-import static jakarta.ws.rs.core.Response.Status.TEMPORARY_REDIRECT;
-import static org.eclipse.krazo.cdi.KrazoCdiExtension.isEventObserved;
-import static org.eclipse.krazo.util.AnnotationUtils.getAnnotation;
-import static org.eclipse.krazo.util.PathUtils.noPrefix;
-import static org.eclipse.krazo.util.PathUtils.noStartingSlash;
-
-import java.lang.reflect.Method;
-import java.net.URI;
-import java.util.Arrays;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.stream.Collectors;
-
-import org.eclipse.krazo.KrazoConfig;
-import org.eclipse.krazo.engine.Viewable;
-import org.eclipse.krazo.event.ControllerRedirectEventImpl;
-import org.eclipse.krazo.lifecycle.RequestLifecycle;
-
 import jakarta.annotation.Priority;
 import jakarta.enterprise.event.Event;
 import jakarta.inject.Inject;
@@ -56,13 +33,25 @@ import jakarta.ws.rs.container.ContainerRequestContext;
 import jakarta.ws.rs.container.ContainerResponseContext;
 import jakarta.ws.rs.container.ContainerResponseFilter;
 import jakarta.ws.rs.container.ResourceInfo;
-import jakarta.ws.rs.core.Context;
-import jakarta.ws.rs.core.HttpHeaders;
-import jakarta.ws.rs.core.MediaType;
-import jakarta.ws.rs.core.Request;
-import jakarta.ws.rs.core.Response;
-import jakarta.ws.rs.core.UriInfo;
-import jakarta.ws.rs.core.Variant;
+import jakarta.ws.rs.core.*;
+import org.eclipse.krazo.KrazoConfig;
+import org.eclipse.krazo.engine.Viewable;
+import org.eclipse.krazo.event.ControllerRedirectEventImpl;
+import org.eclipse.krazo.lifecycle.RequestLifecycle;
+
+import java.lang.reflect.Method;
+import java.net.URI;
+import java.util.Arrays;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.stream.Collectors;
+
+import static jakarta.ws.rs.core.Response.Status.*;
+import static org.eclipse.krazo.cdi.KrazoCdiExtension.isEventObserved;
+import static org.eclipse.krazo.util.AnnotationUtils.getAnnotation;
+import static org.eclipse.krazo.util.PathUtils.noPrefix;
+import static org.eclipse.krazo.util.PathUtils.noStartingSlash;
 
 /**
  * <p>A JAX-RS response filter that fires a {@link jakarta.mvc.event.AfterControllerEvent}
@@ -206,12 +195,16 @@ public class ViewResponseFilter implements ContainerResponseFilter {
      */
     static String appendExtensionIfRequired(String viewName, String defaultExtension) {
         if (viewName == null || viewName.startsWith(REDIRECT)
-                || defaultExtension == null || defaultExtension.length() == 0) {
+                || defaultExtension == null || defaultExtension.length() == 0
+        || viewName.contains(".")) {
             return viewName;
         }
 
         String resultView = viewName;
-        if (!viewName.contains(".")) {
+        if (defaultExtension.contains(".")) {
+            resultView += defaultExtension;
+        }
+        else if (!viewName.contains(".")) {
             resultView += "." + defaultExtension;
         }
         return resultView;
