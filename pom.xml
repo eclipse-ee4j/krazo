@@ -63,7 +63,7 @@
         <slf4j.version>2.0.3</slf4j.version>
         <easymock.version>4.3</easymock.version>
         <hibernate-validator-cdi.version>8.0.0.Final</hibernate-validator-cdi.version>
-        <resteasy.version>6.2.1.Final</resteasy.version>
+        <resteasy.version>6.2.3.Final</resteasy.version>
         <gf.jakarta.el.version>5.0.0-M1</gf.jakarta.el.version>
         <htmlunit.version>2.65.1</htmlunit.version>
         <arquillian-glassfish-remote.version>1.2</arquillian-glassfish-remote.version>
