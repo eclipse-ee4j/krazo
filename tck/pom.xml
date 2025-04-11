@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-    Copyright (c) 2018, 2021 Eclipse Krazo committers and contributors
+    Copyright (c) 2018, 2025 Eclipse Krazo committers and contributors
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -50,7 +50,7 @@
 
         <dependency>
             <groupId>jakarta.platform</groupId>
-            <artifactId>jakarta.jakartaee-api</artifactId>
+            <artifactId>jakarta.jakartaee-web-api</artifactId>
             <scope>provided</scope>
         </dependency>
 
@@ -94,7 +94,7 @@
 
     <profiles>
 
-        <!-- Run TCK against Glassfish 6 -->
+        <!-- Run TCK against Glassfish -->
         <profile>
             <id>tck-glassfish</id>
             <activation>
@@ -127,7 +127,7 @@
             </dependencies>
         </profile>
 
-        <!-- Run TCK against Glassfish 6 with Krazo installed as a Glassfish module -->
+        <!-- Run TCK against Glassfish with Krazo installed as a Glassfish module -->
         <profile>
             <id>tck-glassfish-module</id>
             <activation>

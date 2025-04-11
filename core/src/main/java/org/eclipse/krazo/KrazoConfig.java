@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2014-2015 Oracle and/or its affiliates. All rights reserved.
- * Copyright (c) 2018, 2023 Eclipse Krazo committers and contributors
+ * Copyright (c) 2018, 2025 Eclipse Krazo committers and contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,13 +18,13 @@
  */
 package org.eclipse.krazo;
 
-import jakarta.mvc.engine.ViewEngine;
 import org.eclipse.krazo.cdi.RedirectScopeManager;
 import org.eclipse.krazo.jaxrs.JaxRsContext;
 import org.eclipse.krazo.security.CsrfTokenStrategy;
 import org.eclipse.krazo.security.SessionCsrfTokenStrategy;
 
 import jakarta.inject.Inject;
+import jakarta.mvc.engine.ViewEngine;
 import jakarta.mvc.form.FormMethodOverwriter;
 import jakarta.mvc.security.Csrf;
 import jakarta.ws.rs.core.Configuration;
@@ -51,7 +51,7 @@ public class KrazoConfig {
         }
 
         // default as defined in the spec
-        return Csrf.CsrfOptions.EXPLICIT;
+        return Csrf.CsrfOptions.IMPLICIT;
 
     }
 

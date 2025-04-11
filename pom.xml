@@ -2,7 +2,7 @@
 <!--
 
     Copyright (c) 2014-2015 Oracle and/or its affiliates. All rights reserved.
-    Copyright (c) 2018, 2021 Eclipse Krazo committers and contributors
+    Copyright (c) 2018, 2025 Eclipse Krazo committers and contributors
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -49,22 +49,22 @@
         <spec.version>3.0.0</spec.version>
         <tck.version>3.0.0</tck.version>
 
-        <jersey.version>3.1.1</jersey.version>
+        <jersey.version>4.0.0-M2</jersey.version>
         <arquillian-bom.version>1.7.0.Alpha14</arquillian-bom.version>
         <shrinkwrap-resolver-bom.version>3.1.4</shrinkwrap-resolver-bom.version>
-        <jakartaee-api.version>10.0.0</jakartaee-api.version>
-        <jakarta.servlet-api.version>6.0.0</jakarta.servlet-api.version>
-        <jakarta.enterprise.cdi-api.version>4.0.1</jakarta.enterprise.cdi-api.version>
-        <jakarta.validation-api.version>3.0.2</jakarta.validation-api.version>
-        <jakarta.annotation-api.version>2.1.1</jakarta.annotation-api.version>
-        <jakarta.servlet.jsp.jstl-api.version>3.0.0</jakarta.servlet.jsp.jstl-api.version>
-        <jakarta.ws.rs-api.version>3.1.0</jakarta.ws.rs-api.version>
-        <jakarta.interceptor-api.version>2.1.0</jakarta.interceptor-api.version>
+        <jakartaee-api.version>11.0.0</jakartaee-api.version>
+        <jakarta.servlet-api.version>6.1.0</jakarta.servlet-api.version>
+        <jakarta.enterprise.cdi-api.version>4.1.0</jakarta.enterprise.cdi-api.version>
+        <jakarta.validation-api.version>3.1.0</jakarta.validation-api.version>
+        <jakarta.annotation-api.version>3.0.0</jakarta.annotation-api.version>
+        <jakarta.servlet.jsp.jstl-api.version>3.0.2</jakarta.servlet.jsp.jstl-api.version>
+        <jakarta.ws.rs-api.version>4.0.0</jakarta.ws.rs-api.version>
+        <jakarta.interceptor-api.version>2.2.0</jakarta.interceptor-api.version>
         <junit.version>4.13.2</junit.version>
         <slf4j.version>2.0.3</slf4j.version>
         <easymock.version>4.3</easymock.version>
-        <hibernate-validator-cdi.version>8.0.0.Final</hibernate-validator-cdi.version>
-        <resteasy.version>6.2.1.Final</resteasy.version>
+        <hibernate-validator-cdi.version>8.0.1.Final</hibernate-validator-cdi.version>
+        <resteasy.version>7.0.0.Beta1</resteasy.version>
         <gf.jakarta.el.version>5.0.0-M1</gf.jakarta.el.version>
         <htmlunit.version>2.65.1</htmlunit.version>
         <arquillian-glassfish-remote.version>1.2</arquillian-glassfish-remote.version>
@@ -364,7 +364,7 @@
             <!-- Other Jakarta specifications -->
             <dependency>
                 <groupId>jakarta.platform</groupId>
-                <artifactId>jakarta.jakartaee-api</artifactId>
+                <artifactId>jakarta.jakartaee-web-api</artifactId>
                 <version>${jakartaee-api.version}</version>
                 <scope>provided</scope>
             </dependency>
