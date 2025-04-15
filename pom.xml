@@ -67,7 +67,7 @@
         <resteasy.version>7.0.0.Beta1</resteasy.version>
         <gf.jakarta.el.version>5.0.0-M1</gf.jakarta.el.version>
         <htmlunit.version>2.65.1</htmlunit.version>
-        <arquillian-glassfish-remote.version>1.7</arquillian-glassfish-remote.version>
+        <arquillian-glassfish-remote.version>1.2</arquillian-glassfish-remote.version>
         <wildfly-arquillian-container.version>5.1.0.Beta11</wildfly-arquillian-container.version>
         <arquillian-liberty-managed-jakarta.version>2.1.3</arquillian-liberty-managed-jakarta.version>
 
