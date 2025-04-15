@@ -51,7 +51,7 @@ public class KrazoConfig {
         }
 
         // default as defined in the spec
-        return Csrf.CsrfOptions.EXPLICIT;
+        return Csrf.CsrfOptions.IMPLICIT;
 
     }
 
