@@ -169,44 +169,8 @@
                     <value>wildfly</value>
                 </property>
             </activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <artifactId>maven-surefire-plugin</artifactId>
-                        <configuration>
-                            <dependenciesToScan>jakarta.mvc.tck:mvc-tck-tests</dependenciesToScan>
-                            <systemPropertyVariables>
-                                <arquillian.launch>wildfly</arquillian.launch>
-                                <ee.jakarta.tck.mvc.api.BaseArchiveProvider>
-                                    org.eclipse.krazo.tck.wildfly.WildflyArchiveProvider
-                                </ee.jakarta.tck.mvc.api.BaseArchiveProvider>
-                            </systemPropertyVariables>
-                            <argLine>
-                                --add-opens=java.base/java.security=ALL-UNNAMED
-                                --add-opens=java.base/java.io=ALL-UNNAMED
-                            </argLine>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-            <dependencies>
-                <dependency>
-                    <groupId>org.wildfly.arquillian</groupId>
-                    <artifactId>wildfly-arquillian-container-remote</artifactId>
-                </dependency>
-            </dependencies>
-        </profile>
-
-        <profile>
-            <id>tck-wildfly-managed</id>
-            <activation>
-                <property>
-                    <name>tck-env</name>
-                    <value>wildfly-managed</value>
-                </property>
-            </activation>
             <properties>
-                <wildfly.version>27.0.0.Alpha3</wildfly.version>
+                <wildfly.version>${wildfly.version}</wildfly.version>
             </properties>
             <build>
                 <plugins>
