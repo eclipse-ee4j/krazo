@@ -197,6 +197,16 @@ public class ViewableWriter implements MessageBodyWriter<Viewable> {
         }
 
         @Override
+        public void write(final byte[] b) throws IOException {
+            out.write(b);
+        }
+
+        @Override
+        public void write(final byte[] b, final int off, final int len) throws IOException {
+            out.write(b, off, len);
+        }
+
+        @Override
         public boolean isReady() {
             return false;
         }
