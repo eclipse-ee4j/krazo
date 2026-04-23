@@ -42,6 +42,7 @@ import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.container.ResourceInfo;
 import jakarta.ws.rs.core.*;
 import jakarta.ws.rs.ext.MessageBodyWriter;
+import jakarta.ws.rs.ext.RuntimeDelegate;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
@@ -138,7 +139,7 @@ public class ViewableWriter implements MessageBodyWriter<Viewable> {
 
         // Create wrapper for response
         final ServletOutputStream responseStream = new DelegatingServletOutputStream(out);
-        final HttpServletResponse responseWrapper = new MvcHttpServletResponse(response, responseStream, mediaType, headers);
+        final MvcHttpServletResponse responseWrapper = new MvcHttpServletResponse(response, responseStream, mediaType, headers);
 
         // Pass request to view engine
         try {
@@ -158,6 +159,7 @@ public class ViewableWriter implements MessageBodyWriter<Viewable> {
                 // Process view using selected engine
                 engine.processView(new ViewEngineContextImpl(viewable.getView(), models, request, responseWrapper,
                                                              headers, responseStream, mediaType, uriInfo, resourceInfo, config, mvc.getLocale()));
+                responseWrapper.syncResponseMetadata();
 
             } finally {
                 eventDispatcher.fireAfterProcessViewEvent(engine, viewable);
@@ -215,6 +217,7 @@ public class ViewableWriter implements MessageBodyWriter<Viewable> {
 
         private final ServletOutputStream responseStream;
         private final MultivaluedMap<String, Object> responseHeaders;
+        private final MediaType initialMediaType;
         private PrintWriter responseWriter;
 
         public MvcHttpServletResponse(HttpServletResponse response, ServletOutputStream responseStream, MediaType mediaType,
@@ -223,9 +226,11 @@ public class ViewableWriter implements MessageBodyWriter<Viewable> {
             super(response);
             this.responseStream = responseStream;
             this.responseHeaders = responseHeaders;
+            this.initialMediaType = mediaType;
 
             // initialize content-type and character set from JAX-RS header map
             super.setContentType(mediaType.toString());
+            copyHeadersToServletResponse();
 
         }
 
@@ -239,14 +244,43 @@ public class ViewableWriter implements MessageBodyWriter<Viewable> {
 
         @Override
         public void setContentType(String type) {
+            if (shouldIgnoreJspContentTypeOverride(type)) {
+                return;
+            }
+
             super.setContentType(type);
+            String effectiveContentType = super.getContentType();
+            if (effectiveContentType == null) {
+                effectiveContentType = type;
+            }
+
+            MediaType mediaType = MediaType.valueOf(effectiveContentType);
+            responseHeaders.putSingle(HttpHeaders.CONTENT_TYPE, mediaType);
 
             // update charset in JAX-RS header map
-            String charset = MediaType.valueOf(type).getParameters().get(MediaType.CHARSET_PARAMETER);
+            String charset = mediaType.getParameters().get(MediaType.CHARSET_PARAMETER);
             if (charset != null) {
                 syncCharsetToHeaderMap(charset);
             }
 
+        }
+
+        @Override
+        public void setHeader(String name, String value) {
+            if (handleContentTypeHeaderOverride(name, value)) {
+                return;
+            }
+
+            super.setHeader(name, value);
+        }
+
+        @Override
+        public void addHeader(String name, String value) {
+            if (handleContentTypeHeaderOverride(name, value)) {
+                return;
+            }
+
+            super.addHeader(name, value);
         }
 
         @Override
@@ -268,6 +302,75 @@ public class ViewableWriter implements MessageBodyWriter<Viewable> {
 
             responseHeaders.putSingle(HttpHeaders.CONTENT_TYPE, mediaType.withCharset(charset));
 
+        }
+
+        private boolean shouldIgnoreJspContentTypeOverride(String type) {
+            if (type == null || initialMediaType == null) {
+                return false;
+            }
+
+            MediaType requested = MediaType.valueOf(type);
+            return !MediaType.TEXT_HTML_TYPE.isCompatible(initialMediaType)
+                    && MediaType.TEXT_HTML_TYPE.isCompatible(requested);
+        }
+
+        private boolean handleContentTypeHeaderOverride(String name, String value) {
+            if (!HttpHeaders.CONTENT_TYPE.equalsIgnoreCase(name)) {
+                return false;
+            }
+
+            setContentType(value);
+            return true;
+        }
+
+        private void copyHeadersToServletResponse() {
+            responseHeaders.forEach((name, values) -> {
+                if (HttpHeaders.CONTENT_TYPE.equalsIgnoreCase(name) || values == null || values.isEmpty()) {
+                    return;
+                }
+
+                boolean first = true;
+                for (Object value : values) {
+                    String headerValue = serializeHeaderValue(value);
+                    if (first) {
+                        super.setHeader(name, headerValue);
+                        first = false;
+                    } else {
+                        super.addHeader(name, headerValue);
+                    }
+                }
+            });
+        }
+
+        private void syncResponseMetadata() {
+            Object contentType = responseHeaders.getFirst(HttpHeaders.CONTENT_TYPE);
+            if (contentType != null) {
+                setContentType(String.valueOf(contentType));
+            }
+            copyHeadersToServletResponse();
+        }
+
+        private String serializeHeaderValue(Object value) {
+            if (value == null) {
+                return null;
+            }
+
+            RuntimeDelegate.HeaderDelegate<Object> delegate = getHeaderDelegate(value);
+            if (delegate != null) {
+                return delegate.toString(value);
+            }
+
+            return String.valueOf(value);
+        }
+
+        @SuppressWarnings({"rawtypes", "unchecked"})
+        private RuntimeDelegate.HeaderDelegate<Object> getHeaderDelegate(Object value) {
+            try {
+                return (RuntimeDelegate.HeaderDelegate<Object>) RuntimeDelegate.getInstance()
+                        .createHeaderDelegate((Class) value.getClass());
+            } catch (IllegalArgumentException ex) {
+                return null;
+            }
         }
 
         @Override
