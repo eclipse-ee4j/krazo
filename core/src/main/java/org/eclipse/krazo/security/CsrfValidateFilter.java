@@ -27,6 +27,7 @@ import jakarta.inject.Inject;
 import jakarta.mvc.Controller;
 import jakarta.mvc.security.CsrfProtected;
 import jakarta.mvc.security.CsrfValidationException;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.PATCH;
 import jakarta.ws.rs.POST;
@@ -76,6 +77,9 @@ public class CsrfValidateFilter implements ContainerRequestFilter {
     @Inject
     private Messages messages;
 
+    @Inject
+    private HttpServletRequest request;
+
     private final FormEntityProvider formEntityProvider;
 
     public CsrfValidateFilter() {
@@ -95,6 +99,13 @@ public class CsrfValidateFilter implements ContainerRequestFilter {
             // First check if CSRF token is in header
             final String csrfToken = context.getHeaders().getFirst(token.getHeaderName());
             if (token.getValue().equals(csrfToken)) {
+                return;
+            }
+
+            // Some servlet/JAX-RS integrations expose parsed form parameters via the
+            // servlet request even when the JAX-RS entity stream is no longer safe to
+            // consume for CSRF validation.
+            if (request != null && token.getValue().equals(request.getParameter(token.getParamName()))) {
                 return;
             }
 
