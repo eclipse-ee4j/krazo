@@ -11,7 +11,7 @@ pipeline {
     stage("Compile") {
       steps {
         withMaven() {
-          sh "mvn -Pstaging compile"
+          sh "mvn -Psnapshots compile"
         }
       }
     }
@@ -19,7 +19,7 @@ pipeline {
     stage("Unit Tests & install") {
       steps {
         withMaven() {
-          sh "mvn -Pstaging install"
+          sh "mvn -Psnapshots install"
         }
       }
     }
@@ -27,17 +27,17 @@ pipeline {
     stage("Integration-Test") {
         steps {
             withMaven() {
-              sh "wget https://download.eclipse.org/ee4j/glassfish/glassfish-7.0.4.zip"
-              sh "unzip glassfish-7.0.4.zip"
+              sh "wget https://download.eclipse.org/ee4j/glassfish/glassfish-780.2.zip"
+              sh "unzip glassfish-8.0.2.zip"
 
               sh "rm glassfish7/glassfish/modules/jakarta.mvc-api.jar"
               sh "rm glassfish7/glassfish/modules/krazo-*.jar"
 
-              sh "glassfish7/bin/asadmin start-domain"
+              sh "glassfish8/bin/asadmin start-domain"
 
               sh "mvn -Pstaging,testsuite-glassfish verify"
 
-              sh "glassfish7/bin/asadmin stop-domain"
+              sh "glassfish8/bin/asadmin stop-domain"
             }
         }
     }

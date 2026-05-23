@@ -37,8 +37,8 @@ public abstract class AbstractArchiveProvider implements BaseArchiveProvider {
     public AbstractArchiveProvider() {
 
         sonatypeRepo = MavenRemoteRepositories.createRemoteRepository(
-            "jakarta-staging",
-            "https://jakarta.oss.sonatype.org/content/groups/staging",
+            "downloads",
+            "https://central.sonatype.com/repository/maven-snapshots",
             "default"
         );
 //        sonatypeRepo = MavenRemoteRepositories.createRemoteRepository(

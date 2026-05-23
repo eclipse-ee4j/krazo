@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, 2019 Eclipse Krazo committers and contributors
+ * Copyright (c) 2018, 2025 Eclipse Krazo committers and contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -94,10 +94,12 @@ public class AnnotatedTypeProcessor {
         /*
          * May be one of these classes depending on the exact Hibernate Validator version:
          * org.hibernate.validator.cdi.internal.interceptor.MethodValidated
+         * org.hibernate.validator.cdi.interceptor.internal.MethodValidated
          * org.hibernate.validator.internal.cdi.interceptor.MethodValidated
          */
         return clazz.getName().startsWith("org.hibernate.validator.")
-                && clazz.getName().endsWith(".interceptor.MethodValidated");
+            && (clazz.getName().endsWith(".interceptor.MethodValidated")
+            || clazz.getName().endsWith(".interceptor.internal.MethodValidated"));
     }
 
 }
