@@ -35,7 +35,7 @@ pipeline {
 
               sh "glassfish8/bin/asadmin start-domain"
 
-              sh "mvn -Psnapshots,testsuite-glassfish verify"
+              sh "mvn -Psnapshots -pl tck -DversionUpdateCheckSkip -Ddash.skip -Dtck-env=glassfish verify"
 
               sh "glassfish8/bin/asadmin stop-domain"
             }
