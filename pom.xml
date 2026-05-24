@@ -48,8 +48,8 @@
         <!-- DEPENDENCY PROPERTIES -->
         <spec.version>3.0.0</spec.version>
         <tck.version>3.1.0-SNAPSHOT</tck.version>
-      
-        <jersey.version>4.0.0-M2</jersey.version>
+
+        <jersey.version>4.0.2</jersey.version>
         <arquillian-bom.version>1.9.4.Final</arquillian-bom.version>
         <shrinkwrap-resolver-bom.version>3.1.4</shrinkwrap-resolver-bom.version>
         <jakartaee-api.version>11.0.0</jakartaee-api.version>
@@ -64,7 +64,7 @@
         <slf4j.version>2.0.3</slf4j.version>
         <easymock.version>4.3</easymock.version>
         <hibernate-validator-cdi.version>8.0.1.Final</hibernate-validator-cdi.version>
-        <resteasy.version>7.0.0.Beta1</resteasy.version>
+        <resteasy.version>7.0.2.Final</resteasy.version>
         <gf.jakarta.el.version>5.0.0-M1</gf.jakarta.el.version>
         <htmlunit.version>2.65.1</htmlunit.version>
         <arquillian-glassfish-remote.version>1.2</arquillian-glassfish-remote.version>
