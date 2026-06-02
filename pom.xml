@@ -2,7 +2,7 @@
 <!--
 
     Copyright (c) 2014-2015 Oracle and/or its affiliates. All rights reserved.
-    Copyright (c) 2018, 2025 Eclipse Krazo committers and contributors
+    Copyright (c) 2018, 2026 Eclipse Krazo committers and contributors
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -46,8 +46,8 @@
         <maven.compiler.release>17</maven.compiler.release>
 
         <!-- DEPENDENCY PROPERTIES -->
-        <spec.version>3.0.0</spec.version>
-        <tck.version>3.1.0-SNAPSHOT</tck.version>
+        <spec.version>3.0.1</spec.version>
+        <tck.version>3.0.1</tck.version>
 
         <jersey.version>4.0.2</jersey.version>
         <arquillian-bom.version>1.9.4.Final</arquillian-bom.version>
