@@ -36,6 +36,7 @@ import java.util.stream.Stream;
  *
  * @author Santiago Pericas-Geertsen
  * @author Christian Kaltepoth
+ * @author Satoshi Seto
  */
 @Vetoed // produced by BindingResultManager
 public class BindingResultImpl implements BindingResult {
