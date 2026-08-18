@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2014-2015 Oracle and/or its affiliates. All rights reserved.
- * Copyright (c) 2018, 2019 Eclipse Krazo committers and contributors
+ * Copyright (c) 2018, 2026 Eclipse Krazo committers and contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -74,6 +74,28 @@ public class BindingResultImpl implements BindingResult {
         return Stream.concat(bindingErrors.stream(), validationErrors.stream())
                 .filter(paramError -> Objects.equals(paramError.getParamName(), param))
                 .collect(Collectors.collectingAndThen(Collectors.toSet(), Collections::unmodifiableSet));
+    }
+
+    /**
+     * Returns {@code true} if there are any validation or binding errors.
+     * This is a convenience method equivalent to {@link #isFailed()}.
+     *
+     * @return {@code true} if there are errors, {@code false} otherwise
+     */
+    public boolean hasErrors() {
+        return isFailed();
+    }
+
+    /**
+     * Returns {@code true} if there are any validation or binding errors for the specified parameter.
+     * This is a convenience method that checks if {@link #getErrors(String)} returns a non-empty set.
+     *
+     * @param param the parameter name
+     * @return {@code true} if there are errors for the parameter, {@code false} otherwise
+     * @throws NullPointerException if param is null
+     */
+    public boolean hasErrors(String param) {
+        return !getErrors(param).isEmpty();
     }
 
     public void addValidationErrors(Set<ValidationError> validationErrors) {
