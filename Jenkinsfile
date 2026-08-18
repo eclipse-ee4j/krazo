@@ -28,7 +28,7 @@ pipeline {
         steps {
             withMaven() {
               sh "wget https://download.eclipse.org/ee4j/glassfish/glassfish-8.0.4.zip"
-              sh "unzip glassfish-8.0.2.zip"
+              sh "unzip glassfish-8.0.4.zip"
 
               sh "rm glassfish8/glassfish/modules/jakarta.mvc-api.jar"
               sh "rm glassfish8/glassfish/modules/krazo-*.jar"
