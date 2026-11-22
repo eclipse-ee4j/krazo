@@ -3,9 +3,13 @@
 
     <!-- Enable features -->
     <featureManager>
-        <feature>jakartaee-10.0</feature>
+        <platform>jakartaee-11.0</platform>
+        <feature>restfulWS</feature>
+        <feature>cdi</feature>
+        <feature>servlet</feature>
+        <feature>validation</feature>
+        <feature>pages</feature>
         <feature>localConnector-1.0</feature>
-        <feature>usr:arquillian-support-jakarta-2.1</feature>
     </featureManager>
 
     <!-- To access this server from a remote client add a host attribute

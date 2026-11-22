@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2014-2015 Oracle and/or its affiliates. All rights reserved.
- * Copyright (c) 2018, 2019 Eclipse Krazo committers and contributors
+ * Copyright (c) 2018, 2026 Eclipse Krazo committers and contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,8 +18,6 @@
  */
 package org.eclipse.krazo.test.validation;
 
-import jakarta.enterprise.context.RequestScoped;
-import jakarta.inject.Named;
 import jakarta.mvc.binding.MvcBinding;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
@@ -27,12 +25,12 @@ import jakarta.validation.constraints.Size;
 import jakarta.ws.rs.FormParam;
 
 /**
- * Class FormDataBean.
+ * Form data bound with {@link MvcBinding}. This is a plain object, not a CDI bean: with some
+ * runtimes a normal-scoped bean is injected as a client proxy, whose fields are not the ones
+ * that hold the submitted values.
  *
  * @author Santiago Pericas-Geertsen
  */
-@Named("data")
-@RequestScoped
 public class FormDataBean {
 
     @MvcBinding
