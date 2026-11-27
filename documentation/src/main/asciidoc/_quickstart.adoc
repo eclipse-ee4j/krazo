@@ -156,7 +156,16 @@ in `BindingResult`. Eclipse Krazo logs a warning at startup when this is the cas
 
 To let Eclipse Krazo handle validation, opt the controllers out of the validation done by Jakarta REST with
 `@ValidateOnExecution(type = ExecutableType.NONE)`, on the controller class or on individual controller methods.
-Eclipse Krazo still validates the parameters and reports the violations in `BindingResult`:
+Eclipse Krazo still validates the parameters and reports the violations in `BindingResult`.
+
+`@ValidateOnExecution` is a standard Jakarta Validation annotation, so this doesn't tie the application to
+OpenLiberty. It only controls whether the Jakarta REST runtime and the CDI integration of Jakarta Validation
+validate the method. Eclipse Krazo validates controllers itself on every runtime, so the annotated controllers
+behave the same on OpenLiberty, GlassFish and WildFly.
+
+If a class mixes controller methods with plain Jakarta REST resource methods, annotate the controller methods
+instead of the class. On the class, the annotation also turns off the validation of the plain resource methods,
+on every runtime.
 
 [source,java]
 ----
