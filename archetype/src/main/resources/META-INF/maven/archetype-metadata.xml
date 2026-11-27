@@ -41,7 +41,7 @@
             <defaultValue>jersey</defaultValue>
         </requiredProperty>
         <requiredProperty key="javaRelease">
-            <defaultValue>11</defaultValue>
+            <defaultValue>21</defaultValue>
         </requiredProperty>
     </requiredProperties>
 </archetype-descriptor>
