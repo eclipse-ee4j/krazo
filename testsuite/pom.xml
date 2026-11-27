@@ -395,6 +395,7 @@
 
             <properties>
                 <skipITs>false</skipITs>
+                <liberty.version>26.0.0.11</liberty.version>
             </properties>
 
             <dependencies>
@@ -415,14 +416,14 @@
                     <plugin>
                         <groupId>io.openliberty.tools</groupId>
                         <artifactId>liberty-maven-plugin</artifactId>
-                        <version>3.3.4</version>
+                        <version>3.8.2</version>
                         <configuration>
                             <skip>${skipTests}</skip>
                             <serverName>defaultServer</serverName>
                             <assemblyArtifact>
-                                <groupId>io.openliberty.beta</groupId>
+                                <groupId>io.openliberty</groupId>
                                 <artifactId>openliberty-runtime</artifactId>
-                                <version>22.0.0.13-beta</version>
+                                <version>${liberty.version}</version>
                                 <type>zip</type>
                             </assemblyArtifact>
                         </configuration>

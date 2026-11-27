@@ -1,6 +1,6 @@
 ////
 
-    Copyright (c) 2019-2022 Eclipse Krazo committers and contributors
+    Copyright (c) 2019, 2026 Eclipse Krazo committers and contributors
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -145,6 +145,48 @@ Wildfly is using RESTEasy for Jakarta REST. So you need the Eclipse Krazo RESTEa
     <!-- other dependencies ... -->
 </dependencies>
 ----
+
+[NOTE]
+.Bean Validation on OpenLiberty
+====
+OpenLiberty doesn't expose the RESTEasy SPI that Eclipse Krazo uses to stop RESTEasy from validating
+the parameters of controller methods itself. Without it, RESTEasy rejects requests with constraint
+violations with a `400 Bad Request` response before the controller is invoked, instead of reporting them
+in `BindingResult`. Eclipse Krazo logs a warning at startup when this is the case.
+
+To let Eclipse Krazo handle validation, opt the controllers out of the validation done by Jakarta REST with
+`@ValidateOnExecution(type = ExecutableType.NONE)`, on the controller class or on individual controller methods.
+Eclipse Krazo still validates the parameters and reports the violations in `BindingResult`.
+
+`@ValidateOnExecution` is a standard Jakarta Validation annotation, so this doesn't tie the application to
+OpenLiberty. It only controls whether the Jakarta REST runtime and the CDI integration of Jakarta Validation
+validate the method. Eclipse Krazo validates controllers itself on every runtime, so the annotated controllers
+behave the same on OpenLiberty, GlassFish and WildFly.
+
+If a class mixes controller methods with plain Jakarta REST resource methods, annotate the controller methods
+instead of the class. On the class, the annotation also turns off the validation of the plain resource methods,
+on every runtime.
+
+[source,java]
+----
+@Path("persons")
+@Controller
+@ValidateOnExecution(type = ExecutableType.NONE)
+public class PersonController {
+
+    @Inject
+    private BindingResult bindingResult;
+
+    @POST
+    public String save(@Valid @BeanParam PersonForm form) {
+        if (bindingResult.isFailed()) {
+            return "person-form.jsp";
+        }
+        // ...
+    }
+}
+----
+====
 
 ====== Thorntail
 

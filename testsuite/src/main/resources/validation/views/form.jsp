@@ -1,6 +1,7 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html>
-    <link rel="stylesheet" type="text/css" href="krazo.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/krazo.css">
     <head>
         <title>Form Validation</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -8,7 +9,8 @@
     <body>
     <h1>Form Validation</h1>
     <p>An empty name or an age less than 18 will result in a 400 (validation error)</p>
-    <form name="form" action="resources/form" method="post">
+    <form name="form" action="${mvc.basePath}/${action}" method="post">
+        <input type="hidden" name="${mvc.csrf.name}" value="${mvc.csrf.token}"/>
         <label id="name">Name:</label>
         <input type="text" name="name">
         <label id="age">Age:</label>
