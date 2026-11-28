@@ -9,9 +9,9 @@ pipeline {
     jdk "temurin-jdk21-latest"
   }
 
-  environment {
-    GLASSFISH_VERSION = "9.0.0-M4"
-  }
+//  environment {
+//    GLASSFISH_VERSION = "9.0.0-M4"
+//  }
 
   stages {
     stage("Compile") {
