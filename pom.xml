@@ -36,33 +36,33 @@
     <parent>
         <groupId>org.eclipse.ee4j</groupId>
         <artifactId>project</artifactId>
-        <version>2.0.6</version>
+        <version>2.0.4</version>
         <relativePath/>
     </parent>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <maven.compiler.release>21</maven.compiler.release>
+        <maven.compiler.release>17</maven.compiler.release>
 
         <!-- DEPENDENCY PROPERTIES -->
-        <spec.version>3.1.0-SNAPSHOT</spec.version>
-        <tck.version>3.1.0-SNAPSHOT</tck.version>
+        <spec.version>3.0.1</spec.version>
+        <tck.version>3.0.1</tck.version>
 
         <jersey.version>4.0.2</jersey.version>
-        <arquillian-bom.version>1.10.2.Final</arquillian-bom.version>
+        <arquillian-bom.version>1.9.4.Final</arquillian-bom.version>
         <shrinkwrap-resolver-bom.version>3.1.4</shrinkwrap-resolver-bom.version>
         <jakartaee-api.version>11.0.0</jakartaee-api.version>
         <jakarta.servlet-api.version>6.1.0</jakarta.servlet-api.version>
-        <jakarta.cdi-api.version>5.0.0</jakarta.cdi-api.version>
-        <jakarta.validation-api.version>4.0.0-M1</jakarta.validation-api.version>
+        <jakarta.enterprise.cdi-api.version>4.1.0</jakarta.enterprise.cdi-api.version>
+        <jakarta.validation-api.version>3.1.0</jakarta.validation-api.version>
         <jakarta.annotation-api.version>3.0.0</jakarta.annotation-api.version>
         <jakarta.servlet.jsp.jstl-api.version>3.0.0</jakarta.servlet.jsp.jstl-api.version>
-        <jakarta.ws.rs-api.version>5.0.0-M1</jakarta.ws.rs-api.version>
+        <jakarta.ws.rs-api.version>4.0.0</jakarta.ws.rs-api.version>
         <jakarta.interceptor-api.version>2.2.0</jakarta.interceptor-api.version>
         <junit.version>4.13.2</junit.version>
         <slf4j.version>2.0.3</slf4j.version>
-        <easymock.version>5.7.0</easymock.version>
+        <easymock.version>4.3</easymock.version>
         <hibernate-validator-cdi.version>8.0.1.Final</hibernate-validator-cdi.version>
         <resteasy.version>7.0.2.Final</resteasy.version>
         <gf.jakarta.el.version>5.0.0-M1</gf.jakarta.el.version>
@@ -82,7 +82,7 @@
         <maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
         <findbugs-maven-plugin.version>3.0.3</findbugs-maven-plugin.version>
         <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
-        <jacoco-maven-plugin.version>0.8.16</jacoco-maven-plugin.version>
+        <jacoco-maven-plugin.version>0.8.7</jacoco-maven-plugin.version>
         <maven-bundle-plugin.version>5.1.1</maven-bundle-plugin.version>
         <maven-war-plugin.version>3.2.3</maven-war-plugin.version>
         <dependency-check-maven.version>6.0.1</dependency-check-maven.version>
@@ -166,9 +166,6 @@
                             <arg>-Xlint:serial</arg>
                             <!-- disables the warning about the missing -bootclasspath on java 11 -->
                             <arg>-Xlint:-options</arg>
-                            <!-- Jakarta REST 5 deprecates @Context for removal in favour of @Inject.
-                                 Keep @Context until Krazo no longer needs to run on Jakarta EE 11 runtimes. -->
-                            <arg>-Xlint:-removal</arg>
                             <arg>-Werror</arg>
                         </compilerArgs>
                     </configuration>
@@ -387,27 +384,10 @@
             </dependency>
 
             <dependency>
-                <groupId>jakarta.cdi</groupId>
-                <artifactId>jakarta.cdi-api</artifactId>
-                <version>${jakarta.cdi-api.version}</version>
-                <scope>provided</scope>
-            </dependency>
-            <!-- CDI 5 moved to the jakarta.cdi groupId. Manage the old coordinates
-                 (pulled in by jakartaee-web-api 11) so they relocate to CDI 5 -->
-            <dependency>
                 <groupId>jakarta.enterprise</groupId>
                 <artifactId>jakarta.enterprise.cdi-api</artifactId>
-                <version>${jakarta.cdi-api.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>jakarta.enterprise</groupId>
-                <artifactId>jakarta.enterprise.lang-model</artifactId>
-                <version>${jakarta.cdi-api.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>jakarta.enterprise</groupId>
-                <artifactId>jakarta.enterprise.cdi-el-api</artifactId>
-                <version>${jakarta.cdi-api.version}</version>
+                <version>${jakarta.enterprise.cdi-api.version}</version>
+                <scope>provided</scope>
             </dependency>
 
             <dependency>

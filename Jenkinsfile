@@ -27,17 +27,17 @@ pipeline {
     stage("Integration-Test") {
         steps {
             withMaven() {
-              sh "wget https://github.com/eclipse-ee4j/glassfish/releases/download/9.0.0-M4/glassfish-9.0.0-M4.zip"
-              sh "unzip glassfish-9.0.0-M4.zip"
+              sh "wget https://download.eclipse.org/ee4j/glassfish/glassfish-8.0.5.zip"
+              sh "unzip glassfish-8.0.5.zip"
 
-              sh "rm glassfish9/glassfish/modules/jakarta.mvc-api.jar"
-              sh "rm glassfish9/glassfish/modules/krazo-*.jar"
+              sh "rm glassfish8/glassfish/modules/jakarta.mvc-api.jar"
+              sh "rm glassfish8/glassfish/modules/krazo-*.jar"
 
-              sh "glassfish9/bin/asadmin start-domain"
+              sh "glassfish8/bin/asadmin start-domain"
 
               sh "mvn -Psnapshots -pl tck -DversionUpdateCheckSkip -Ddash.skip -Dtck-env=glassfish verify"
 
-              sh "glassfish9/bin/asadmin stop-domain"
+              sh "glassfish8/bin/asadmin stop-domain"
             }
         }
     }
