@@ -1,0 +1,66 @@
+// Runs the Jakarta MVC TCK against GlassFish.
+// The MVC API and Krazo jars bundled with GlassFish are removed, so the TCK runs with the
+// Krazo version built here (the tck-glassfish profile adds them to each test deployment).
+pipeline {
+  agent any
+
+  tools {
+    maven "apache-maven-latest"
+    jdk "temurin-jdk21-latest"
+  }
+
+  environment {
+    GLASSFISH_VERSION = "8.0.5"
+  }
+
+  stages {
+    stage("Compile") {
+      steps {
+        withMaven() {
+          sh "mvn -Psnapshots compile"
+        }
+      }
+    }
+
+    stage("Unit Tests & install") {
+      steps {
+        withMaven() {
+          sh "mvn -Psnapshots install"
+        }
+      }
+    }
+
+    stage("Start GlassFish") {
+      steps {
+        script {
+          env.GLASSFISH_HOME = "glassfish" + env.GLASSFISH_VERSION.tokenize('.')[0]
+        }
+        sh "wget -q https://github.com/eclipse-ee4j/glassfish/releases/download/${GLASSFISH_VERSION}/glassfish-${GLASSFISH_VERSION}.zip"
+        sh "unzip -q glassfish-${GLASSFISH_VERSION}.zip"
+
+        sh "rm ${GLASSFISH_HOME}/glassfish/modules/jakarta.mvc-api.jar"
+        sh "rm ${GLASSFISH_HOME}/glassfish/modules/krazo-*.jar"
+
+        sh "${GLASSFISH_HOME}/bin/asadmin start-domain"
+      }
+    }
+
+    stage("TCK on GlassFish") {
+      steps {
+        withMaven() {
+          sh "mvn -Psnapshots -pl tck -DversionUpdateCheckSkip -Ddash.skip -Dtck-env=glassfish verify"
+        }
+      }
+    }
+  }
+
+  post {
+    always {
+      script {
+        if (env.GLASSFISH_HOME && fileExists("${env.GLASSFISH_HOME}/bin/asadmin")) {
+          sh "${env.GLASSFISH_HOME}/bin/asadmin stop-domain || true"
+        }
+      }
+    }
+  }
+}
