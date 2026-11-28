@@ -9,9 +9,9 @@ pipeline {
     jdk "temurin-jdk21-latest"
   }
 
-  environment {
-    LIBERTY_VERSION = "26.0.0.11"
-  }
+//  environment {
+//    LIBERTY_VERSION = "26.0.0.11"
+//  }
 
   stages {
     stage("Compile") {
