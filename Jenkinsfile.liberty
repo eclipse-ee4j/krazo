@@ -33,8 +33,18 @@ pipeline {
     stage("TCK on Open Liberty") {
       steps {
         withMaven() {
-          sh "mvn -Psnapshots -pl tck -DversionUpdateCheckSkip -Ddash.skip -Dtck-env=liberty -Dliberty.version=${LIBERTY_VERSION} verify"
+          sh "mvn -Psnapshots -pl tck -DversionUpdateCheckSkip -Ddash.skip -Dtck-env=liberty -Dliberty.version=${LIBERTY_VERSION} -Dmaven.test.failure.ignore=true verify"
         }
+      }
+    }
+
+    // Test failures make the build unstable instead of failing it, so this stage always runs
+    stage("TCK Results") {
+      steps {
+        withMaven() {
+          sh "MAVEN_ARGS=-Psnapshots tck/tck-results.sh \"Open Liberty ${LIBERTY_VERSION}\""
+        }
+        archiveArtifacts artifacts: "tck/target/TCK-Results.md"
       }
     }
   }

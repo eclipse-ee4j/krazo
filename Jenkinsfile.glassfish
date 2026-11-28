@@ -48,8 +48,18 @@ pipeline {
     stage("TCK on GlassFish") {
       steps {
         withMaven() {
-          sh "mvn -Psnapshots -pl tck -DversionUpdateCheckSkip -Ddash.skip -Dtck-env=glassfish verify"
+          sh "mvn -Psnapshots -pl tck -DversionUpdateCheckSkip -Ddash.skip -Dtck-env=glassfish -Dmaven.test.failure.ignore=true verify"
         }
+      }
+    }
+
+    // Test failures make the build unstable instead of failing it, so this stage always runs
+    stage("TCK Results") {
+      steps {
+        withMaven() {
+          sh "MAVEN_ARGS=-Psnapshots tck/tck-results.sh \"Eclipse GlassFish ${GLASSFISH_VERSION}\""
+        }
+        archiveArtifacts artifacts: "tck/target/TCK-Results.md"
       }
     }
   }
