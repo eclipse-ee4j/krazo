@@ -8,9 +8,9 @@ pipeline {
     jdk "temurin-jdk21-latest"
   }
 
-  environment {
-    WILDFLY_VERSION = "42.0.0.Final"
-  }
+//  environment {
+//    WILDFLY_VERSION = "42.0.0.Final"
+//  }
 
   stages {
     stage("Compile") {
