@@ -50,7 +50,7 @@
         <tck.version>3.1.0-SNAPSHOT</tck.version>
 
         <jersey.version>4.0.2</jersey.version>
-        <arquillian-bom.version>1.9.4.Final</arquillian-bom.version>
+        <arquillian-bom.version>1.10.2.Final</arquillian-bom.version>
         <shrinkwrap-resolver-bom.version>3.1.4</shrinkwrap-resolver-bom.version>
         <jakartaee-api.version>11.0.0</jakartaee-api.version>
         <jakarta.servlet-api.version>6.1.0</jakarta.servlet-api.version>
