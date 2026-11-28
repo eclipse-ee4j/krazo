@@ -9,9 +9,13 @@ pipeline {
     jdk "temurin-jdk21-latest"
   }
 
-  environment {
-    GLASSFISH_VERSION = "9.0.0-M4"
-  }
+#   parameters {
+#        string(name: 'GLASSFISH_VERSION', defaultValue: '9.0.0-M4', description: 'Target GlassFish')
+#    }
+
+#  environment {
+#   GLASSFISH_VERSION = "9.0.0-M4"
+#  }
 
   stages {
     stage("Compile") {
@@ -33,7 +37,7 @@ pipeline {
     stage("Start GlassFish") {
       steps {
         script {
-          env.GLASSFISH_HOME = "glassfish" + env.GLASSFISH_VERSION.tokenize('.')[0]
+          env.GLASSFISH_HOME = "glassfish" + GLASSFISH_VERSION.tokenize('.')[0]
         }
         sh "wget -q https://github.com/eclipse-ee4j/glassfish/releases/download/${GLASSFISH_VERSION}/glassfish-${GLASSFISH_VERSION}.zip"
         sh "unzip -q glassfish-${GLASSFISH_VERSION}.zip"
