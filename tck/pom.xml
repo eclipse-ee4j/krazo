@@ -64,6 +64,18 @@
 
     <dependencyManagement>
         <dependencies>
+            <!--
+                Must be imported before the TCK BOM, which pins Arquillian 1.5.0.Final.
+                That version is too old for the current WildFly and Liberty Arquillian adapters.
+            -->
+            <dependency>
+                <groupId>org.jboss.arquillian</groupId>
+                <artifactId>arquillian-bom</artifactId>
+                <version>${arquillian-bom.version}</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+
             <!-- TCK BOM -->
             <dependency>
                 <groupId>jakarta.mvc.tck</groupId>
