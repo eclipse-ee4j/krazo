@@ -1,0 +1,40 @@
+// Runs the Jakarta MVC TCK against WildFly Preview.
+// The tck-wildfly profile downloads WildFly Preview and starts it through the managed Arquillian container.
+pipeline {
+  agent any
+
+  tools {
+    maven "apache-maven-latest"
+    jdk "temurin-jdk21-latest"
+  }
+
+  environment {
+    WILDFLY_VERSION = "42.0.0.Final"
+  }
+
+  stages {
+    stage("Compile") {
+      steps {
+        withMaven() {
+          sh "mvn -Psnapshots compile"
+        }
+      }
+    }
+
+    stage("Unit Tests & install") {
+      steps {
+        withMaven() {
+          sh "mvn -Psnapshots install"
+        }
+      }
+    }
+
+    stage("TCK on WildFly") {
+      steps {
+        withMaven() {
+          sh "mvn -Psnapshots -pl tck -DversionUpdateCheckSkip -Ddash.skip -Dtck-env=wildfly -Dwildfly.version=${WILDFLY_VERSION} verify"
+        }
+      }
+    }
+  }
+}

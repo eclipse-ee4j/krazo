@@ -64,6 +64,28 @@
 
     <dependencyManagement>
         <dependencies>
+            <!--
+                Imported before the TCK BOM, so the Arquillian version used with the container adapters
+                is managed by Krazo rather than by the TCK BOM.
+            -->
+            <dependency>
+                <groupId>org.jboss.arquillian</groupId>
+                <artifactId>arquillian-bom</artifactId>
+                <version>${arquillian-bom.version}</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+
+            <!--
+                HtmlUnit, used by the TCK tests, requires a recent commons-io. Without this, the
+                Liberty Arquillian adapter brings in commons-io 2.11.0, which fails with a NoSuchMethodError.
+            -->
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>2.22.0</version>
+            </dependency>
+
             <!-- TCK BOM -->
             <dependency>
                 <groupId>jakarta.mvc.tck</groupId>
