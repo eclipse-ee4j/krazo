@@ -1,0 +1,41 @@
+// Runs the Jakarta MVC TCK against Open Liberty.
+// The tck-liberty profile downloads Open Liberty, creates the server from
+// tck/src/test/resources/liberty/server.xml and starts it through the managed Arquillian container.
+pipeline {
+  agent any
+
+  tools {
+    maven "apache-maven-latest"
+    jdk "temurin-jdk21-latest"
+  }
+
+  environment {
+    LIBERTY_VERSION = "26.0.0.11"
+  }
+
+  stages {
+    stage("Compile") {
+      steps {
+        withMaven() {
+          sh "mvn -Psnapshots compile"
+        }
+      }
+    }
+
+    stage("Unit Tests & install") {
+      steps {
+        withMaven() {
+          sh "mvn -Psnapshots install"
+        }
+      }
+    }
+
+    stage("TCK on Open Liberty") {
+      steps {
+        withMaven() {
+          sh "mvn -Psnapshots -pl tck -DversionUpdateCheckSkip -Ddash.skip -Dtck-env=liberty -Dliberty.version=${LIBERTY_VERSION} verify"
+        }
+      }
+    }
+  }
+}
