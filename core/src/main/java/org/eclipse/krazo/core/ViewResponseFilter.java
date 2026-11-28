@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2014-2015 Oracle and/or its affiliates. All rights reserved.
- * Copyright (c) 2018, 2023 Eclipse Krazo committers and contributors
+ * Copyright (c) 2018, 2026 Eclipse Krazo committers and contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -155,7 +155,8 @@ public class ViewResponseFilter implements ContainerResponseFilter {
             if (view == null) {
                 throw new ServerErrorException(messages.get("EntityToStringNull", method), INTERNAL_SERVER_ERROR);
             }
-            responseContext.setEntity(new Viewable(view), null, responseContext.getMediaType());
+            responseContext.setEntity(new Viewable(view), null,
+                    defaultMediaTypeIfRequired(responseContext.getMediaType(), hasProduces(resourceInfo)));
         }
 
         // Redirect logic, entity must be a Viewable if not null
@@ -208,6 +209,28 @@ public class ViewResponseFilter implements ContainerResponseFilter {
             resultView += "." + defaultExtension;
         }
         return resultView;
+    }
+
+    private static boolean hasProduces(ResourceInfo resourceInfo) {
+        return resourceInfo.getResourceMethod().getAnnotation(Produces.class) != null
+                || getAnnotation(resourceInfo.getResourceClass(), Produces.class) != null;
+    }
+
+    /*
+     * Controllers without @Produces default to text/html. Jersey applies this default through
+     * KrazoModelProcessor, but other runtimes like RESTEasy pick a fallback media type for requests
+     * accepting any type, e.g. application/octet-stream for a wildcard Accept header. Replace such fallbacks,
+     * but keep a media type explicitly set by the controller.
+     */
+    static MediaType defaultMediaTypeIfRequired(MediaType mediaType, boolean hasProduces) {
+        if (hasProduces) {
+            return mediaType;
+        }
+        if (mediaType == null || mediaType.isWildcardType() || mediaType.isWildcardSubtype()
+                || MediaType.APPLICATION_OCTET_STREAM_TYPE.isCompatible(mediaType)) {
+            return MediaType.TEXT_HTML_TYPE;
+        }
+        return mediaType;
     }
 
     private static MediaType selectVariant(Request request, ResourceInfo resourceInfo) {
